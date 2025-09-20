@@ -12,6 +12,7 @@ public:
 	bool LoadSource(const char* sourceFile);
 	int GetUniformLocation(const char* name);
 	void Use();
+	void ConfigureUniformBlock(const char* blockName, unsigned int bindingPoint);
 
 private:
 	unsigned int m_shaderProgramId = 0;

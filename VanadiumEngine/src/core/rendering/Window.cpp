@@ -32,3 +32,16 @@ Window::~Window()
 {
 	glfwTerminate();
 }
+
+glm::mat4 Window::GetOrthographicProjection()
+{
+	float sw = (float)m_width / (float)m_height;
+	float sh = 1.0;
+
+	float left = -sw / 2.0f;
+	float right = sw / 2.0f;
+	float bottom = -sh / 2.0f;
+	float top = sh / 2.0f;
+
+	return glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
+}

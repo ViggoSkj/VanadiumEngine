@@ -5,7 +5,7 @@ project "Vanadium-Game"
    targetdir "Binaries/%{cfg.buildcfg}"
    staticruntime "off"
 
-   files { "src/**.h", "src/**.cpp", "src/**.c" }
+   files { "src/**.h", "src/**.cpp", "src/**.c", "res/**" }
 
    includedirs
    {

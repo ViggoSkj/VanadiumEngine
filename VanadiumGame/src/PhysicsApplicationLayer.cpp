@@ -110,7 +110,7 @@ void PhysicsApplicationLayer::OnUpdate(double dt)
 void PhysicsApplicationLayer::OnRender(double dt)
 {
 	m_renderQueueItem->shader.Use();
-	glm::mat4 projectionMatrix = m_camera.GetOrthographicProjection();
+	glm::mat4 projectionMatrix = m_camera.GetViewMatrix();
 	glUniformMatrix4fv(m_projectionMatrixUniformId, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 
 	m_instanceVertexBuffer.UpdateVertecies(m_simulation.GetTransforms().get(), Simulation::BallCount * 16 * sizeof(float), 0);

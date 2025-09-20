@@ -115,6 +115,12 @@ void Shader::Use()
 	glUseProgram(m_shaderProgramId);
 }
 
+void Shader::ConfigureUniformBlock(const char* blockName, unsigned int bindingPoint)
+{
+	unsigned int blockIndex = glGetUniformBlockIndex(m_shaderProgramId, blockName);
+	glUniformBlockBinding(m_shaderProgramId, blockIndex, bindingPoint);
+}
+
 unsigned int Shader::CompileShader(const char* shaderSource, GLenum type)
 {
 	static int  success;

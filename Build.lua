@@ -10,8 +10,6 @@ workspace "Vanadium"
 
 OutputDir = "%{cfg.system}-%{cfg.architecture}/%{cfg.buildcfg}"
 
-group "VanadiumEngine"
 include "VanadiumEngine/Build-VanadiumEngine.lua"
-group ""
 
 include "VanadiumGame/Build-VanadiumGame.lua"
