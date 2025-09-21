@@ -2,8 +2,7 @@
 #include "core/rendering/rendering.h"
 #include "PhysicsApplicationLayer.h"
 #include "TestSquareLayer.h"
-
-#include "core/AssetManager/AssetTypes/ShaderSourceObject.h"
+#include "core/AssetManager/AssetTypes/Shader/ShaderParser/ShaderTokenizer.h"
 
 int main()
 {
