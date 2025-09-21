@@ -6,6 +6,7 @@ typedef unsigned int AssetRef;
 enum FileAssetType
 {
 	Image,
+	ShaderSource,
 };
 
 struct FileAsset

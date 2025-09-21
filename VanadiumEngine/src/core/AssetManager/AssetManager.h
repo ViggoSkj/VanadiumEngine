@@ -2,7 +2,7 @@
 #include <vector>
 #include <unordered_map>
 #include "FileAsset.h"
-#include "Texture/Texture.h"
+#include "AssetTypes/Texture.h"
 
 class AssetManager
 {

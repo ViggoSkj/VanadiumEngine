@@ -1,7 +1,6 @@
 #include "UniformBuffer.h"
 #include "core/rendering/GLCommon.h"
 
-
 UniformBuffer::UniformBuffer()
 {
 	glGenBuffers(1, &m_id);

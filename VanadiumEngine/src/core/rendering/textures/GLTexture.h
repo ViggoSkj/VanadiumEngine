@@ -1,5 +1,5 @@
 #pragma once
-#include "core/AssetManager/Texture/Texture.h"
+#include "core/AssetManager/AssetTypes/Texture.h"
 #include "core/rendering/textures/TextureConfiguration.h"
 
 class GLTexture
