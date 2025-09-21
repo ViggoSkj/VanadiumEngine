@@ -22,7 +22,7 @@ void VertexArray::UnBind()
 	glBindVertexArray(0);
 }
 
-void VertexArray::AssignVertexAttributes(std::vector<VertexAttribute> attributes, int divisor)
+void VertexArray::AssignVertexAttributes(std::vector<GLVertexAttribute> attributes, int divisor)
 {
 	Bind();
 
@@ -30,7 +30,7 @@ void VertexArray::AssignVertexAttributes(std::vector<VertexAttribute> attributes
 
 	for (int i = 0; i < attributes.size(); i++)
 	{
-		VertexAttribute a = attributes[i];
+		GLVertexAttribute a = attributes[i];
 		stride += a.TypeSize * a.Count;
 	}
 
@@ -38,7 +38,7 @@ void VertexArray::AssignVertexAttributes(std::vector<VertexAttribute> attributes
 
 	for (int i = 0; i < attributes.size(); i++)
 	{
-		VertexAttribute a = attributes[i];
+		GLVertexAttribute a = attributes[i];
 		glVertexAttribPointer(m_vertexAttributeCount + i, a.Count, a.Type, GL_FALSE, stride, (void*)(offset));
 		glCheckError();
 		glEnableVertexAttribArray(m_vertexAttributeCount + i);

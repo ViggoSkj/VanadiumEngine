@@ -1,26 +1,18 @@
 #pragma once
 #include "core/rendering/GLCommon.h"
+#include "VertexShader.h"
 
-enum ShaderType
+struct FragmentShader
 {
-	Fragment = GL_FRAGMENT_SHADER,
-	Vertex = GL_VERTEX_SHADER,
-	Geometry = GL_GEOMETRY_SHADER,
-	Compute = GL_COMPUTE_SHADER,
-};
 
-struct ShaderSource
-{
-	ShaderType Type;
-	const char* Source;
 };
 
 class ShaderSourceObject
 {
 public:
+	ShaderSourceObject(std::string source);
 
 private:
-
+	FragmentShader m_fragmentShader;
+	VertexShader m_vertexShader;
 };
-
-void TokenizeShaderSource(std::string source);

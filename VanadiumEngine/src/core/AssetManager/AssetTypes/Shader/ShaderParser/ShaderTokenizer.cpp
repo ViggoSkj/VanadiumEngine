@@ -1,30 +1,16 @@
 #include "ShaderTokenizer.h"
-#include "../ShaderDataTypeMaps.h"
-#include "../ShaderDataType.h"
 #include <string>
 #include <vector>
-#include <map>
+#include "../ShaderKeyword.h"
+#include "../ShaderKeywordMaps.h"
+#include "../ShaderDataTypeMaps.h"
+#include "../ShaderDataType.h"
+#include "TokenizedShader.h"
 
-const char* KeywordString(ShaderKeyword keyword)
+TokenizedShader Tokenizer::Tokenize(std::string source)
 {
-	switch (keyword)
-	{
-	case Layout:
-		return "layout";
-	case In:
-		return "in";
-	case Uniform:
-		return "uniform";
-	case Location:
-		return "location";
-	default:
-		throw "e";
-	}
-}
-
-size_t KeywordLength(ShaderKeyword keyword)
-{
-	return strlen(KeywordString(keyword));
+	Tokenizer tokenizer(source);
+	return TokenizedShader(tokenizer.m_tokens);
 }
 
 Tokenizer::Tokenizer(std::string source)
@@ -32,28 +18,6 @@ Tokenizer::Tokenizer(std::string source)
 {
 	Tokenize();
 };
-
-int Tokenizer::FindToken(TokenType type, unsigned int offset)
-{
-	for (int i = 0; i < m_tokens.size(); i++)
-	{
-		if (m_tokens[i].Type == type)
-			return i;
-	}
-
-	return -1;
-}
-
-int Tokenizer::FindKeyword(ShaderKeyword keyword, unsigned int offset)
-{
-	for (int i = offset; i < m_tokens.size(); i++)
-	{
-		if (m_tokens[i].Type == TokenType::Keyword && m_tokens[i].Text == KeywordString(keyword))
-			return i;
-	}
-
-	return -1;
-}
 
 void Tokenizer::Tokenize()
 {
@@ -107,14 +71,10 @@ void Tokenizer::Tokenize()
 			continue;
 
 		// check for keyowrds
-		for (ShaderKeyword keyword : usedKeywords)
+		if (StringToShaderKeyword.contains(cursorName))
 		{
-			if (KeywordString(keyword) == cursorName)
-			{
-				TokenizeKeyword(keyword);
-				progress = true;
-				break;
-			}
+			TokenizeDataType(cursorName);
+			progress = true;
 		}
 
 		if (progress)
@@ -153,10 +113,10 @@ void Tokenizer::TokenizeFlowControl()
 	m_cursor++;
 }
 
-void Tokenizer::TokenizeKeyword(ShaderKeyword keyword)
+void Tokenizer::TokenizeKeyword(std::string keyword)
 {
-	AddToken(TokenType::Keyword, KeywordString(keyword));
-	m_cursor += KeywordLength(keyword);
+	AddToken(TokenType::Keyword, keyword);
+	m_cursor += keyword.size();
 }
 
 void Tokenizer::TokenizeDataType(std::string type)
@@ -212,31 +172,4 @@ void Tokenizer::AddToken(TokenType type, char c)
 {
 	std::string text(1, c);
 	AddToken(type, text);
-}
-
-Token Tokenizer::LastToken()
-{
-	if (m_tokens.size() < 1)
-		return Token();
-	return m_tokens.back();
-}
-
-void TokenizeShaderSource(std::string source)
-{
-	Tokenizer tokenizer(source);
-
-	// find vertex info
-
-	const std::vector<Token>& tokens = tokenizer.Tokens();
-
-	unsigned int cursor = -1;
-
-	while ((cursor = tokenizer.FindKeyword(ShaderKeyword::In, cursor + 1)) != -1)
-	{
-		Token typeToken = tokens[cursor + 1];
-		Token locationToken = tokens[cursor - 2];
-
-		unsigned int location = std::stoi(locationToken.Text);
-		ShaderDataType type = StringToShaderDataType.at(typeToken.Text);
-	}
 }

@@ -2,29 +2,45 @@
 #include "core/rendering/rendering.h"
 #include "PhysicsApplicationLayer.h"
 #include "TestSquareLayer.h"
-#include "core/AssetManager/AssetTypes/Shader/ShaderParser/ShaderTokenizer.h"
+#include "core/AssetManager/AssetTypes/Shader/ShaderSourceObject.h"
 
 int main()
 {
-
 	const char* source = R"(
-        #version 330 core
-        layout(location = 0) in vec3 aPos;
-        layout(location = 1) in vec2 aCoord;
-        layout(std140) uniform Matrices
-        {
-            mat4 projection;
-            mat4 view;
-        };
-        out vec2 uv;
-        void main()
-        {
-            gl_Position = projection * view * vec4(aPos.x, aPos.y, aPos.z, 1.0);
-            uv = aCoord;
-        }
+PRAGMA VERTEX
+#version 330 core
+layout (location = 0) in vec3 aPos;
+layout (location = 1) in vec2 aCoord;
+
+layout (std140) uniform Matrices
+{
+    mat4 projection;
+    mat4 view;
+};
+
+out vec2 uv;
+
+void main()
+{
+    gl_Position = projection * view * vec4(aPos.x, aPos.y, aPos.z, 1.0);
+    uv = aCoord;
+}
+
+PRAGMA FRAGMENT
+#version 330 core
+out vec4 FragColor;
+in vec2 uv;
+
+uniform sampler2D u_sampler;
+
+void main()
+{
+    FragColor = texture2D(u_sampler, uv);
+}
     )";
 
-	TokenizeShaderSource(source);
+    ShaderSourceObject o(source);
+
 
 	return 0;
 }
