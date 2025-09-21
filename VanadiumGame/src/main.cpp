@@ -7,7 +7,7 @@
 int main()
 {
 	const char* source = R"(
-PRAGMA VERTEX
+#shader vertex
 #version 330 core
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec2 aCoord;
@@ -18,6 +18,13 @@ layout (std140) uniform Matrices
     mat4 view;
 };
 
+layout (std140) uniform test
+{
+    vec3 pos;
+    vec4 color;
+    float size;
+};
+
 out vec2 uv;
 
 void main()
@@ -26,7 +33,7 @@ void main()
     uv = aCoord;
 }
 
-PRAGMA FRAGMENT
+#shader fragment
 #version 330 core
 out vec4 FragColor;
 in vec2 uv;
@@ -38,7 +45,6 @@ void main()
     FragColor = texture2D(u_sampler, uv);
 }
     )";
-
     ShaderSourceObject o(source);
 
 

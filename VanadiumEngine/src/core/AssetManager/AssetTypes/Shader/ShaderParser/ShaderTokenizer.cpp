@@ -73,7 +73,7 @@ void Tokenizer::Tokenize()
 		// check for keyowrds
 		if (StringToShaderKeyword.contains(cursorName))
 		{
-			TokenizeDataType(cursorName);
+			TokenizeKeyword(cursorName);
 			progress = true;
 		}
 
@@ -121,7 +121,7 @@ void Tokenizer::TokenizeKeyword(std::string keyword)
 
 void Tokenizer::TokenizeDataType(std::string type)
 {
-	AddToken(TokenType::Keyword, type);
+	AddToken(TokenType::Type, type);
 	m_cursor += type.size();
 }
 

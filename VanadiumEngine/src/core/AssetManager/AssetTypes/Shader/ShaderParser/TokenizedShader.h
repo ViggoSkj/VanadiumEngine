@@ -11,6 +11,7 @@ public:
 
 	int FindToken(TokenType type, unsigned int offset = 0);
 	int FindKeyword(ShaderKeyword keyword, unsigned int offset = 0);
+	int FindHint(std::string hintCommand, std::string hintArgument, unsigned int offset = 0);
 
 	const std::vector<Token>& Tokens() {
 		return m_tokens;

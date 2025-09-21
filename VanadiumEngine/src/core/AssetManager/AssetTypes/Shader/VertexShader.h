@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "ShaderDataType.h"
+#include "ShaderUniform.h"
 
 struct VertexAttribute
 {
@@ -18,6 +19,6 @@ public:
 	VertexShader();
 	~VertexShader();
 
-private:
-	std::vector<VertexAttribute> m_vertexAttributes;
+	std::vector<VertexAttribute> VertexAttributes;
+	std::vector<ShaderUniformObject> UniformObjects;
 };
