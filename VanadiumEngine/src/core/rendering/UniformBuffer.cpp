@@ -27,6 +27,7 @@ void UniformBuffer::SetData(void* data, unsigned int offset, unsigned int size)
 {
 	Bind();
 	glBufferSubData(GL_UNIFORM_BUFFER, offset, size, data);
+	glCheckError();
 	UnBind();
 }
 

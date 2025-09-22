@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include "TokenizedShader.h"
-#include "../VertexShader.h"
+#include "../ShaderTypes/VertexShader.h"
 #include "../ShaderUniform.h"
 
 namespace TokenizedVertexShaderAnalyzer

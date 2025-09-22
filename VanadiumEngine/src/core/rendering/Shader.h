@@ -1,11 +1,13 @@
 #pragma once
 #include "core/rendering/GLCommon.h"
+#include "core/AssetManager/AssetTypes/Shader/ShaderSourceObject.h"
 
 class Shader
 {
 public:
 	Shader();
 	Shader(const Shader& other) = default;
+	Shader(ShaderSourceObject sourceObject);
 	~Shader();
 
 	unsigned int GetId();

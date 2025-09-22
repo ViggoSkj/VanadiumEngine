@@ -163,13 +163,35 @@ void Tokenizer::TokenizeHint()
 
 	m_cursor = end;
 }
+void Tokenizer::AddToken(TokenType type, std::string text, unsigned int sourceIndex)
+{
+	m_tokens.push_back(Token(type, text, sourceIndex, LineNumber(sourceIndex)));
+}
+
 void Tokenizer::AddToken(TokenType type, std::string text)
 {
-	m_tokens.push_back(Token(type, text));
+	m_tokens.push_back(Token(type, text, m_cursor, LineNumber(m_cursor)));
+}
+
+void Tokenizer::AddToken(TokenType type, char c, unsigned int sourceIndex)
+{
+	std::string text(1, c);
+	AddToken(type, text, sourceIndex);
 }
 
 void Tokenizer::AddToken(TokenType type, char c)
 {
 	std::string text(1, c);
 	AddToken(type, text);
+}
+
+unsigned int Tokenizer::LineNumber(unsigned int cursorPosition)
+{
+	unsigned int lineNumber = 0;
+	for (int i = cursorPosition; i > 0; i--)
+	{
+		if (m_source[cursorPosition] == '\n')
+			lineNumber++;
+	}
+	return lineNumber;
 }

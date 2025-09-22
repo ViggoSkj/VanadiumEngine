@@ -1,20 +1,17 @@
 #pragma once
 #include <string>
 
-typedef unsigned int AssetRef;
-
-enum FileAssetType
-{
-	Image,
-	ShaderSource,
-};
-
 struct FileAsset
 {
-	std::string FilePath;
-	FileAssetType AssetType;
+	FileAsset() {};
+	FileAsset(std::string filePath) {};
+};
 
-	FileAsset(std::string filePath, FileAssetType assetType)
-		: FilePath(filePath), AssetType(assetType) {
+struct AssetRef
+{
+	AssetRef(unsigned int index)
+		: BufferIndex(index) {
 	};
+
+	unsigned int BufferIndex;
 };

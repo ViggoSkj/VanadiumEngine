@@ -1,20 +1,37 @@
 #pragma once
 #include <vector>
 #include <unordered_map>
+#include <typeindex>
 #include "FileAsset.h"
-#include "AssetTypes/Texture.h"
+#include "AssetTypes/Texture/Texture.h"
+#include "AssetStore.h"
 
 class AssetManager
 {
 public:
-	AssetRef AddFileAsset(FileAsset asset);
-	void FreeAsset(AssetRef assetSlot);
+	template<typename T>
+		requires(std::is_base_of_v<FileAsset, T>)
+	AssetStore<T>& GetAssetStore()
+	{
+		static AssetStore<T> store;
+		return store;
+	}
 
-	std::shared_ptr<Texture> LoadTexture(AssetRef imageAsset);
+	template<typename T>
+		requires(std::is_base_of_v<FileAsset, T>)
+	T& GetAsset(AssetRef ref)
+	{
+		AssetStore<T>& store = GetAssetStore<T>();
+		return store.Get(ref);
+	}
 
+	template<typename T>
+		requires(std::is_base_of_v<FileAsset, T>)
+	AssetRef LoadFileAsset(const char* filePath)
+	{
+		AssetStore<T>& store = GetAssetStore<T>();
+		return store.LoadAsset(filePath);
+	}
 private:
-	std::vector<FileAsset> m_fileAssets;
-	std::vector<AssetRef> m_freeAssetSlots;
 
-	std::unordered_map<AssetRef, std::shared_ptr<Texture>> m_imageTextures;
 };

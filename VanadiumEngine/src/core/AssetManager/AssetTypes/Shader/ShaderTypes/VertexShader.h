@@ -1,9 +1,10 @@
 #pragma once
 #include <vector>
-#include "ShaderDataType.h"
-#include "ShaderUniform.h"
+#include "../ShaderDataType.h"
+#include "../ShaderUniform.h"
+#include "ShaderBase.h"
 
-struct VertexAttribute
+struct VertexAttribute 
 {
 	ShaderDataType Type;
 	unsigned int Location;
@@ -13,12 +14,7 @@ struct VertexAttribute
 	};
 };
 
-class VertexShader
+struct VertexShader : public ShaderBase
 {
-public:
-	VertexShader();
-	~VertexShader();
-
 	std::vector<VertexAttribute> VertexAttributes;
-	std::vector<ShaderUniformObject> UniformObjects;
 };

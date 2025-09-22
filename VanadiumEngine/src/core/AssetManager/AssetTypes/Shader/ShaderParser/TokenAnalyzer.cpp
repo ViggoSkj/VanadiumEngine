@@ -29,7 +29,6 @@ void TokenizedVertexShaderAnalyzer::GetUniformObjects(TokenizedShader& shader, s
 		// is uniform object
 		if (tokens[cursor + 1].Type == TokenType::Name)
 		{
-
 			std::vector<ShaderUniform> uniforms;
 
 			unsigned int cursor2 = shader.FindToken(TokenType::Type, cursor);
@@ -58,5 +57,16 @@ void TokenizedVertexShaderAnalyzer::GetUniformObjects(TokenizedShader& shader, s
 
 void TokenizedVertexShaderAnalyzer::GetUniforms(TokenizedShader& shader, std::vector<ShaderUniform>& uniforms)
 {
+	unsigned int cursor = -1;
+	const std::vector<Token> tokens = shader.Tokens();
 
+	while ((cursor = shader.FindKeyword(ShaderKeyword::Uniform, cursor + 1)) != -1)
+	{
+		if (tokens[cursor + 1].Type == TokenType::Type)
+		{
+			Token typeToken = tokens[cursor + 1];
+			Token nameToken = tokens[cursor + 2];
+			uniforms.push_back(ShaderUniform(nameToken.Text, StringToShaderDataType.at(typeToken.Text)));
+		}
+	}
 }

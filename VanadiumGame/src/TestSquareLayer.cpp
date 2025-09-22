@@ -1,17 +1,25 @@
 #include "TestSquareLayer.h"
+#include "core/AssetManager/AssetTypes/Texture/TextureAsset.h"
+#include "core/AssetManager/AssetTypes/Shader/ShaderSourceObject.h"
 
 TestSquareLayer::TestSquareLayer()
 {
 	Application& application = Application::Get();
-
 	AssetManager& assetManager = application.GetAssetManager();
-	AssetRef playerRunning = assetManager.AddFileAsset(FileAsset(
-		"res/images/player-running.png",
-		FileAssetType::Image
-	));
 
+	// texture
+	AssetRef ref = assetManager.LoadFileAsset<TextureRGBAAsset>("res/images/player-running.png");
+	TextureRGBA tex = assetManager.GetAsset<TextureRGBAAsset>(ref).Texture;
+	m_texture.AssignTexture((Texture*) &tex);
 	m_texture.Use();
-	m_texture.AssignTexture(assetManager.LoadTexture(playerRunning).get());
+
+	// shader
+	AssetRef shaderRef = assetManager.LoadFileAsset<ShaderSourceObject>("res/shaders/texture.shader");
+	ShaderSourceObject o = assetManager.GetAsset<ShaderSourceObject>(shaderRef);
+	shader = Shader(o);
+	m_samplerId = shader.GetUniformLocation("u_sampler");
+	m_matrixUniforms.SetBindingPoint(0);
+	
 
 	float vertices[] = {
 		 0.5f,  0.5f, 0.0f, 1.0f, 0.0f,  // top right
@@ -39,16 +47,6 @@ TestSquareLayer::TestSquareLayer()
 		{sizeof(float), GL_FLOAT, 3},
 		{sizeof(float), GL_FLOAT, 2},
 		});
-
-
-	shader.LoadSource("res/shaders/texture.shader");
-	m_samplerId = shader.GetUniformLocation("u_sampler");
-	glActiveTexture(GL_TEXTURE0);
-	m_texture.Bind();
-
-
-	m_matrixUniforms.SetBindingPoint(0);
-	shader.ConfigureUniformBlock("Matrices", 0);
 }
 
 void TestSquareLayer::OnUpdate(double dt)
@@ -86,7 +84,9 @@ void TestSquareLayer::OnRender(double dt)
 	Application& app = Application::Get();
 
 	glActiveTexture(GL_TEXTURE0);
+	glCheckError();
 	glUniform1i(m_samplerId, 0);
+	glCheckError();
 	m_texture.Bind();
 	m_VAO.Bind();
 	shader.Use();
@@ -97,7 +97,7 @@ void TestSquareLayer::OnRender(double dt)
 	m_matrixUniforms.SetData(glm::value_ptr(proj), 0, sizeof(float) * 4 * 4);
 	m_matrixUniforms.SetData(glm::value_ptr(view), sizeof(float) * 4 * 4, sizeof(float) * 4 * 4);
 
-	glCheckError();
 
+	glCheckError();
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }

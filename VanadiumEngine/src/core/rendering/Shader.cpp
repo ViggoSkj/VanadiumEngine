@@ -28,12 +28,12 @@ void LoadShaderSource(std::string path, ShaderProgramSource& source)
 
 	while (std::getline(File, line))
 	{
-		if (line == "PRAGMA VERTEX")
+		if (line == "#shader vertex")
 		{
 			type = ShaderType::VERTEX_SHADER;
 			continue;
 		}
-		if (line == "PRAGMA FRAGMENT")
+		if (line == "#shader fragment")
 		{
 			type = ShaderType::FRAGMENT_SHADER;
 			continue;
@@ -62,6 +62,31 @@ void LoadShaderSource(std::string path, ShaderProgramSource& source)
 Shader::Shader()
 {
 
+}
+
+Shader::Shader(ShaderSourceObject sourceObject)
+{
+	static int  success;
+	static char infoLog[512];
+
+	unsigned int vertexShader = CompileShader(sourceObject.m_vertexShader.Source.c_str(), GL_VERTEX_SHADER);
+	unsigned int fragmentShader = CompileShader(sourceObject.m_fragmentShader.Source.c_str(), GL_FRAGMENT_SHADER);
+
+	m_shaderProgramId = glCreateProgram();
+	glAttachShader(m_shaderProgramId, vertexShader);
+	glAttachShader(m_shaderProgramId, fragmentShader);
+	glLinkProgram(m_shaderProgramId);
+
+	glUseProgram(m_shaderProgramId);
+
+	glGetProgramiv(m_shaderProgramId, GL_LINK_STATUS, &success);
+	if (!success) {
+		glGetProgramInfoLog(m_shaderProgramId, 512, NULL, infoLog);
+		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
+	}
+
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
 }
 
 Shader::~Shader()
