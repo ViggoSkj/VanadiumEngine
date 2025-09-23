@@ -92,3 +92,49 @@ inline const std::unordered_map<std::string, ShaderDataType> StringToShaderDataT
 	{"uimage1D", UImage1D}, {"uimage2D", UImage2D}, {"uimage3D", UImage3D}, {"uimagecube", UImageCube}, {"uimage2Drect", UImage2DRect},
 	{"uimage1Darray", UImage1DArray}, {"uimage2Darray", UImage2DArray}, {"uimagebuffer", UImageBuffer}, {"uimage2Dms", UImage2DMS}, {"uimage2Dmsarray", UImage2DMSArray}
 };
+
+
+inline const std::unordered_map<ShaderDataType, unsigned int> ShaderDataTypeToSize = {
+	{Void, 0},
+	{Bool, 4},
+	{Int, 4},
+	{UInt, 4},
+	{Float, 4},
+	{Double, 8},
+
+	{Bool2, 4 * 2}, {Bool3, 4 * 3}, {Bool4, 4 * 4},
+	{Int2, 4 * 2}, {Int3, 4 * 3}, {Int4, 4 * 4},
+	{UInt2, 4 * 2}, {UInt3, 4 * 3}, {UInt4, 4 * 4},
+	{Float2, 4 * 2}, {Float3, 4 * 3}, {Float4, 4 * 4},
+	{Double2, 8 * 2}, {Double3, 8 * 3}, {Double4, 8 * 4},
+
+	{Mat2, 0}, {Mat2x3, 0}, {Mat2x4, 0},
+	{Mat3, 0}, {Mat3x2, 0}, {Mat3x4, 0},
+	{Mat4, 4 * 4 * 4}, {Mat4x2, 0}, {Mat4x3, 0},
+	{DMat2, 0}, {DMat2x3, 0}, {DMat2x4, 0},
+	{DMat3, 0}, {DMat3x2, 0}, {DMat3x4, 0},
+	{DMat4, 0}, {DMat4x2, 0}, {DMat4x3, 0},
+
+	{Sampler1D, 0}, {Sampler2D, 0}, {Sampler3D, 0},
+	{SamplerCube, 0}, {Sampler2DRect, 0},
+	{Sampler1DShadow, 0}, {Sampler2DShadow, 0},
+	{SamplerCubeShadow, 0}, {Sampler2DRectShadow, 0},
+	{Sampler1DArray, 0}, {Sampler2DArray, 0},
+	{Sampler1DArrayShadow, 0}, {Sampler2DArrayShadow, 0},
+	{SamplerBuffer, 0}, {Sampler2DMS, 0}, {Sampler2DMSArray, 0},
+	{ISampler1D, 0}, {ISampler2D, 0}, {ISampler3D, 0},
+	{ISamplerCube, 0}, {ISampler2DRect, 0},
+	{ISampler1DArray, 0}, {ISampler2DArray, 0},
+	{ISamplerBuffer, 0}, {ISampler2DMS, 0}, {ISampler2DMSArray, 0},
+	{USampler1D, 0}, {USampler2D, 0}, {USampler3D, 0},
+	{USamplerCube, 0}, {USampler2DRect, 0},
+	{USampler1DArray, 0}, {USampler2DArray, 0},
+	{USamplerBuffer, 0}, {USampler2DMS, 0}, {USampler2DMSArray, 0},
+
+	{Image1D, 0}, {Image2D, 0}, {Image3D, 0}, {ImageCube, 0}, {Image2DRect, 0},
+	{Image1DArray, 0}, {Image2DArray, 0}, {ImageBuffer, 0}, {Image2DMS, 0}, {Image2DMSArray, 0},
+	{IImage1D, 0}, {IImage2D, 0}, {IImage3D, 0}, {IImageCube, 0}, {IImage2DRect, 0},
+	{IImage1DArray, 0}, {IImage2DArray, 0}, {IImageBuffer, 0}, {IImage2DMS, 0}, {IImage2DMSArray, 0},
+	{UImage1D, 0}, {UImage2D, 0}, {UImage3D, 0}, {UImageCube, 0}, {UImage2DRect, 0},
+	{UImage1DArray, 0}, {UImage2DArray, 0}, {UImageBuffer, 0}, {UImage2DMS, 0}, {UImage2DMSArray, 0}
+};

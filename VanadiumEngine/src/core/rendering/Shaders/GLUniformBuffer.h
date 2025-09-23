@@ -1,10 +1,11 @@
 #pragma once
+#include "core/AssetManager/AssetTypes/Shader/ShaderDataType.h"
 
-class UniformBuffer
+class GLUniformBuffer
 {
 public:
-	UniformBuffer();
-	~UniformBuffer();
+	GLUniformBuffer(unsigned int size, GLenum usage=GL_STATIC_DRAW);
+	~GLUniformBuffer();
 
 	void Bind();
 	void UnBind();

@@ -1,4 +1,4 @@
-#include "Shader.h"
+#include "GLShader.h"
 #include <fstream>
 #include <glad/glad.h>
 #include <string>
@@ -59,47 +59,23 @@ void LoadShaderSource(std::string path, ShaderProgramSource& source)
 
 
 
-Shader::Shader()
+GLShader::GLShader()
 {
 
 }
 
-Shader::Shader(ShaderSourceObject sourceObject)
+GLShader::GLShader(const GLShader& other)
+	: ReferenceCounting(other), m_shaderProgramId(other.m_shaderProgramId)
 {
-	static int  success;
-	static char infoLog[512];
 
-	unsigned int vertexShader = CompileShader(sourceObject.m_vertexShader.Source.c_str(), GL_VERTEX_SHADER);
-	unsigned int fragmentShader = CompileShader(sourceObject.m_fragmentShader.Source.c_str(), GL_FRAGMENT_SHADER);
-
-	m_shaderProgramId = glCreateProgram();
-	glAttachShader(m_shaderProgramId, vertexShader);
-	glAttachShader(m_shaderProgramId, fragmentShader);
-	glLinkProgram(m_shaderProgramId);
-
-	glUseProgram(m_shaderProgramId);
-
-	glGetProgramiv(m_shaderProgramId, GL_LINK_STATUS, &success);
-	if (!success) {
-		glGetProgramInfoLog(m_shaderProgramId, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-	}
-
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
 }
 
-Shader::~Shader()
-{
-	glDeleteProgram(m_shaderProgramId);
-}
-
-unsigned int Shader::GetId()
+unsigned int GLShader::GetId()
 {
 	return m_shaderProgramId;
 }
 
-bool Shader::LoadSource(const char* sourceFile)
+bool GLShader::LoadSource(const char* sourceFile)
 {
 	static int  success;
 	static char infoLog[512];
@@ -129,24 +105,24 @@ bool Shader::LoadSource(const char* sourceFile)
 	return false;
 }
 
-int Shader::GetUniformLocation(const char* name)
+int GLShader::GetUniformLocation(const char* name)
 {
 	Use();
 	return glGetUniformLocation(m_shaderProgramId, name);
 }
 
-void Shader::Use()
+void GLShader::Use()
 {
 	glUseProgram(m_shaderProgramId);
 }
 
-void Shader::ConfigureUniformBlock(const char* blockName, unsigned int bindingPoint)
+void GLShader::ConfigureUniformBlock(const char* blockName, unsigned int bindingPoint)
 {
 	unsigned int blockIndex = glGetUniformBlockIndex(m_shaderProgramId, blockName);
 	glUniformBlockBinding(m_shaderProgramId, blockIndex, bindingPoint);
 }
 
-unsigned int Shader::CompileShader(const char* shaderSource, GLenum type)
+unsigned int GLShader::CompileShader(const char* shaderSource, GLenum type)
 {
 	static int  success;
 	static char infoLog[512];

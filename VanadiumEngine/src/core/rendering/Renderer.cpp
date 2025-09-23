@@ -18,26 +18,3 @@ Renderer::~Renderer()
 {
 
 }
-
-RenderQueueItem* Renderer::CreateRenderQueueItem()
-{
-	m_renderQueue.emplace_back();
-	return &m_renderQueue.back();
-}
-
-void Renderer::Render()
-{
-
-
-	// -- RENDER LOGIC -- //
-
-	for (int i = 0; i < m_renderQueue.size(); i++)
-	{
-		RenderQueueItem& item = m_renderQueue[i];
-		item.shader.Use();
-		item.vertexArray.Bind();
-		glDrawElementsInstanced(GL_TRIANGLES, item.indexCount, GL_UNSIGNED_INT, 0, item.instanceCount);
-
-	}
-
-}

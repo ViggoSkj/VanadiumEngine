@@ -1,29 +1,30 @@
-#include "UniformBuffer.h"
 #include "core/rendering/GLCommon.h"
+#include "GLUniformBuffer.h"
 
-UniformBuffer::UniformBuffer()
+
+GLUniformBuffer::GLUniformBuffer(unsigned int size, GLenum usage)
 {
 	glGenBuffers(1, &m_id);
 	Bind();
-	glBufferData(GL_UNIFORM_BUFFER, 16 * 2 * 4, NULL, GL_STATIC_DRAW);
+	glBufferData(GL_UNIFORM_BUFFER, size, NULL, usage);
 }
 
-UniformBuffer::~UniformBuffer()
+GLUniformBuffer::~GLUniformBuffer()
 {
 	glDeleteBuffers(1, &m_id);
 }
 
-void UniformBuffer::Bind()
+void GLUniformBuffer::Bind()
 {
 	glBindBuffer(GL_UNIFORM_BUFFER, m_id);
 }
 
-void UniformBuffer::UnBind()
+void GLUniformBuffer::UnBind()
 {
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
-void UniformBuffer::SetData(void* data, unsigned int offset, unsigned int size)
+void GLUniformBuffer::SetData(void* data, unsigned int offset, unsigned int size)
 {
 	Bind();
 	glBufferSubData(GL_UNIFORM_BUFFER, offset, size, data);
@@ -31,7 +32,7 @@ void UniformBuffer::SetData(void* data, unsigned int offset, unsigned int size)
 	UnBind();
 }
 
-void UniformBuffer::SetBindingPoint(unsigned int bindingPoint)
+void GLUniformBuffer::SetBindingPoint(unsigned int bindingPoint)
 {
 	glBindBufferRange(GL_UNIFORM_BUFFER, bindingPoint, m_id, 0, 2 * sizeof(float) * 4 * 4 * 2);
 	glCheckError();

@@ -3,18 +3,18 @@
 #include <vector>
 #include "ShaderDataType.h"
 
-struct ShaderUniform
+struct UniformDescriptor
 {
 	std::string name;
 	ShaderDataType type;
 
-	ShaderUniform(std::string name, ShaderDataType type)
+	UniformDescriptor(std::string name, ShaderDataType type)
 		: name(name), type(type) {
 	};
 };
 
-struct ShaderUniformObject
+struct UniformObjectDescriptor
 {
 	std::string name;
-	std::vector<ShaderUniform> uniforms;
+	std::vector<UniformDescriptor> uniforms;
 };

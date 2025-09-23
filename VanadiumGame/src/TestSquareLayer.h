@@ -1,6 +1,8 @@
 #pragma once
 #include "core/ApplicationLayer.h"
 #include "core/rendering/Rendering.h"
+#include "core/rendering/Shaders/UniformBufferManager.h"
+#include "core/Shaders.h"
 
 class TestSquareLayer : public ApplicationLayer
 {
@@ -12,9 +14,9 @@ public:
 
 private:
 	GLTexture m_texture;
-	UniformBuffer m_matrixUniforms;
+	UniformBufferManager m_uniformBufferManager;
+	GLShader m_shader;
 	VertexArray m_VAO;
-	Shader shader;
 	Camera m_camera;
 	unsigned int m_samplerId;
 };

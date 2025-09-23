@@ -10,6 +10,8 @@ project "VanadiumEngine"
    includedirs
    {
       "src",
+      "src/core/AssetManager",
+      "src/core/rendering",
 
       -- libraries
       "../Vendor/includes"

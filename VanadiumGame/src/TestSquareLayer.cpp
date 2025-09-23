@@ -1,9 +1,19 @@
 #include "TestSquareLayer.h"
+#include <iostream>
 #include "core/AssetManager/AssetTypes/Texture/TextureAsset.h"
-#include "core/AssetManager/AssetTypes/Shader/ShaderSourceObject.h"
 
 TestSquareLayer::TestSquareLayer()
 {
+	int vua;
+	glGetIntegerv(GL_MAX_VERTEX_UNIFORM_BLOCKS, &vua);
+	std::cout << vua << std::endl;
+	glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_BLOCKS, &vua);
+	std::cout << vua << std::endl;
+	glGetIntegerv(GL_MAX_GEOMETRY_UNIFORM_BLOCKS, &vua);
+	std::cout << vua << std::endl;
+
+
+
 	Application& application = Application::Get();
 	AssetManager& assetManager = application.GetAssetManager();
 
@@ -14,12 +24,13 @@ TestSquareLayer::TestSquareLayer()
 	m_texture.Use();
 
 	// shader
-	AssetRef shaderRef = assetManager.LoadFileAsset<ShaderSourceObject>("res/shaders/texture.shader");
-	ShaderSourceObject o = assetManager.GetAsset<ShaderSourceObject>(shaderRef);
-	shader = Shader(o);
-	m_samplerId = shader.GetUniformLocation("u_sampler");
-	m_matrixUniforms.SetBindingPoint(0);
-	
+	AssetRef shaderRef = assetManager.LoadFileAsset<ShaderAsset>("res/shaders/texture.shader");
+	ShaderAsset asset = assetManager.GetAsset<ShaderAsset>(shaderRef);
+	m_shader = asset.Shader;
+	m_samplerId = m_shader.GetUniformLocation("u_sampler");
+
+	// TODO FIGURE OUT HOW TO MANAGE THE BUFFERS BINDING POINTS
+
 
 	float vertices[] = {
 		 0.5f,  0.5f, 0.0f, 1.0f, 0.0f,  // top right
@@ -89,13 +100,13 @@ void TestSquareLayer::OnRender(double dt)
 	glCheckError();
 	m_texture.Bind();
 	m_VAO.Bind();
-	shader.Use();
+	m_shader.Use();
 
 	glm::mat4 proj = app.GetWindow().GetOrthographicProjection();
 	glm::mat4 view = m_camera.GetViewMatrix();
 
-	m_matrixUniforms.SetData(glm::value_ptr(proj), 0, sizeof(float) * 4 * 4);
-	m_matrixUniforms.SetData(glm::value_ptr(view), sizeof(float) * 4 * 4, sizeof(float) * 4 * 4);
+	//m_matrixUniforms.SetData(glm::value_ptr(proj), 0, sizeof(float) * 4 * 4);
+	//m_matrixUniforms.SetData(glm::value_ptr(view), sizeof(float) * 4 * 4, sizeof(float) * 4 * 4);
 
 
 	glCheckError();
