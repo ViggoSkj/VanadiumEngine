@@ -1,5 +1,5 @@
 #include "VertexBuffer.h"
-#include "core/rendering/GLCommon.h"
+#include "GLCommon.h"
 
 VertexBuffer::VertexBuffer()
 {

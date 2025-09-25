@@ -1,5 +1,5 @@
 #pragma once
-#include "core/rendering/GLCommon.h"
+#include "GLCommon.h"
 
 class VertexBuffer
 {

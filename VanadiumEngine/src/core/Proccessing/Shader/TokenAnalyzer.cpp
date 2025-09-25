@@ -1,6 +1,6 @@
 #include "TokenAnalyzer.h"
-#include "../ShaderDataTypeMaps.h"
-#include "../ShaderKeyword.h"
+#include "ShaderKeyword.h"
+#include "Shaders/ShaderDataTypeMaps.h"
 
 void TokenizedVertexShaderAnalyzer::GetVertexAttributes(TokenizedShader& shader, std::vector<VertexAttribute>& vertexAttributes)
 {

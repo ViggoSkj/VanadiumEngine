@@ -1,4 +1,4 @@
-#include "core/rendering/GLCommon.h"
+#include "GLCommon.h"
 #include "GLUniformBuffer.h"
 
 

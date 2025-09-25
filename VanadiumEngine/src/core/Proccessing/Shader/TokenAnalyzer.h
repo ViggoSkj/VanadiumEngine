@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
 #include "TokenizedShader.h"
-#include "core/AssetManager/AssetTypes/Shader/VertexAttribute.h"
-#include "../ShaderUniform.h"
+#include "Shaders/VertexAttribute.h"
+#include "Shaders/ShaderUniform.h"
 
 namespace TokenizedVertexShaderAnalyzer
 {

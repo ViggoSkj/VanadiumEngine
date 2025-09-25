@@ -1,9 +1,8 @@
 #pragma once
-#include "core/rendering/GLCommon.h"
-#include "ShaderParser/TokenizedShader.h"
-#include "ShaderTypes/VertexShaderDescriptor.h"
-#include "ShaderTypes/FragmentShaderDescriptor.h"
-#include "../../FileAsset.h"
+#include "GLCommon.h"
+#include "core/Proccessing/Shader/TokenizedShader.h"
+#include "VertexShaderDescriptor.h"
+#include "FragmentShaderDescriptor.h"
 
 class ShaderDescriptor
 {

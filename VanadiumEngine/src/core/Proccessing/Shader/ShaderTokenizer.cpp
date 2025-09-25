@@ -1,10 +1,10 @@
 #include "ShaderTokenizer.h"
 #include <string>
 #include <vector>
-#include "../ShaderKeyword.h"
-#include "../ShaderKeywordMaps.h"
-#include "../ShaderDataTypeMaps.h"
-#include "../ShaderDataType.h"
+#include "ShaderKeyword.h"
+#include "ShaderKeywordMaps.h"
+#include "Shaders/ShaderDataTypeMaps.h"
+#include "Shaders/ShaderDataType.h"
 #include "TokenizedShader.h"
 
 TokenizedShader Tokenizer::Tokenize(std::string source)

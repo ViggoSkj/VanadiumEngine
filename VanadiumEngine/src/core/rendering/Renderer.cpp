@@ -1,5 +1,5 @@
 #include "Renderer.h"
-#include "core/rendering/GLCommon.h"
+#include "GLCommon.h"
 
 
 Renderer::Renderer(Window& window)

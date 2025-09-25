@@ -1,5 +1,5 @@
 #pragma once
-#include "core/AssetManager/AssetTypes/Shader/ShaderDataType.h"
+#include "ShaderDataType.h"
 #include "core/util/ReferenceCounting.h"
 #include "Shaders/UniformBindingSlot.h"
 

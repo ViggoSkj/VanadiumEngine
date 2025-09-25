@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "core/AssetManager/AssetTypes/Shader/ShaderUniform.h"
+#include "Shaders/ShaderUniform.h"
 
 struct ShaderBaseDescriptor
 {

@@ -1,8 +1,8 @@
 #pragma once
 #include <optional>
-#include "AssetTypes/Shader/ShaderDescriptor.h"
-#include "Shaders/GLUniformBuffer.h"
-#include "Shaders/UniformBindingSlot.h"
+#include "Descriptors/ShaderDescriptor.h"
+#include "GLUniformBuffer.h"
+#include "UniformBindingSlot.h"
 
 class UniformObject
 {

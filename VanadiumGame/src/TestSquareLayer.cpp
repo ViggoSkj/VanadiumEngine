@@ -28,9 +28,6 @@ TestSquareLayer::TestSquareLayer()
 
 	m_samplerId = m_shader.GlShader().GetUniformLocation("u_sampler");
 
-	// TODO FIGURE OUT HOW TO MANAGE THE BUFFERS BINDING POINTS
-
-
 	float vertices[] = {
 		 0.5f,  0.5f, 0.0f, 1.0f, 0.0f,  // top right
 		 0.5f, -0.5f, 0.0f, 1.0f, 1.0f,  // bottom right
@@ -56,7 +53,7 @@ TestSquareLayer::TestSquareLayer()
 	m_VAO.AssignVertexAttributes({
 		{sizeof(float), GL_FLOAT, 3},
 		{sizeof(float), GL_FLOAT, 2},
-		});
+	});
 }
 
 void TestSquareLayer::OnUpdate(double dt)

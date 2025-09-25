@@ -1,7 +1,7 @@
 #include "ShaderAsset.h"
-#include "ShaderParser/ShaderTokenizer.h"
+#include "core/Proccessing/Shader/ShaderTokenizer.h"
 
-ShaderAsset::ShaderAsset(std::string source)
-	: ShaderProgram(source) {
+ShaderAsset::ShaderAsset(std::string filePath)
+	: ShaderProgram(FileAsset::ReadFile(filePath)) {
 
 };

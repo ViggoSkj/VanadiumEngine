@@ -1,6 +1,6 @@
 #include "UniformBufferManager.h"
-#include "core/AssetManager/AssetTypes/Shader/ShaderDataType.h"
-#include "core/AssetManager/AssetTypes/Shader/ShaderDataTypeMaps.h"
+#include "Shaders/ShaderDataType.h"
+#include "Shaders/ShaderDataTypeMaps.h"
 
 void UniformBufferManager::ReportShaderSourceObject(ShaderDescriptor o)
 {

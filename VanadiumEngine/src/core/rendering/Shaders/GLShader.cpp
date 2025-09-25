@@ -1,5 +1,5 @@
 #include "GLShader.h"
-#include <fstream>
+#include <sstream>
 #include <glad/glad.h>
 #include <string>
 #include <iostream>
@@ -12,15 +12,15 @@ struct ShaderProgramSource
 };
 
 
-void LoadShaderSource(std::string path, ShaderProgramSource& source)
+void LoadShaderSource(std::string source, ShaderProgramSource& sources)
 {
-	std::fstream File(path);
+	std::stringstream stream(source);
 
 	ShaderType type = ShaderType::None;
 
 	std::string line;
 
-	while (std::getline(File, line))
+	while (std::getline(stream, line))
 	{
 		if (line == "#shader vertex")
 		{
@@ -37,12 +37,12 @@ void LoadShaderSource(std::string path, ShaderProgramSource& source)
 		{
 		case ShaderType::VertexShader:
 		{
-			source.VertexSource.append(line + "\n");
+			sources.VertexSource.append(line + "\n");
 			break;
 		}
 		case ShaderType::FragmentShader:
 		{
-			source.FragmentSource.append(line + "\n");
+			sources.FragmentSource.append(line + "\n");
 			break;
 		}
 		case ShaderType::None:
@@ -64,16 +64,16 @@ GLShader::GLShader(const GLShader& other)
 
 }
 
-bool GLShader::LoadSource(const char* sourceFile)
+bool GLShader::LoadSource(std::string source)
 {
 	static int  success;
 	static char infoLog[512];
 
-	ShaderProgramSource source;
-	LoadShaderSource(sourceFile, source);
+	ShaderProgramSource sources;
+	LoadShaderSource(source, sources);
 
-	unsigned int vertexShader = CompileShader(source.VertexSource.c_str(), GL_VERTEX_SHADER);
-	unsigned int fragmentShader = CompileShader(source.FragmentSource.c_str(), GL_FRAGMENT_SHADER);
+	unsigned int vertexShader = CompileShader(sources.VertexSource.c_str(), GL_VERTEX_SHADER);
+	unsigned int fragmentShader = CompileShader(sources.FragmentSource.c_str(), GL_FRAGMENT_SHADER);
 
 	GL_CHECK(m_shaderProgramId = glCreateProgram());
 	GL_CHECK(glAttachShader(m_shaderProgramId, vertexShader));

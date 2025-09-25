@@ -1,5 +1,5 @@
 #include "UniformObject.h"
-#include "AssetTypes/Shader/ShaderDataTypeMaps.h"
+#include "ShaderDataTypeMaps.h"
 
 static unsigned int UniformVectorSize(std::vector<UniformDescriptor> vector)
 {

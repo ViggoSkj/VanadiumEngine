@@ -1,9 +1,9 @@
 #pragma once
 #include <vector>
-#include "AssetTypes/Shader/ShaderDescriptor.h"
-#include "Shaders/UniformObject.h"
-#include "Shaders/ShaderType.h"
-#include "Shaders/UniformBindingSlot.h"
+#include "Descriptors/ShaderDescriptor.h"
+#include "UniformObject.h"
+#include "ShaderType.h"
+#include "UniformBindingSlot.h"
 
 class UniformBinder
 {

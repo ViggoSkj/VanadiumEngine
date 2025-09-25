@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 #include <vector>
-#include "AssetTypes/Shader/ShaderUniform.h"
+#include "Shaders/ShaderUniform.h"
 #include "Shaders/ShaderType.h"
 #include "Shaders/UniformBinder.h"
 #include "Shaders/UniformBindingSlot.h"

@@ -11,7 +11,7 @@ UniformBinder::UniformBinder(ShaderType shaderType, unsigned int count)
 {
     for (int i = 0; i < count; i++)
     {
-        m_bindingSlots.emplace_back(UniformBindingSlot(shaderType, count - i));
+        m_bindingSlots.emplace_back(UniformBindingSlot(shaderType, count - i - 1));
     }
 }
 

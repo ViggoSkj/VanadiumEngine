@@ -1,7 +1,7 @@
 #pragma once
-#include "AssetTypes/Shader/ShaderDescriptor.h"
-#include "Shaders/GLShader.h"
-#include "Shaders/UniformObject.h"
+#include "Descriptors/ShaderDescriptor.h"
+#include "GLShader.h"
+#include "UniformObject.h"
 
 class Shader
 {

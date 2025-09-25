@@ -4,7 +4,7 @@
 
 struct ShaderAsset : public FileAsset
 {
-	ShaderAsset(std::string source);
+	ShaderAsset(std::string filePath);
 	
 	Shader ShaderProgram;
 };

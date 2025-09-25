@@ -1,9 +1,9 @@
 #include "Shader.h"
-#include "AssetTypes/Shader/ShaderParser/ShaderTokenizer.h"
+#include "core/Proccessing/Shader/ShaderTokenizer.h"
 #include <optional>
 
 Shader::Shader(std::string source)
-	: m_shaderDescriptor(Tokenizer::Tokenize(FileAsset::ReadFile(source)))
+	: m_shaderDescriptor(Tokenizer::Tokenize(source))
 {
 	m_shaderProgram.LoadSource(source.c_str());
 }

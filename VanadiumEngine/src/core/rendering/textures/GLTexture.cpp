@@ -1,5 +1,5 @@
 #include "GLTexture.h"
-#include "core/rendering/GLCommon.h"
+#include "GLCommon.h"
 
 GLTexture::GLTexture()
 	: Config(TextureFiltering::Nearest, TextureWrap::MirroredRepeat)

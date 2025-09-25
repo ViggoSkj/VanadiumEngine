@@ -1,5 +1,5 @@
 #include "IndexBuffer.h"
-#include "core/rendering/GLCommon.h"
+#include "GLCommon.h"
 
 IndexBuffer::IndexBuffer()
 {
