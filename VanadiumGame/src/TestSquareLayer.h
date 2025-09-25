@@ -1,4 +1,5 @@
 #pragma once
+#include <optional>
 #include "core/ApplicationLayer.h"
 #include "core/rendering/Rendering.h"
 #include "core/rendering/Shaders/UniformBufferManager.h"
@@ -15,7 +16,8 @@ public:
 private:
 	GLTexture m_texture;
 	UniformBufferManager m_uniformBufferManager;
-	GLShader m_shader;
+	Shader m_shader;
+	UniformObject m_matrices;
 	VertexArray m_VAO;
 	Camera m_camera;
 	unsigned int m_samplerId;

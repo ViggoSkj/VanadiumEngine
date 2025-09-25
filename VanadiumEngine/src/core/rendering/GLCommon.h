@@ -5,4 +5,5 @@
 #include <iostream>	
 
 GLenum glCheckError_(const char* file, int line);
-#define glCheckError() glCheckError_(__FILE__, __LINE__)
+
+#define GL_CHECK(stmt) do { stmt; glCheckError_(__FILE__, __LINE__); }

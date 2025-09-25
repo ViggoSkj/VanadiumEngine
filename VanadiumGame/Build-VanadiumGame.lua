@@ -13,6 +13,8 @@ project "Vanadium-Game"
 
 	  -- Include Core
 	  "../VanadiumEngine/src",
+      "../VanadiumEngine/src/core/AssetManager",
+      "../VanadiumEngine/src/core/rendering",
 
       -- libraries
 	  "../Vendor/includes",

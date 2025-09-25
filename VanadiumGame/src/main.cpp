@@ -7,10 +7,8 @@
 int main()
 {
     Application app;
-	AssetManager man = app.GetAssetManager();
-
-	AssetRef ref = man.LoadFileAsset<ShaderAsset>("res/shaders/texture.shader");
-	ShaderAsset a = man.GetAsset<ShaderAsset>(ref);
+	app.PushLayer<TestSquareLayer>();
+	app.Run();
 
 	return 0;
 }

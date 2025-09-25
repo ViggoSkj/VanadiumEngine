@@ -15,6 +15,11 @@ struct UniformDescriptor
 
 struct UniformObjectDescriptor
 {
-	std::string name;
-	std::vector<UniformDescriptor> uniforms;
+	UniformObjectDescriptor() = default;
+	UniformObjectDescriptor(std::string name, std::vector<UniformDescriptor> uniforms)
+		: Name(name), Uniforms(uniforms) {
+	};
+
+	std::string Name;
+	std::vector<UniformDescriptor> Uniforms;
 };

@@ -10,6 +10,8 @@ class ShaderDescriptor
 public:
 	ShaderDescriptor(TokenizedShader tokenizedShader);
 	
+	const UniformObjectDescriptor& FindUniformObjectDescriptor(std::string name) const;
+
 	VertexShaderDescriptor VertexShader;
 	FragmentShaderDescriptor FragmentShader;
 };

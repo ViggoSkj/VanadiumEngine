@@ -3,10 +3,12 @@
 
 
 GLUniformBuffer::GLUniformBuffer(unsigned int size, GLenum usage)
+	: m_size(size)
 {
 	glGenBuffers(1, &m_id);
 	Bind();
-	glBufferData(GL_UNIFORM_BUFFER, size, NULL, usage);
+	glBufferData(GL_UNIFORM_BUFFER, m_size, NULL, usage);
+
 }
 
 GLUniformBuffer::~GLUniformBuffer()
@@ -28,12 +30,11 @@ void GLUniformBuffer::SetData(void* data, unsigned int offset, unsigned int size
 {
 	Bind();
 	glBufferSubData(GL_UNIFORM_BUFFER, offset, size, data);
-	glCheckError();
 	UnBind();
 }
 
-void GLUniformBuffer::SetBindingPoint(unsigned int bindingPoint)
+void GLUniformBuffer::SetBindingPoint(UniformBindingSlot& uniformBindingSlot)
 {
-	glBindBufferRange(GL_UNIFORM_BUFFER, bindingPoint, m_id, 0, 2 * sizeof(float) * 4 * 4 * 2);
-	glCheckError();
+	Bind();
+	glBindBufferRange(GL_UNIFORM_BUFFER, uniformBindingSlot.Slot, m_id, 0, m_size);
 }

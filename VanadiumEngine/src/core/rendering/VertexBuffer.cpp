@@ -25,7 +25,6 @@ void VertexBuffer::SetVertecies(const void* data, int size, GLenum usage)
 {
 	Bind();
 	glBufferData(GL_ARRAY_BUFFER, size, data, usage);
-	glCheckError();
 	UnBind();
 }
 
@@ -33,6 +32,5 @@ void VertexBuffer::UpdateVertecies(const void* data, int size, int offset)
 {
 	Bind();
 	glBufferSubData(GL_ARRAY_BUFFER, offset, size, data);
-	glCheckError();
 	UnBind();
 }

@@ -21,7 +21,7 @@ void UniformBufferManager::SetData(std::string objectName, std::string uniformNa
 	int index = -1;
 
 	for (int i = 0; i < m_objects.size(); i++)
-		if (m_objects[i].name == objectName)
+		if (m_objects[i].Name == objectName)
 			index = i;
 
 	if (index == -1)
@@ -36,14 +36,14 @@ void UniformBufferManager::SetData(std::string objectName, std::string uniformNa
 	// get uniform offset;
 
 	unsigned int offset = 0;
-	for (int i = 0; i < object.uniforms.size(); i++)
+	for (int i = 0; i < object.Uniforms.size(); i++)
 	{
-		if (object.uniforms[i].name == uniformName)
+		if (object.Uniforms[i].name == uniformName)
 		{
-			buffer.SetData(data, offset, ShaderDataTypeToSize.at(object.uniforms[i].type));
+			buffer.SetData(data, offset, ShaderDataTypeToSize.at(object.Uniforms[i].type));
 			break;
 		}
-		offset += ShaderDataTypeToSize.at(object.uniforms[i].type);
+		offset += ShaderDataTypeToSize.at(object.Uniforms[i].type);
 	}
 }
 
@@ -52,7 +52,7 @@ void UniformBufferManager::AddUniformObject(UniformObjectDescriptor& object)
 	// make sure its unique
 	for (int i = 0; i < m_objects.size(); i++)
 	{
-		if (m_objects[i].name == object.name)
+		if (m_objects[i].Name == object.Name)
 			return;
 	}
 
@@ -60,9 +60,9 @@ void UniformBufferManager::AddUniformObject(UniformObjectDescriptor& object)
 
 	unsigned int size = 0;
 
-	for (int i = 0; i < object.uniforms.size(); i++)
+	for (int i = 0; i < object.Uniforms.size(); i++)
 	{
-		size += ShaderDataTypeToSize.at(object.uniforms[i].type);
+		size += ShaderDataTypeToSize.at(object.Uniforms[i].type);
 	}
 
 	m_buffers.emplace_back(size, GL_STREAM_DRAW);

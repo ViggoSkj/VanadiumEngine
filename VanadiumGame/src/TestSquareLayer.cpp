@@ -1,18 +1,12 @@
 #include "TestSquareLayer.h"
 #include <iostream>
 #include "core/AssetManager/AssetTypes/Texture/TextureAsset.h"
+#include "core/rendering/RenderingManager.h"
 
 TestSquareLayer::TestSquareLayer()
+	: m_shader(Application::Get().GetAssetManager().LoadAndGetFileAsset<ShaderAsset>("res/shaders/texture.shader").ShaderProgram)
 {
-	int vua;
-	glGetIntegerv(GL_MAX_VERTEX_UNIFORM_BLOCKS, &vua);
-	std::cout << vua << std::endl;
-	glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_BLOCKS, &vua);
-	std::cout << vua << std::endl;
-	glGetIntegerv(GL_MAX_GEOMETRY_UNIFORM_BLOCKS, &vua);
-	std::cout << vua << std::endl;
-
-
+	RenderingManager man;
 
 	Application& application = Application::Get();
 	AssetManager& assetManager = application.GetAssetManager();
@@ -20,14 +14,19 @@ TestSquareLayer::TestSquareLayer()
 	// texture
 	AssetRef ref = assetManager.LoadFileAsset<TextureRGBAAsset>("res/images/player-running.png");
 	TextureRGBA tex = assetManager.GetAsset<TextureRGBAAsset>(ref).Texture;
-	m_texture.AssignTexture((Texture*) &tex);
+	m_texture.AssignTexture((Texture*)&tex);
 	m_texture.Use();
 
 	// shader
-	AssetRef shaderRef = assetManager.LoadFileAsset<ShaderAsset>("res/shaders/texture.shader");
-	ShaderAsset asset = assetManager.GetAsset<ShaderAsset>(shaderRef);
-	m_shader = asset.Shader;
-	m_samplerId = m_shader.GetUniformLocation("u_sampler");
+
+	UniformBindingSlot slot = man.LoanUniformBindingSlot(ShaderType::VertexShader);
+
+	UniformObjectDescriptor matricesDescriptor = m_shader.Descriptor().FindUniformObjectDescriptor("Matrices");
+	m_matrices = UniformObject(matricesDescriptor);
+	m_matrices.Bind(slot);
+	m_shader.ReportUniformObject(m_matrices);
+
+	m_samplerId = m_shader.GlShader().GetUniformLocation("u_sampler");
 
 	// TODO FIGURE OUT HOW TO MANAGE THE BUFFERS BINDING POINTS
 
@@ -95,20 +94,16 @@ void TestSquareLayer::OnRender(double dt)
 	Application& app = Application::Get();
 
 	glActiveTexture(GL_TEXTURE0);
-	glCheckError();
 	glUniform1i(m_samplerId, 0);
-	glCheckError();
 	m_texture.Bind();
 	m_VAO.Bind();
-	m_shader.Use();
+	m_shader.GlShader().Use();
 
 	glm::mat4 proj = app.GetWindow().GetOrthographicProjection();
 	glm::mat4 view = m_camera.GetViewMatrix();
 
-	//m_matrixUniforms.SetData(glm::value_ptr(proj), 0, sizeof(float) * 4 * 4);
-	//m_matrixUniforms.SetData(glm::value_ptr(view), sizeof(float) * 4 * 4, sizeof(float) * 4 * 4);
+	m_matrices.Buffer.SetData(glm::value_ptr(proj), 0, 4 * 4 * 4);
+	m_matrices.Buffer.SetData(glm::value_ptr(view), 4 * 4 * 4, 4 * 4 * 4);
 
-
-	glCheckError();
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }

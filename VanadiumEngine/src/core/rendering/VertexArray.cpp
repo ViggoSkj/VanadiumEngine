@@ -40,9 +40,7 @@ void VertexArray::AssignVertexAttributes(std::vector<GLVertexAttribute> attribut
 	{
 		GLVertexAttribute a = attributes[i];
 		glVertexAttribPointer(m_vertexAttributeCount + i, a.Count, a.Type, GL_FALSE, stride, (void*)(offset));
-		glCheckError();
 		glEnableVertexAttribArray(m_vertexAttributeCount + i);
-		glCheckError();
 		glVertexAttribDivisor(m_vertexAttributeCount + i, divisor);
 		offset += a.TypeSize * a.Count;
 	}

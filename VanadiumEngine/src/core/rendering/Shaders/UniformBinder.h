@@ -1,9 +1,20 @@
 #pragma once
 #include <vector>
-#include "core/AssetManager/AssetTypes/Shader/ShaderDescriptor.h"
-#include "core/rendering/Shaders/GLUniformBuffer.h"
+#include "AssetTypes/Shader/ShaderDescriptor.h"
+#include "Shaders/UniformObject.h"
+#include "Shaders/ShaderType.h"
+#include "Shaders/UniformBindingSlot.h"
 
-struct UniformBinder
+class UniformBinder
 {
-	std::vector<> m_permanent;
+public:
+	static unsigned int BlockCount(GLenum block);
+
+	UniformBinder(ShaderType shaderType, unsigned int count);
+
+	UniformBindingSlot LoneBindingSlot();
+	void ReturnBindingSlot(UniformBindingSlot bindingSlot);
+
+private:
+	std::vector<UniformBindingSlot> m_bindingSlots;
 };

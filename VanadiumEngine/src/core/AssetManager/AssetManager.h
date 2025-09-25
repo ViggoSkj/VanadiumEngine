@@ -32,6 +32,15 @@ public:
 		AssetStore<T>& store = GetAssetStore<T>();
 		return store.LoadAsset(filePath);
 	}
+
+	template<typename T>
+		requires(std::is_base_of_v<FileAsset, T>)
+	T& LoadAndGetFileAsset(const char* filePath)
+	{
+		AssetStore<T>& store = GetAssetStore<T>();
+		AssetRef ref = store.LoadAsset(filePath);
+		return store.Get(ref);
+	}
 private:
 
 };

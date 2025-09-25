@@ -3,6 +3,7 @@
 #include <glad/glad.h>
 #include <string>
 #include <iostream>
+#include "ShaderType.h"
 
 struct ShaderProgramSource
 {
@@ -10,19 +11,12 @@ struct ShaderProgramSource
 	std::string FragmentSource;
 };
 
-enum ShaderType
-{
-	NONE,
-	VERTEX_SHADER,
-	FRAGMENT_SHADER
-};
-
 
 void LoadShaderSource(std::string path, ShaderProgramSource& source)
 {
 	std::fstream File(path);
 
-	ShaderType type = ShaderType::NONE;
+	ShaderType type = ShaderType::None;
 
 	std::string line;
 
@@ -30,28 +24,28 @@ void LoadShaderSource(std::string path, ShaderProgramSource& source)
 	{
 		if (line == "#shader vertex")
 		{
-			type = ShaderType::VERTEX_SHADER;
+			type = ShaderType::VertexShader;
 			continue;
 		}
 		if (line == "#shader fragment")
 		{
-			type = ShaderType::FRAGMENT_SHADER;
+			type = ShaderType::FragmentShader;
 			continue;
 		}
 
 		switch (type)
 		{
-		case ShaderType::VERTEX_SHADER:
+		case ShaderType::VertexShader:
 		{
 			source.VertexSource.append(line + "\n");
 			break;
 		}
-		case ShaderType::FRAGMENT_SHADER:
+		case ShaderType::FragmentShader:
 		{
 			source.FragmentSource.append(line + "\n");
 			break;
 		}
-		case ShaderType::NONE:
+		case ShaderType::None:
 			break;
 		}
 	}
@@ -68,11 +62,6 @@ GLShader::GLShader(const GLShader& other)
 	: ReferenceCounting(other), m_shaderProgramId(other.m_shaderProgramId)
 {
 
-}
-
-unsigned int GLShader::GetId()
-{
-	return m_shaderProgramId;
 }
 
 bool GLShader::LoadSource(const char* sourceFile)
@@ -92,7 +81,7 @@ bool GLShader::LoadSource(const char* sourceFile)
 	glLinkProgram(m_shaderProgramId);
 
 	glUseProgram(m_shaderProgramId);
-	
+
 	glGetProgramiv(m_shaderProgramId, GL_LINK_STATUS, &success);
 	if (!success) {
 		glGetProgramInfoLog(m_shaderProgramId, 512, NULL, infoLog);
@@ -105,18 +94,18 @@ bool GLShader::LoadSource(const char* sourceFile)
 	return false;
 }
 
-int GLShader::GetUniformLocation(const char* name)
+int GLShader::GetUniformLocation(const char* name) const
 {
 	Use();
 	return glGetUniformLocation(m_shaderProgramId, name);
 }
 
-void GLShader::Use()
+void GLShader::Use() const
 {
 	glUseProgram(m_shaderProgramId);
 }
 
-void GLShader::ConfigureUniformBlock(const char* blockName, unsigned int bindingPoint)
+void GLShader::ConfigureUniformBlock(const char* blockName, unsigned int bindingPoint) const
 {
 	unsigned int blockIndex = glGetUniformBlockIndex(m_shaderProgramId, blockName);
 	glUniformBlockBinding(m_shaderProgramId, blockIndex, bindingPoint);

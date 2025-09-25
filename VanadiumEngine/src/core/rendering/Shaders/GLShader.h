@@ -8,11 +8,13 @@ public:
 	GLShader();
 	GLShader(const GLShader& other);
 
-	unsigned int GetId();
+	unsigned int GetId() const {
+		return m_shaderProgramId;
+	};
 	bool LoadSource(const char* sourceFile);
-	int GetUniformLocation(const char* name);
-	void Use();
-	void ConfigureUniformBlock(const char* blockName, unsigned int bindingPoint);
+	int GetUniformLocation(const char* name) const;
+	void Use() const;
+	void ConfigureUniformBlock(const char* blockName, unsigned int bindingPoint) const;
 
 protected:
 	void Dispose() override {

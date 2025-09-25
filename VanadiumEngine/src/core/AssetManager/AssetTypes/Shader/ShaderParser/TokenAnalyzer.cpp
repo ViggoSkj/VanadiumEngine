@@ -45,9 +45,7 @@ void TokenizedVertexShaderAnalyzer::GetUniformObjects(TokenizedShader& shader, s
 
 			Token objectNameToken = tokens[cursor + 1];
 
-			UniformObjectDescriptor obj;
-			obj.name = objectNameToken.Text;
-			obj.uniforms = std::move(uniforms);
+			UniformObjectDescriptor obj(objectNameToken.Text, std::move(uniforms));
 			uniformObjects.push_back(obj);
 
 			cursor += 1;

@@ -55,3 +55,18 @@ ShaderDescriptor::ShaderDescriptor(TokenizedShader shader)
 	TokenizedVertexShaderAnalyzer::GetUniformObjects(tokenizedFragmentShader, FragmentShader.UniformObjects);
 	TokenizedVertexShaderAnalyzer::GetUniforms(tokenizedFragmentShader, FragmentShader.Uniforms);
 }
+
+const UniformObjectDescriptor& ShaderDescriptor::FindUniformObjectDescriptor(std::string name) const
+{
+	for (int i = 0; i < VertexShader.UniformObjects.size(); i++)
+	{
+		if (VertexShader.UniformObjects[i].Name == name)
+			return VertexShader.UniformObjects[i];
+	}
+
+	for (int i = 0; i < FragmentShader.UniformObjects.size(); i++)
+	{
+		if (FragmentShader.UniformObjects[i].Name == name)
+			return FragmentShader.UniformObjects[i];
+	}
+}
