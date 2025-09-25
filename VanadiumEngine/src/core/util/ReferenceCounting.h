@@ -17,11 +17,6 @@ public:
 		Inc();
 	}
 
-	ReferenceCounting& operator=(ReferenceCounting& other)
-	{
-		std::cout << "cpy";
-	}
-
 	~ReferenceCounting() {
 		Dec();
 		if (m_references == 0)

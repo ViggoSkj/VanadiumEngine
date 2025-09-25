@@ -11,7 +11,7 @@ Renderer::Renderer(Window& window)
 		return;
 	}
 
-	glViewport(0, 0, m_window.GetWidth(), m_window.GetHeight());
+	GL_CHECK(glViewport(0, 0, m_window.GetWidth(), m_window.GetHeight()));
 }
 
 Renderer::~Renderer()

@@ -75,21 +75,21 @@ bool GLShader::LoadSource(const char* sourceFile)
 	unsigned int vertexShader = CompileShader(source.VertexSource.c_str(), GL_VERTEX_SHADER);
 	unsigned int fragmentShader = CompileShader(source.FragmentSource.c_str(), GL_FRAGMENT_SHADER);
 
-	m_shaderProgramId = glCreateProgram();
-	glAttachShader(m_shaderProgramId, vertexShader);
-	glAttachShader(m_shaderProgramId, fragmentShader);
-	glLinkProgram(m_shaderProgramId);
+	GL_CHECK(m_shaderProgramId = glCreateProgram());
+	GL_CHECK(glAttachShader(m_shaderProgramId, vertexShader));
+	GL_CHECK(glAttachShader(m_shaderProgramId, fragmentShader));
+	GL_CHECK(glLinkProgram(m_shaderProgramId));
 
-	glUseProgram(m_shaderProgramId);
+	GL_CHECK(glUseProgram(m_shaderProgramId));
 
-	glGetProgramiv(m_shaderProgramId, GL_LINK_STATUS, &success);
+	GL_CHECK(glGetProgramiv(m_shaderProgramId, GL_LINK_STATUS, &success));
 	if (!success) {
-		glGetProgramInfoLog(m_shaderProgramId, 512, NULL, infoLog);
+		GL_CHECK(glGetProgramInfoLog(m_shaderProgramId, 512, NULL, infoLog));
 		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
 	}
 
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
+	GL_CHECK(glDeleteShader(vertexShader));
+	GL_CHECK(glDeleteShader(fragmentShader));
 
 	return false;
 }
@@ -102,13 +102,13 @@ int GLShader::GetUniformLocation(const char* name) const
 
 void GLShader::Use() const
 {
-	glUseProgram(m_shaderProgramId);
+	GL_CHECK(glUseProgram(m_shaderProgramId));
 }
 
 void GLShader::ConfigureUniformBlock(const char* blockName, unsigned int bindingPoint) const
 {
-	unsigned int blockIndex = glGetUniformBlockIndex(m_shaderProgramId, blockName);
-	glUniformBlockBinding(m_shaderProgramId, blockIndex, bindingPoint);
+	GL_CHECK(unsigned int blockIndex = glGetUniformBlockIndex(m_shaderProgramId, blockName));
+	GL_CHECK(glUniformBlockBinding(m_shaderProgramId, blockIndex, bindingPoint));
 }
 
 unsigned int GLShader::CompileShader(const char* shaderSource, GLenum type)
@@ -116,15 +116,16 @@ unsigned int GLShader::CompileShader(const char* shaderSource, GLenum type)
 	static int  success;
 	static char infoLog[512];
 
-	unsigned int shader = glCreateShader(type);
-	glShaderSource(shader, 1, &shaderSource, NULL);
-	glCompileShader(shader);
+	unsigned int shader;
+	GL_CHECK(shader = glCreateShader(type));
+	GL_CHECK(glShaderSource(shader, 1, &shaderSource, NULL));
+	GL_CHECK(glCompileShader(shader));
 
-	glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+	GL_CHECK(glGetShaderiv(shader, GL_COMPILE_STATUS, &success));
 
 	if (!success)
 	{
-		glGetShaderInfoLog(shader, 512, NULL, infoLog);
+		GL_CHECK(glGetShaderInfoLog(shader, 512, NULL, infoLog));
 		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
 		return 0;
 	}

@@ -22,8 +22,8 @@ void Application::Run()
 		double dt = (double)glfwGetTime() - prevTime;
 		prevTime = (float)glfwGetTime();
 
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		GL_CHECK(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
+		GL_CHECK(glClear(GL_COLOR_BUFFER_BIT));
 
 		if (m_window.ShouldClose())
 		{

@@ -3,7 +3,7 @@
 unsigned int UniformBinder::BlockCount(GLenum block)
 {
     int count;
-    glGetIntegerv(block, &count);
+    GL_CHECK(glGetIntegerv(block, &count));
     return count;
 }
 

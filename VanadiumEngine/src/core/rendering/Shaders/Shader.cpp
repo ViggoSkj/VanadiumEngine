@@ -23,6 +23,7 @@ void Shader::ReportUniformObject(UniformObject object)
 	case (ShaderType::VertexShader):
 		if (!m_shaderDescriptor.VertexShader.UsesUniformObject(object.Descriptor.Name))
 			return;
+		break;
 	default:
 		return;
 	}

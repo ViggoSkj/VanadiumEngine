@@ -18,7 +18,7 @@ public:
 
 protected:
 	void Dispose() override {
-		glDeleteProgram(m_shaderProgramId);
+		GL_CHECK(glDeleteProgram(m_shaderProgramId));
 	};
 
 private:

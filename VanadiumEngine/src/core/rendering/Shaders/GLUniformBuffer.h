@@ -1,14 +1,15 @@
 #pragma once
 #include "core/AssetManager/AssetTypes/Shader/ShaderDataType.h"
+#include "core/util/ReferenceCounting.h"
 #include "Shaders/UniformBindingSlot.h"
 
-class GLUniformBuffer
+class GLUniformBuffer : ReferenceCounting
 {
 public:
 
 	GLUniformBuffer() = default;
 	GLUniformBuffer(unsigned int size, GLenum usage=GL_STATIC_DRAW);
-	~GLUniformBuffer();
+	GLUniformBuffer(const GLUniformBuffer& other);
 
 	void Bind();
 	void UnBind();
@@ -16,6 +17,12 @@ public:
 	void SetData(void* data, unsigned int offset, unsigned int size);
 
 	void SetBindingPoint(UniformBindingSlot& uniformBindingSlot);
+
+protected:
+	void Dispose() override {
+		GL_CHECK(glDeleteProgram(m_id));
+	};
+
 private:
 	unsigned int m_id;
 	unsigned int m_size;
