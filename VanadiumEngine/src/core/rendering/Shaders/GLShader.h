@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include "GLCommon.h"
-#include "core/util/ReferenceCounting.h"
+#include "core/Util/ReferenceCounting.h"
 
 class GLShader : public ReferenceCounting
 {

@@ -1,8 +1,8 @@
 #pragma once
 #include <optional>
 #include "core/ApplicationLayer.h"
-#include "core/rendering/Rendering.h"
-#include "core/rendering/Shaders/UniformBufferManager.h"
+#include "core/Rendering/Rendering.h"
+#include "core/Rendering/Shaders/UniformBufferManager.h"
 #include "core/Shaders.h"
 
 class TestSquareLayer : public ApplicationLayer

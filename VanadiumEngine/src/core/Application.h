@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "core/rendering/Window.h"
-#include "core/rendering/Renderer.h"
+#include "core/Rendering/Window.h"
+#include "core/Rendering/Renderer.h"
 #include "core/AssetManager/AssetManager.h"
 #include "ApplicationLayer.h"
 

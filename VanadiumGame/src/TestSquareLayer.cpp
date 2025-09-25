@@ -1,7 +1,7 @@
 #include "TestSquareLayer.h"
 #include <iostream>
 #include "core/AssetManager/AssetTypes/Texture/TextureAsset.h"
-#include "core/rendering/RenderingManager.h"
+#include "core/Rendering/RenderingManager.h"
 
 TestSquareLayer::TestSquareLayer()
 	: m_shader(Application::Get().GetAssetManager().LoadAndGetFileAsset<ShaderAsset>("res/shaders/texture.shader").ShaderProgram)

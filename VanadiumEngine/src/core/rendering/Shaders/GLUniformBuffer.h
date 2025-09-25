@@ -1,6 +1,6 @@
 #pragma once
 #include "ShaderDataType.h"
-#include "core/util/ReferenceCounting.h"
+#include "core/Util/ReferenceCounting.h"
 #include "Shaders/UniformBindingSlot.h"
 
 class GLUniformBuffer : ReferenceCounting

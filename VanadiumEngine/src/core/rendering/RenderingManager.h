@@ -6,7 +6,7 @@
 #include "Shaders/UniformBinder.h"
 #include "Shaders/UniformBindingSlot.h"
 #include "Shaders/Shader.h"
-#include "core/util/UnorderdVector.h"
+#include "core/Util/UnorderdVector.h"
 
 class RenderingManager
 {
