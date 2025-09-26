@@ -38,29 +38,17 @@ void TestSquareLayer::OnUpdate(double dt)
 	InputManager man = Application::Get().GetWindow().GetInputManager();
 
 	if (man.Down(Key::W))
-	{
 		m_camera.Position.y += 1.0f * (float)dt / m_camera.Zoom;
-	}
 	if (man.Down(Key::S))
-	{
 		m_camera.Position.y -= 1.0f * (float)dt / m_camera.Zoom;
-	}
 	if (man.Down(Key::A))
-	{
 		m_camera.Position.x -= 1.0f * (float)dt / m_camera.Zoom;
-	}
 	if (man.Down(Key::D))
-	{
 		m_camera.Position.x += 1.0f * (float)dt / m_camera.Zoom;
-	}
 	if (man.Down(Key::Q))
-	{
 		m_camera.Zoom += 1.0f * (float)dt * m_camera.Zoom;
-	}
 	if (man.Down(Key::E))
-	{
 		m_camera.Zoom -= 1.0f * (float)dt * m_camera.Zoom;
-	}
 }
 
 void TestSquareLayer::OnRender(double dt)

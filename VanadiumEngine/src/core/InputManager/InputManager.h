@@ -23,9 +23,9 @@ public:
 	const bool& CtrlDown = m_leftCtrlDown;
 
 private:
-	bool m_leftShiftDown;
-	bool m_leftCtrlDown;
-	bool m_leftAltDown;
+	bool m_leftShiftDown = false;
+	bool m_leftCtrlDown = false;
+	bool m_leftAltDown = false;
 
 	KeyState m_keyStates[Key::_LAST];
 };
