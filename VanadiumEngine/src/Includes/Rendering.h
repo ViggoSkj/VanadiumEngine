@@ -1,7 +1,9 @@
 #pragma once
 
-// Shaders
+// Main
+#include "RenderingManager.h"
 
+// Shaders
 #include "Shaders/Descriptors/ShaderDescriptorBase.h"
 #include "Shaders/Descriptors/VertexShaderDescriptor.h"
 #include "Shaders/Descriptors/FragmentShaderDescriptor.h"
@@ -26,3 +28,4 @@
 
 #include "AssetTypes/Texture/Texture.h"
 #include "AssetTypes/Texture/TextureAsset.h"
+

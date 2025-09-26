@@ -1,11 +1,11 @@
 #include <iostream>
-#include "TestSquareLayer.h"
+#include "Platformer/PlatformerLayer.h"
 #include "Application.h"
 
 int main()
 {
     Application app;
-	app.PushLayer<TestSquareLayer>();
+	app.PushLayer<PlatformerLayer>();
 	app.Run();
 
 	return 0;

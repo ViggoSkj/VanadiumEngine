@@ -1,7 +1,5 @@
 #include "TestSquareLayer.h"
 #include <iostream>
-#include "core/AssetManager/AssetTypes/Texture/TextureAsset.h"
-#include "core/Rendering/RenderingManager.h"
 #include "Util.h"
 
 TestSquareLayer::TestSquareLayer()
@@ -35,19 +33,19 @@ void TestSquareLayer::OnUpdate(double dt)
 {
 	GLFWwindow* glfwWindow = Application::Get().GetWindow().GetGLFWwindow().get();
 
-	InputManager man = Application::Get().GetWindow().GetInputManager();
+	InputManager Input = Application::Get().GetWindow().GetInputManager();
 
-	if (man.Down(Key::W))
+	if (Input.Down(Key::W))
 		m_camera.Position.y += 1.0f * (float)dt / m_camera.Zoom;
-	if (man.Down(Key::S))
+	if (Input.Down(Key::S))
 		m_camera.Position.y -= 1.0f * (float)dt / m_camera.Zoom;
-	if (man.Down(Key::A))
+	if (Input.Down(Key::A))
 		m_camera.Position.x -= 1.0f * (float)dt / m_camera.Zoom;
-	if (man.Down(Key::D))
+	if (Input.Down(Key::D))
 		m_camera.Position.x += 1.0f * (float)dt / m_camera.Zoom;
-	if (man.Down(Key::Q))
+	if (Input.Down(Key::Q))
 		m_camera.Zoom += 1.0f * (float)dt * m_camera.Zoom;
-	if (man.Down(Key::E))
+	if (Input.Down(Key::E))
 		m_camera.Zoom -= 1.0f * (float)dt * m_camera.Zoom;
 }
 
