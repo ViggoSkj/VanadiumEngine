@@ -20,10 +20,13 @@ void Application::Run()
 	while (m_running)
 	{
 		double dt = (double)glfwGetTime() - prevTime;
+		m_time.TimeSinceStart += dt;
 		prevTime = (float)glfwGetTime();
 
 		GL_CHECK(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
 		GL_CHECK(glClear(GL_COLOR_BUFFER_BIT));
+
+		m_window.ProcessInput();
 
 		if (m_window.ShouldClose())
 		{
@@ -36,7 +39,6 @@ void Application::Run()
 			m_applicationLayers[i]->OnUpdate(dt);
 		}
 
-		// m_renderer.Render();
 
 		for (int i = 0; i < m_applicationLayers.size(); i++)
 		{

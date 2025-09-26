@@ -18,13 +18,20 @@ void main()
 }
 
 #shader fragment
-#version 330 core
+#version 400 core
 out vec4 FragColor;
 in vec2 uv;
 
+uniform float u_time;
 uniform sampler2D u_sampler;
 
 void main()
 {
-    FragColor = texture2D(u_sampler, uv);
+    float timePerFrame = 0.1;
+    int frames = 8;
+
+    int frame = int(floor(u_time/timePerFrame));
+    frame = int(mod(frame, 8));
+    float x = float(frame)/float(frames);
+    FragColor = texture2D(u_sampler, vec2(x + uv.x/float(frames), uv.y));
 }

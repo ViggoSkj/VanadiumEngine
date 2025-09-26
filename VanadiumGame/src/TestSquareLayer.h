@@ -21,5 +21,6 @@ private:
 	VertexArray m_VAO;
 	Camera m_camera;
 	unsigned int m_samplerId;
+	unsigned int m_timeId;
 };
 

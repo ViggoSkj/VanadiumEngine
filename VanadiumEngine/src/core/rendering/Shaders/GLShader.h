@@ -24,5 +24,5 @@ protected:
 
 private:
 	unsigned int m_shaderProgramId = 0;
-	unsigned int CompileShader(const char* shaderSource, GLenum type);
+	unsigned int CompileShader(const char* shaderSource, int lineNumber, GLenum type);
 };

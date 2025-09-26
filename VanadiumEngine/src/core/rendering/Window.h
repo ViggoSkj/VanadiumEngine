@@ -5,6 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "GLCommon.h"
+#include "core/InputManager/InputManager.h"
 
 class Window
 {
@@ -21,9 +22,16 @@ public:
 	glm::mat4 GetOrthographicProjection();
 
 	std::shared_ptr<GLFWwindow> GetGLFWwindow() { return m_window; }
+	
+	void ProcessInput();
+
+	const InputManager& GetInputManager() const { return m_inputManager; };
 
 private:
 	int m_width;
 	int m_height;
+	
+	InputManager m_inputManager;
+
 	std::shared_ptr<GLFWwindow> m_window;
 };

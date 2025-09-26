@@ -8,9 +8,37 @@
 struct ShaderProgramSource
 {
 	std::string VertexSource;
+	int VertexStartLine = -1;
 	std::string FragmentSource;
+	int FragmentStartLine = -1;
 };
 
+static int GetLineNumber(const char* err)
+{
+	int len = strlen(err);
+	std::string lineString = "";
+	int count = 0;
+	for (int i = 0; i < len; i++)
+	{
+		if (err[i] == ':')
+		{
+			count++;
+			if (count == 2)
+			{
+				for (int j = 1; j < 100; j++)
+				{
+					if ('0' <= err[i + j] && err[i + j] <= '9')
+						lineString += err[i + j];
+					else
+						break;
+				}
+				break;
+			}
+		}
+	}
+
+	return std::stoi(lineString);
+}
 
 void LoadShaderSource(std::string source, ShaderProgramSource& sources)
 {
@@ -19,17 +47,21 @@ void LoadShaderSource(std::string source, ShaderProgramSource& sources)
 	ShaderType type = ShaderType::None;
 
 	std::string line;
+	int lineNr = 0;
 
 	while (std::getline(stream, line))
 	{
+		lineNr++;
 		if (line == "#shader vertex")
 		{
 			type = ShaderType::VertexShader;
+			sources.VertexStartLine = lineNr;
 			continue;
 		}
 		if (line == "#shader fragment")
 		{
 			type = ShaderType::FragmentShader;
+			sources.FragmentStartLine = lineNr;
 			continue;
 		}
 
@@ -51,8 +83,6 @@ void LoadShaderSource(std::string source, ShaderProgramSource& sources)
 	}
 }
 
-
-
 GLShader::GLShader()
 {
 
@@ -72,8 +102,8 @@ bool GLShader::LoadSource(std::string source)
 	ShaderProgramSource sources;
 	LoadShaderSource(source, sources);
 
-	unsigned int vertexShader = CompileShader(sources.VertexSource.c_str(), GL_VERTEX_SHADER);
-	unsigned int fragmentShader = CompileShader(sources.FragmentSource.c_str(), GL_FRAGMENT_SHADER);
+	unsigned int vertexShader = CompileShader(sources.VertexSource.c_str(), sources.VertexStartLine, GL_VERTEX_SHADER);
+	unsigned int fragmentShader = CompileShader(sources.FragmentSource.c_str(), sources.FragmentStartLine, GL_FRAGMENT_SHADER);
 
 	GL_CHECK(m_shaderProgramId = glCreateProgram());
 	GL_CHECK(glAttachShader(m_shaderProgramId, vertexShader));
@@ -97,7 +127,10 @@ bool GLShader::LoadSource(std::string source)
 int GLShader::GetUniformLocation(const char* name) const
 {
 	Use();
-	return glGetUniformLocation(m_shaderProgramId, name);
+	unsigned int id = GL_CHECK(glGetUniformLocation(m_shaderProgramId, name));
+	if (id == -1)
+		std::cout << "no such uniform" << std::endl;
+	return id;
 }
 
 void GLShader::Use() const
@@ -111,7 +144,7 @@ void GLShader::ConfigureUniformBlock(const char* blockName, unsigned int binding
 	GL_CHECK(glUniformBlockBinding(m_shaderProgramId, blockIndex, bindingPoint));
 }
 
-unsigned int GLShader::CompileShader(const char* shaderSource, GLenum type)
+unsigned int GLShader::CompileShader(const char* shaderSource, int startNumber, GLenum type)
 {
 	static int  success;
 	static char infoLog[512];
@@ -126,7 +159,8 @@ unsigned int GLShader::CompileShader(const char* shaderSource, GLenum type)
 	if (!success)
 	{
 		GL_CHECK(glGetShaderInfoLog(shader, 512, NULL, infoLog));
-		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+		int line = GetLineNumber(infoLog);
+		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << "(" << line + startNumber << ")" << infoLog << std::endl;
 		return 0;
 	}
 

@@ -1,9 +1,10 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "core/Rendering/Window.h"
-#include "core/Rendering/Renderer.h"
-#include "core/AssetManager/AssetManager.h"
+#include "Window.h"
+#include "Renderer.h"
+#include "AssetManager.h"
+#include "core/Time.h"
 #include "ApplicationLayer.h"
 
 class Application
@@ -26,6 +27,8 @@ public:
 	Renderer& GetRenderer() { return m_renderer; };
 	Window& GetWindow() { return m_window; };
 	AssetManager& GetAssetManager() { return m_assetManager; }
+
+	const Time& GetTime() const { return m_time; }
 private:
 	static Application* s_instance;
 
@@ -34,4 +37,5 @@ private:
 	Window m_window;
 	Renderer m_renderer;
 	AssetManager m_assetManager;
+	Time m_time;
 };

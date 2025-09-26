@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "core/InputManager/KeyMaps.h"
 
 void glfw_window_deleter(GLFWwindow* window) {
 	if (window) {
@@ -44,4 +45,17 @@ glm::mat4 Window::GetOrthographicProjection()
 	float top = sh / 2.0f;
 
 	return glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
+}
+
+void Window::ProcessInput()
+{
+	bool states[Key::_LAST];
+
+	for (int i = 0; i < Key::_LAST; i++)
+	{
+		int glfwKey = GlfwKeyMappings[i];
+		states[i] = glfwGetKey(m_window.get(), glfwKey) == GLFW_PRESS;
+	}
+
+	m_inputManager.ReportNewKeyStates(states);
 }
