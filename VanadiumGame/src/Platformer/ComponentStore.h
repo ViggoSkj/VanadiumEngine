@@ -31,19 +31,7 @@ struct ComponentTracker
 };
 
 
-
-
-
-
-
-
-
-
-template <typename T>
-struct ComponentRef
-{
-	unsigned int Id;
-};
+typedef unsigned int ComponentRef;
 
 
 template <typename TComponent>
@@ -51,19 +39,19 @@ template <typename TComponent>
 class ComponentStore
 {
 public:
-	ComponentRef<TComponent> CreateInstance()
+	ComponentRef CreateInstance()
 	{
 		m_components.PushBack(TComponent());
 		m_tracker.InsertLookup(m_components.Last().GetId(), m_components.Size() - 1);
-		return ComponentRef<TComponent>(m_components.Last().GetId());
+		return ComponentRef(m_components.Last().GetId());
 	}
 
-	TComponent& GetComponent(ComponentRef<TComponent> ref)
+	TComponent& GetComponent(ComponentRef ref)
 	{
-		return m_components.Get(m_tracker.GetComponentIndex(ref.Id));
+		return m_components.Get(m_tracker.GetComponentIndex(ref));
 	}
 
-	void DeleteInstance(ComponentRef<TComponent> ref);
+	void DeleteInstance(ComponentRef ref);
 
 private:
 	struct ComponentLookup
@@ -83,9 +71,9 @@ private:
 
 template<typename TComponent>
 	requires std::is_base_of_v<Component, TComponent>
-inline void ComponentStore<TComponent>::DeleteInstance(ComponentRef<TComponent> ref)
+inline void ComponentStore<TComponent>::DeleteInstance(ComponentRef ref)
 {
-	unsigned int componentIndex = m_tracker.MarkRemoved(ref.Id);
+	unsigned int componentIndex = m_tracker.MarkRemoved(ref);
 	m_tracker.UpdateComponentIndex(m_components.Last().GetId(), componentIndex);
 	m_components.Remove(componentIndex);
 
