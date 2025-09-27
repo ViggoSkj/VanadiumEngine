@@ -13,6 +13,7 @@ public:
 	}
 
 	void PushBack(T entry);
+	void Set(size_t index, T entry);
 	void Remove(size_t index);
 
 	T Last()
@@ -21,6 +22,8 @@ public:
 	};
 
 	T Get(size_t index);
+
+	void Swap(size_t a, size_t b);
 
 private:
 	std::vector<T> m_vector;
@@ -42,7 +45,7 @@ inline void UnorderedVector<T>::PushBack(T entry)
 template<typename T>
 inline void UnorderedVector<T>::Remove(size_t index)
 {
-	m_vector[index] = m_vector.back();
+	m_vector[index] = std::move(m_vector.back());
 	m_vector.pop_back();
 }
 
@@ -50,4 +53,17 @@ template<typename T>
 inline T UnorderedVector<T>::Get(size_t index)
 {
 	return m_vector[index];
+}
+
+template<typename T>
+inline void UnorderedVector<T>::Set(size_t index, T entry)
+{
+	m_vector[index] = entry;
+}
+
+
+template<typename T>
+inline void UnorderedVector<T>::Swap(size_t a, size_t b)
+{
+	std::swap(m_vector[a], m_vector[b]);
 }
