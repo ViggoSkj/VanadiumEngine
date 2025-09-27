@@ -15,6 +15,11 @@ public:
 	void PushBack(T entry);
 	void Remove(size_t index);
 
+	T Last()
+	{
+		return m_vector.back();
+	};
+
 	T Get(size_t index);
 
 private:

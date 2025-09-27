@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Platformer/PlatformerLayer.h"
 #include "Application.h"
+#include "Platformer/ComponentStore.h"
 
 int main()
 {
