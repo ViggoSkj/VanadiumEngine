@@ -13,6 +13,8 @@ void ComponentTracker::InsertLookup(unsigned int id, unsigned int componentIndex
 
 }
 
+
+// TODO: fix binary search
 unsigned int ComponentTracker::FindLookupIndex(unsigned int id)
 {
 
@@ -33,9 +35,27 @@ unsigned int ComponentTracker::FindLookupIndex(unsigned int id)
 	}
 
 	if (i == maxIterations)
+	{
+		return (left + right) / 2;
+
+		for (int i = 0; i < Lookups.size(); i++)
+		{
+			if (Lookups[i].Id == id)
+				return i;
+		}
+
 		return -1;
+	}
 
 	return (left + right) / 2;
+}
+
+unsigned int ComponentTracker::GetComponentIndex(unsigned int id)
+{
+	unsigned int index = FindLookupIndex(id);
+	if (index == -1)
+		throw "a";
+	return Lookups[index].ComponentIndex;
 }
 
 unsigned int ComponentTracker::MarkRemoved(unsigned int id)

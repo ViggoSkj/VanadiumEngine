@@ -20,6 +20,7 @@ struct ComponentTracker
 {
 	void InsertLookup(unsigned int id, unsigned int componentIndex);
 	unsigned int FindLookupIndex(unsigned int id);
+	unsigned int GetComponentIndex(unsigned int id);
 	unsigned int MarkRemoved(unsigned int id);
 	void Sort();
 	void Flush();
@@ -55,6 +56,11 @@ public:
 		m_components.PushBack(TComponent());
 		m_tracker.InsertLookup(m_components.Last().GetId(), m_components.Size() - 1);
 		return ComponentRef<TComponent>(m_components.Last().GetId());
+	}
+
+	TComponent& GetComponent(ComponentRef<TComponent> ref)
+	{
+		return m_components.Get(m_tracker.GetComponentIndex(ref.Id));
 	}
 
 	void DeleteInstance(ComponentRef<TComponent> ref);

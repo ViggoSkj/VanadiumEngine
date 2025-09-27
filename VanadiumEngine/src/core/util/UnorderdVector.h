@@ -21,7 +21,7 @@ public:
 		return m_vector.back();
 	};
 
-	T Get(size_t index);
+	T& Get(size_t index);
 
 	void Swap(size_t a, size_t b);
 
@@ -50,7 +50,7 @@ inline void UnorderedVector<T>::Remove(size_t index)
 }
 
 template<typename T>
-inline T UnorderedVector<T>::Get(size_t index)
+inline T& UnorderedVector<T>::Get(size_t index)
 {
 	return m_vector[index];
 }
