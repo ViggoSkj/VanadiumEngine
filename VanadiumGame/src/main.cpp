@@ -44,13 +44,13 @@ int main()
 	app.Run();
 	*/
 
-	Entity e1;
-	AddNumberComponents(e1, 1, 2.5);
-	LogNumberComponents(e1);
+	for (int i = 0; i < 1000; i++)
+	{
 
-	Entity e2;
-	AddNumberComponents(e2, 100, 24.234234);
-	LogNumberComponents(e2);
+		Entity e1;
+		AddNumberComponents(e1, 1, 2.5);
+		LogNumberComponents(e1);
+	}
 
 	return 0;
 }
