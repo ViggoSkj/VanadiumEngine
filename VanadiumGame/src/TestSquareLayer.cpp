@@ -19,7 +19,6 @@ TestSquareLayer::TestSquareLayer()
 	// shader
 
 	UniformBindingSlot slot = man.LoanUniformBindingSlot(ShaderType::VertexShader);
-
 	UniformObjectDescriptor matricesDescriptor = m_shader.Descriptor().FindUniformObjectDescriptor("Matrices");
 	m_matrices = UniformObject(matricesDescriptor);
 	m_matrices.Bind(slot);

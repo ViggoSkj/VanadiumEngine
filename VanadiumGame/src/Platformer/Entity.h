@@ -4,6 +4,8 @@
 #include "Component.h"
 #include "ComponentStore.h"
 
+inline unsigned int Entity::s_nextId = 1;
+
 struct ComponentAccess
 {
 	ComponentAccess() = default;
@@ -20,9 +22,12 @@ class Entity
 public:
 	static unsigned int nextComponentId;
 
+	Entity()
+		: m_id(s_nextId++) { };
+
 	template<typename TComponent>
 		requires std::is_base_of_v<Component, TComponent>
-	ComponentStore<TComponent>* GetComponentStore();
+	static ComponentStore<TComponent>* GetComponentStore();
 
 	template<typename TComponent>
 		requires std::is_base_of_v<Component, TComponent>
@@ -37,6 +42,12 @@ public:
 	TComponent& GetComponent();
 
 	std::vector<ComponentAccess> m_components;
+
+	unsigned int GetId() const { return m_id; };
+private:
+	static unsigned int s_nextId;
+
+	unsigned int m_id;
 };
 
 template<typename TComponent>
@@ -52,7 +63,7 @@ template<typename TComponent>
 inline ComponentRef Entity::AddComponent()
 {
 	ComponentStore<TComponent>* store = GetComponentStore<TComponent>();
-	ComponentRef ref = store->CreateInstance();
+	ComponentRef ref = store->CreateInstance(e.m_id);
 	ComponentAccess a(reinterpret_cast<ComponentStore<Component>*>(store), ref);
 	m_components.push_back(a);
 	return a.Ref;
@@ -74,7 +85,7 @@ inline TComponent& Entity::GetComponent()
 
 	for (int i = 0; i < m_components.size(); i++)
 	{
-		if ((void *)m_components[i].ComponentStore == (void *)store)
+		if ((void*)m_components[i].ComponentStore == (void*)store)
 			return store->GetComponent(m_components[i].Ref);
 	}
 	throw "not found";

@@ -4,7 +4,10 @@
 Application* Application::s_instance = nullptr;
 
 Application::Application()
-	: m_window(1600, 1200), m_renderer(m_window)
+	: Application(1600, 1000) {};
+
+Application::Application(unsigned int width, unsigned int height)
+	: m_window(width, height), m_renderer(m_window)
 {
 	Application::s_instance = this;
 }

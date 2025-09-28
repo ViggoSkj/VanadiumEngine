@@ -71,6 +71,13 @@ unsigned int ComponentTracker::MarkRemoved(unsigned int id)
 
 void ComponentTracker::Sort()
 {
+
+
+	std::vector<ComponentLookup> buffer(Lookups.size());
+
+	std::vector<ComponentLookup>* writeTo = &buffer;
+	std::vector<ComponentLookup>* readFrom = &Lookups;
+
 	int layerSize = 1;
 
 	int totalValues = Lookups.size();
@@ -78,28 +85,45 @@ void ComponentTracker::Sort()
 	while (layerSize < totalValues)
 	{
 		int pointer = 0;
-		while (pointer + layerSize < totalValues)
+		while (pointer + layerSize <= totalValues)
 		{
-			int leftPointer = pointer;
-			int rightPointer = pointer + layerSize;
+			int leftPointerOffset = 0;
+			int rightPointerOffset = 0;
 
-			int valuesLeft = std::min(layerSize * 2, totalValues - pointer);
-			int lastIndex = pointer + valuesLeft - 1;
+			int rightLayerSize = std::min(layerSize, totalValues - pointer - layerSize);
 
-			while (rightPointer <= lastIndex && leftPointer <= lastIndex)
-			{
-				if (Lookups[leftPointer].Id >= Lookups[rightPointer].Id)
-				{
-					std::swap(Lookups[leftPointer], Lookups[rightPointer]);
-					rightPointer++;
-				}
+			for (int i = 0; i < layerSize + rightLayerSize; i++)
+				if (leftPointerOffset >= layerSize)
+					(*writeTo)[pointer + i] = (*readFrom)[pointer + layerSize + rightPointerOffset++];
+				else if (rightPointerOffset >= rightLayerSize)
+					(*writeTo)[pointer + i] = (*readFrom)[pointer + leftPointerOffset++];
+				else
+					if ((*readFrom)[pointer + leftPointerOffset].Id > (*readFrom)[pointer + layerSize + rightPointerOffset].Id)
+						(*writeTo)[pointer + i] = (*readFrom)[pointer + layerSize + rightPointerOffset++];
+					else
+						(*writeTo)[pointer + i] = (*readFrom)[pointer + leftPointerOffset++];
 
-				leftPointer++;
-			}
 			pointer += layerSize * 2;
 		}
+
+
+
+		for (int i = pointer; i < totalValues; i++)
+		{
+			(*writeTo)[i] = (*readFrom)[i];
+		}
+
+		std::swap(readFrom, writeTo);
+
 		layerSize *= 2;
 	}
+
+	Lookups.swap(*readFrom);
+
+
+
+
+
 }
 
 void ComponentTracker::Flush()

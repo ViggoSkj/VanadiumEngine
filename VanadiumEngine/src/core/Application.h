@@ -11,7 +11,11 @@ class Application
 {
 public:
 	Application();
+	Application(unsigned int width, unsigned int height);
+	Application(const Application&) = delete;
 	~Application();
+
+
 	static Application& Get() { return *Application::s_instance; }
 
 	void Run();

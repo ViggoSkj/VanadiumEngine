@@ -13,6 +13,7 @@ public:
 	}
 
 	void PushBack(T entry);
+	void EmplaceBack(T entry);
 	void Set(size_t index, T entry);
 	void Remove(size_t index);
 
@@ -39,7 +40,13 @@ inline UnorderedVector<T>::UnorderedVector(size_t initalSize)
 template<typename T>
 inline void UnorderedVector<T>::PushBack(T entry)
 {
-	m_vector.push_back(entry);
+	m_vector.emplace_back(entry);
+}
+
+template<typename T>
+inline void UnorderedVector<T>::EmplaceBack(T entry)
+{
+	m_vector.emplace_back(entry);
 }
 
 template<typename T>

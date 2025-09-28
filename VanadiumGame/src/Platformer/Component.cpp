@@ -1,6 +1,7 @@
 #include "Component.h"
+#include <iostream>
 
-Component::Component()
+Component::Component(unsigned int owner)
+	: m_id(Component::m_nextId++), m_owner(owner)
 {
-	m_id = Component::m_nextId++;
-}
+};

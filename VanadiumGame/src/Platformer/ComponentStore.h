@@ -39,9 +39,10 @@ template <typename TComponent>
 class ComponentStore
 {
 public:
-	ComponentRef CreateInstance()
+
+	ComponentRef CreateInstance(unsigned int owner)
 	{
-		m_components.PushBack(TComponent());
+		m_components.PushBack(TComponent(owner));
 		m_tracker.InsertLookup(m_components.Last().GetId(), m_components.Size() - 1);
 		return ComponentRef(m_components.Last().GetId());
 	}
@@ -52,6 +53,8 @@ public:
 	}
 
 	void DeleteInstance(ComponentRef ref);
+
+	UnorderedVector<TComponent>& GetComponents() { return m_components; };
 
 private:
 	struct ComponentLookup

@@ -25,9 +25,21 @@ struct FileAsset
 
 struct AssetRef
 {
+	AssetRef() = default;
 	AssetRef(unsigned int index)
 		: BufferIndex(index) {
 	};
 
+	bool operator==(const AssetRef& other) const {
+		return BufferIndex == other.BufferIndex;
+	}
+
 	unsigned int BufferIndex;
+};
+
+struct AssetRefHash
+{
+	std::size_t operator()(const AssetRef& ref) const {
+		return ref.BufferIndex;
+	}
 };

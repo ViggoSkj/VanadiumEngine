@@ -1,7 +1,7 @@
 #include "Platformer/ComponentStore.h"
 #include <iostream>
 
-class IntComponent : public Component
+class TestIntComponent : public Component
 {
 public:
 	int Value;
@@ -10,7 +10,7 @@ public:
 
 int Test()
 {
-	ComponentStore<IntComponent> store;
+	ComponentStore<TestIntComponent> store;
 
 	const int count = 100000;
 	std::vector<ComponentRef> refsToDelete;
