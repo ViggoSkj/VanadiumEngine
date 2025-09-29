@@ -1,6 +1,6 @@
-#include "ComponentStore.h"
+#include "IdIndexMap.h"
 
-void ComponentTracker::InsertLookup(unsigned int id, unsigned int componentIndex)
+void IdIndexMap::InsertLookup(unsigned int id, unsigned int componentIndex)
 {
 	if (EmptySlots.size() == 0)
 	{
@@ -8,15 +8,17 @@ void ComponentTracker::InsertLookup(unsigned int id, unsigned int componentIndex
 		return;
 	}
 
-	Lookups[EmptySlots.back()] = ComponentLookup(id, componentIndex);
+	Lookups[EmptySlots.back()] = IdIndexLookup(id, componentIndex);
 	EmptySlots.pop_back();
 
 }
 
 
 // TODO: fix binary search
-unsigned int ComponentTracker::FindLookupIndex(unsigned int id)
+unsigned int IdIndexMap::FindLookupIndex(unsigned int id)
 {
+	if (Lookups.size() < 1)
+		return -1;
 
 	int left = 0;
 	int right = Lookups.size() - 1;
@@ -24,7 +26,7 @@ unsigned int ComponentTracker::FindLookupIndex(unsigned int id)
 	int maxIterations = log2(Lookups.size()) + 2;
 
 	int i = 0;
-	while ((foundId = Lookups[(left + right)/2].Id) != id && i < maxIterations)
+	while ((foundId = Lookups[(left + right) / 2].Id) != id && i < maxIterations)
 	{
 		if (foundId <= id)
 			left = ceil((left + right) / 2.0f);
@@ -50,15 +52,15 @@ unsigned int ComponentTracker::FindLookupIndex(unsigned int id)
 	return (left + right) / 2;
 }
 
-unsigned int ComponentTracker::GetComponentIndex(unsigned int id)
+unsigned int IdIndexMap::GetIndex(unsigned int id)
 {
 	unsigned int index = FindLookupIndex(id);
 	if (index == -1)
 		throw "a";
-	return Lookups[index].ComponentIndex;
+	return Lookups[index].Index;
 }
 
-unsigned int ComponentTracker::MarkRemoved(unsigned int id)
+unsigned int IdIndexMap::MarkRemoved(unsigned int id)
 {
 	unsigned int lookupIndex = FindLookupIndex(id);
 
@@ -66,17 +68,17 @@ unsigned int ComponentTracker::MarkRemoved(unsigned int id)
 		throw "dasdas";
 
 	EmptySlots.push_back(lookupIndex);
-	return Lookups[lookupIndex].ComponentIndex;
+	return Lookups[lookupIndex].Index;
 }
 
-void ComponentTracker::Sort()
+void IdIndexMap::Sort()
 {
 
 
-	std::vector<ComponentLookup> buffer(Lookups.size());
+	std::vector<IdIndexLookup> buffer(Lookups.size());
 
-	std::vector<ComponentLookup>* writeTo = &buffer;
-	std::vector<ComponentLookup>* readFrom = &Lookups;
+	std::vector<IdIndexLookup>* writeTo = &buffer;
+	std::vector<IdIndexLookup>* readFrom = &Lookups;
 
 	int layerSize = 1;
 
@@ -119,14 +121,9 @@ void ComponentTracker::Sort()
 	}
 
 	Lookups.swap(*readFrom);
-
-
-
-
-
 }
 
-void ComponentTracker::Flush()
+void IdIndexMap::Flush()
 {
 	for (int i = 0; i < EmptySlots.size(); i++)
 	{
@@ -138,12 +135,12 @@ void ComponentTracker::Flush()
 	Sort();
 }
 
-void ComponentTracker::UpdateComponentIndex(unsigned int id, unsigned int newComponentIndex)
+void IdIndexMap::UpdateIndex(unsigned int id, unsigned int newIndex)
 {
 	unsigned int lookupIndex = FindLookupIndex(id);
 
 	if (lookupIndex == -1)
 		throw "dasdas";
 
-	Lookups[lookupIndex].ComponentIndex = newComponentIndex;
+	Lookups[lookupIndex].Index = newIndex;
 }

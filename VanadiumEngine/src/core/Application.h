@@ -6,6 +6,7 @@
 #include "AssetManager.h"
 #include "core/Time.h"
 #include "ApplicationLayer.h"
+#include "EntityComponentSystem/EntityComponentSystem.h"
 
 class Application
 {
@@ -31,6 +32,7 @@ public:
 	Renderer& GetRenderer() { return m_renderer; };
 	Window& GetWindow() { return m_window; };
 	AssetManager& GetAssetManager() { return m_assetManager; }
+	EntityComponentSystem& GetECS() { return m_ecs; };
 
 	const Time& GetTime() const { return m_time; }
 private:
@@ -41,5 +43,6 @@ private:
 	Window m_window;
 	Renderer m_renderer;
 	AssetManager m_assetManager;
+	EntityComponentSystem m_ecs;
 	Time m_time;
 };

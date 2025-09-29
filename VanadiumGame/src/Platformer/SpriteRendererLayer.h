@@ -8,6 +8,7 @@ class SpriteRendererLayer : public ApplicationLayer
 public:
 	SpriteRendererLayer();
 
+	void OnUpdate(double dt) override;
 	void OnRender(double dt) override;
 
 

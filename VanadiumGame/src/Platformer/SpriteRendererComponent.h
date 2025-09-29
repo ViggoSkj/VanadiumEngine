@@ -1,5 +1,5 @@
 #pragma once
-#include "Component.h"
+#include "ECS.h"
 #include "Rendering.h"
 
 class SpriteRendererComponent : public Component

@@ -9,13 +9,13 @@ layout (std140) uniform Matrices
     mat4 view;
 };
 
-uniform mat4 model;
-
+uniform mat4 u_model;
+ 
 out vec2 uv;
 
 void main()
 {
-    gl_Position = projection * view * model * vec4(aPos.x, aPos.y, aPos.z, 1.0);
+    gl_Position = projection * view * u_model * vec4(aPos.x, aPos.y, aPos.z, 1.0);
     uv = aCoord;
 }
 
@@ -29,11 +29,5 @@ uniform sampler2D u_sampler;
 
 void main()
 {
-    float timePerFrame = 0.1;
-    int frames = 8;
-
-    int frame = int(floor(u_time/timePerFrame));
-    frame = int(mod(frame, 8));
-    float x = float(frame)/float(frames);
-    FragColor = texture2D(u_sampler, vec2(x + uv.x/float(frames), uv.y));
+    FragColor = texture2D(u_sampler, uv);
 }

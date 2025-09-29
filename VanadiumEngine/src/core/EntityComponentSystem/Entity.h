@@ -4,8 +4,6 @@
 #include "Component.h"
 #include "ComponentStore.h"
 
-inline unsigned int Entity::s_nextId = 1;
-
 struct ComponentAccess
 {
 	ComponentAccess() = default;
@@ -22,9 +20,9 @@ class Entity
 public:
 	static unsigned int nextComponentId;
 
-	Entity()
-		: m_id(s_nextId++) { };
-
+	Entity(unsigned int id)
+		: m_id(id) { };
+	
 	template<typename TComponent>
 		requires std::is_base_of_v<Component, TComponent>
 	static ComponentStore<TComponent>* GetComponentStore();
@@ -45,8 +43,6 @@ public:
 
 	unsigned int GetId() const { return m_id; };
 private:
-	static unsigned int s_nextId;
-
 	unsigned int m_id;
 };
 
@@ -63,7 +59,7 @@ template<typename TComponent>
 inline ComponentRef Entity::AddComponent()
 {
 	ComponentStore<TComponent>* store = GetComponentStore<TComponent>();
-	ComponentRef ref = store->CreateInstance(e.m_id);
+	ComponentRef ref = store->CreateInstance(m_id);
 	ComponentAccess a(reinterpret_cast<ComponentStore<Component>*>(store), ref);
 	m_components.push_back(a);
 	return a.Ref;
