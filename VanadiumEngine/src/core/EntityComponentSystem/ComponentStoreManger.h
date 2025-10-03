@@ -38,6 +38,17 @@ public:
 		return *static_cast<ComponentStore<TComponent>*>(m_stores.back().get());
 	}
 
+	IComponentStore& GetComponentStore(unsigned int id)
+	{
+		for (int i = 0; i < m_stores.size(); i++)
+		{
+			if (m_stores[i]->GetId() == id)
+				return *m_stores[i].get();
+		}
+
+		throw "no such store";
+	}
+
 	template <typename TComponent>
 		requires std::is_base_of_v<Component, TComponent>
 	ComponentRef AddComponent(unsigned int owner)

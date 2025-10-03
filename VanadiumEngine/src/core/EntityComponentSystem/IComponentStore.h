@@ -7,6 +7,8 @@ struct IComponentStore
 
 	virtual ~IComponentStore() = default;
 
+	virtual void DeleteInstance(unsigned int id) {};
+
 	unsigned int GetId() { return m_id; };
 
 private:

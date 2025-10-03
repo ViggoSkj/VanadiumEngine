@@ -15,6 +15,7 @@ public:
 
 	Entity& CreateEntity(unsigned int owner);
 	Entity& FindEntity(unsigned int id);
+	void DeleteEntity(unsigned int id);
 
 	void SignalOwnerDeleted(unsigned int owner);
 

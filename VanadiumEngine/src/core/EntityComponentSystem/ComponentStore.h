@@ -31,11 +31,14 @@ public:
 	}
 
 
-	void DeleteInstance(unsigned int ref)
+	void DeleteInstance(unsigned int ref) override
 	{
 		unsigned int componentIndex = m_idIndexMap.MarkRemoved(ref);
-		m_idIndexMap.UpdateIndex(m_components.back().GetId(), componentIndex);
+		unsigned int componentId = m_components.back().GetId();
+
 		m_components.remove(componentIndex);
+		if (m_components.size() > 0)
+			m_idIndexMap.UpdateIndex(componentId, componentIndex);
 
 		if (m_idIndexMap.EmptySlotCount() > 100)
 			m_idIndexMap.Flush();

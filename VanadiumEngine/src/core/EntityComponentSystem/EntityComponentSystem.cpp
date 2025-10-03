@@ -13,15 +13,19 @@ Entity& EntityComponentSystem::FindEntity(unsigned int id)
 	return m_entities[entityIndex];
 }
 
+void EntityComponentSystem::DeleteEntity(unsigned int id)
+{
+	unsigned int index = m_entityIdIndexMap.MarkRemoved(id);
+	m_entities.remove(index);
+}
+
 void EntityComponentSystem::SignalOwnerDeleted(unsigned int owner)
 {
-	for (int i = 0; i < m_entities.size(); i++)
+	while (m_entities.size() > 0)
 	{
-		if (m_entities[i].GetOwner() == owner)
+		if (m_entities.back().GetOwner() == owner)
 		{
-			m_entityIdIndexMap.MarkRemoved(m_entities[i].GetId());
-			m_entities[i];
-			m_entities.remove(i);
+			DeleteEntity(m_entities.back().GetId());
 		}
 	}
 }

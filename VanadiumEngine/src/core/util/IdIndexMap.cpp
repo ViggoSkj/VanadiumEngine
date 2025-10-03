@@ -17,6 +17,8 @@ void IdIndexMap::InsertLookup(unsigned int id, unsigned int componentIndex)
 // TODO: fix binary search
 unsigned int IdIndexMap::FindLookupIndex(unsigned int id)
 {
+	Flush();
+
 	if (Lookups.size() < 1)
 		return -1;
 
