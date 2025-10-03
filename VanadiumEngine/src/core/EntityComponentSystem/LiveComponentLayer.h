@@ -16,8 +16,9 @@ template <typename TComponent>
 	requires std::is_base_of_v<LiveComponent, TComponent>
 void LiveComponentLayer<TComponent>::OnUpdate(double dt)
 {
-	ComponentStore<TComponent>* store = Entity::GetComponentStore<TComponent>();
-	UnorderedVector<TComponent>& components = store->GetComponents();
+	EntityComponentSystem& ECS = Application::Get().GetECS();
+	ComponentStore<TComponent>& store = ECS.GetComponentStore<TComponent>();
+	UnorderedVector<TComponent>& components = store.GetComponents();
 
 	for (int i = 0; i < components.size(); i++)
 	{

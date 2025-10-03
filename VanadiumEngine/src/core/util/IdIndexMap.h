@@ -23,6 +23,8 @@ public:
 	void Flush();
 	void UpdateIndex(unsigned int id, unsigned int newIndex);
 
+	std::size_t EmptySlotCount() const { return EmptySlots.size(); };
+
 private:
 	std::vector<IdIndexLookup> Lookups;
 	std::vector<unsigned int> EmptySlots;

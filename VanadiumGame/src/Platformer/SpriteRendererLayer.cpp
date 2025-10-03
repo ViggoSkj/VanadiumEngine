@@ -11,33 +11,16 @@ SpriteRendererLayer::SpriteRendererLayer()
 	: m_textureShader(Application::Get().GetAssetManager().LoadAndGetFileAsset<ShaderAsset>("res/shaders/texture.shader").ShaderProgram), m_VAO(Util::Square())
 {
 	RenderingManager man;
-	AssetManager assetManager = Application::Get().GetAssetManager();
-	EntityComponentSystem& ECS = Application::Get().GetECS();
 
 	UniformBindingSlot slot = man.LoanUniformBindingSlot(ShaderType::VertexShader);
 	UniformObjectDescriptor matricesDescriptor = m_textureShader.Descriptor().FindUniformObjectDescriptor("Matrices");
 	m_matrices = UniformObject(matricesDescriptor);
 	m_matrices.Bind(slot);
 
-	Entity::GetComponentStore<MovableCameraComponent>()->CreateInstance(0);
-
 	m_textureShader.ReportUniformObject(m_matrices);
-
-	AssetRef texRef = assetManager.LoadFileAsset<TextureRGBAAsset>("res/images/player-running.png");
-	AssetRef texRef2 = assetManager.LoadFileAsset<TextureRGBAAsset>("res/images/character.png");
-
-	Entity& e1 = ECS.CreateEntity();
-	ComponentRef ref = e1.AddComponent<SpriteRendererComponent>();
-	e1.AddComponent<TransformComponent>();
-	e1.GetComponent<SpriteRendererComponent>(ref).TextureRef = texRef;
-
-	Entity& e2 = ECS.CreateEntity();
-	ComponentRef ref2 = e2.AddComponent<SpriteRendererComponent>();
-	e2.AddComponent<TransformComponent>();
-	e2.GetComponent<SpriteRendererComponent>(ref).TextureRef = texRef2;
 }
 
-void SpriteRendererLayer::OnUpdate(double dt)
+void SpriteRendererLayer::OnUpdate(double dt) 
 {
 
 }
@@ -48,15 +31,22 @@ void SpriteRendererLayer::OnRender(double dt)
 	AssetManager assetManager = app.GetAssetManager();
 	EntityComponentSystem& ECS = Application::Get().GetECS();
 
-	ComponentStore<SpriteRendererComponent>* spStore = Entity::GetComponentStore<SpriteRendererComponent>();
-	ComponentStore<TransformComponent>* tStore = Entity::GetComponentStore<TransformComponent>();
+	ComponentStore<SpriteRendererComponent>& spStore = ECS.GetComponentStore<SpriteRendererComponent>();
+	ComponentStore<TransformComponent>& tStore = ECS.GetComponentStore<TransformComponent>();
 
-	UnorderedVector<SpriteRendererComponent>& sps = spStore->GetComponents();
+	UnorderedVector<SpriteRendererComponent>& sps = spStore.GetComponents();
 
 	unsigned int m_samplerId = m_textureShader.GlShader().GetUniformLocation("u_sampler");
 	unsigned int m_modelMatrix = m_textureShader.GlShader().GetUniformLocation("u_model");
 
 	glm::mat4 proj = app.GetWindow().GetOrthographicProjection();
+
+	if (MovableCameraComponent::Main == nullptr)
+	{
+		std::cout << "no camera component available";
+		return;
+	}
+
 	glm::mat4 view = MovableCameraComponent::Main->Camera.GetViewMatrix();
 
 	m_matrices.Buffer.SetData(glm::value_ptr(proj), 0, 4 * 4 * 4);

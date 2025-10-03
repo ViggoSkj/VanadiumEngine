@@ -4,4 +4,5 @@
 Component::Component(unsigned int owner)
 	: m_id(Component::m_nextId++), m_owner(owner)
 {
-};
+}
+

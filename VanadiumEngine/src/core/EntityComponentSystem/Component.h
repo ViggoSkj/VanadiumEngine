@@ -1,6 +1,5 @@
 #pragma once
-
-
+#include <stdint.h>
 
 class Component
 {
@@ -17,3 +16,19 @@ private:
 };
 
 inline unsigned int Component::m_nextId = 0;
+
+
+template<typename TComponent>
+struct ComponentTypeId
+{
+	static unsigned int Id;
+};
+
+template<typename TComponent>
+inline uint32_t ComponentTypeId<TComponent>::Id;
+
+template<typename TComponent>
+unsigned int GetComponentTypeId()
+{
+	return reinterpret_cast<unsigned int>(&ComponentTypeId<TComponent>::Id);
+}

@@ -10,7 +10,12 @@ void MovableCameraComponent::OnUpdate(double dt)
 {
 	GLFWwindow* glfwWindow = Application::Get().GetWindow().GetGLFWwindow().get();
 
-	InputManager Input = Application::Get().GetWindow().GetInputManager();
+	const InputManager& Input = Application::Get().GetWindow().GetInputManager();
+	EntityComponentSystem &ECS = Application::Get().GetECS();
+	SceneManager& sceneManager = Application::Get().GetSceneManager();
+
+	if (Input.Down(Key::R))
+		sceneManager.UnloadScene(ECS.FindEntity(GetOwnerId()).GetOwner());
 
 	if (Input.Down(Key::W))
 		this->Camera.Position.y += 1.0f * (float)dt / this->Camera.Zoom;

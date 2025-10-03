@@ -3,15 +3,16 @@
 #include <vector>
 #include "Component.h"
 #include "ComponentStore.h"
+#include "ComponentStoreManger.h"
 
 struct ComponentAccess
 {
 	ComponentAccess() = default;
-	ComponentAccess(ComponentStore<Component>* store, ComponentRef ref)
-		: ComponentStore(store), Ref(ref) {
+	ComponentAccess(unsigned int ComponentTypeId, ComponentRef ref)
+		: ComponentTypeId(ComponentTypeId), Ref(ref) {
 	};
 
-	ComponentStore<Component>* ComponentStore;
+	unsigned int ComponentTypeId;
 	ComponentRef Ref;
 };
 
@@ -20,71 +21,45 @@ class Entity
 public:
 	static unsigned int nextComponentId;
 
-	Entity(unsigned int id)
-		: m_id(id) { };
-	
-	template<typename TComponent>
-		requires std::is_base_of_v<Component, TComponent>
-	static ComponentStore<TComponent>* GetComponentStore();
+	Entity(ComponentStoreManager* storeManager, unsigned int id, unsigned int owner)
+		: m_storeManager(storeManager), m_id(id), m_owner(owner) {
+	};
 
 	template<typename TComponent>
 		requires std::is_base_of_v<Component, TComponent>
-	ComponentRef AddComponent();
+	TComponent& AddComponent()
+	{
+		m_components.emplace_back(m_storeManager->AddComponent<TComponent>(m_id));
+		return m_storeManager->GetComponent<TComponent>(m_components.back().GetComponentId());
+	}
 
 	template<typename TComponent>
 		requires std::is_base_of_v<Component, TComponent>
-	TComponent& GetComponent(ComponentRef ref);
+	TComponent& GetComponent()
+	{
+		unsigned int componentTypeId = GetComponentTypeId<TComponent>();
+		unsigned int componentId = -1;
 
-	template<typename TComponent>
-		requires std::is_base_of_v<Component, TComponent>
-	TComponent& GetComponent();
+		for (int i = 0; i < m_components.size(); i++)
+		{
+			if (m_components[i].GetComponentTypeId() == componentTypeId)
+				componentId = m_components[i].GetComponentId();
+		}
+		if (componentId == -1)
+			throw "not found";
 
-	std::vector<ComponentAccess> m_components;
+		return m_storeManager->GetComponent<TComponent>(componentId);
+	}
+
+	std::vector<ComponentRef> m_components;
 
 	unsigned int GetId() const { return m_id; };
+	unsigned int GetOwner() const { return m_owner; };
 private:
 	unsigned int m_id;
+	unsigned int m_owner;
+
+	ComponentStoreManager* m_storeManager;
 };
-
-template<typename TComponent>
-	requires std::is_base_of_v<Component, TComponent>
-inline ComponentStore<TComponent>* Entity::GetComponentStore()
-{
-	static ComponentStore<TComponent> store;
-	return &store;
-}
-
-template<typename TComponent>
-	requires std::is_base_of_v<Component, TComponent>
-inline ComponentRef Entity::AddComponent()
-{
-	ComponentStore<TComponent>* store = GetComponentStore<TComponent>();
-	ComponentRef ref = store->CreateInstance(m_id);
-	ComponentAccess a(reinterpret_cast<ComponentStore<Component>*>(store), ref);
-	m_components.push_back(a);
-	return a.Ref;
-}
-
-template<typename TComponent>
-	requires std::is_base_of_v<Component, TComponent>
-inline TComponent& Entity::GetComponent(ComponentRef ref)
-{
-	ComponentStore<TComponent>* store = GetComponentStore<TComponent>();
-	return store->GetComponent(ref);
-}
-
-template<typename TComponent>
-	requires std::is_base_of_v<Component, TComponent>
-inline TComponent& Entity::GetComponent()
-{
-	ComponentStore<TComponent>* store = GetComponentStore<TComponent>();
-
-	for (int i = 0; i < m_components.size(); i++)
-	{
-		if ((void*)m_components[i].ComponentStore == (void*)store)
-			return store->GetComponent(m_components[i].Ref);
-	}
-	throw "not found";
-}
 
 inline unsigned int Entity::nextComponentId = 0;

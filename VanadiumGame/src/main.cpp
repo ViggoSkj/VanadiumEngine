@@ -3,13 +3,46 @@
 #include "Application.h"
 #include "Platformer/SpriteRendererLayer.h"
 #include "Platformer/Components/Camera.h"
+#include "Platformer/TransformComponent.h"
+#include "Platformer/SpriteRendererComponent.h"
 #include "SimdTest/SimdTest.h"
+#include "core/Scene/Scene.h"
+#include "core/Scene/SceneSetupStep.h"
+#include "ECS.h"
+
+
+class TestSceneSetupStep : public SceneSetupStep
+{
+public:
+	void Execute() override
+	{
+		Application& app = Application::Get();
+		EntityComponentSystem& ECS = app.GetECS();
+
+		Entity& camera = CreateEntity();
+		camera.AddComponent<MovableCameraComponent>();
+
+		Entity& e1 = CreateEntity();
+		e1.AddComponent<SpriteRendererComponent>().LoadRGBATexture("res/images/character.png");
+		e1.AddComponent<TransformComponent>();
+
+		Entity& e2 = CreateEntity();
+		e2.AddComponent<SpriteRendererComponent>().LoadRGBATexture("res/images/player-running.png");
+		e2.AddComponent<TransformComponent>();
+	}
+};
 
 int main()
 {
+
 	Application app(1500, 1000);
 	app.PushLayer<SpriteRendererLayer>();
 	app.PushLayer<LiveComponentLayer<MovableCameraComponent>>();
+
+	Scene& testScene = app.GetSceneManager().ConstructScene();
+	testScene.AddSetupStep<TestSceneSetupStep>();
+	app.GetSceneManager().LoadScene(testScene.GetId());
+
 	app.Run();
 
 	return 0;
