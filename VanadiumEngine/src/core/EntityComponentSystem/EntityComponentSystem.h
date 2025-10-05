@@ -13,6 +13,8 @@ public:
 	EntityComponentSystem() = default;
 	EntityComponentSystem(const EntityComponentSystem&) = delete;
 
+	~EntityComponentSystem();
+
 	Entity& CreateEntity(unsigned int owner);
 	Entity& FindEntity(unsigned int id);
 	void DeleteEntity(unsigned int id);
@@ -21,7 +23,7 @@ public:
 
 	template<typename TComponent>
 		requires std::is_base_of_v<Component, TComponent>
-	ComponentStore<TComponent>& GetComponentStore()
+	std::optional<ComponentStore<TComponent>*> GetComponentStore()
 	{
 		return m_storeManager.GetComponentStore<TComponent>();
 	}

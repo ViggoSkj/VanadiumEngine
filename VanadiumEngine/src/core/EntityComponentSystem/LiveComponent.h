@@ -10,4 +10,6 @@ public:
 
 	virtual void OnUpdate(double dt) {};
 	virtual void OnRender(double dt) {};
+
+private:
 };

@@ -3,16 +3,16 @@
 #include "Util.h"
 
 TestSquareLayer::TestSquareLayer()
-	: m_shader(Application::Get().GetAssetManager().LoadAndGetFileAsset<ShaderAsset>("res/shaders/texture.shader").ShaderProgram), m_VAO(Util::Square())
+	: m_shader(Application::Get().GetAssetManager()->LoadAndGetFileAsset<ShaderAsset>("res/shaders/texture.shader").ShaderProgram), m_VAO(Util::Square())
 {
 	RenderingManager man;
 
 	Application& application = Application::Get();
-	AssetManager& assetManager = application.GetAssetManager();
+	AssetManager* assetManager = application.GetAssetManager();
 
 	// texture
-	AssetRef ref = assetManager.LoadFileAsset<TextureRGBAAsset>("res/images/player-running.png");
-	TextureRGBA tex = assetManager.GetAsset<TextureRGBAAsset>(ref).Texture;
+	AssetRef ref = assetManager->LoadFileAsset<TextureRGBAAsset>("res/images/player-running.png");
+	TextureRGBA tex = assetManager->GetAsset<TextureRGBAAsset>(ref).Texture;
 	m_texture.AssignTexture((Texture*)&tex);
 	m_texture.Use();
 
@@ -29,9 +29,9 @@ TestSquareLayer::TestSquareLayer()
 
 void TestSquareLayer::OnUpdate(double dt)
 {
-	GLFWwindow* glfwWindow = Application::Get().GetWindow().GetGLFWwindow().get();
+	GLFWwindow* glfwWindow = Application::Get().GetWindow()->GetGLFWwindow().get();
 
-	InputManager Input = Application::Get().GetWindow().GetInputManager();
+	InputManager Input = Application::Get().GetWindow()->GetInputManager();
 
 	if (Input.Down(Key::W))
 		m_camera.Position.y += 1.0f * (float)dt / m_camera.Zoom;
@@ -58,7 +58,7 @@ void TestSquareLayer::OnRender(double dt)
 	m_texture.Bind();
 	m_VAO.Bind();
 
-	glm::mat4 proj = app.GetWindow().GetOrthographicProjection();
+	glm::mat4 proj = app.GetWindow()->GetOrthographicProjection();
 	glm::mat4 view = m_camera.GetViewMatrix();
 
 	m_matrices.Buffer.SetData(glm::value_ptr(proj), 0, 4 * 4 * 4);

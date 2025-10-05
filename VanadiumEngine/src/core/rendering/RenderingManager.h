@@ -12,6 +12,7 @@ class RenderingManager
 {
 public:
 	RenderingManager();
+	RenderingManager(const RenderingManager&) = delete;
 
 	UniformBindingSlot LoanUniformBindingSlot(ShaderType shaderType);
 	void ReturnuniformBindingSlot(UniformBindingSlot bindingSlot);

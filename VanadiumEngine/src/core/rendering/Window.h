@@ -11,6 +11,7 @@ class Window
 {
 public:
 	Window(int width, int height);
+	Window(const Window&) = delete;
 	~Window();
 
 	int GetWidth() const { return m_width; }

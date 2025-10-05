@@ -1,5 +1,10 @@
 #include "EntityComponentSystem.h"
 
+EntityComponentSystem::~EntityComponentSystem()
+{
+	m_entities.clear();
+}
+
 Entity& EntityComponentSystem::CreateEntity(unsigned int owner)
 {
 	m_entities.emplace_back(&m_storeManager, s_nextEntityId++, owner);

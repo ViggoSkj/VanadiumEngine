@@ -15,7 +15,6 @@ public:
 	ComponentStore()
 		: IComponentStore(GetComponentTypeId<TComponent>()) {
 	}
-
 	ComponentStore(const ComponentStore<TComponent>&) = delete;
 
 	unsigned int CreateInstance(unsigned int owner)

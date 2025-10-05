@@ -53,7 +53,7 @@ void SceneManager::UnloadSceneNow(unsigned int sceneId)
 	{
 		if (m_scenes[i].GetId() == sceneId && m_scenes[i].Loaded())
 		{
-			Application::Get().GetECS().SignalOwnerDeleted(sceneId);
+			Application::Get().GetECS()->SignalOwnerDeleted(sceneId);
 			m_scenes[i].Taredown();
 			break;
 		}

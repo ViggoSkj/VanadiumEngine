@@ -23,47 +23,49 @@ private:
 class ComponentStoreManager
 {
 public:
+
+	// TODO: test if it is faster to split creating and getting into two functions and having to manualy initialise component stores.
 	template <typename TComponent>
 		requires std::is_base_of_v<Component, TComponent>
-	ComponentStore<TComponent>& GetComponentStore()
+	std::optional<ComponentStore<TComponent>*> GetComponentStore()
 	{
 		for (int i = 0; i < m_stores.size(); i++)
 		{
 			if (m_stores[i]->GetId() == GetComponentTypeId<TComponent>())
-				return *static_cast<ComponentStore<TComponent>*>(m_stores[i].get());
+				return static_cast<ComponentStore<TComponent>*>(m_stores[i].get());
 		}
 		// create component store
 		std::unique_ptr<ComponentStore<TComponent>> store();
 		m_stores.push_back(std::make_unique<ComponentStore<TComponent>>());
-		return *static_cast<ComponentStore<TComponent>*>(m_stores.back().get());
+		return static_cast<ComponentStore<TComponent>*>(m_stores.back().get());
 	}
 
-	IComponentStore& GetComponentStore(unsigned int id)
+	std::optional<IComponentStore*> GetComponentStore(unsigned int id)
 	{
 		for (int i = 0; i < m_stores.size(); i++)
 		{
 			if (m_stores[i]->GetId() == id)
-				return *m_stores[i].get();
+				return m_stores[i].get();
 		}
 
-		throw "no such store";
+		return std::nullopt;
 	}
 
 	template <typename TComponent>
 		requires std::is_base_of_v<Component, TComponent>
 	ComponentRef AddComponent(unsigned int owner)
 	{
-		ComponentStore<TComponent>& componentStore = GetComponentStore<TComponent>();
-		unsigned int componentId = componentStore.CreateInstance(owner);
-		return ComponentRef(componentId, componentStore.GetId());
+		ComponentStore<TComponent>* componentStore = GetComponentStore<TComponent>().value();
+		unsigned int componentId = componentStore->CreateInstance(owner);
+		return ComponentRef(componentId, componentStore->GetId());
 	}
 
 	template<typename TComponent>
 		requires std::is_base_of_v<Component, TComponent>
 	TComponent& GetComponent(unsigned int componentId)
 	{
-		ComponentStore<TComponent>& store = GetComponentStore<TComponent>();
-		return store.GetComponent(componentId);
+		ComponentStore<TComponent>* store = GetComponentStore<TComponent>().value();
+		return store->GetComponent(componentId);
 	}
 
 

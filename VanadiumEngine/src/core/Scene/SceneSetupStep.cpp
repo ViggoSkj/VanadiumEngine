@@ -3,5 +3,5 @@
 
 Entity& SceneSetupStep::CreateEntity()
 {
-	return Application::Get().GetECS().CreateEntity(SceneId);
+	return Application::Get().GetECS()->CreateEntity(SceneId);
 }

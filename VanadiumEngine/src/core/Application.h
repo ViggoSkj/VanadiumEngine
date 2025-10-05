@@ -30,11 +30,11 @@ public:
 		m_applicationLayers.push_back(std::make_unique<TLayer>());
 	}
 
-	SceneManager& GetSceneManager() { return *m_sceneManager; };
-	RenderingManager& GetRenderingManager() { return *m_renderingManager; };
-	Window& GetWindow() { return *m_window; };
-	AssetManager& GetAssetManager() { return *m_assetManager; }
-	EntityComponentSystem& GetECS() { return *m_ecs; };
+	SceneManager* GetSceneManager() { return m_sceneManager.get(); };
+	RenderingManager* GetRenderingManager() { return m_renderingManager.get(); };
+	Window* GetWindow() { return m_window.get(); };
+	AssetManager* GetAssetManager() { return m_assetManager.get(); }
+	EntityComponentSystem* GetECS() { return m_ecs.get(); };
 
 	const Time& GetTime() const { return *m_time; }
 private:

@@ -43,8 +43,6 @@ void Application::Run()
 		m_time->TimeSinceStart += dt;
 		prevTime = (float)glfwGetTime();
 
-		m_sceneManager->FlushCommands();
-
 		GL_CHECK(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
 		GL_CHECK(glClear(GL_COLOR_BUFFER_BIT));
 

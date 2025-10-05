@@ -9,6 +9,9 @@
 class AssetManager
 {
 public:
+	AssetManager() = default;
+	AssetManager(const AssetManager&) = delete;
+
 	template<typename T>
 		requires(std::is_base_of_v<FileAsset, T>)
 	AssetStore<T>& GetAssetStore()

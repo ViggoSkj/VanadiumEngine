@@ -8,7 +8,7 @@
 #include "ECS.h"
 
 SpriteRendererLayer::SpriteRendererLayer()
-	: m_textureShader(Application::Get().GetAssetManager().LoadAndGetFileAsset<ShaderAsset>("res/shaders/texture.shader").ShaderProgram), m_VAO(Util::Square())
+	: m_textureShader(Application::Get().GetAssetManager()->LoadAndGetFileAsset<ShaderAsset>("res/shaders/texture.shader").ShaderProgram), m_VAO(Util::Square())
 {
 	RenderingManager man;
 
@@ -27,19 +27,18 @@ void SpriteRendererLayer::OnUpdate(double dt)
 
 void SpriteRendererLayer::OnRender(double dt)
 {
-	Application& app = Application::Get();
-	AssetManager assetManager = app.GetAssetManager();
-	EntityComponentSystem& ECS = Application::Get().GetECS();
+	AssetManager* assetManager = Application::Get().GetAssetManager();
+	EntityComponentSystem* ECS = Application::Get().GetECS();
 
-	ComponentStore<SpriteRendererComponent>& spStore = ECS.GetComponentStore<SpriteRendererComponent>();
-	ComponentStore<TransformComponent>& tStore = ECS.GetComponentStore<TransformComponent>();
+	ComponentStore<SpriteRendererComponent>* spStore = ECS->GetComponentStore<SpriteRendererComponent>().value();
+	ComponentStore<TransformComponent>* tStore = ECS->GetComponentStore<TransformComponent>().value();
 
-	UnorderedVector<SpriteRendererComponent>& sps = spStore.GetComponents();
+	UnorderedVector<SpriteRendererComponent>& sps = spStore->GetComponents();
 
 	unsigned int m_samplerId = m_textureShader.GlShader().GetUniformLocation("u_sampler");
 	unsigned int m_modelMatrix = m_textureShader.GlShader().GetUniformLocation("u_model");
 
-	glm::mat4 proj = app.GetWindow().GetOrthographicProjection();
+	glm::mat4 proj = Application::Get().GetWindow()->GetOrthographicProjection();
 
 	if (MovableCameraComponent::Main == nullptr)
 	{
@@ -59,7 +58,7 @@ void SpriteRendererLayer::OnRender(double dt)
 
 	for (int i = 0; i < sps.size(); i++)
 	{
-		Entity& e = ECS.FindEntity(sps[i].GetOwnerId());
+		Entity& e = ECS->FindEntity(sps[i].GetOwnerId());
 		TransformComponent& tc = e.GetComponent<TransformComponent>();
 
 		glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(tc.ModelMatrix()));
@@ -72,14 +71,14 @@ void SpriteRendererLayer::OnRender(double dt)
 
 GLTexture& SpriteRendererLayer::GetTexture(AssetRef textureRef)
 {
-	AssetManager assetManager = Application::Get().GetAssetManager();
+	AssetManager* assetManager = Application::Get().GetAssetManager();
 
 	if (m_readyTexture.contains(textureRef))
 	{
 		return m_readyTexture.at(textureRef);
 	}
 
-	TextureRGBAAsset& asset = assetManager.GetAsset<TextureRGBAAsset>(textureRef);
+	TextureRGBAAsset& asset = assetManager->GetAsset<TextureRGBAAsset>(textureRef);
 
 	m_readyTexture.try_emplace(textureRef);
 	GLTexture& tex = m_readyTexture.at(textureRef);
