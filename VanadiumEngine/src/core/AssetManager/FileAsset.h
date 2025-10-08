@@ -1,11 +1,18 @@
 #pragma once
 #include <string>
 #include <fstream>
+#include <filesystem>
 
 struct FileAsset
 {
 	static std::string ReadFile(std::string file)
 	{
+
+		if (!std::filesystem::exists(file))
+		{
+			file = "../VanadiumEngine/" + file;
+		}
+
 		std::fstream stream(file);
 		std::string result;
 		std::string line;

@@ -1,6 +1,6 @@
 #pragma once
 #include "GLCommon.h"
-#include "core/Proccessing/Shader/TokenizedShader.h"
+#include "core/Processing/Shader/Tokenizer/TokenizedShader.h"
 #include "VertexShaderDescriptor.h"
 #include "FragmentShaderDescriptor.h"
 

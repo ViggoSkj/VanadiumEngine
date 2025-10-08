@@ -29,7 +29,6 @@ public:
 		return m_components[m_idIndexMap.GetIndex(id)];
 	}
 
-
 	void DeleteInstance(unsigned int ref) override
 	{
 		unsigned int componentIndex = m_idIndexMap.MarkRemoved(ref);

@@ -12,6 +12,8 @@ public:
 
 	void Bind(UniformBindingSlot bindingSlot);
 
+	const std::string_view GetName() const { return Descriptor.Name; };
+
 	UniformObjectDescriptor Descriptor;
 	GLUniformBuffer Buffer;
 

@@ -1,11 +1,12 @@
 #include "ShaderTokenizer.h"
 #include <string>
 #include <vector>
-#include "ShaderKeyword.h"
-#include "ShaderKeywordMaps.h"
+#include "core/Processing/Shader/ShaderKeyword.h"
+#include "core/Processing/Shader/ShaderKeywordMaps.h"
 #include "Shaders/ShaderDataTypeMaps.h"
 #include "Shaders/ShaderDataType.h"
 #include "TokenizedShader.h"
+#include "core/Processing/Shader/ShaderOperator.h"
 
 TokenizedShader Tokenizer::Tokenize(std::string source)
 {
@@ -28,12 +29,19 @@ void Tokenizer::Tokenize()
 		ShaderKeyword::Location,
 	};
 
+	int i = 0;
 	while (m_cursor < m_source.size())
 	{
 		const char cursorChar = m_source[m_cursor];
-		std::string cursorName = CursorName();
+		std::string cursorWord = CursorWord();
 
 		bool progress = true;
+
+		if (i > 100000)
+		{
+			throw "to many iterations, somethings wrong";
+		}
+		i++;
 
 		switch (cursorChar)
 		{
@@ -60,6 +68,7 @@ void Tokenizer::Tokenize()
 		case '*':
 		case '=':
 		case '.':
+		case '%':
 			TokenizeUniOperator();
 			break;
 		default:
@@ -70,10 +79,20 @@ void Tokenizer::Tokenize()
 		if (progress)
 			continue;
 
-		// check for keyowrds
-		if (StringToShaderKeyword.contains(cursorName))
+		// check for operator
+		if (StringToShaderOperator.contains(cursorWord))
 		{
-			TokenizeKeyword(cursorName);
+			TokenizeOperator(cursorWord);
+			progress = true;
+		}
+
+		if (progress)
+			continue;
+
+		// check for keyowrds
+		if (StringToShaderKeyword.contains(cursorWord))
+		{
+			TokenizeKeyword(cursorWord);
 			progress = true;
 		}
 
@@ -81,17 +100,17 @@ void Tokenizer::Tokenize()
 			continue;
 
 		// check for types
-		if (StringToShaderDataType.contains(cursorName))
+		if (StringToShaderDataType.contains(cursorWord))
 		{
-			TokenizeDataType(cursorName);
+			TokenizeDataType(cursorWord);
 			progress = true;
 		}
 		
 		if (progress)
 			continue;
 
-		AddToken(TokenType::Name, cursorName);
-		m_cursor += cursorName.size();
+		AddToken(TokenType::Name, cursorWord);
+		m_cursor += cursorWord.size();
 	}
 }
 
@@ -105,6 +124,12 @@ void Tokenizer::TokenizeUniOperator()
 {
 	AddToken(TokenType::Operator, m_source[m_cursor]);
 	m_cursor++;
+}
+
+void Tokenizer::TokenizeOperator(std::string op)
+{
+	AddToken(TokenType::Operator, op);
+	m_cursor += op.size();
 }
 
 void Tokenizer::TokenizeFlowControl()
@@ -125,24 +150,46 @@ void Tokenizer::TokenizeDataType(std::string type)
 	m_cursor += type.size();
 }
 
-std::string Tokenizer::CursorName()
+std::string Tokenizer::CursorWord()
 {
 	std::string cursorName = "";
 
-	for (int i = 0; validNameChar(m_source[m_cursor + i]); i++)
+	char prev = '\0';
+	char next = '\0';
+
+	int i = 0;
+	while (true)
 	{
+		if (i + m_cursor > 0)
+			prev = m_source[m_cursor + i - 1];
+
+		if (i + m_cursor + 1 < m_source.size())
+			next = m_source[m_cursor + i + 1];
+
+		if (!validNameChar(m_source[m_cursor + i], prev, next))
+			break;
+
 		cursorName.push_back(m_source[m_cursor + i]);
+		
+		i++;
 	}
 
 	return cursorName;
 }
 
-bool Tokenizer::validNameChar(char c)
+bool Tokenizer::validNameChar(char c, char prev, char next)
 {
 	if (c >= '0' && c <= '9') return true;
 	if (c >= 'A' && c <= 'Z') return true;
 	if (c >= 'a' && c <= 'z') return true;
 	if (c == '_') return true;
+
+	if (c == '|')
+		return (prev == '|' ? 1 : 0 + next == '|' ? 1 : 0) == 1;
+	if (c == '&')
+		return (prev == '&' ? 1 : 0 + next == '&' ? 1 : 0) == 1;
+	if (c == '=')
+		return (prev == '=' ? 1 : 0 + next == '=' ? 1 : 0) == 1;
 	return false;
 }
 

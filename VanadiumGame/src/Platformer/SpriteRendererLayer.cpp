@@ -4,7 +4,6 @@
 #include "Rendering.h"
 #include "TransformComponent.h"
 #include "Util.h"
-#include "Components/Camera.h"	
 #include "ECS.h"
 
 SpriteRendererLayer::SpriteRendererLayer()
@@ -14,7 +13,7 @@ SpriteRendererLayer::SpriteRendererLayer()
 
 	UniformBindingSlot slot = man.LoanUniformBindingSlot(ShaderType::VertexShader);
 	UniformObjectDescriptor matricesDescriptor = m_textureShader.Descriptor().FindUniformObjectDescriptor("Matrices");
-	m_matrices = UniformObject(matricesDescriptor);
+	m_matrices = man.CreateUniformObject(matricesDescriptor);
 	m_matrices.Bind(slot);
 
 	m_textureShader.ReportUniformObject(m_matrices);
@@ -40,13 +39,15 @@ void SpriteRendererLayer::OnRender(double dt)
 
 	glm::mat4 proj = Application::Get().GetWindow()->GetOrthographicProjection();
 
-	if (MovableCameraComponent::Main == nullptr)
+	std::optional<CameraComponent*> oCameraComponent = CameraComponent::GetMain();
+
+	if (!oCameraComponent.has_value())
 	{
-		std::cout << "no camera component available";
+		std::cout << "no main camera";
 		return;
 	}
 
-	glm::mat4 view = MovableCameraComponent::Main->Camera.GetViewMatrix();
+	glm::mat4 view = oCameraComponent.value()->GetCamera().GetViewMatrix();
 
 	m_matrices.Buffer.SetData(glm::value_ptr(proj), 0, 4 * 4 * 4);
 	m_matrices.Buffer.SetData(glm::value_ptr(view), 4 * 4 * 4, 4 * 4 * 4);

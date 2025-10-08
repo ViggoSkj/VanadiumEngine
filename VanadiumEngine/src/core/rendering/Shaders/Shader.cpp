@@ -1,5 +1,5 @@
 #include "Shader.h"
-#include "core/Proccessing/Shader/ShaderTokenizer.h"
+#include "core/Processing/Shader/Tokenizer/ShaderTokenizer.h"
 #include <optional>
 
 Shader::Shader(std::string source)

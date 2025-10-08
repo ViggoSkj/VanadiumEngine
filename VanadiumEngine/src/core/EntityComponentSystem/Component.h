@@ -5,6 +5,9 @@ class Component
 {
 public:
 	Component() = default;
+	Component(Component&&) noexcept = default;
+	Component& operator=(Component&&) noexcept = default;
+	Component(const Component&) = delete;
 	Component(unsigned int owner);
 
 	unsigned int GetId() const { return m_id; };

@@ -1,6 +1,6 @@
 
 #pragma once
-#include "core/Rendering/Color.h"
+#include "core/Rendering/Primitives/Color.h"
 #include "core/Util/Array2D.h"
 
 enum ImageFileFormat

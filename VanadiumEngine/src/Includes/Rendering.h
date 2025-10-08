@@ -1,31 +1,31 @@
 #pragma once
 
 // Main
-#include "RenderingManager.h"
+#include "core/Rendering/RenderingManager.h"
 
 // Shaders
-#include "Shaders/Descriptors/ShaderDescriptorBase.h"
-#include "Shaders/Descriptors/VertexShaderDescriptor.h"
-#include "Shaders/Descriptors/FragmentShaderDescriptor.h"
-#include "Shaders/Descriptors/ShaderDescriptor.h"
-#include "Shaders/ShaderUniform.h"
-#include "Shaders/GLShader.h"
-#include "Shaders/GLUniformBuffer.h"
+#include "core/Rendering/Shaders/Descriptors/ShaderDescriptorBase.h"
+#include "core/Rendering/Shaders/Descriptors/VertexShaderDescriptor.h"
+#include "core/Rendering/Shaders/Descriptors/FragmentShaderDescriptor.h"
+#include "core/Rendering/Shaders/Descriptors/ShaderDescriptor.h"
+#include "core/Rendering/Shaders/ShaderUniform.h"
+#include "core/Rendering/Shaders/GLShader.h"
+#include "core/Rendering/Shaders/GLUniformBuffer.h"
 
-#include "AssetTypes/Shader/ShaderAsset.h"
+#include "core/AssetManager/AssetTypes/Shader/ShaderAsset.h"
 
 // Vertex, Index
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
-#include "VertexArray.h"
+#include "core/Rendering/Primitives/VertexBuffer.h"
+#include "core/Rendering/Primitives/IndexBuffer.h"
+#include "core/Rendering/Primitives/VertexArray.h"
 
 // Camera
-#include "Camera.h"
+#include "core/Rendering/Camera.h"
 
 // Texture
-#include "Textures/GLTexture.h"
-#include "Textures/TextureConfiguration.h"
+#include "core/Rendering/Textures/GLTexture.h"
+#include "core/Rendering/Textures/TextureConfiguration.h"
 
-#include "AssetTypes/Texture/Texture.h"
-#include "AssetTypes/Texture/TextureAsset.h"
+#include "core/AssetManager/AssetTypes/Texture/Texture.h"
+#include "core/AssetManager/AssetTypes/Texture/TextureAsset.h"
 

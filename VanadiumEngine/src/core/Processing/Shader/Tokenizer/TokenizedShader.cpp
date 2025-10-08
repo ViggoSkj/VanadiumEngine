@@ -1,5 +1,5 @@
 #include "TokenizedShader.h"
-#include "ShaderKeywordMaps.h"
+#include "core/Processing/Shader/ShaderKeywordMaps.h"
 
 TokenizedShader::TokenizedShader(std::vector<Token>& tokens)
 {

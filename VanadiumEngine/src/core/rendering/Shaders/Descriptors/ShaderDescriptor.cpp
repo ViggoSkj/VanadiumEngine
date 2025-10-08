@@ -1,8 +1,8 @@
 #include "ShaderDescriptor.h"
 #include <vector>
 #include <fstream>
-#include "core/Proccessing/Shader/ShaderTokenizer.h"
-#include "core/Proccessing/Shader/TokenAnalyzer.h"
+#include "core/Processing/Shader/Tokenizer/ShaderTokenizer.h"
+#include "core/Processing/Shader/Tokenizer/TokenAnalyzer.h"
 
 int SmallestPositiveDifference(int self, std::vector<int> others)
 {

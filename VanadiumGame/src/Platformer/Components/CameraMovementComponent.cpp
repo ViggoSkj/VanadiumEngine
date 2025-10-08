@@ -1,12 +1,11 @@
-#include "Camera.h"
+#include "CameraMovementComponent.h"
 
-MovableCameraComponent::MovableCameraComponent(unsigned int owner)
+CameraMovementComponent::CameraMovementComponent(unsigned int owner)
 	: LiveComponent(owner)
 {
-	MovableCameraComponent::Main = this;
 }
 
-void MovableCameraComponent::OnUpdate(double dt) 
+void CameraMovementComponent::OnUpdate(double dt) 
 {
 	GLFWwindow* glfwWindow = Application::Get().GetWindow()->GetGLFWwindow().get();
 
@@ -14,15 +13,16 @@ void MovableCameraComponent::OnUpdate(double dt)
 	EntityComponentSystem* ECS = Application::Get().GetECS();
 	SceneManager* sceneManager = Application::Get().GetSceneManager();
 
+	Camera& camera = GetComponent<CameraComponent>().GetCamera();;
+
 	if (Input.GetKey(Key::R) == KeyState::Pressed)
 	{
 		sceneManager->UnloadScene(ECS->FindEntity(GetOwnerId()).GetOwner());
 		sceneManager->LoadScene(ECS->FindEntity(GetOwnerId()).GetOwner());
-
 	}
 
 	if (Input.Down(Key::Q))
-		this->Camera.Zoom += 1.0f * (float)dt * this->Camera.Zoom;
+		camera.Zoom += 1.0f * (float)dt * camera.Zoom;
 	if (Input.Down(Key::E))
-		this->Camera.Zoom -= 1.0f * (float)dt * this->Camera.Zoom;
+		camera.Zoom -= 1.0f * (float)dt * camera.Zoom;
 }

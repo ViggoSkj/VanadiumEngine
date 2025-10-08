@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
 #include "ShaderToken.h"
-#include "ShaderKeyword.h"
-#include "Shaders/ShaderDataType.h"
+#include "core/Processing/Shader/ShaderKeyword.h"
+#include "core/Rendering/Shaders/ShaderDataType.h"
 
 class TokenizedShader
 {

@@ -2,13 +2,14 @@
 #include "Platformer/PlatformerLayer.h"
 #include "Application.h"
 #include "Platformer/SpriteRendererLayer.h"
-#include "Platformer/Components/Camera.h"
+#include "Platformer/Components/CameraMovementComponent.h"
 #include "Platformer/Components/PlayerMovementComponent.h"
 #include "Platformer/TransformComponent.h"
 #include "Platformer/SpriteRendererComponent.h"
 #include "SimdTest/SimdTest.h"
 #include "core/Scene/Scene.h"
 #include "core/Scene/SceneSetupStep.h"
+#include "core/BuiltIn/Layers/GridBackgroundLayer.h"
 #include "ECS.h"
 
 
@@ -21,7 +22,8 @@ public:
 		EntityComponentSystem* ECS = app.GetECS();
 
 		Entity& camera = CreateEntity();
-		camera.AddComponent<MovableCameraComponent>();
+		camera.AddComponent<CameraComponent>();
+		camera.AddComponent<CameraMovementComponent>();
 
 		Entity& e1 = CreateEntity();
 		e1.AddComponent<SpriteRendererComponent>().LoadRGBATexture("res/images/character.png");
@@ -38,8 +40,9 @@ int main()
 {
 
 	Application app(1500, 1000);
+	app.PushLayer<GridBackgroundLayer>();
 	app.PushLayer<SpriteRendererLayer>();
-	app.PushLayer<LiveComponentLayer<MovableCameraComponent>>();
+	app.PushLayer<LiveComponentLayer<CameraMovementComponent>>();
 	app.PushLayer<LiveComponentLayer<PlayerMovementComponent>>();
 
 	Scene& testScene = app.GetSceneManager()->ConstructScene();

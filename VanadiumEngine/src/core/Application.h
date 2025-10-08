@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "Window.h"
+#include "core/Rendering/Window/Window.h"
 #include "core/Rendering/RenderingManager.h"
 #include "AssetManager.h"
 #include "core/Time.h"
