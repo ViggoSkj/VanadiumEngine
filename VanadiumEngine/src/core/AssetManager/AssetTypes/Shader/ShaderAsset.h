@@ -1,10 +1,16 @@
 #pragma once
 #include "Shaders/Shader.h"
 #include "FileAsset.h"
+#include "core/Processing/Shader/ShaderProcessingObject.h"
 
-struct ShaderAsset : public FileAsset
+template<typename TFileAsset>
+class FileAssetStore;
+
+struct ShaderCodeAsset
 {
-	ShaderAsset(std::string filePath);
-	
-	Shader ShaderProgram;
+	ShaderCodeAsset(std::filesystem::path path);
+
+	ShaderProcessingObject processingObject;
+
+	Shader CreateShader();
 };

@@ -1,10 +1,10 @@
 #include <iostream>
+#include "Components.h"
 #include "Platformer/PlatformerLayer.h"
 #include "Application.h"
 #include "Platformer/SpriteRendererLayer.h"
 #include "Platformer/Components/CameraMovementComponent.h"
 #include "Platformer/Components/PlayerMovementComponent.h"
-#include "Platformer/TransformComponent.h"
 #include "Platformer/SpriteRendererComponent.h"
 #include "SimdTest/SimdTest.h"
 #include "core/Scene/Scene.h"
@@ -26,9 +26,9 @@ public:
 		camera.AddComponent<CameraMovementComponent>();
 
 		Entity& e1 = CreateEntity();
+		e1.AddComponent<PlayerMovementComponent>();
 		e1.AddComponent<SpriteRendererComponent>().LoadRGBATexture("res/images/character.png");
 		e1.AddComponent<TransformComponent>();
-		e1.AddComponent<PlayerMovementComponent>();
 
 		Entity& e2 = CreateEntity();
 		e2.AddComponent<SpriteRendererComponent>().LoadRGBATexture("res/images/player-running.png");

@@ -7,7 +7,3 @@
 
 #include "core/EntityComponentSystem/LiveComponent/LiveComponent.h"
 #include "core/EntityComponentSystem/LiveComponent/LiveComponentLayer.h"
-
-// built in component
-
-#include "core/Rendering/Component/CameraComponent.h"

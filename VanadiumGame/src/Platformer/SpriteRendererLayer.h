@@ -13,10 +13,10 @@ public:
 
 
 private:
-	GLTexture& GetTexture(AssetRef textureRef);
+	GLTexture& GetTexture(std::shared_ptr<TextureRGBAAsset> texture);
 
 	VertexArray m_VAO;
 	UniformObject m_matrices;
 	Shader m_textureShader;
-	std::unordered_map<AssetRef, GLTexture, AssetRefHash> m_readyTexture;
+	std::unordered_map<std::shared_ptr<TextureRGBAAsset>, GLTexture> m_readyTexture;
 };

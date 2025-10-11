@@ -2,9 +2,9 @@
 #include "core/AssetManager/FileAsset.h"
 #include "Texture.h"
 
-struct TextureRGBAAsset : public FileAsset
+struct TextureRGBAAsset
 {
 public:
-	TextureRGBAAsset(std::string path);
+	TextureRGBAAsset(std::filesystem::path path);
 	TextureRGBA Texture;
 };

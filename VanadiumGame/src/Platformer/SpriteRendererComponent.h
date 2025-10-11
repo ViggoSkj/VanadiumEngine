@@ -7,5 +7,5 @@ class SpriteRendererComponent : public Component
 public:
 	void LoadRGBATexture(std::string filePath);
 
-	AssetRef TextureRef;
+	std::shared_ptr<TextureRGBAAsset> Texture;
 };

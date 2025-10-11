@@ -1,15 +1,16 @@
 #include "Texture.h"
 #include <iostream>
+#include <filesystem>
 #include "lodepng/lodepng.h"
 
-TextureRGBA::TextureRGBA(const char* file, ImageFileFormat format)
+TextureRGBA::TextureRGBA(std::filesystem::path path, ImageFileFormat format)
 {
     unsigned char* image = NULL;   // will be allocated by lodepng
     unsigned int width, height;
     unsigned int error;
 
     // Decode from file into an RGBA 8-bit buffer (4 bytes per pixel)
-    error = lodepng_decode32_file(&image, &width, &height, file);
+    error = lodepng_decode32_file(&image, &width, &height, path.string().c_str());
     if (error) {
         printf("decoder error %u: %s\n", error, lodepng_error_text(error));
         return;

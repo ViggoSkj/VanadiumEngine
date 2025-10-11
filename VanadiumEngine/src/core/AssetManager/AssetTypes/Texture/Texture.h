@@ -1,5 +1,6 @@
 
 #pragma once
+#include <filesystem>
 #include "core/Rendering/Primitives/Color.h"
 #include "core/Util/Array2D.h"
 
@@ -20,7 +21,7 @@ public:
 class TextureRGBA : public Texture
 {
 public:
-	TextureRGBA(const char* file, ImageFileFormat format);
+	TextureRGBA(std::filesystem::path path, ImageFileFormat format);
 
 	unsigned int GetWidth() override { return m_data.GetWidth(); }
 	unsigned int GetHeight() override { return m_data.GetHeight(); }

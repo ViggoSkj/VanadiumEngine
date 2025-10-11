@@ -1,7 +1,6 @@
 #include "Core.h"
 #include "PlayerMovementComponent.h"
 #include "Camera.h"
-#include "../TransformComponent.h"
 
 void PlayerMovementComponent::OnUpdate(double dt)
 {

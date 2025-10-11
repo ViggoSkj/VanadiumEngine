@@ -1,10 +1,12 @@
 #pragma once
 #include <vector>
 #include <unordered_map>
+#include <memory>
+#include <filesystem>
 #include <typeindex>
 #include "FileAsset.h"
 #include "AssetTypes/Texture/Texture.h"
-#include "AssetStore.h"
+#include "FileAssetStore.h"
 
 class AssetManager
 {
@@ -12,38 +14,27 @@ public:
 	AssetManager() = default;
 	AssetManager(const AssetManager&) = delete;
 
-	template<typename T>
-		requires(std::is_base_of_v<FileAsset, T>)
-	AssetStore<T>& GetAssetStore()
+	template<typename TFileAsset>
+	FileAssetStore<TFileAsset>* GetAssetStore()
 	{
-		static AssetStore<T> store;
-		return store;
+		for (int i = 0; i < m_assetStores.size(); i++)
+		{
+			if (m_assetStores[i]->GetId() == GetAssetTypeId<TFileAsset>())
+				return static_cast<FileAssetStore<TFileAsset>*>(m_assetStores[i].get());
+		}
+		// create component store
+		std::unique_ptr<FileAssetStore<TFileAsset>> store();
+		m_assetStores.push_back(std::make_unique<FileAssetStore<TFileAsset>>());
+		return static_cast<FileAssetStore<TFileAsset>*>(m_assetStores.back().get());
 	}
 
-	template<typename T>
-		requires(std::is_base_of_v<FileAsset, T>)
-	T& GetAsset(AssetRef ref)
+	template<typename TFileAsset>
+	std::shared_ptr<TFileAsset> GetFileAsset(std::filesystem::path path)
 	{
-		AssetStore<T>& store = GetAssetStore<T>();
-		return store.Get(ref);
-	}
-
-	template<typename T>
-		requires(std::is_base_of_v<FileAsset, T>)
-	AssetRef LoadFileAsset(const char* filePath)
-	{
-		AssetStore<T>& store = GetAssetStore<T>();
-		return store.LoadAsset(filePath);
-	}
-
-	template<typename T>
-		requires(std::is_base_of_v<FileAsset, T>)
-	T& LoadAndGetFileAsset(const char* filePath)
-	{
-		AssetStore<T>& store = GetAssetStore<T>();
-		AssetRef ref = store.LoadAsset(filePath);
-		return store.Get(ref);
+		FileAssetStore<TFileAsset>* store = GetAssetStore<TFileAsset>();
+		return store->GetAsset(path);
 	}
 private:
 
+	std::vector<std::unique_ptr<IFileAssetStore>> m_assetStores;
 };

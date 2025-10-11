@@ -1,9 +1,9 @@
 #include "Shader.h"
 #include "core/Processing/Shader/Tokenizer/ShaderTokenizer.h"
-#include <optional>
+#include "core/Processing/Shader/CodeGenerator/ShaderCodeGenerator.h"
 
-Shader::Shader(std::string source)
-	: m_shaderDescriptor(Tokenizer::Tokenize(source))
+Shader::Shader(std::string source, ShaderDescriptor descriptor)
+	: m_shaderDescriptor(descriptor)
 {
 	m_shaderProgram.LoadSource(source.c_str());
 }

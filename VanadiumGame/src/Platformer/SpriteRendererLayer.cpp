@@ -1,13 +1,13 @@
 #include "SpriteRendererLayer.h"
+#include "Components.h"
 #include "GLCommon.h"
 #include "SpriteRendererComponent.h"
 #include "Rendering.h"
-#include "TransformComponent.h"
 #include "Util.h"
 #include "ECS.h"
 
 SpriteRendererLayer::SpriteRendererLayer()
-	: m_textureShader(Application::Get().GetAssetManager()->LoadAndGetFileAsset<ShaderAsset>("res/shaders/texture.shader").ShaderProgram), m_VAO(Util::Square())
+	: m_textureShader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/texture.shader")->CreateShader()), m_VAO(Util::Square())
 {
 	RenderingManager man;
 
@@ -64,26 +64,22 @@ void SpriteRendererLayer::OnRender(double dt)
 
 		glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(tc.ModelMatrix()));
 
-		GLTexture& texture = GetTexture(sps[i].TextureRef);
+		GLTexture& texture = GetTexture(sps[i].Texture);
 		texture.Use();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
 }
 
-GLTexture& SpriteRendererLayer::GetTexture(AssetRef textureRef)
+GLTexture& SpriteRendererLayer::GetTexture(std::shared_ptr<TextureRGBAAsset> texture)
 {
-	AssetManager* assetManager = Application::Get().GetAssetManager();
-
-	if (m_readyTexture.contains(textureRef))
+	if (m_readyTexture.contains(texture))
 	{
-		return m_readyTexture.at(textureRef);
+		return m_readyTexture.at(texture);
 	}
 
-	TextureRGBAAsset& asset = assetManager->GetAsset<TextureRGBAAsset>(textureRef);
-
-	m_readyTexture.try_emplace(textureRef);
-	GLTexture& tex = m_readyTexture.at(textureRef);
-	tex.AssignTexture((Texture*) &asset.Texture);
+	m_readyTexture.try_emplace(texture);
+	GLTexture& tex = m_readyTexture.at(texture);
+	tex.AssignTexture((Texture*) &texture->Texture);
 	
 	return tex;
 }

@@ -5,16 +5,12 @@ layout (location = 1) in vec2 aCoord;
 
 out vec2 uv;
 
-layout (std140) uniform Matrices
-{
-    mat4 projection;
-    mat4 view;
-};
+#include res/lib/CameraUniformObject.shader
 
 void main()
 {
-    gl_Position = projection * view * vec4(aPos.x, aPos.y, aPos.z, 1.0);
-    uv = aCoord;
+    gl_Position = vec4(aPos, 1.0);
+    uv = (inverse(projection * view) * vec4(aPos, 1.0)).xy;
 }
 
 #shader fragment
@@ -28,11 +24,11 @@ void main()
 
     vec3 color = vec3(0.1, 0.2, 8.0);
 
-    ivec2 pos = ivec2(uv*size);
+    ivec2 pos = ivec2(round(uv*size));
 
-    FragColor=vec4(uv, 1.0, 1.0);
+    FragColor=vec4(0.2, 0.4, 0.7, 1.0);
 
-    if (pos.x%2 ==  pos.y%2)
+    if ((pos.x + pos.y)%2 == 0)
     {
         FragColor *= 0.9;
     }

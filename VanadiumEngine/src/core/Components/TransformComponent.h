@@ -1,5 +1,5 @@
 #pragma once
-#include "ECS.h"
+#include "core/EntityComponentSystem/Component.h"
 #include "glm/glm.hpp"
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -8,7 +8,7 @@ class TransformComponent : public Component
 {
 public:
 	TransformComponent(TransformComponent&& other) noexcept = default;
-	TransformComponent& operator=(TransformComponent && other) noexcept = default;
+	TransformComponent& operator=(TransformComponent&& other) noexcept = default;
 
 	TransformComponent(unsigned int owner);
 

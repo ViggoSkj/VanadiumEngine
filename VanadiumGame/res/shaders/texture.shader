@@ -3,11 +3,7 @@
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec2 aCoord;
 
-layout (std140) uniform Matrices
-{
-    mat4 projection;
-    mat4 view;
-};
+#include res/lib/CameraUniformObject.shader
 
 uniform mat4 u_model;
  

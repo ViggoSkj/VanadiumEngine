@@ -2,11 +2,13 @@
 #include "Descriptors/ShaderDescriptor.h"
 #include "GLShader.h"
 #include "UniformObject.h"
+#include "core/IO/IFileLoader.h"
+
 
 class Shader
 {
 public:
-	Shader(std::string source);
+	Shader(std::string source, ShaderDescriptor descriptor);
 
 	// uses the uniform object if it is needed
 	void ReportUniformObject(UniformObject object);

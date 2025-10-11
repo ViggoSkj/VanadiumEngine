@@ -1,16 +1,26 @@
 #pragma once
+#include "core/CoreTypes.h"
 #include <string>
 #include <fstream>
 #include <filesystem>
+#include <concepts>
 
-struct FileAsset
+template<typename T>
+concept LoadableAsset = requires(std::filesystem::path path) {
+	{ T(path) }; // T must be constructible from std::filesystem::path
+	{ std::declval<T>().Load(path) }; // optional if you want a Load() method
+};
+
+namespace FileAsset
 {
-	static std::string ReadFile(std::string file)
+	static std::string ReadFile(std::filesystem::path file)
 	{
 
 		if (!std::filesystem::exists(file))
 		{
-			file = "../VanadiumEngine/" + file;
+			std::filesystem::path sub("../VanadiumEngine/");
+			sub += file;
+			file = sub;
 		}
 
 		std::fstream stream(file);
@@ -25,28 +35,20 @@ struct FileAsset
 
 		return result;
 	}
-
-	FileAsset() {};
-	FileAsset(std::string filePath) {};
 };
 
-struct AssetRef
+
+template<typename TAsset>
+struct AssetTypeId
 {
-	AssetRef() = default;
-	AssetRef(unsigned int index)
-		: BufferIndex(index) {
-	};
-
-	bool operator==(const AssetRef& other) const {
-		return BufferIndex == other.BufferIndex;
-	}
-
-	unsigned int BufferIndex;
+	static u32 Id;
 };
 
-struct AssetRefHash
+template<typename TAsset>
+inline u32 AssetTypeId<TAsset>::Id;
+
+template<typename TAsset>
+u32 GetAssetTypeId()
 {
-	std::size_t operator()(const AssetRef& ref) const {
-		return ref.BufferIndex;
-	}
-};
+	return reinterpret_cast<u32>(&AssetTypeId<TAsset>::Id);
+}

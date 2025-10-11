@@ -41,3 +41,17 @@ int TokenizedShader::FindHint(std::string hintCommand, std::string hintArgument,
 
 	return -1;
 }
+
+i32 TokenizedShader::FindHint(std::string hintCommand, unsigned int offset)
+{
+	for (int i = offset; i < m_tokens.size(); i++)
+	{
+		if (m_tokens[i].Type == TokenType::HintCommand && m_tokens[i].Text == hintCommand)
+		{
+			if (m_tokens[i + 1].Type == TokenType::HintArgument)
+				return i;
+		}
+	}
+
+	return -1;
+}

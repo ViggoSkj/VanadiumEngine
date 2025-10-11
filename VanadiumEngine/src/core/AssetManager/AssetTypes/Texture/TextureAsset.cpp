@@ -1,6 +1,6 @@
 #include "TextureAsset.h"
 
-TextureRGBAAsset::TextureRGBAAsset(std::string path)
-	: Texture(path.c_str(), ImageFileFormat::Png)
+TextureRGBAAsset::TextureRGBAAsset(std::filesystem::path path)
+	: Texture(path, ImageFileFormat::Png)
 {
 }

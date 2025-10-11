@@ -7,6 +7,7 @@
 class ShaderDescriptor
 {
 public:
+	ShaderDescriptor() = default;
 	ShaderDescriptor(TokenizedShader tokenizedShader);
 	
 	const UniformObjectDescriptor& FindUniformObjectDescriptor(std::string name) const;
