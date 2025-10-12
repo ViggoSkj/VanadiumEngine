@@ -21,6 +21,7 @@ project "Vanadium-Game"
 	  "../Vendor/includes",
    }
 
+
    links
    {
         "VanadiumEngine",

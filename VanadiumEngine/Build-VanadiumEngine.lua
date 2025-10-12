@@ -10,12 +10,16 @@ project "VanadiumEngine"
    includedirs
    {
       "src",
+      "src/Includes",
       "src/core/AssetManager",
       "src/core/rendering",
 
       -- libraries
       "../Vendor/includes"
    }
+
+   pchheader "pch.h"
+   pchsource "src/Includes/pch.cpp"
 
    targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")
    objdir ("../Binaries/Intermediates/" .. OutputDir .. "/%{prj.name}")

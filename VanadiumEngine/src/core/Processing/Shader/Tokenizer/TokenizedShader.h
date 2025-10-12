@@ -1,5 +1,5 @@
 #pragma once
-#include <vector>
+
 #include "core/CoreTypes.h"
 #include "ShaderToken.h"
 #include "core/Processing/Shader/ShaderKeyword.h"

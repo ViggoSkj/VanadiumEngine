@@ -1,5 +1,6 @@
+#include "pch.h"
 #include "ShaderDescriptor.h"
-#include <vector>
+
 #include <fstream>
 #include "core/Processing/Shader/Tokenizer/ShaderTokenizer.h"
 #include "core/Processing/Shader/Tokenizer/TokenAnalyzer.h"

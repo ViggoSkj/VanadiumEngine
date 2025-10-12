@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "ShaderCodeGenerator.h"
 #include "core/IO/IFileLoader.h"
 #include "core/AssetManager/AssetManager.h"
@@ -5,6 +6,8 @@
 
 namespace ShaderCodeGenerator
 {
+
+	// TODO: make able to import multiple things
 	void ExecuteIncludes(ShaderProcessingObject& processingObject, IShaderCodeLoader* codeLoader)
 	{
 		i32 tokenCursor = -1;

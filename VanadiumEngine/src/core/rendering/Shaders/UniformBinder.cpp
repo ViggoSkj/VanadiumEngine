@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "UniformBinder.h"
 
 unsigned int UniformBinder::BlockCount(GLenum block)

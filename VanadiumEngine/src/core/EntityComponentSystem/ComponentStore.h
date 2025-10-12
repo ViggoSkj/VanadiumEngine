@@ -1,6 +1,7 @@
 #pragma once
+#include "pch.h"
 #include <optional>
-#include <vector>
+
 #include "Util.h"
 #include "Component.h"
 #include "core/Util/IdIndexMap.h"
@@ -32,11 +33,12 @@ public:
 	void DeleteInstance(unsigned int ref) override
 	{
 		unsigned int componentIndex = m_idIndexMap.MarkRemoved(ref);
-		unsigned int componentId = m_components.back().GetId();
+		unsigned int movedComponentId = m_components.back().GetId();
+
+		if (m_components[componentIndex].GetId() != movedComponentId)
+			m_idIndexMap.UpdateIndex(movedComponentId, componentIndex);
 
 		m_components.remove(componentIndex);
-		if (m_components.size() > 0)
-			m_idIndexMap.UpdateIndex(componentId, componentIndex);
 
 		if (m_idIndexMap.EmptySlotCount() > 100)
 			m_idIndexMap.Flush();

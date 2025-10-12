@@ -1,5 +1,5 @@
 #pragma once
-#include <vector>
+
 #include "Shaders/ShaderDataType.h"
 #include "Shaders/ShaderUniform.h"
 #include "Shaders/VertexAttribute.h"

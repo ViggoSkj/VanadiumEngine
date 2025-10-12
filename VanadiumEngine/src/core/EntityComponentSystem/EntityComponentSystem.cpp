@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "EntityComponentSystem.h"
 
 EntityComponentSystem::~EntityComponentSystem()

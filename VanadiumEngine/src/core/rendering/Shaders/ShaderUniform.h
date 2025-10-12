@@ -1,6 +1,6 @@
 #pragma once
-#include <string>
-#include <vector>
+
+
 #include "ShaderDataType.h"
 
 struct UniformDescriptor

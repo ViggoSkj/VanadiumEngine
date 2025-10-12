@@ -1,7 +1,7 @@
 #pragma once
 #include "GLAD/glad.h"
 #include "GLFW/glfw3.h"
-#include <string>
+
 #include <iostream>	
 
 GLenum glCheckError_(const char* file, int line);

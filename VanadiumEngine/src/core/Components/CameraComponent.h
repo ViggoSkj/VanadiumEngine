@@ -1,4 +1,5 @@
 #pragma
+#include "pch.h"
 #include "core/EntityComponentSystem/LiveComponent/LiveComponent.h"
 #include "core/Rendering/Camera.h"
 
@@ -17,11 +18,11 @@ public:
 
 	void OnUpdate(double dt) override;
 
-	Camera& GetCamera() { return m_camera; };
+	Camera GetCamera();
 
+	float Zoom = 1.0;
 private:
 	static CameraComponent* s_main;
-	Camera m_camera;
 };
 
 inline CameraComponent* CameraComponent::s_main = nullptr;

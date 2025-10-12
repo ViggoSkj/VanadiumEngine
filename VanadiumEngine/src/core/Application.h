@@ -1,5 +1,4 @@
 #pragma once
-#include <vector>
 #include <memory>
 #include "core/Rendering/Window/Window.h"
 #include "core/Rendering/RenderingManager.h"

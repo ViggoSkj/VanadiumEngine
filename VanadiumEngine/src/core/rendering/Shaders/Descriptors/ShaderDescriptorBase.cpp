@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "ShaderDescriptorBase.h"
 
 bool ShaderBaseDescriptor::UsesUniformObject(std::string name)

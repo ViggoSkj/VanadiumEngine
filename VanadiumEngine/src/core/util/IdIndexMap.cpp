@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "IdIndexMap.h"
 
 void IdIndexMap::InsertLookup(unsigned int id, unsigned int componentIndex)
@@ -70,6 +71,7 @@ unsigned int IdIndexMap::MarkRemoved(unsigned int id)
 		throw "dasdas";
 
 	EmptySlots.push_back(lookupIndex);
+
 	return Lookups[lookupIndex].Index;
 }
 

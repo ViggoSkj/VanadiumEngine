@@ -1,6 +1,7 @@
+#include "pch.h"
 #include "ShaderTokenizer.h"
-#include <string>
-#include <vector>
+
+
 #include "core/Processing/Shader/ShaderKeyword.h"
 #include "core/Processing/Shader/ShaderKeywordMaps.h"
 #include "Shaders/ShaderDataTypeMaps.h"

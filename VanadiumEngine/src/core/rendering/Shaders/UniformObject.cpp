@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "UniformObject.h"
 #include "ShaderDataTypeMaps.h"
 

@@ -1,6 +1,5 @@
 #pragma once
-#include <string>
-#include <vector>
+#include "pch.h"
 #include "ShaderToken.h"
 #include "TokenizedShader.h"
 

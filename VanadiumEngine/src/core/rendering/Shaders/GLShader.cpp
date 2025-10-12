@@ -1,7 +1,8 @@
+#include "pch.h"
 #include "GLShader.h"
 #include <sstream>
 #include <glad/glad.h>
-#include <string>
+
 #include <iostream>
 #include "ShaderType.h"
 

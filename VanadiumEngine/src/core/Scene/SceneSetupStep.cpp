@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "SceneSetupStep.h"
 #include "core/Application.h"
 

@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "GLCommon.h"
 
 GLenum glCheckError_(const char* file, int line)

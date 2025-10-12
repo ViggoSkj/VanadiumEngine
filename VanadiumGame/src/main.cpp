@@ -1,16 +1,14 @@
+#include "pch.h"
 #include <iostream>
 #include "Components.h"
 #include "Platformer/PlatformerLayer.h"
 #include "Application.h"
+#include "Core.h"
+#include "core/BuiltIn/Layers/GridBackgroundLayer.h"
 #include "Platformer/SpriteRendererLayer.h"
 #include "Platformer/Components/CameraMovementComponent.h"
 #include "Platformer/Components/PlayerMovementComponent.h"
 #include "Platformer/SpriteRendererComponent.h"
-#include "SimdTest/SimdTest.h"
-#include "core/Scene/Scene.h"
-#include "core/Scene/SceneSetupStep.h"
-#include "core/BuiltIn/Layers/GridBackgroundLayer.h"
-#include "ECS.h"
 
 
 class TestSceneSetupStep : public SceneSetupStep
@@ -22,6 +20,7 @@ public:
 		EntityComponentSystem* ECS = app.GetECS();
 
 		Entity& camera = CreateEntity();
+		camera.AddComponent<TransformComponent>();
 		camera.AddComponent<CameraComponent>();
 		camera.AddComponent<CameraMovementComponent>();
 

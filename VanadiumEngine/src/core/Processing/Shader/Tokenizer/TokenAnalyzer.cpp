@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "TokenAnalyzer.h"
 #include "core/Processing/Shader/ShaderKeyword.h"
 #include "Shaders/ShaderDataTypeMaps.h"

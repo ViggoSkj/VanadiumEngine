@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 #include "Tokenizer/TokenizedShader.h"
 #include "Tokenizer/ShaderTokenizer.h"
 

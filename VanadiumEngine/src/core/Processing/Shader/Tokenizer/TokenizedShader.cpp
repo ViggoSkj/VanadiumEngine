@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "TokenizedShader.h"
 #include "core/Processing/Shader/ShaderKeywordMaps.h"
 

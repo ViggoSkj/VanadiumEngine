@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "Shader.h"
 #include "core/Processing/Shader/Tokenizer/ShaderTokenizer.h"
 #include "core/Processing/Shader/CodeGenerator/ShaderCodeGenerator.h"

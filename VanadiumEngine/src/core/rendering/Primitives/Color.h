@@ -1,11 +1,10 @@
 #pragma once
-#include <cstdint>
-
+#include "pch.h"
 
 struct ColorRGBA
 {
-	std::uint8_t r;
-	std::uint8_t g;
-	std::uint8_t b;
-	std::uint8_t a;
+	u8 r;
+	u8 g;
+	u8 b;
+	u8 a;
 };

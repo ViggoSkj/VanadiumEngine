@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "GLTexture.h"
 #include "GLCommon.h"
 

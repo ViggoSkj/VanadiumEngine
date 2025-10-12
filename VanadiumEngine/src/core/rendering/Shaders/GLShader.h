@@ -1,5 +1,5 @@
 #pragma once
-#include <string>
+
 #include "GLCommon.h"
 #include "core/Util/ReferenceCounting.h"
 

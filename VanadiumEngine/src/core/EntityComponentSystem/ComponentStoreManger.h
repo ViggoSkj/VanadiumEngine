@@ -1,4 +1,5 @@
 #pragma once
+#include "pch.h"
 #include "IComponentStore.h"
 #include "ComponentStore.h"
 #include "Component.h"

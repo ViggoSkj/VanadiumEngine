@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "RenderingManager.h"
 
 RenderingManager::RenderingManager()

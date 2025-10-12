@@ -1,7 +1,7 @@
 #pragma once
 #include "ShaderDataType.h"
-#include <unordered_map>
-#include <string>
+
+
 
 inline const std::unordered_map<ShaderDataType, std::string> ShaderDataTypeToString = {
 	{Void, "void"},

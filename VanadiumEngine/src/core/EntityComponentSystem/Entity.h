@@ -1,6 +1,7 @@
 #pragma once
+#include "pch.h"
 #include <memory>
-#include <vector>
+
 #include "Component.h"
 #include "ComponentStore.h"
 #include "ComponentStoreManger.h"

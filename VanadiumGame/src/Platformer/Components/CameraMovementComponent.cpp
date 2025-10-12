@@ -14,7 +14,8 @@ void CameraMovementComponent::OnUpdate(double dt)
 	EntityComponentSystem* ECS = Application::Get().GetECS();
 	SceneManager* sceneManager = Application::Get().GetSceneManager();
 
-	Camera& camera = GetComponent<CameraComponent>().GetCamera();;
+	CameraComponent& camera = GetComponent<CameraComponent>();
+	TransformComponent& Transform = GetComponent<TransformComponent>();
 
 	if (Input.GetKey(Key::R) == KeyState::Pressed)
 	{
@@ -22,16 +23,14 @@ void CameraMovementComponent::OnUpdate(double dt)
 		sceneManager->LoadScene(ECS->FindEntity(GetOwnerId()).GetOwner());
 	}
 
-
 	if (Input.Down(Key::W))
-		camera.Position.y += 1.0f * (float)dt / camera.Zoom;
+		Transform.Position.y += 1.0f * (float)dt / camera.Zoom;
 	if (Input.Down(Key::S))
-		camera.Position.y -= 1.0f * (float)dt / camera.Zoom;
+		Transform.Position.y -= 1.0f * (float)dt / camera.Zoom;
 	if (Input.Down(Key::A))
-		camera.Position.x -= 1.0f * (float)dt / camera.Zoom;
+		Transform.Position.x -= 1.0f * (float)dt / camera.Zoom;
 	if (Input.Down(Key::D))
-		camera.Position.x += 1.0f * (float)dt / camera.Zoom;
-
+		Transform.Position.x += 1.0f * (float)dt / camera.Zoom;
 
 	if (Input.Down(Key::Q))
 		camera.Zoom += 1.0f * (float)dt * camera.Zoom;

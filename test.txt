@@ -1,0 +1,483 @@
+Rebuild started at 17:26...
+1>------ Rebuild All started: Project: VanadiumEngine, Configuration: Debug x64 ------
+1>Application.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=1.59490s < 16569898456767 - 16569914405775 > BB [C:\dev\Vanadium\VanadiumEngine\src\core\Application.cpp]
+1>ShaderAsset.cpp
+1>C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(26,47): warning C4930: 'std::unique_ptr<FileAssetStore<ShaderCodeAsset>,std::default_delete<FileAssetStore<ShaderCodeAsset>>> store(void)': prototyped function not called (was a variable definition intended?)
+1>(compiling source file 'src/core/AssetManager/AssetTypes/Shader/ShaderAsset.cpp')
+1>    C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(26,47):
+1>    the template instantiation context (the oldest one first) is
+1>        C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetTypes\Shader\ShaderAsset.cpp(12,82):
+1>        see reference to function template instantiation 'FileAssetStore<ShaderCodeAsset> *AssetManager::GetAssetStore<ShaderCodeAsset>(void)' being compiled
+1>C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4311: 'reinterpret_cast': pointer truncation from 'u32 *' to 'u32'
+1>(compiling source file 'src/core/AssetManager/AssetTypes/Shader/ShaderAsset.cpp')
+1>    C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9):
+1>    the template instantiation context (the oldest one first) is
+1>        C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetTypes\Shader\ShaderAsset.cpp(12,82):
+1>        see reference to function template instantiation 'FileAssetStore<ShaderCodeAsset> *AssetManager::GetAssetStore<ShaderCodeAsset>(void)' being compiled
+1>        C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(22,37):
+1>        see reference to function template instantiation 'u32 GetAssetTypeId<ShaderCodeAsset>(void)' being compiled
+1>C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4302: 'reinterpret_cast': truncation from 'u32 *' to 'u32'
+1>(compiling source file 'src/core/AssetManager/AssetTypes/Shader/ShaderAsset.cpp')
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=1.62554s < 16569914416280 - 16569930671682 > [C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetTypes\Shader\ShaderAsset.cpp]
+1>Texture.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=1.08895s < 16569930683073 - 16569941572608 > [C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetTypes\Texture\Texture.cpp]
+1>TextureAsset.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=1.07897s < 16569941585802 - 16569952375548 > [C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetTypes\Texture\TextureAsset.cpp]
+1>TransformComponent.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=0.26527s < 16569952394593 - 16569955047258 > [C:\dev\Vanadium\VanadiumEngine\src\core\Components\TransformComponent.cpp]
+1>LiveComponent.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=1.36520s < 16569955059273 - 16569968711264 > [C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\LiveComponent\LiveComponent.cpp]
+1>GridBackgroundLayer.cpp
+1>C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(26,47): warning C4930: 'std::unique_ptr<FileAssetStore<ShaderCodeAsset>,std::default_delete<FileAssetStore<ShaderCodeAsset>>> store(void)': prototyped function not called (was a variable definition intended?)
+1>(compiling source file 'src/core/BuiltIn/Layers/GridBackgroundLayer.cpp')
+1>    C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(26,47):
+1>    the template instantiation context (the oldest one first) is
+1>        C:\dev\Vanadium\VanadiumEngine\src\core\BuiltIn\Layers\GridBackgroundLayer.cpp(5,51):
+1>        see reference to function template instantiation 'std::shared_ptr<ShaderCodeAsset> AssetManager::GetFileAsset<ShaderCodeAsset>(std::filesystem::path)' being compiled
+1>        C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(34,39):
+1>        see reference to function template instantiation 'FileAssetStore<ShaderCodeAsset> *AssetManager::GetAssetStore<ShaderCodeAsset>(void)' being compiled
+1>C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4311: 'reinterpret_cast': pointer truncation from 'u32 *' to 'u32'
+1>(compiling source file 'src/core/BuiltIn/Layers/GridBackgroundLayer.cpp')
+1>    C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9):
+1>    the template instantiation context (the oldest one first) is
+1>        C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(34,39):
+1>        see reference to function template instantiation 'FileAssetStore<ShaderCodeAsset> *AssetManager::GetAssetStore<ShaderCodeAsset>(void)' being compiled
+1>        C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(22,37):
+1>        see reference to function template instantiation 'u32 GetAssetTypeId<ShaderCodeAsset>(void)' being compiled
+1>C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4302: 'reinterpret_cast': truncation from 'u32 *' to 'u32'
+1>(compiling source file 'src/core/BuiltIn/Layers/GridBackgroundLayer.cpp')
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=1.42775s < 16569968729843 - 16569983007316 > [C:\dev\Vanadium\VanadiumEngine\src\core\BuiltIn\Layers\GridBackgroundLayer.cpp]
+1>Component.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=0.43882s < 16569983021097 - 16569987409312 > [C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.cpp]
+1>EntityComponentSystem.cpp
+1>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\EntityComponentSystem.cpp(11,79): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=0.52149s < 16569987419021 - 16569992633900 > [C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\EntityComponentSystem.cpp]
+1>InputManager.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=0.43483s < 16569992645999 - 16569996994286 > [C:\dev\Vanadium\VanadiumEngine\src\core\InputManager\InputManager.cpp]
+1>ShaderCodeGenerator.cpp
+1>C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\CodeGenerator\ShaderCodeGenerator.cpp(28,41): warning C4267: '-=': conversion from 'size_t' to 'i32', possible loss of data
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=1.15778s < 16569997007765 - 16570008585559 > [C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\CodeGenerator\ShaderCodeGenerator.cpp]
+1>ShaderTokenizer.cpp
+1>C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\Tokenizer\ShaderTokenizer.cpp(113,30): warning C4267: '+=': conversion from 'size_t' to 'unsigned int', possible loss of data
+1>C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\Tokenizer\ShaderTokenizer.cpp(132,21): warning C4267: '+=': conversion from 'size_t' to 'unsigned int', possible loss of data
+1>C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\Tokenizer\ShaderTokenizer.cpp(144,26): warning C4267: '+=': conversion from 'size_t' to 'unsigned int', possible loss of data
+1>C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\Tokenizer\ShaderTokenizer.cpp(150,23): warning C4267: '+=': conversion from 'size_t' to 'unsigned int', possible loss of data
+1>C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\Tokenizer\ShaderTokenizer.cpp(199,19): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=0.72077s < 16570008598222 - 16570015805926 > [C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\Tokenizer\ShaderTokenizer.cpp]
+1>TokenAnalyzer.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=0.66136s < 16570015823132 - 16570022436701 > [C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\Tokenizer\TokenAnalyzer.cpp]
+1>TokenizedShader.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=0.57187s < 16570022448904 - 16570028167608 > [C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\Tokenizer\TokenizedShader.cpp]
+1>CameraComponent.cpp
+1>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(36,9): warning C4311: 'reinterpret_cast': pointer truncation from 'unsigned int *' to 'unsigned int'
+1>(compiling source file 'src/core/Components/CameraComponent.cpp')
+1>    C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(36,9):
+1>    the template instantiation context (the oldest one first) is
+1>        C:\dev\Vanadium\VanadiumEngine\src\core\Components\CameraComponent.cpp(19,17):
+1>        see reference to function template instantiation 'TComponent &LiveComponent::GetComponent<TransformComponent>(void)' being compiled
+1>        with
+1>        [
+1>            TComponent=TransformComponent
+1>        ]
+1>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\LiveComponent\LiveComponent.h(25,41):
+1>        see reference to function template instantiation 'TComponent &Entity::GetComponent<TransformComponent>(void)' being compiled
+1>        with
+1>        [
+1>            TComponent=TransformComponent
+1>        ]
+1>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(56,34):
+1>        see reference to function template instantiation 'unsigned int GetComponentTypeId<TransformComponent>(void)' being compiled
+1>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(36,9): warning C4302: 'reinterpret_cast': truncation from 'unsigned int *' to 'unsigned int'
+1>(compiling source file 'src/core/Components/CameraComponent.cpp')
+1>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47): warning C4930: 'std::unique_ptr<ComponentStore<TransformComponent>,std::default_delete<ComponentStore<TransformComponent>>> store(void)': prototyped function not called (was a variable definition intended?)
+1>(compiling source file 'src/core/Components/CameraComponent.cpp')
+1>    C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47):
+1>    the template instantiation context (the oldest one first) is
+1>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(67,26):
+1>        see reference to function template instantiation 'TComponent &ComponentStoreManager::GetComponent<TransformComponent>(unsigned int)' being compiled
+1>        with
+1>        [
+1>            TComponent=TransformComponent
+1>        ]
+1>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(67,39):
+1>        see reference to function template instantiation 'std::optional<ComponentStore<TransformComponent> *> ComponentStoreManager::GetComponentStore<TransformComponent>(void)' being compiled
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=1.46223s < 16570028190468 - 16570042812782 > [C:\dev\Vanadium\VanadiumEngine\src\core\Components\CameraComponent.cpp]
+1>GLCommon.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=0.48061s < 16570042827746 - 16570047633877 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\GLCommon.cpp]
+1>IndexBuffer.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=0.45423s < 16570047645833 - 16570052188143 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Primitives\IndexBuffer.cpp]
+1>RenderingManager.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=1.16082s < 16570052201827 - 16570063810077 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\RenderingManager.cpp]
+1>ShaderDescriptor.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=0.52254s < 16570063821952 - 16570069047377 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Shaders\Descriptors\ShaderDescriptor.cpp]
+1>ShaderDescriptorBase.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=0.48632s < 16570069058337 - 16570073921527 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Shaders\Descriptors\ShaderDescriptorBase.cpp]
+1>Generating Code...
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.01359s < 16570073932927 - 16570074068779 > BB [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Shaders\Descriptors\ShaderDescriptorBase.cpp]
+1>C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Shaders\Descriptors\ShaderDescriptor.cpp(72,1): warning C4715: 'ShaderDescriptor::FindUniformObjectDescriptor': not all control paths return a value
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.02242s < 16570074083061 - 16570074307225 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Shaders\Descriptors\ShaderDescriptor.cpp]
+1>C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\RenderingManager.cpp(21,1): warning C4715: 'RenderingManager::LoanUniformBindingSlot': not all control paths return a value
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.02441s < 16570074316390 - 16570074560522 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\RenderingManager.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.00841s < 16570074569794 - 16570074653857 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Primitives\IndexBuffer.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.01161s < 16570074665420 - 16570074781538 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\GLCommon.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.02543s < 16570074793016 - 16570075047267 > [C:\dev\Vanadium\VanadiumEngine\src\core\Components\CameraComponent.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.03202s < 16570075311609 - 16570075631824 > [C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\Tokenizer\TokenizedShader.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.04712s < 16570075643784 - 16570076114962 > [C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\Tokenizer\TokenAnalyzer.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.06272s < 16570076125660 - 16570076752867 > [C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\Tokenizer\ShaderTokenizer.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.02192s < 16570076761543 - 16570076980699 > [C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\CodeGenerator\ShaderCodeGenerator.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.00740s < 16570076989068 - 16570077063067 > [C:\dev\Vanadium\VanadiumEngine\src\core\InputManager\InputManager.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.01316s < 16570077069843 - 16570077201426 > [C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\EntityComponentSystem.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.00664s < 16570077209698 - 16570077276128 > [C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.03666s < 16570077283896 - 16570077650473 > [C:\dev\Vanadium\VanadiumEngine\src\core\BuiltIn\Layers\GridBackgroundLayer.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.01506s < 16570077657945 - 16570077808527 > [C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\LiveComponent\LiveComponent.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.00522s < 16570077818062 - 16570077870249 > [C:\dev\Vanadium\VanadiumEngine\src\core\Components\TransformComponent.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.01685s < 16570077877074 - 16570078045623 > [C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetTypes\Texture\TextureAsset.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.01926s < 16570078053829 - 16570078246444 > [C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetTypes\Texture\Texture.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.04734s < 16570078254115 - 16570078727558 > [C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetTypes\Shader\ShaderAsset.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.02431s < 16570078734911 - 16570078978059 > [C:\dev\Vanadium\VanadiumEngine\src\core\Application.cpp]
+1>Compiling...
+1>GLShader.cpp
+1>C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Shaders\GLShader.cpp(18,10): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=0.56678s < 16570078986556 - 16570084654385 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Shaders\GLShader.cpp]
+1>GLUniformBuffer.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=0.48089s < 16570084668389 - 16570089477301 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Shaders\GLUniformBuffer.cpp]
+1>Shader.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=1.12602s < 16570089489704 - 16570100749950 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Shaders\Shader.cpp]
+1>UniformBinder.cpp
+1>C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Shaders\UniformBinder.cpp(12,23): warning C4018: '<': signed/unsigned mismatch
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=0.53066s < 16570100765522 - 16570106072104 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Shaders\UniformBinder.cpp]
+1>UniformObject.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=0.63031s < 16570106084274 - 16570112387420 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Shaders\UniformObject.cpp]
+1>GLTexture.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=1.09995s < 16570112613804 - 16570123613309 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Textures\GLTexture.cpp]
+1>VertexArray.cpp
+1>C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Primitives\VertexArray.cpp(42,3): warning C4312: 'type cast': conversion from 'int' to 'void *' of greater size
+1>C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Primitives\VertexArray.cpp(48,43): warning C4267: '+=': conversion from 'size_t' to 'unsigned int', possible loss of data
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=0.47559s < 16570123627013 - 16570128382869 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Primitives\VertexArray.cpp]
+1>VertexBuffer.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=0.45683s < 16570128396327 - 16570132964643 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Primitives\VertexBuffer.cpp]
+1>Window.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=0.63284s < 16570132987202 - 16570139315617 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Window\Window.cpp]
+1>Scene.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=0.53981s < 16570139333909 - 16570144732034 > [C:\dev\Vanadium\VanadiumEngine\src\core\Scene\Scene.cpp]
+1>SceneManager.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=1.40020s < 16570144747386 - 16570158749361 > [C:\dev\Vanadium\VanadiumEngine\src\core\Scene\SceneManager.cpp]
+1>SceneSetupStep.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=1.37153s < 16570158760413 - 16570172475711 > [C:\dev\Vanadium\VanadiumEngine\src\core\Scene\SceneSetupStep.cpp]
+1>IdIndexMap.cpp
+1>C:\dev\Vanadium\VanadiumEngine\src\core\Util\IdIndexMap.cpp(26,12): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+1>C:\dev\Vanadium\VanadiumEngine\src\core\Util\IdIndexMap.cpp(28,39): warning C4244: 'argument': conversion from 'unsigned __int64' to 'double', possible loss of data
+1>C:\dev\Vanadium\VanadiumEngine\src\core\Util\IdIndexMap.cpp(28,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+1>C:\dev\Vanadium\VanadiumEngine\src\core\Util\IdIndexMap.cpp(33,15): warning C4018: '<=': signed/unsigned mismatch
+1>C:\dev\Vanadium\VanadiumEngine\src\core\Util\IdIndexMap.cpp(34,15): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+1>C:\dev\Vanadium\VanadiumEngine\src\core\Util\IdIndexMap.cpp(36,17): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+1>C:\dev\Vanadium\VanadiumEngine\src\core\Util\IdIndexMap.cpp(88,18): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=0.22704s < 16570172487668 - 16570174758036 > [C:\dev\Vanadium\VanadiumEngine\src\core\Util\IdIndexMap.cpp]
+1>lodepng.cpp
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=0.32658s < 16570174770790 - 16570178036631 > [C:\dev\Vanadium\VanadiumEngine\src\lodepng.cpp]
+1>Generating Code...
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.03001s < 16570178050050 - 16570178350101 > [C:\dev\Vanadium\VanadiumEngine\src\lodepng.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.01135s < 16570178359373 - 16570178472908 > [C:\dev\Vanadium\VanadiumEngine\src\core\Util\IdIndexMap.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.01854s < 16570178482681 - 16570178668124 > [C:\dev\Vanadium\VanadiumEngine\src\core\Scene\SceneSetupStep.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.02188s < 16570178676283 - 16570178895072 > [C:\dev\Vanadium\VanadiumEngine\src\core\Scene\SceneManager.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.01074s < 16570178903069 - 16570179010516 > [C:\dev\Vanadium\VanadiumEngine\src\core\Scene\Scene.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.00999s < 16570179017370 - 16570179117318 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Window\Window.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.00725s < 16570179127515 - 16570179199966 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Primitives\VertexBuffer.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.00818s < 16570179208937 - 16570179290693 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Primitives\VertexArray.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.01344s < 16570179300034 - 16570179434439 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Textures\GLTexture.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.03775s < 16570179442472 - 16570179819986 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Shaders\UniformObject.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.01201s < 16570179829632 - 16570179949727 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Shaders\UniformBinder.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.02343s < 16570179961994 - 16570180196326 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Shaders\Shader.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.00741s < 16570180205097 - 16570180279230 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Shaders\GLUniformBuffer.cpp]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.01670s < 16570180287585 - 16570180454580 > [C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Shaders\GLShader.cpp]
+1>glad.c
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1.dll)=0.19750s < 16570182986086 - 16570184961087 > BB [C:\dev\Vanadium\VanadiumEngine\src\glad.c]
+1>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.01608s < 16570184973756 - 16570185134549 > BB [C:\dev\Vanadium\VanadiumEngine\src\glad.c]
+1>VanadiumEngine.vcxproj -> C:\dev\Vanadium\Binaries\windows-x86_64\Debug\VanadiumEngine\VanadiumEngine.lib
+1>Done building project "VanadiumEngine.vcxproj".
+2>------ Rebuild All started: Project: Vanadium-Game, Configuration: Debug x64 ------
+2>CameraMovementComponent.cpp
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(36,9): warning C4311: 'reinterpret_cast': pointer truncation from 'unsigned int *' to 'unsigned int'
+2>(compiling source file 'src/Platformer/Components/CameraMovementComponent.cpp')
+2>    C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(36,9):
+2>    the template instantiation context (the oldest one first) is
+2>        C:\dev\Vanadium\VanadiumGame\src\Platformer\Components\CameraMovementComponent.cpp(17,28):
+2>        see reference to function template instantiation 'TComponent &LiveComponent::GetComponent<CameraComponent>(void)' being compiled
+2>        with
+2>        [
+2>            TComponent=CameraComponent
+2>        ]
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\LiveComponent\LiveComponent.h(25,41):
+2>        see reference to function template instantiation 'TComponent &Entity::GetComponent<CameraComponent>(void)' being compiled
+2>        with
+2>        [
+2>            TComponent=CameraComponent
+2>        ]
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(56,34):
+2>        see reference to function template instantiation 'unsigned int GetComponentTypeId<CameraComponent>(void)' being compiled
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(36,9): warning C4302: 'reinterpret_cast': truncation from 'unsigned int *' to 'unsigned int'
+2>(compiling source file 'src/Platformer/Components/CameraMovementComponent.cpp')
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47): warning C4930: 'std::unique_ptr<ComponentStore<CameraComponent>,std::default_delete<ComponentStore<CameraComponent>>> store(void)': prototyped function not called (was a variable definition intended?)
+2>(compiling source file 'src/Platformer/Components/CameraMovementComponent.cpp')
+2>    C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47):
+2>    the template instantiation context (the oldest one first) is
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(67,26):
+2>        see reference to function template instantiation 'TComponent &ComponentStoreManager::GetComponent<CameraComponent>(unsigned int)' being compiled
+2>        with
+2>        [
+2>            TComponent=CameraComponent
+2>        ]
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(67,39):
+2>        see reference to function template instantiation 'std::optional<ComponentStore<CameraComponent> *> ComponentStoreManager::GetComponentStore<CameraComponent>(void)' being compiled
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47): warning C4930: 'std::unique_ptr<ComponentStore<TransformComponent>,std::default_delete<ComponentStore<TransformComponent>>> store(void)': prototyped function not called (was a variable definition intended?)
+2>(compiling source file 'src/Platformer/Components/CameraMovementComponent.cpp')
+2>    C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47):
+2>    the template instantiation context (the oldest one first) is
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(67,26):
+2>        see reference to function template instantiation 'TComponent &ComponentStoreManager::GetComponent<TransformComponent>(unsigned int)' being compiled
+2>        with
+2>        [
+2>            TComponent=TransformComponent
+2>        ]
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(67,39):
+2>        see reference to function template instantiation 'std::optional<ComponentStore<TransformComponent> *> ComponentStoreManager::GetComponentStore<TransformComponent>(void)' being compiled
+2>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=1.46781s < 16570188108834 - 16570202786909 > BB [C:\dev\Vanadium\VanadiumGame\src\Platformer\Components\CameraMovementComponent.cpp]
+2>PlayerMovementComponent.cpp
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(36,9): warning C4311: 'reinterpret_cast': pointer truncation from 'unsigned int *' to 'unsigned int'
+2>(compiling source file 'src/Platformer/Components/PlayerMovementComponent.cpp')
+2>    C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(36,9):
+2>    the template instantiation context (the oldest one first) is
+2>        C:\dev\Vanadium\VanadiumGame\src\Platformer\Components\PlayerMovementComponent.cpp(10,34):
+2>        see reference to function template instantiation 'TComponent &LiveComponent::GetComponent<TransformComponent>(void)' being compiled
+2>        with
+2>        [
+2>            TComponent=TransformComponent
+2>        ]
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\LiveComponent\LiveComponent.h(25,41):
+2>        see reference to function template instantiation 'TComponent &Entity::GetComponent<TransformComponent>(void)' being compiled
+2>        with
+2>        [
+2>            TComponent=TransformComponent
+2>        ]
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(56,34):
+2>        see reference to function template instantiation 'unsigned int GetComponentTypeId<TransformComponent>(void)' being compiled
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(36,9): warning C4302: 'reinterpret_cast': truncation from 'unsigned int *' to 'unsigned int'
+2>(compiling source file 'src/Platformer/Components/PlayerMovementComponent.cpp')
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47): warning C4930: 'std::unique_ptr<ComponentStore<TransformComponent>,std::default_delete<ComponentStore<TransformComponent>>> store(void)': prototyped function not called (was a variable definition intended?)
+2>(compiling source file 'src/Platformer/Components/PlayerMovementComponent.cpp')
+2>    C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47):
+2>    the template instantiation context (the oldest one first) is
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(67,26):
+2>        see reference to function template instantiation 'TComponent &ComponentStoreManager::GetComponent<TransformComponent>(unsigned int)' being compiled
+2>        with
+2>        [
+2>            TComponent=TransformComponent
+2>        ]
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(67,39):
+2>        see reference to function template instantiation 'std::optional<ComponentStore<TransformComponent> *> ComponentStoreManager::GetComponentStore<TransformComponent>(void)' being compiled
+2>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=1.40264s < 16570202807154 - 16570216833541 > [C:\dev\Vanadium\VanadiumGame\src\Platformer\Components\PlayerMovementComponent.cpp]
+2>SpriteRendererComponent.cpp
+2>C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(26,47): warning C4930: 'std::unique_ptr<FileAssetStore<TextureRGBAAsset>,std::default_delete<FileAssetStore<TextureRGBAAsset>>> store(void)': prototyped function not called (was a variable definition intended?)
+2>(compiling source file 'src/Platformer/SpriteRendererComponent.cpp')
+2>    C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(26,47):
+2>    the template instantiation context (the oldest one first) is
+2>        C:\dev\Vanadium\VanadiumGame\src\Platformer\SpriteRendererComponent.cpp(5,50):
+2>        see reference to function template instantiation 'std::shared_ptr<TextureRGBAAsset> AssetManager::GetFileAsset<TextureRGBAAsset>(std::filesystem::path)' being compiled
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(34,39):
+2>        see reference to function template instantiation 'FileAssetStore<TextureRGBAAsset> *AssetManager::GetAssetStore<TextureRGBAAsset>(void)' being compiled
+2>C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4311: 'reinterpret_cast': pointer truncation from 'u32 *' to 'u32'
+2>(compiling source file 'src/Platformer/SpriteRendererComponent.cpp')
+2>    C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9):
+2>    the template instantiation context (the oldest one first) is
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(34,39):
+2>        see reference to function template instantiation 'FileAssetStore<TextureRGBAAsset> *AssetManager::GetAssetStore<TextureRGBAAsset>(void)' being compiled
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(22,37):
+2>        see reference to function template instantiation 'u32 GetAssetTypeId<TextureRGBAAsset>(void)' being compiled
+2>C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4302: 'reinterpret_cast': truncation from 'u32 *' to 'u32'
+2>(compiling source file 'src/Platformer/SpriteRendererComponent.cpp')
+2>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=1.44355s < 16570216847758 - 16570231283246 > [C:\dev\Vanadium\VanadiumGame\src\Platformer\SpriteRendererComponent.cpp]
+2>SpriteRendererLayer.cpp
+2>C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(26,47): warning C4930: 'std::unique_ptr<FileAssetStore<ShaderCodeAsset>,std::default_delete<FileAssetStore<ShaderCodeAsset>>> store(void)': prototyped function not called (was a variable definition intended?)
+2>(compiling source file 'src/Platformer/SpriteRendererLayer.cpp')
+2>    C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(26,47):
+2>    the template instantiation context (the oldest one first) is
+2>        C:\dev\Vanadium\VanadiumGame\src\Platformer\SpriteRendererLayer.cpp(10,58):
+2>        see reference to function template instantiation 'std::shared_ptr<ShaderCodeAsset> AssetManager::GetFileAsset<ShaderCodeAsset>(std::filesystem::path)' being compiled
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(34,39):
+2>        see reference to function template instantiation 'FileAssetStore<ShaderCodeAsset> *AssetManager::GetAssetStore<ShaderCodeAsset>(void)' being compiled
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47): warning C4930: 'std::unique_ptr<ComponentStore<SpriteRendererComponent>,std::default_delete<ComponentStore<SpriteRendererComponent>>> store(void)': prototyped function not called (was a variable definition intended?)
+2>(compiling source file 'src/Platformer/SpriteRendererLayer.cpp')
+2>    C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47):
+2>    the template instantiation context (the oldest one first) is
+2>        C:\dev\Vanadium\VanadiumGame\src\Platformer\SpriteRendererLayer.cpp(32,58):
+2>        see reference to function template instantiation 'std::optional<ComponentStore<SpriteRendererComponent> *> EntityComponentSystem::GetComponentStore<SpriteRendererComponent>(void)' being compiled
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\EntityComponentSystem.h(28,25):
+2>        see reference to function template instantiation 'std::optional<ComponentStore<SpriteRendererComponent> *> ComponentStoreManager::GetComponentStore<SpriteRendererComponent>(void)' being compiled
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47): warning C4930: 'std::unique_ptr<ComponentStore<TransformComponent>,std::default_delete<ComponentStore<TransformComponent>>> store(void)': prototyped function not called (was a variable definition intended?)
+2>(compiling source file 'src/Platformer/SpriteRendererLayer.cpp')
+2>    C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47):
+2>    the template instantiation context (the oldest one first) is
+2>        C:\dev\Vanadium\VanadiumGame\src\Platformer\SpriteRendererLayer.cpp(33,52):
+2>        see reference to function template instantiation 'std::optional<ComponentStore<TransformComponent> *> EntityComponentSystem::GetComponentStore<TransformComponent>(void)' being compiled
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\EntityComponentSystem.h(28,25):
+2>        see reference to function template instantiation 'std::optional<ComponentStore<TransformComponent> *> ComponentStoreManager::GetComponentStore<TransformComponent>(void)' being compiled
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(36,9): warning C4311: 'reinterpret_cast': pointer truncation from 'unsigned int *' to 'unsigned int'
+2>(compiling source file 'src/Platformer/SpriteRendererLayer.cpp')
+2>    C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(36,9):
+2>    the template instantiation context (the oldest one first) is
+2>        C:\dev\Vanadium\VanadiumGame\src\Platformer\SpriteRendererLayer.cpp(63,30):
+2>        see reference to function template instantiation 'TComponent &Entity::GetComponent<TransformComponent>(void)' being compiled
+2>        with
+2>        [
+2>            TComponent=TransformComponent
+2>        ]
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(56,34):
+2>        see reference to function template instantiation 'unsigned int GetComponentTypeId<TransformComponent>(void)' being compiled
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(36,9): warning C4302: 'reinterpret_cast': truncation from 'unsigned int *' to 'unsigned int'
+2>(compiling source file 'src/Platformer/SpriteRendererLayer.cpp')
+2>C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4311: 'reinterpret_cast': pointer truncation from 'u32 *' to 'u32'
+2>(compiling source file 'src/Platformer/SpriteRendererLayer.cpp')
+2>    C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9):
+2>    the template instantiation context (the oldest one first) is
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(34,39):
+2>        see reference to function template instantiation 'FileAssetStore<ShaderCodeAsset> *AssetManager::GetAssetStore<ShaderCodeAsset>(void)' being compiled
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(22,37):
+2>        see reference to function template instantiation 'u32 GetAssetTypeId<ShaderCodeAsset>(void)' being compiled
+2>C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4302: 'reinterpret_cast': truncation from 'u32 *' to 'u32'
+2>(compiling source file 'src/Platformer/SpriteRendererLayer.cpp')
+2>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=1.51259s < 16570231301395 - 16570246427335 > [C:\dev\Vanadium\VanadiumGame\src\Platformer\SpriteRendererLayer.cpp]
+2>SimdTest.cpp
+2>C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(18,18): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+2>C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(71,18): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+2>C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(106,115): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+2>C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(106,94): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+2>C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(106,73): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+2>C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(106,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+2>C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(107,120): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+2>C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(107,98): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+2>C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(107,76): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+2>C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(107,54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+2>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=0.21968s < 16570246438676 - 16570248635458 > [C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp]
+2>main.cpp
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47): warning C4930: 'std::unique_ptr<ComponentStore<TransformComponent>,std::default_delete<ComponentStore<TransformComponent>>> store(void)': prototyped function not called (was a variable definition intended?)
+2>(compiling source file 'src/main.cpp')
+2>    C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47):
+2>    the template instantiation context (the oldest one first) is
+2>        C:\dev\Vanadium\VanadiumGame\src\main.cpp(22,10):
+2>        see reference to function template instantiation 'TComponent &Entity::AddComponent<TransformComponent>(void)' being compiled
+2>        with
+2>        [
+2>            TComponent=TransformComponent
+2>        ]
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(48,54):
+2>        see reference to function template instantiation 'ComponentRef ComponentStoreManager::AddComponent<TransformComponent>(unsigned int)' being compiled
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(58,48):
+2>        see reference to function template instantiation 'std::optional<ComponentStore<TransformComponent> *> ComponentStoreManager::GetComponentStore<TransformComponent>(void)' being compiled
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47): warning C4930: 'std::unique_ptr<ComponentStore<CameraComponent>,std::default_delete<ComponentStore<CameraComponent>>> store(void)': prototyped function not called (was a variable definition intended?)
+2>(compiling source file 'src/main.cpp')
+2>    C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47):
+2>    the template instantiation context (the oldest one first) is
+2>        C:\dev\Vanadium\VanadiumGame\src\main.cpp(23,10):
+2>        see reference to function template instantiation 'TComponent &Entity::AddComponent<CameraComponent>(void)' being compiled
+2>        with
+2>        [
+2>            TComponent=CameraComponent
+2>        ]
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(48,54):
+2>        see reference to function template instantiation 'ComponentRef ComponentStoreManager::AddComponent<CameraComponent>(unsigned int)' being compiled
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(58,48):
+2>        see reference to function template instantiation 'std::optional<ComponentStore<CameraComponent> *> ComponentStoreManager::GetComponentStore<CameraComponent>(void)' being compiled
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47): warning C4930: 'std::unique_ptr<ComponentStore<TComponent>,std::default_delete<ComponentStore<TComponent>>> store(void)': prototyped function not called (was a variable definition intended?)
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47): warning C4930:         with
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47): warning C4930:         [
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47): warning C4930:             TComponent=CameraMovementComponent
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47): warning C4930:         ]
+2>(compiling source file 'src/main.cpp')
+2>    C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47):
+2>    the template instantiation context (the oldest one first) is
+2>        C:\dev\Vanadium\VanadiumGame\src\main.cpp(24,10):
+2>        see reference to function template instantiation 'TComponent &Entity::AddComponent<CameraMovementComponent>(void)' being compiled
+2>        with
+2>        [
+2>            TComponent=CameraMovementComponent
+2>        ]
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(48,54):
+2>        see reference to function template instantiation 'ComponentRef ComponentStoreManager::AddComponent<CameraMovementComponent>(unsigned int)' being compiled
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(58,48):
+2>        see reference to function template instantiation 'std::optional<ComponentStore<TComponent> *> ComponentStoreManager::GetComponentStore<CameraMovementComponent>(void)' being compiled
+2>        with
+2>        [
+2>            TComponent=CameraMovementComponent
+2>        ]
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47): warning C4930: 'std::unique_ptr<ComponentStore<TComponent>,std::default_delete<ComponentStore<TComponent>>> store(void)': prototyped function not called (was a variable definition intended?)
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47): warning C4930:         with
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47): warning C4930:         [
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47): warning C4930:             TComponent=PlayerMovementComponent
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47): warning C4930:         ]
+2>(compiling source file 'src/main.cpp')
+2>    C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47):
+2>    the template instantiation context (the oldest one first) is
+2>        C:\dev\Vanadium\VanadiumGame\src\main.cpp(27,6):
+2>        see reference to function template instantiation 'TComponent &Entity::AddComponent<PlayerMovementComponent>(void)' being compiled
+2>        with
+2>        [
+2>            TComponent=PlayerMovementComponent
+2>        ]
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(48,54):
+2>        see reference to function template instantiation 'ComponentRef ComponentStoreManager::AddComponent<PlayerMovementComponent>(unsigned int)' being compiled
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(58,48):
+2>        see reference to function template instantiation 'std::optional<ComponentStore<TComponent> *> ComponentStoreManager::GetComponentStore<PlayerMovementComponent>(void)' being compiled
+2>        with
+2>        [
+2>            TComponent=PlayerMovementComponent
+2>        ]
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47): warning C4930: 'std::unique_ptr<ComponentStore<SpriteRendererComponent>,std::default_delete<ComponentStore<SpriteRendererComponent>>> store(void)': prototyped function not called (was a variable definition intended?)
+2>(compiling source file 'src/main.cpp')
+2>    C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(38,47):
+2>    the template instantiation context (the oldest one first) is
+2>        C:\dev\Vanadium\VanadiumGame\src\main.cpp(28,6):
+2>        see reference to function template instantiation 'TComponent &Entity::AddComponent<SpriteRendererComponent>(void)' being compiled
+2>        with
+2>        [
+2>            TComponent=SpriteRendererComponent
+2>        ]
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(48,54):
+2>        see reference to function template instantiation 'ComponentRef ComponentStoreManager::AddComponent<SpriteRendererComponent>(unsigned int)' being compiled
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(58,48):
+2>        see reference to function template instantiation 'std::optional<ComponentStore<SpriteRendererComponent> *> ComponentStoreManager::GetComponentStore<SpriteRendererComponent>(void)' being compiled
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStore.h(23,78): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+2>(compiling source file 'src/main.cpp')
+2>    C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStore.h(23,78):
+2>    the template instantiation context (the oldest one first) is
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(59,30):
+2>        see reference to class template instantiation 'ComponentStore<SpriteRendererComponent>' being compiled
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStore.h(20,15):
+2>        while compiling class template member function 'unsigned int ComponentStore<SpriteRendererComponent>::CreateInstance(unsigned int)'
+2>            C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(59,28):
+2>            see the first reference to 'ComponentStore<SpriteRendererComponent>::CreateInstance' in 'ComponentStoreManager::AddComponent'
+2>            C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(48,54):
+2>            see the first reference to 'ComponentStoreManager::AddComponent' in 'Entity::AddComponent'
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(36,9): warning C4311: 'reinterpret_cast': pointer truncation from 'unsigned int *' to 'unsigned int'
+2>(compiling source file 'src/main.cpp')
+2>    C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(36,9):
+2>    the template instantiation context (the oldest one first) is
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(58,48):
+2>        see reference to function template instantiation 'std::optional<ComponentStore<TransformComponent> *> ComponentStoreManager::GetComponentStore<TransformComponent>(void)' being compiled
+2>        C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(34,32):
+2>        see reference to function template instantiation 'unsigned int GetComponentTypeId<TransformComponent>(void)' being compiled
+2>C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(36,9): warning C4302: 'reinterpret_cast': truncation from 'unsigned int *' to 'unsigned int'
+2>(compiling source file 'src/main.cpp')
+2>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c1xx.dll)=1.55671s < 16570248651094 - 16570264218174 > [C:\dev\Vanadium\VanadiumGame\src\main.cpp]
+2>Generating Code...
+2>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.05476s < 16570264229660 - 16570264777290 > BB [C:\dev\Vanadium\VanadiumGame\src\main.cpp]
+2>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.01039s < 16570264787583 - 16570264891470 > [C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp]
+2>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.06627s < 16570264899530 - 16570265562267 > [C:\dev\Vanadium\VanadiumGame\src\Platformer\SpriteRendererLayer.cpp]
+2>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.03470s < 16570265570700 - 16570265917697 > [C:\dev\Vanadium\VanadiumGame\src\Platformer\SpriteRendererComponent.cpp]
+2>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.05676s < 16570265926406 - 16570266493983 > [C:\dev\Vanadium\VanadiumGame\src\Platformer\Components\PlayerMovementComponent.cpp]
+2>time(C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\c2.dll)=0.02698s < 16570266503034 - 16570266772815 > [C:\dev\Vanadium\VanadiumGame\src\Platformer\Components\CameraMovementComponent.cpp]
+2>MSVCRTD.lib(initializers.obj) : warning LNK4098: defaultlib 'msvcrt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
+2>Vanadium-Game.vcxproj -> C:\dev\Vanadium\Binaries\windows-x86_64\Debug\Vanadium-Game\Vanadium-Game.exe
+2>Done building project "Vanadium-Game.vcxproj".
+========== Rebuild All: 2 succeeded, 0 failed, 0 skipped ==========
+========== Rebuild completed at 17:26 and took 37.555 seconds ==========

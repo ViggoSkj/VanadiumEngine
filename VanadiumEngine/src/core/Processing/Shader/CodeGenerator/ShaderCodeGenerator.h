@@ -1,4 +1,5 @@
 #pragma once
+#include "pch.h"
 #include "core/Processing/Shader/IShaderCodeLoader.h"
 #include "core/Processing/Shader/ShaderProcessingObject.h"
 

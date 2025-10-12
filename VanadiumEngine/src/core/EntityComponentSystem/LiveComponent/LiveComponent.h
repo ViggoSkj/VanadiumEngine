@@ -1,4 +1,5 @@
 #pragma once
+#include "pch.h"
 #include "core/EntityComponentSystem/EntityComponentSystem.h"
 
 class LiveComponent : public Component
