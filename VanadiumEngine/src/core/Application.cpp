@@ -1,4 +1,6 @@
 #include "pch.h"
+#include <thread>
+#include <chrono>
 #include "Application.h"
 #include "GLCommon.h"
 #include <memory>
@@ -28,6 +30,10 @@ Application::Application(unsigned int width, unsigned int height)
 
 	GL_CHECK(glViewport(0, 0, m_window->GetWidth(), m_window->GetHeight()));
 
+	GL_CHECK(glEnable(GL_BLEND));
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	Application::s_instance = this;
 }
 
@@ -38,11 +44,21 @@ Application::~Application()
 void Application::Run()
 {
 	float prevTime = (float)glfwGetTime();
+	double fpsCap = 120;
+	double minDt = 1.0 / fpsCap;
 	while (m_running)
 	{
 		double dt = (double)glfwGetTime() - prevTime;
+
+		if (dt < minDt)
+		{
+			std::this_thread::sleep_for(std::chrono::microseconds((long long)((minDt - dt) * 1000000)));
+			dt = (double)glfwGetTime() - prevTime;
+		}
+
 		m_time->TimeSinceStart += dt;
 		prevTime = (float)glfwGetTime();
+
 
 		GL_CHECK(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
 		GL_CHECK(glClear(GL_COLOR_BUFFER_BIT));
@@ -59,7 +75,6 @@ void Application::Run()
 		{
 			m_applicationLayers[i]->OnUpdate(dt);
 		}
-
 
 		for (int i = 0; i < m_applicationLayers.size(); i++)
 		{

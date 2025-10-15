@@ -1,6 +1,5 @@
 #pragma once
 #include "pch.h"
-#include <filesystem>
 #include "ShaderProcessingObject.h"
 
 struct IShaderCodeLoader

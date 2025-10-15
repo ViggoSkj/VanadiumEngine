@@ -1,7 +1,6 @@
 #pragma once
 #include "pch.h"
 #include <memory>
-#include <filesystem>
 #include <typeindex>
 #include "FileAsset.h"
 #include "AssetTypes/Texture/Texture.h"

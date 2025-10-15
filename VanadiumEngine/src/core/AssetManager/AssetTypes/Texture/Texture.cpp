@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "Texture.h"
 #include <iostream>
-#include <filesystem>
 #include "lodepng/lodepng.h"
 
 TextureRGBA::TextureRGBA(std::filesystem::path path, ImageFileFormat format)

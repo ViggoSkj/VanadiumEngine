@@ -13,6 +13,8 @@ Window::Window(int width, int height)
 	m_width = width;	
 	m_height = height;	
 
+	
+
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);

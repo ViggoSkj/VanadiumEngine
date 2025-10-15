@@ -1,6 +1,5 @@
 #pragma once
 #include "pch.h"
-#include <filesystem>
 #include "core/Rendering/Primitives/Color.h"
 #include "core/Util/Array2D.h"
 

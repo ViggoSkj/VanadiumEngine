@@ -9,12 +9,11 @@ void PlayerMovementComponent::OnUpdate(double dt)
 
 	TransformComponent& transform = GetComponent<TransformComponent>();
 
-	if (Input.Down(Key::W))
-		transform.Position.y += 1.0f * (float)dt;
-	if (Input.Down(Key::S))
-		transform.Position.y -= 1.0f * (float)dt;
-	if (Input.Down(Key::A))
-		transform.Position.x -= 1.0f * (float)dt;
-	if (Input.Down(Key::D))
-		transform.Position.x += 1.0f * (float)dt;
+	speed += gravity * dt;
+	transform.Position += Vector2(0, speed) * (float) dt;
+
+	if (Input.GetKey(Key::Space) == KeyState::Pressed)
+		speed = -gravity * 0.5;
+
+	transform.Position.x = sin(Application::Get().GetTime().TimeSinceStart) * 3.0f - 1.5f;
 }

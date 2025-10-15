@@ -14,9 +14,9 @@ public:
 	TransformComponent(unsigned int owner);
 
 
-	glm::vec2 Position;
+	Vector2 Position;
 
-	glm::mat4 ModelMatrix()
+	Matrix4x4 ModelMatrix()
 	{
 		return glm::translate(glm::identity<glm::mat4>(), glm::vec3(Position, 0.0));
 	}

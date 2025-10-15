@@ -1,0 +1,625 @@
+MSBuild version 17.14.19+164abd434 for .NET Framework
+Build started 2025-10-12 19:05:58.
+
+Project "C:\dev\Vanadium\Vanadium.sln" on node 1 (default targets).
+ValidateSolutionConfiguration:
+  Building solution configuration "Release|x64".
+Project "C:\dev\Vanadium\Vanadium.sln" (1) is building "C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj" (2) on node 1 (default targets).
+Project "C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj" (2) is building "C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj" (3) on node 1 (default targets).
+PrepareForBuild:
+  Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+InitializeBuildStatus:
+  Creating "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\VanadiumEngine.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+  Touching "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\VanadiumEngine.tlog\unsuccessfulbuild".
+ClCompile:
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\CL.exe /c /Isrc /Isrc\Includes /Isrc\core\AssetManager /Isrc\core\rendering /I..\Vendor\includes /Zi /nologo /W3 /WX- /diagnostics:column /Ox /Oi /D RELEASE /D _UNICODE /D UNICODE /GF /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++20 /Yc"pch.h" /Fp"C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\VanadiumEngine.pch" /Fo"C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\\" /Fd"C:\dev\Vanadium\VanadiumEngine\..\Binaries\windows-x86_64\Release\VanadiumEngine\VanadiumEngine.pdb" /external:W3 /Gd /TP /FC /errorReport:queue /EHsc /Zc:preprocessor /Zc:__cplusplus /MP src\Includes\pch.cpp
+  pch.cpp
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\CL.exe /c /Isrc /Isrc\Includes /Isrc\core\AssetManager /Isrc\core\rendering /I..\Vendor\includes /Zi /nologo /W3 /WX- /diagnostics:column /Ox /Oi /D RELEASE /D _UNICODE /D UNICODE /GF /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++20 /Yu"pch.h" /Fp"C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\VanadiumEngine.pch" /Fo"C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\\" /Fd"C:\dev\Vanadium\VanadiumEngine\..\Binaries\windows-x86_64\Release\VanadiumEngine\VanadiumEngine.pdb" /external:W3 /Gd /TP /FC /errorReport:queue /EHsc /Zc:preprocessor /Zc:__cplusplus /MP src\core\Application.cpp src\core\AssetManager\AssetTypes\Shader\ShaderAsset.cpp src\core\AssetManager\AssetTypes\Texture\Texture.cpp src\core\AssetManager\AssetTypes\Texture\TextureAsset.cpp src\core\BuiltIn\Layers\GridBackgroundLayer.cpp src\core\Components\CameraComponent.cpp src\core\Components\TransformComponent.cpp src\core\EntityComponentSystem\Component.cpp src\core\EntityComponentSystem\EntityComponentSystem.cpp src\core\EntityComponentSystem\LiveComponent\LiveComponent.cpp src\core\InputManager\InputManager.cpp src\core\Processing\Shader\CodeGenerator\ShaderCodeGenerator.cpp src\core\Processing\Shader\Tokenizer\ShaderTokenizer.cpp src\core\Processing\Shader\Tokenizer\TokenAnalyzer.cpp src\core\Processing\Shader\Tokenizer\TokenizedShader.cpp src\core\Rendering\GLCommon.cpp src\core\Rendering\Primitives\IndexBuffer.cpp src\core\Rendering\Primitives\VertexArray.cpp src\core\Rendering\Primitives\VertexBuffer.cpp src\core\Rendering\RenderingManager.cpp src\core\Rendering\Shaders\Descriptors\ShaderDescriptor.cpp src\core\Rendering\Shaders\Descriptors\ShaderDescriptorBase.cpp src\core\Rendering\Shaders\GLShader.cpp src\core\Rendering\Shaders\GLUniformBuffer.cpp src\core\Rendering\Shaders\Shader.cpp src\core\Rendering\Shaders\UniformBinder.cpp src\core\Rendering\Shaders\UniformObject.cpp src\core\Rendering\Textures\GLTexture.cpp src\core\Rendering\Window\Window.cpp src\core\Scene\Scene.cpp src\core\Scene\SceneManager.cpp src\core\Scene\SceneSetupStep.cpp src\core\Util\IdIndexMap.cpp src\glad.cpp src\lodepng.cpp
+  Application.cpp
+  ShaderAsset.cpp
+  Texture.cpp
+  TextureAsset.cpp
+  GridBackgroundLayer.cpp
+  CameraComponent.cpp
+  TransformComponent.cpp
+  Component.cpp
+  EntityComponentSystem.cpp
+  LiveComponent.cpp
+  InputManager.cpp
+  ShaderCodeGenerator.cpp
+  ShaderTokenizer.cpp
+  TokenAnalyzer.cpp
+  TokenizedShader.cpp
+  GLCommon.cpp
+  IndexBuffer.cpp
+  VertexArray.cpp
+  VertexBuffer.cpp
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\EntityComponentSystem.cpp(12,79): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/EntityComponentSystem/EntityComponentSystem.cpp')
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Primitives\VertexArray.cpp(43,3): warning C4312: 'type cast': conversion from 'int' to 'void *' of greater size [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/Rendering/Primitives/VertexArray.cpp')
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Primitives\VertexArray.cpp(49,43): warning C4267: '+=': conversion from 'size_t' to 'unsigned int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/Rendering/Primitives/VertexArray.cpp')
+  
+  RenderingManager.cpp
+  ShaderDescriptor.cpp
+  ShaderDescriptorBase.cpp
+C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\CodeGenerator\ShaderCodeGenerator.cpp(29,41): warning C4267: '-=': conversion from 'size_t' to 'i32', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/Processing/Shader/CodeGenerator/ShaderCodeGenerator.cpp')
+  
+  GLShader.cpp
+C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\Tokenizer\ShaderTokenizer.cpp(114,30): warning C4267: '+=': conversion from 'size_t' to 'unsigned int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/Processing/Shader/Tokenizer/ShaderTokenizer.cpp')
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\Tokenizer\ShaderTokenizer.cpp(133,21): warning C4267: '+=': conversion from 'size_t' to 'unsigned int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/Processing/Shader/Tokenizer/ShaderTokenizer.cpp')
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\Tokenizer\ShaderTokenizer.cpp(145,26): warning C4267: '+=': conversion from 'size_t' to 'unsigned int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/Processing/Shader/Tokenizer/ShaderTokenizer.cpp')
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\Tokenizer\ShaderTokenizer.cpp(151,23): warning C4267: '+=': conversion from 'size_t' to 'unsigned int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/Processing/Shader/Tokenizer/ShaderTokenizer.cpp')
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\Tokenizer\ShaderTokenizer.cpp(200,19): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/Processing/Shader/Tokenizer/ShaderTokenizer.cpp')
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Shaders\GLShader.cpp(19,10): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/Rendering/Shaders/GLShader.cpp')
+  
+  GLUniformBuffer.cpp
+  Shader.cpp
+  UniformBinder.cpp
+C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\RenderingManager.cpp(22,1): warning C4715: 'RenderingManager::LoanUniformBindingSlot': not all control paths return a value [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(24,47): warning C4930: 'std::unique_ptr<FileAssetStore<ShaderCodeAsset>,std::default_delete<FileAssetStore<ShaderCodeAsset>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  UniformObject.cpp
+  (compiling source file '/src/core/AssetManager/AssetTypes/Shader/ShaderAsset.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(24,47):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetTypes\Shader\ShaderAsset.cpp(13,82):
+          see reference to function template instantiation 'FileAssetStore<ShaderCodeAsset> *AssetManager::GetAssetStore<ShaderCodeAsset>(void)' being compiled
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4311: 'reinterpret_cast': pointer truncation from 'u32 *' to 'u32' [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/AssetManager/AssetTypes/Shader/ShaderAsset.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetTypes\Shader\ShaderAsset.cpp(13,82):
+          see reference to function template instantiation 'FileAssetStore<ShaderCodeAsset> *AssetManager::GetAssetStore<ShaderCodeAsset>(void)' being compiled
+          C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(20,37):
+          see reference to function template instantiation 'u32 GetAssetTypeId<ShaderCodeAsset>(void)' being compiled
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4302: 'reinterpret_cast': truncation from 'u32 *' to 'u32' [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/AssetManager/AssetTypes/Shader/ShaderAsset.cpp')
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Shaders\Descriptors\ShaderDescriptor.cpp(73,1): warning C4715: 'ShaderDescriptor::FindUniformObjectDescriptor': not all control paths return a value [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  GLTexture.cpp
+C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Shaders\UniformBinder.cpp(13,23): warning C4018: '<': signed/unsigned mismatch [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/Rendering/Shaders/UniformBinder.cpp')
+  
+  Window.cpp
+  Scene.cpp
+  SceneManager.cpp
+C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(24,47): warning C4930: 'std::unique_ptr<FileAssetStore<ShaderCodeAsset>,std::default_delete<FileAssetStore<ShaderCodeAsset>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  SceneSetupStep.cpp
+  (compiling source file '/src/core/BuiltIn/Layers/GridBackgroundLayer.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(24,47):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumEngine\src\core\BuiltIn\Layers\GridBackgroundLayer.cpp(6,51):
+          see reference to function template instantiation 'std::shared_ptr<ShaderCodeAsset> AssetManager::GetFileAsset<ShaderCodeAsset>(std::filesystem::path)' being compiled
+          C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(32,39):
+          see reference to function template instantiation 'FileAssetStore<ShaderCodeAsset> *AssetManager::GetAssetStore<ShaderCodeAsset>(void)' being compiled
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4311: 'reinterpret_cast': pointer truncation from 'u32 *' to 'u32' [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/BuiltIn/Layers/GridBackgroundLayer.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(32,39):
+          see reference to function template instantiation 'FileAssetStore<ShaderCodeAsset> *AssetManager::GetAssetStore<ShaderCodeAsset>(void)' being compiled
+          C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(20,37):
+          see reference to function template instantiation 'u32 GetAssetTypeId<ShaderCodeAsset>(void)' being compiled
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4302: 'reinterpret_cast': truncation from 'u32 *' to 'u32' [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/BuiltIn/Layers/GridBackgroundLayer.cpp')
+  
+  IdIndexMap.cpp
+  glad.cpp
+  lodepng.cpp
+C:\dev\Vanadium\VanadiumEngine\src\core\Util\IdIndexMap.cpp(27,12): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/Util/IdIndexMap.cpp')
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\Util\IdIndexMap.cpp(29,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/Util/IdIndexMap.cpp')
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\Util\IdIndexMap.cpp(34,15): warning C4018: '<=': signed/unsigned mismatch [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/Util/IdIndexMap.cpp')
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\Util\IdIndexMap.cpp(35,15): warning C4244: '=': conversion from 'float' to 'int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/Util/IdIndexMap.cpp')
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\Util\IdIndexMap.cpp(37,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/Util/IdIndexMap.cpp')
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\Util\IdIndexMap.cpp(89,18): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/Util/IdIndexMap.cpp')
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9): warning C4311: 'reinterpret_cast': pointer truncation from 'unsigned int *' to 'unsigned int' [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/Components/CameraComponent.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumEngine\src\core\Components\CameraComponent.cpp(20,17):
+          see reference to function template instantiation 'TComponent &LiveComponent::GetComponent<TransformComponent>(void)' being compiled
+          with
+          [
+              TComponent=TransformComponent
+          ]
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\LiveComponent\LiveComponent.h(26,41):
+          see reference to function template instantiation 'TComponent &Entity::GetComponent<TransformComponent>(void)' being compiled
+          with
+          [
+              TComponent=TransformComponent
+          ]
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(57,34):
+          see reference to function template instantiation 'unsigned int GetComponentTypeId<TransformComponent>(void)' being compiled
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9): warning C4302: 'reinterpret_cast': truncation from 'unsigned int *' to 'unsigned int' [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/Components/CameraComponent.cpp')
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930: 'std::unique_ptr<ComponentStore<TransformComponent>,std::default_delete<ComponentStore<TransformComponent>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  (compiling source file '/src/core/Components/CameraComponent.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(68,26):
+          see reference to function template instantiation 'TComponent &ComponentStoreManager::GetComponent<TransformComponent>(unsigned int)' being compiled
+          with
+          [
+              TComponent=TransformComponent
+          ]
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(68,39):
+          see reference to function template instantiation 'std::optional<ComponentStore<TransformComponent> *> ComponentStoreManager::GetComponentStore<TransformComponent>(void)' being compiled
+  
+Lib:
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\Lib.exe /OUT:"C:\dev\Vanadium\VanadiumEngine\..\Binaries\windows-x86_64\Release\VanadiumEngine\VanadiumEngine.lib" /NOLOGO /MACHINE:X64 "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\pch.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\Application.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\ShaderAsset.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\Texture.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\TextureAsset.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\GridBackgroundLayer.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\CameraComponent.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\TransformComponent.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\Component.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\EntityComponentSystem.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\LiveComponent.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\InputManager.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\ShaderCodeGenerator.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\ShaderTokenizer.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\TokenAnalyzer.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\TokenizedShader.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\GLCommon.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\IndexBuffer.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\VertexArray.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\VertexBuffer.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\RenderingManager.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\ShaderDescriptor.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\ShaderDescriptorBase.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\GLShader.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\GLUniformBuffer.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\Shader.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\UniformBinder.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\UniformObject.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\GLTexture.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\Window.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\Scene.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\SceneManager.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\SceneSetupStep.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\IdIndexMap.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\glad.obj"
+  "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\lodepng.obj"
+  VanadiumEngine.vcxproj -> C:\dev\Vanadium\Binaries\windows-x86_64\Release\VanadiumEngine\VanadiumEngine.lib
+TlogCleanup:
+  Removing the following items from tlogs as they were removed from the project or build: C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.cpp
+FinalizeBuildStatus:
+  Deleting file "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\VanadiumEngine.tlog\unsuccessfulbuild".
+  Touching "C:\dev\Vanadium\VanadiumEngine\..\Binaries\Intermediates\windows-x86_64\Release\VanadiumEngine\VanadiumEngine.tlog\VanadiumEngine.lastbuildstate".
+Done Building Project "C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj" (default targets).
+PrepareForBuild:
+  Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+InitializeBuildStatus:
+  Creating "C:\dev\Vanadium\VanadiumGame\..\Binaries\Intermediates\windows-x86_64\Release\Vanadium-Game\Vanadium-Game.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+  Touching "C:\dev\Vanadium\VanadiumGame\..\Binaries\Intermediates\windows-x86_64\Release\Vanadium-Game\Vanadium-Game.tlog\unsuccessfulbuild".
+ClCompile:
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\CL.exe /c /Isrc /I..\VanadiumEngine\src /I..\VanadiumEngine\src\Includes /I..\VanadiumEngine\src\core\AssetManager /I..\VanadiumEngine\src\core\rendering /I..\Vendor\includes /Zi /nologo /W3 /WX- /diagnostics:column /Ox /Oi /D WINDOWS /D RELEASE /D _UNICODE /D UNICODE /GF /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++20 /Fo"C:\dev\Vanadium\VanadiumGame\..\Binaries\Intermediates\windows-x86_64\Release\Vanadium-Game\\" /Fd"C:\dev\Vanadium\VanadiumGame\..\Binaries\Intermediates\windows-x86_64\Release\Vanadium-Game\vc143.pdb" /external:W3 /Gd /TP /FC /errorReport:queue /EHsc /Zc:preprocessor /Zc:__cplusplus /MP src\Platformer\Components\CameraMovementComponent.cpp src\Platformer\Components\PlayerMovementComponent.cpp src\Platformer\SpriteRendererComponent.cpp src\Platformer\SpriteRendererLayer.cpp src\SimdTest\SimdTest.cpp src\main.cpp
+  CameraMovementComponent.cpp
+  PlayerMovementComponent.cpp
+  SpriteRendererComponent.cpp
+  SpriteRendererLayer.cpp
+  SimdTest.cpp
+  main.cpp
+C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(18,18): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(71,18): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(106,115): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(106,94): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(106,73): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(106,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(107,120): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(107,98): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(107,76): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(107,54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(24,47): warning C4930: 'std::unique_ptr<FileAssetStore<TextureRGBAAsset>,std::default_delete<FileAssetStore<TextureRGBAAsset>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/Platformer/SpriteRendererComponent.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(24,47):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumGame\src\Platformer\SpriteRendererComponent.cpp(5,50):
+          see reference to function template instantiation 'std::shared_ptr<TextureRGBAAsset> AssetManager::GetFileAsset<TextureRGBAAsset>(std::filesystem::path)' being compiled
+          C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(32,39):
+          see reference to function template instantiation 'FileAssetStore<TextureRGBAAsset> *AssetManager::GetAssetStore<TextureRGBAAsset>(void)' being compiled
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(24,47): warning C4930: 'std::unique_ptr<FileAssetStore<ShaderCodeAsset>,std::default_delete<FileAssetStore<ShaderCodeAsset>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/Platformer/SpriteRendererLayer.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(24,47):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumGame\src\Platformer\SpriteRendererLayer.cpp(10,58):
+          see reference to function template instantiation 'std::shared_ptr<ShaderCodeAsset> AssetManager::GetFileAsset<ShaderCodeAsset>(std::filesystem::path)' being compiled
+          C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(32,39):
+          see reference to function template instantiation 'FileAssetStore<ShaderCodeAsset> *AssetManager::GetAssetStore<ShaderCodeAsset>(void)' being compiled
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930: 'std::unique_ptr<ComponentStore<SpriteRendererComponent>,std::default_delete<ComponentStore<SpriteRendererComponent>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/Platformer/SpriteRendererLayer.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumGame\src\Platformer\SpriteRendererLayer.cpp(32,58):
+          see reference to function template instantiation 'std::optional<ComponentStore<SpriteRendererComponent> *> EntityComponentSystem::GetComponentStore<SpriteRendererComponent>(void)' being compiled
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\EntityComponentSystem.h(29,25):
+          see reference to function template instantiation 'std::optional<ComponentStore<SpriteRendererComponent> *> ComponentStoreManager::GetComponentStore<SpriteRendererComponent>(void)' being compiled
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930: 'std::unique_ptr<ComponentStore<TransformComponent>,std::default_delete<ComponentStore<TransformComponent>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/Platformer/SpriteRendererLayer.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumGame\src\Platformer\SpriteRendererLayer.cpp(33,52):
+          see reference to function template instantiation 'std::optional<ComponentStore<TransformComponent> *> EntityComponentSystem::GetComponentStore<TransformComponent>(void)' being compiled
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\EntityComponentSystem.h(29,25):
+          see reference to function template instantiation 'std::optional<ComponentStore<TransformComponent> *> ComponentStoreManager::GetComponentStore<TransformComponent>(void)' being compiled
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9): warning C4311: 'reinterpret_cast': pointer truncation from 'unsigned int *' to 'unsigned int' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/Platformer/SpriteRendererLayer.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumGame\src\Platformer\SpriteRendererLayer.cpp(63,30):
+          see reference to function template instantiation 'TComponent &Entity::GetComponent<TransformComponent>(void)' being compiled
+          with
+          [
+              TComponent=TransformComponent
+          ]
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(57,34):
+          see reference to function template instantiation 'unsigned int GetComponentTypeId<TransformComponent>(void)' being compiled
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9): warning C4302: 'reinterpret_cast': truncation from 'unsigned int *' to 'unsigned int' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/Platformer/SpriteRendererLayer.cpp')
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4311: 'reinterpret_cast': pointer truncation from 'u32 *' to 'u32' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/Platformer/SpriteRendererComponent.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(32,39):
+          see reference to function template instantiation 'FileAssetStore<TextureRGBAAsset> *AssetManager::GetAssetStore<TextureRGBAAsset>(void)' being compiled
+          C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(20,37):
+          see reference to function template instantiation 'u32 GetAssetTypeId<TextureRGBAAsset>(void)' being compiled
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4302: 'reinterpret_cast': truncation from 'u32 *' to 'u32' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/Platformer/SpriteRendererComponent.cpp')
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9): warning C4311: 'reinterpret_cast': pointer truncation from 'unsigned int *' to 'unsigned int' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/Platformer/Components/CameraMovementComponent.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumGame\src\Platformer\Components\CameraMovementComponent.cpp(17,28):
+          see reference to function template instantiation 'TComponent &LiveComponent::GetComponent<CameraComponent>(void)' being compiled
+          with
+          [
+              TComponent=CameraComponent
+          ]
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\LiveComponent\LiveComponent.h(26,41):
+          see reference to function template instantiation 'TComponent &Entity::GetComponent<CameraComponent>(void)' being compiled
+          with
+          [
+              TComponent=CameraComponent
+          ]
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(57,34):
+          see reference to function template instantiation 'unsigned int GetComponentTypeId<CameraComponent>(void)' being compiled
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9): warning C4302: 'reinterpret_cast': truncation from 'unsigned int *' to 'unsigned int' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/Platformer/Components/CameraMovementComponent.cpp')
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4311: 'reinterpret_cast': pointer truncation from 'u32 *' to 'u32' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/Platformer/SpriteRendererLayer.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(32,39):
+          see reference to function template instantiation 'FileAssetStore<ShaderCodeAsset> *AssetManager::GetAssetStore<ShaderCodeAsset>(void)' being compiled
+          C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(20,37):
+          see reference to function template instantiation 'u32 GetAssetTypeId<ShaderCodeAsset>(void)' being compiled
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4302: 'reinterpret_cast': truncation from 'u32 *' to 'u32' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/Platformer/SpriteRendererLayer.cpp')
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930: 'std::unique_ptr<ComponentStore<TransformComponent>,std::default_delete<ComponentStore<TransformComponent>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/main.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumGame\src\main.cpp(23,10):
+          see reference to function template instantiation 'TComponent &Entity::AddComponent<TransformComponent>(void)' being compiled
+          with
+          [
+              TComponent=TransformComponent
+          ]
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(49,54):
+          see reference to function template instantiation 'ComponentRef ComponentStoreManager::AddComponent<TransformComponent>(unsigned int)' being compiled
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(59,48):
+          see reference to function template instantiation 'std::optional<ComponentStore<TransformComponent> *> ComponentStoreManager::GetComponentStore<TransformComponent>(void)' being compiled
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930: 'std::unique_ptr<ComponentStore<CameraComponent>,std::default_delete<ComponentStore<CameraComponent>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/main.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumGame\src\main.cpp(24,10):
+          see reference to function template instantiation 'TComponent &Entity::AddComponent<CameraComponent>(void)' being compiled
+          with
+          [
+              TComponent=CameraComponent
+          ]
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(49,54):
+          see reference to function template instantiation 'ComponentRef ComponentStoreManager::AddComponent<CameraComponent>(unsigned int)' being compiled
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(59,48):
+          see reference to function template instantiation 'std::optional<ComponentStore<CameraComponent> *> ComponentStoreManager::GetComponentStore<CameraComponent>(void)' being compiled
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9): warning C4311: 'reinterpret_cast': pointer truncation from 'unsigned int *' to 'unsigned int' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/Platformer/Components/PlayerMovementComponent.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumGame\src\Platformer\Components\PlayerMovementComponent.cpp(10,34):
+          see reference to function template instantiation 'TComponent &LiveComponent::GetComponent<TransformComponent>(void)' being compiled
+          with
+          [
+              TComponent=TransformComponent
+          ]
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\LiveComponent\LiveComponent.h(26,41):
+          see reference to function template instantiation 'TComponent &Entity::GetComponent<TransformComponent>(void)' being compiled
+          with
+          [
+              TComponent=TransformComponent
+          ]
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(57,34):
+          see reference to function template instantiation 'unsigned int GetComponentTypeId<TransformComponent>(void)' being compiled
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9): warning C4302: 'reinterpret_cast': truncation from 'unsigned int *' to 'unsigned int' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/Platformer/Components/PlayerMovementComponent.cpp')
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930: 'std::unique_ptr<ComponentStore<TComponent>,std::default_delete<ComponentStore<TComponent>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930:         with [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930:         [ [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930:             TComponent=CameraMovementComponent [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930:         ] [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/main.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumGame\src\main.cpp(25,10):
+          see reference to function template instantiation 'TComponent &Entity::AddComponent<CameraMovementComponent>(void)' being compiled
+          with
+          [
+              TComponent=CameraMovementComponent
+          ]
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(49,54):
+          see reference to function template instantiation 'ComponentRef ComponentStoreManager::AddComponent<CameraMovementComponent>(unsigned int)' being compiled
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(59,48):
+          see reference to function template instantiation 'std::optional<ComponentStore<TComponent> *> ComponentStoreManager::GetComponentStore<CameraMovementComponent>(void)' being compiled
+          with
+          [
+              TComponent=CameraMovementComponent
+          ]
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930: 'std::unique_ptr<ComponentStore<TComponent>,std::default_delete<ComponentStore<TComponent>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930:         with [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930:         [ [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930:             TComponent=PlayerMovementComponent [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930:         ] [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/main.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumGame\src\main.cpp(28,6):
+          see reference to function template instantiation 'TComponent &Entity::AddComponent<PlayerMovementComponent>(void)' being compiled
+          with
+          [
+              TComponent=PlayerMovementComponent
+          ]
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(49,54):
+          see reference to function template instantiation 'ComponentRef ComponentStoreManager::AddComponent<PlayerMovementComponent>(unsigned int)' being compiled
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(59,48):
+          see reference to function template instantiation 'std::optional<ComponentStore<TComponent> *> ComponentStoreManager::GetComponentStore<PlayerMovementComponent>(void)' being compiled
+          with
+          [
+              TComponent=PlayerMovementComponent
+          ]
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930: 'std::unique_ptr<ComponentStore<SpriteRendererComponent>,std::default_delete<ComponentStore<SpriteRendererComponent>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/main.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumGame\src\main.cpp(29,6):
+          see reference to function template instantiation 'TComponent &Entity::AddComponent<SpriteRendererComponent>(void)' being compiled
+          with
+          [
+              TComponent=SpriteRendererComponent
+          ]
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(49,54):
+          see reference to function template instantiation 'ComponentRef ComponentStoreManager::AddComponent<SpriteRendererComponent>(unsigned int)' being compiled
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(59,48):
+          see reference to function template instantiation 'std::optional<ComponentStore<SpriteRendererComponent> *> ComponentStoreManager::GetComponentStore<SpriteRendererComponent>(void)' being compiled
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930: 'std::unique_ptr<ComponentStore<CameraComponent>,std::default_delete<ComponentStore<CameraComponent>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/Platformer/Components/CameraMovementComponent.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(68,26):
+          see reference to function template instantiation 'TComponent &ComponentStoreManager::GetComponent<CameraComponent>(unsigned int)' being compiled
+          with
+          [
+              TComponent=CameraComponent
+          ]
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(68,39):
+          see reference to function template instantiation 'std::optional<ComponentStore<CameraComponent> *> ComponentStoreManager::GetComponentStore<CameraComponent>(void)' being compiled
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930: 'std::unique_ptr<ComponentStore<TransformComponent>,std::default_delete<ComponentStore<TransformComponent>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/Platformer/Components/CameraMovementComponent.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(68,26):
+          see reference to function template instantiation 'TComponent &ComponentStoreManager::GetComponent<TransformComponent>(unsigned int)' being compiled
+          with
+          [
+              TComponent=TransformComponent
+          ]
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(68,39):
+          see reference to function template instantiation 'std::optional<ComponentStore<TransformComponent> *> ComponentStoreManager::GetComponentStore<TransformComponent>(void)' being compiled
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStore.h(24,78): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/main.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStore.h(24,78):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(60,30):
+          see reference to class template instantiation 'ComponentStore<SpriteRendererComponent>' being compiled
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStore.h(21,15):
+          while compiling class template member function 'unsigned int ComponentStore<SpriteRendererComponent>::CreateInstance(unsigned int)'
+              C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(60,28):
+              see the first reference to 'ComponentStore<SpriteRendererComponent>::CreateInstance' in 'ComponentStoreManager::AddComponent'
+              C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(49,54):
+              see the first reference to 'ComponentStoreManager::AddComponent' in 'Entity::AddComponent'
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930: 'std::unique_ptr<ComponentStore<TransformComponent>,std::default_delete<ComponentStore<TransformComponent>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/Platformer/Components/PlayerMovementComponent.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Entity.h(68,26):
+          see reference to function template instantiation 'TComponent &ComponentStoreManager::GetComponent<TransformComponent>(unsigned int)' being compiled
+          with
+          [
+              TComponent=TransformComponent
+          ]
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(68,39):
+          see reference to function template instantiation 'std::optional<ComponentStore<TransformComponent> *> ComponentStoreManager::GetComponentStore<TransformComponent>(void)' being compiled
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9): warning C4311: 'reinterpret_cast': pointer truncation from 'unsigned int *' to 'unsigned int' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/main.cpp')
+      C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9):
+      the template instantiation context (the oldest one first) is
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(59,48):
+          see reference to function template instantiation 'std::optional<ComponentStore<TransformComponent> *> ComponentStoreManager::GetComponentStore<TransformComponent>(void)' being compiled
+          C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(35,32):
+          see reference to function template instantiation 'unsigned int GetComponentTypeId<TransformComponent>(void)' being compiled
+  
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9): warning C4302: 'reinterpret_cast': truncation from 'unsigned int *' to 'unsigned int' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  (compiling source file 'src/main.cpp')
+  
+Link:
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\link.exe /ERRORREPORT:QUEUE /OUT:"C:\dev\Vanadium\VanadiumGame\..\Binaries\windows-x86_64\Release\Vanadium-Game\Vanadium-Game.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:..\Vendor\lib opengl32.lib glfw3.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\dev\Vanadium\VanadiumGame\..\Binaries\windows-x86_64\Release\Vanadium-Game\Vanadium-Game.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\dev\Vanadium\VanadiumGame\..\Binaries\windows-x86_64\Release\Vanadium-Game\Vanadium-Game.lib" /MACHINE:X64 "C:\dev\Vanadium\VanadiumGame\..\Binaries\Intermediates\windows-x86_64\Release\Vanadium-Game\CameraMovementComponent.obj"
+  "C:\dev\Vanadium\VanadiumGame\..\Binaries\Intermediates\windows-x86_64\Release\Vanadium-Game\PlayerMovementComponent.obj"
+  "C:\dev\Vanadium\VanadiumGame\..\Binaries\Intermediates\windows-x86_64\Release\Vanadium-Game\SpriteRendererComponent.obj"
+  "C:\dev\Vanadium\VanadiumGame\..\Binaries\Intermediates\windows-x86_64\Release\Vanadium-Game\SpriteRendererLayer.obj"
+  "C:\dev\Vanadium\VanadiumGame\..\Binaries\Intermediates\windows-x86_64\Release\Vanadium-Game\SimdTest.obj"
+  "C:\dev\Vanadium\VanadiumGame\..\Binaries\Intermediates\windows-x86_64\Release\Vanadium-Game\main.obj"
+  "C:\dev\Vanadium\Binaries\windows-x86_64\Release\VanadiumEngine\VanadiumEngine.lib"
+  Vanadium-Game.vcxproj -> C:\dev\Vanadium\Binaries\windows-x86_64\Release\Vanadium-Game\Vanadium-Game.exe
+TlogCleanup:
+  Removing the following items from tlogs as they were removed from the project or build: C:\dev\Vanadium\VanadiumGame\src\Platformer\Component.cpp
+FinalizeBuildStatus:
+  Deleting file "C:\dev\Vanadium\VanadiumGame\..\Binaries\Intermediates\windows-x86_64\Release\Vanadium-Game\Vanadium-Game.tlog\unsuccessfulbuild".
+  Touching "C:\dev\Vanadium\VanadiumGame\..\Binaries\Intermediates\windows-x86_64\Release\Vanadium-Game\Vanadium-Game.tlog\Vanadium-Game.lastbuildstate".
+Done Building Project "C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj" (default targets).
+Done Building Project "C:\dev\Vanadium\Vanadium.sln" (default targets).
+
+Build succeeded.
+
+"C:\dev\Vanadium\Vanadium.sln" (default target) (1) ->
+"C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj" (default target) (2) ->
+"C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj" (default target) (3) ->
+(ClCompile target) -> 
+  C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\EntityComponentSystem.cpp(12,79): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Primitives\VertexArray.cpp(43,3): warning C4312: 'type cast': conversion from 'int' to 'void *' of greater size [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Primitives\VertexArray.cpp(49,43): warning C4267: '+=': conversion from 'size_t' to 'unsigned int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\CodeGenerator\ShaderCodeGenerator.cpp(29,41): warning C4267: '-=': conversion from 'size_t' to 'i32', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\Tokenizer\ShaderTokenizer.cpp(114,30): warning C4267: '+=': conversion from 'size_t' to 'unsigned int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\Tokenizer\ShaderTokenizer.cpp(133,21): warning C4267: '+=': conversion from 'size_t' to 'unsigned int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\Tokenizer\ShaderTokenizer.cpp(145,26): warning C4267: '+=': conversion from 'size_t' to 'unsigned int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\Tokenizer\ShaderTokenizer.cpp(151,23): warning C4267: '+=': conversion from 'size_t' to 'unsigned int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\Processing\Shader\Tokenizer\ShaderTokenizer.cpp(200,19): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Shaders\GLShader.cpp(19,10): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\RenderingManager.cpp(22,1): warning C4715: 'RenderingManager::LoanUniformBindingSlot': not all control paths return a value [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(24,47): warning C4930: 'std::unique_ptr<FileAssetStore<ShaderCodeAsset>,std::default_delete<FileAssetStore<ShaderCodeAsset>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4311: 'reinterpret_cast': pointer truncation from 'u32 *' to 'u32' [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4302: 'reinterpret_cast': truncation from 'u32 *' to 'u32' [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Shaders\Descriptors\ShaderDescriptor.cpp(73,1): warning C4715: 'ShaderDescriptor::FindUniformObjectDescriptor': not all control paths return a value [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\Rendering\Shaders\UniformBinder.cpp(13,23): warning C4018: '<': signed/unsigned mismatch [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(24,47): warning C4930: 'std::unique_ptr<FileAssetStore<ShaderCodeAsset>,std::default_delete<FileAssetStore<ShaderCodeAsset>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4311: 'reinterpret_cast': pointer truncation from 'u32 *' to 'u32' [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4302: 'reinterpret_cast': truncation from 'u32 *' to 'u32' [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\Util\IdIndexMap.cpp(27,12): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\Util\IdIndexMap.cpp(29,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\Util\IdIndexMap.cpp(34,15): warning C4018: '<=': signed/unsigned mismatch [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\Util\IdIndexMap.cpp(35,15): warning C4244: '=': conversion from 'float' to 'int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\Util\IdIndexMap.cpp(37,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\Util\IdIndexMap.cpp(89,18): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9): warning C4311: 'reinterpret_cast': pointer truncation from 'unsigned int *' to 'unsigned int' [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9): warning C4302: 'reinterpret_cast': truncation from 'unsigned int *' to 'unsigned int' [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930: 'std::unique_ptr<ComponentStore<TransformComponent>,std::default_delete<ComponentStore<TransformComponent>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumEngine\VanadiumEngine.vcxproj]
+
+
+"C:\dev\Vanadium\Vanadium.sln" (default target) (1) ->
+"C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj" (default target) (2) ->
+  C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(18,18): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(71,18): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(106,115): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(106,94): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(106,73): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(106,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(107,120): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(107,98): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(107,76): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumGame\src\SimdTest\SimdTest.cpp(107,54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(24,47): warning C4930: 'std::unique_ptr<FileAssetStore<TextureRGBAAsset>,std::default_delete<FileAssetStore<TextureRGBAAsset>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\AssetManager.h(24,47): warning C4930: 'std::unique_ptr<FileAssetStore<ShaderCodeAsset>,std::default_delete<FileAssetStore<ShaderCodeAsset>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930: 'std::unique_ptr<ComponentStore<SpriteRendererComponent>,std::default_delete<ComponentStore<SpriteRendererComponent>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930: 'std::unique_ptr<ComponentStore<TransformComponent>,std::default_delete<ComponentStore<TransformComponent>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9): warning C4311: 'reinterpret_cast': pointer truncation from 'unsigned int *' to 'unsigned int' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9): warning C4302: 'reinterpret_cast': truncation from 'unsigned int *' to 'unsigned int' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4311: 'reinterpret_cast': pointer truncation from 'u32 *' to 'u32' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4302: 'reinterpret_cast': truncation from 'u32 *' to 'u32' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9): warning C4311: 'reinterpret_cast': pointer truncation from 'unsigned int *' to 'unsigned int' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9): warning C4302: 'reinterpret_cast': truncation from 'unsigned int *' to 'unsigned int' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4311: 'reinterpret_cast': pointer truncation from 'u32 *' to 'u32' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\AssetManager\FileAsset.h(53,9): warning C4302: 'reinterpret_cast': truncation from 'u32 *' to 'u32' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930: 'std::unique_ptr<ComponentStore<TransformComponent>,std::default_delete<ComponentStore<TransformComponent>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930: 'std::unique_ptr<ComponentStore<CameraComponent>,std::default_delete<ComponentStore<CameraComponent>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9): warning C4311: 'reinterpret_cast': pointer truncation from 'unsigned int *' to 'unsigned int' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9): warning C4302: 'reinterpret_cast': truncation from 'unsigned int *' to 'unsigned int' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930: 'std::unique_ptr<ComponentStore<TComponent>,std::default_delete<ComponentStore<TComponent>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930:         with [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930:         [ [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930:             TComponent=CameraMovementComponent [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930:         ] [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930: 'std::unique_ptr<ComponentStore<TComponent>,std::default_delete<ComponentStore<TComponent>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930:         with [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930:         [ [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930:             TComponent=PlayerMovementComponent [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930:         ] [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930: 'std::unique_ptr<ComponentStore<SpriteRendererComponent>,std::default_delete<ComponentStore<SpriteRendererComponent>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930: 'std::unique_ptr<ComponentStore<CameraComponent>,std::default_delete<ComponentStore<CameraComponent>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930: 'std::unique_ptr<ComponentStore<TransformComponent>,std::default_delete<ComponentStore<TransformComponent>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStore.h(24,78): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\ComponentStoreManger.h(39,47): warning C4930: 'std::unique_ptr<ComponentStore<TransformComponent>,std::default_delete<ComponentStore<TransformComponent>>> store(void)': prototyped function not called (was a variable definition intended?) [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9): warning C4311: 'reinterpret_cast': pointer truncation from 'unsigned int *' to 'unsigned int' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+  C:\dev\Vanadium\VanadiumEngine\src\core\EntityComponentSystem\Component.h(37,9): warning C4302: 'reinterpret_cast': truncation from 'unsigned int *' to 'unsigned int' [C:\dev\Vanadium\VanadiumGame\Vanadium-Game.vcxproj]
+
+    63 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:07.64

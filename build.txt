@@ -1,0 +1,17 @@
+if i have interface 
+
+IA
+{
+ IB test
+}
+
+can i make 
+
+D : IB
+{
+}
+
+C : IA
+{
+D test;
+}

@@ -2,6 +2,8 @@
 #include "pch.h"
 #include <stdint.h>
 
+class EntityComponentSystem;
+
 class Component
 {
 public:
@@ -13,6 +15,16 @@ public:
 
 	unsigned int GetId() const { return m_id; };
 	unsigned int GetOwnerId() const { return m_owner; };
+
+	template<typename TComponent>
+		requires std::is_base_of_v<Component, TComponent>
+	TComponent& GetComponent()
+	{
+		return ECS().FindEntity(GetOwnerId()).GetComponent<TComponent>();
+	}
+protected:
+	EntityComponentSystem& ECS();
+
 private:
 	static unsigned int m_nextId;
 	unsigned int m_id;

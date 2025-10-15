@@ -3,7 +3,6 @@
 #include "core/CoreTypes.h"
 
 #include <fstream>
-#include <filesystem>
 #include <concepts>
 
 template<typename T>
