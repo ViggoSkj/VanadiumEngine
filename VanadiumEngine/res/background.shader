@@ -30,6 +30,6 @@ void main()
 
     if ((pos.x + pos.y)%2 == 0)
     {
-        FragColor *= 0.9;
+        FragColor ;
     }
 }

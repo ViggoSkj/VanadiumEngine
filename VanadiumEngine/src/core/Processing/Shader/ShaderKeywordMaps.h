@@ -7,11 +7,12 @@ inline const std::unordered_map<ShaderKeyword, std::string> ShaderKeywordToStrin
 	{ In, "in" },
 	{ Uniform, "uniform" },
 	{ Location, "location" },
+	{ Const, "const" },
 };
 
 inline const std::unordered_map<std::string, ShaderKeyword> StringToShaderKeyword = {
 	{ "layout", Layout },
 	{ "in", In },
 	{ "uniform", Uniform },
-	{ "location", Location },
+	{ "const", Const },
 };

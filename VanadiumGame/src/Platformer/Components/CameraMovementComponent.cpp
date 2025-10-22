@@ -1,8 +1,8 @@
 #include "CameraMovementComponent.h"
 #include "Components.h"
 
-CameraMovementComponent::CameraMovementComponent(unsigned int owner)
-	: LiveComponent(owner)
+CameraMovementComponent::CameraMovementComponent(EntityRef ref)
+	: LiveComponent(ref)
 {
 }
 
@@ -14,13 +14,13 @@ void CameraMovementComponent::OnUpdate(double dt)
 	EntityComponentSystem* ECS = Application::Get().GetECS();
 	SceneManager* sceneManager = Application::Get().GetSceneManager();
 
-	CameraComponent& camera = GetComponent<CameraComponent>();
-	TransformComponent& Transform = GetComponent<TransformComponent>();
+	CameraComponent& camera = *GetComponent<CameraComponent>().value();
+	TransformComponent& Transform = *GetComponent<TransformComponent>().value();
 
 	if (Input.GetKey(Key::R) == KeyState::Pressed)
 	{
-		sceneManager->UnloadScene(ECS->FindEntity(GetOwnerId()).GetOwner());
-		sceneManager->LoadScene(ECS->FindEntity(GetOwnerId()).GetOwner());
+		sceneManager->UnloadScene(ECS->FindEntity(GetOwnerId()).value()->GetOwner());
+		sceneManager->LoadScene(ECS->FindEntity(GetOwnerId()).value()->GetOwner());
 	}
 
 	if (Input.Down(Key::W))

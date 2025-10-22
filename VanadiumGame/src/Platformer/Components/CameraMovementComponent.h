@@ -5,7 +5,7 @@
 class CameraMovementComponent : public LiveComponent
 {
 public:
-	CameraMovementComponent(unsigned int owner);
+	CameraMovementComponent(EntityRef ref);
 
 	void OnUpdate(double dt) override;
 };

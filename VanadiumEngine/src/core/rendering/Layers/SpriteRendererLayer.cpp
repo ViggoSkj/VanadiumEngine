@@ -1,7 +1,8 @@
+#include "pch.h"
 #include "SpriteRendererLayer.h"
 #include "Components.h"
 #include "GLCommon.h"
-#include "SpriteRendererComponent.h"
+#include "core/Components/SpriteRendererComponent.h"
 #include "Rendering.h"
 #include "Util.h"
 #include "ECS.h"
@@ -43,7 +44,7 @@ void SpriteRendererLayer::OnRender(double dt)
 
 	if (!oCameraComponent.has_value())
 	{
-		std::cout << "no main camera";
+		std::cout << "no main camera" << std::endl;
 		return;
 	}
 
@@ -59,8 +60,8 @@ void SpriteRendererLayer::OnRender(double dt)
 
 	for (int i = 0; i < sps.size(); i++)
 	{
-		Entity& e = ECS->FindEntity(sps[i].GetOwnerId());
-		TransformComponent& tc = e.GetComponent<TransformComponent>();
+		Entity& e = *ECS->FindEntity(sps[i].GetOwnerId()).value();
+		TransformComponent& tc = *e.GetComponent<TransformComponent>().value();
 
 		glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(tc.ModelMatrix()));
 

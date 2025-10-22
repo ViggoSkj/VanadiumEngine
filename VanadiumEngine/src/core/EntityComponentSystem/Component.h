@@ -1,7 +1,9 @@
 #pragma once
 #include "pch.h"
+#include "core/EntityComponentSystem/EntityRef.h"
 #include <stdint.h>
 
+class Entity;
 class EntityComponentSystem;
 
 class Component
@@ -11,27 +13,28 @@ public:
 	Component(Component&&) noexcept = default;
 	Component& operator=(Component&&) noexcept = default;
 	Component(const Component&) = delete;
-	Component(unsigned int owner);
+	Component(EntityRef entityRef);
 
 	unsigned int GetId() const { return m_id; };
-	unsigned int GetOwnerId() const { return m_owner; };
+	u32 GetOwnerId() const;
+	Entity& GetEntity();
 
 	template<typename TComponent>
 		requires std::is_base_of_v<Component, TComponent>
-	TComponent& GetComponent()
+	std::optional<TComponent*> GetComponent()
 	{
-		return ECS().FindEntity(GetOwnerId()).GetComponent<TComponent>();
+		return ECS().FindEntity(GetOwnerId()).value()->GetComponent<TComponent>();
 	}
 protected:
 	EntityComponentSystem& ECS();
 
 private:
-	static unsigned int m_nextId;
-	unsigned int m_id;
-	unsigned int m_owner;
+	static u32 m_nextId;
+	u32 m_id;
+	EntityRef m_entityRef;
 };
 
-inline unsigned int Component::m_nextId = 0;
+inline u32 Component::m_nextId = 0;
 
 
 template<typename TComponent>

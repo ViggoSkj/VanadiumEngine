@@ -23,13 +23,6 @@ Tokenizer::Tokenizer(std::string source)
 
 void Tokenizer::Tokenize()
 {
-	std::vector<ShaderKeyword> usedKeywords = {
-		ShaderKeyword::Layout,
-		ShaderKeyword::Uniform,
-		ShaderKeyword::In,
-		ShaderKeyword::Location,
-	};
-
 	int i = 0;
 	while (m_cursor < m_source.size())
 	{
@@ -58,6 +51,8 @@ void Tokenizer::Tokenize()
 			break;
 		case '(':
 		case ')':
+		case ']':
+		case '[':
 		case '{':
 		case '}':
 		case ',':
@@ -70,6 +65,8 @@ void Tokenizer::Tokenize()
 		case '=':
 		case '.':
 		case '%':
+		case '<':
+		case '>':
 			TokenizeUniOperator();
 			break;
 		default:

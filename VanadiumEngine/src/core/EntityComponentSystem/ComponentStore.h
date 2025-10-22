@@ -18,19 +18,22 @@ public:
 	}
 	ComponentStore(const ComponentStore<TComponent>&) = delete;
 
-	unsigned int CreateInstance(unsigned int owner)
+	u32 CreateInstance(EntityRef ref)
 	{
-		m_components.emplace_back(owner);
+		m_components.emplace_back(ref);
 		m_idIndexMap.InsertLookup(m_components.back().GetId(), m_components.size() - 1);
 		return m_components.back().GetId();
 	}
 
-	TComponent& GetComponent(unsigned int id)
+	std::optional<TComponent*> GetComponent(unsigned int id)
 	{
-		return m_components[m_idIndexMap.GetIndex(id)];
+		size_t index = m_idIndexMap.GetIndex(id);
+		if (index == -1)
+			return std::nullopt;
+		return std::optional<TComponent*>(&m_components[index]);
 	}
 
-	void DeleteInstance(unsigned int ref) override
+	void DeleteInstance(u32 ref) override
 	{
 		unsigned int componentIndex = m_idIndexMap.MarkRemoved(ref);
 		unsigned int movedComponentId = m_components.back().GetId();
@@ -39,14 +42,16 @@ public:
 			m_idIndexMap.UpdateIndex(movedComponentId, componentIndex);
 
 		m_components.remove(componentIndex);
-
-		if (m_idIndexMap.EmptySlotCount() > 100)
-			m_idIndexMap.Flush();
 	}
 
 	void MarkOwnerRemoved(unsigned int ownerId)
 	{
 		// TODO: Implement
+	}
+
+	void Flush() override
+	{
+		m_idIndexMap.Flush();
 	}
 
 	UnorderedVector<TComponent>& GetComponents() { return m_components; };

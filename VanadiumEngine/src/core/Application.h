@@ -8,6 +8,7 @@
 #include "core/EntityComponentSystem/EntityComponentSystem.h"
 #include "core/Scene/Scene.h"
 #include "core/Scene/SceneManager.h"
+#include "core/Debug/Logger.h"
 
 class Application
 {
@@ -34,6 +35,7 @@ public:
 	Window* GetWindow() { return m_window.get(); };
 	AssetManager* GetAssetManager() { return m_assetManager.get(); }
 	EntityComponentSystem* GetECS() { return m_ecs.get(); };
+	Logger* GetLogger() { return m_logger.get(); };
 
 	const Time& GetTime() const { return *m_time; }
 private:
@@ -49,4 +51,5 @@ private:
 	std::unique_ptr<AssetManager> m_assetManager;
 	std::unique_ptr<EntityComponentSystem> m_ecs;
 	std::unique_ptr<Time> m_time;
+	std::unique_ptr<Logger> m_logger;
 };

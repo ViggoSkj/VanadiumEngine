@@ -18,6 +18,8 @@ GLenum glCheckError_(const char* file, int line)
 		case GL_INVALID_FRAMEBUFFER_OPERATION: error = "INVALID_FRAMEBUFFER_OPERATION"; break;
 		}
 		std::cout << error << " | " << file << " (" << line << ")" << std::endl;
+		// check if windows only
+		__debugbreak();
 	}
 	return errorCode;
 }

@@ -14,3 +14,5 @@ typedef int64_t i64;
 
 typedef glm::vec2 Vector2;
 typedef glm::mat4 Matrix4x4;
+
+typedef glm::ivec2 Vector2I;

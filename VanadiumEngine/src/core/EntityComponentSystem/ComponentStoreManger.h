@@ -54,21 +54,28 @@ public:
 
 	template <typename TComponent>
 		requires std::is_base_of_v<Component, TComponent>
-	ComponentRef AddComponent(unsigned int owner)
+	ComponentRef AddComponent(EntityRef ref)
 	{
 		ComponentStore<TComponent>* componentStore = GetComponentStore<TComponent>().value();
-		unsigned int componentId = componentStore->CreateInstance(owner);
+		unsigned int componentId = componentStore->CreateInstance(ref);
 		return ComponentRef(componentId, componentStore->GetId());
 	}
 
 	template<typename TComponent>
 		requires std::is_base_of_v<Component, TComponent>
-	TComponent& GetComponent(unsigned int componentId)
+	std::optional<TComponent*> GetComponent(unsigned int componentId)
 	{
 		ComponentStore<TComponent>* store = GetComponentStore<TComponent>().value();
 		return store->GetComponent(componentId);
 	}
 
+	void Flush()
+	{
+		for (int i = 0; i < m_stores.size(); i++)
+		{
+			m_stores[i]->Flush();
+		}
+	}
 
 private:
 	std::vector<std::unique_ptr<IComponentStore>> m_stores;

@@ -6,7 +6,9 @@
 #include "core/Util/UnorderdVector.h"
 #include "core/Util/IdIndexMap.h"
 #include "ComponentStoreManger.h"
+#include "EntityRef.h"
 
+class Entity;
 
 class EntityComponentSystem
 {
@@ -16,9 +18,10 @@ public:
 
 	~EntityComponentSystem();
 
-	Entity& CreateEntity(unsigned int owner);
-	Entity& FindEntity(unsigned int id);
-	void DeleteEntity(unsigned int id);
+	EntityRef CreateEntity(SceneRef sceneRef);
+	std::optional<Entity*> FindEntity(u32 id);
+	void DeleteEntity(u32 id);
+	void DeleteEntity(EntityRef ref);
 
 	void SignalOwnerDeleted(unsigned int owner);
 
@@ -28,6 +31,8 @@ public:
 	{
 		return m_storeManager.GetComponentStore<TComponent>();
 	}
+
+	void Flush();
 
 private:
 	static unsigned int s_nextEntityId;

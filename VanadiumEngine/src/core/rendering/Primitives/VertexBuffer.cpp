@@ -25,6 +25,7 @@ void VertexBuffer::UnBind()
 void VertexBuffer::SetVertecies(const void* data, int size, GLenum usage)
 {
 	Bind();
+	m_bufferSize = size;
 	GL_CHECK(glBufferData(GL_ARRAY_BUFFER, size, data, usage));
 	UnBind();
 }
@@ -32,6 +33,8 @@ void VertexBuffer::SetVertecies(const void* data, int size, GLenum usage)
 void VertexBuffer::UpdateVertecies(const void* data, int size, int offset)
 {
 	Bind();
+	if (size + offset > m_bufferSize)
+		throw "buffer does not have enugh capacity";
 	GL_CHECK(glBufferSubData(GL_ARRAY_BUFFER, offset, size, data));
 	UnBind();
 }

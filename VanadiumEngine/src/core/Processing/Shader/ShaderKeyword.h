@@ -7,4 +7,5 @@ enum ShaderKeyword
 	In,
 	Uniform,
 	Location,
+	Const
 };

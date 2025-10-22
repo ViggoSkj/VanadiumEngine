@@ -16,9 +16,9 @@ class IdIndexMap
 {
 public:
 	void InsertLookup(unsigned int id, unsigned int index);
-	unsigned int FindLookupIndex(unsigned int id);
-	unsigned int GetIndex(unsigned int id);
-	unsigned int MarkRemoved(unsigned int id);
+	size_t FindLookupIndex(unsigned int id);
+	size_t GetIndex(unsigned int id);
+	size_t MarkRemoved(unsigned int id);
 	void Sort();
 	void Flush();
 	void UpdateIndex(unsigned int id, unsigned int newIndex);
@@ -26,6 +26,8 @@ public:
 	std::size_t EmptySlotCount() const { return EmptySlots.size(); };
 
 private:
+	bool m_sorted = true;
+	u32 m_flushCount = 100;
 	std::vector<IdIndexLookup> Lookups;
 	std::vector<unsigned int> EmptySlots;
 };

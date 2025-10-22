@@ -10,6 +10,8 @@ struct IComponentStore
 
 	virtual void DeleteInstance(unsigned int id) {};
 
+	virtual void Flush() {};
+
 	unsigned int GetId() { return m_id; };
 
 private:

@@ -27,6 +27,7 @@ Application::Application(unsigned int width, unsigned int height)
 	m_assetManager = std::make_unique<AssetManager>();
 	m_ecs = std::make_unique<EntityComponentSystem>();
 	m_time = std::make_unique<Time>();
+	m_logger = std::make_unique<Logger>();
 
 	GL_CHECK(glViewport(0, 0, m_window->GetWidth(), m_window->GetHeight()));
 
@@ -44,7 +45,7 @@ Application::~Application()
 void Application::Run()
 {
 	float prevTime = (float)glfwGetTime();
-	double fpsCap = 120;
+	double fpsCap = 1000;
 	double minDt = 1.0 / fpsCap;
 	while (m_running)
 	{
@@ -83,6 +84,7 @@ void Application::Run()
 
 		m_sceneManager->FlushCommands();
 		m_window->SwapBuffers();
+		m_ecs->Flush();
 		glfwPollEvents();
 	}
 }

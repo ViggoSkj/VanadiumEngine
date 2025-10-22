@@ -5,8 +5,8 @@
 class PlayerMovementComponent : public LiveComponent
 {
 public:
-	PlayerMovementComponent(unsigned int owner)
-		: LiveComponent(owner) { }
+	PlayerMovementComponent(EntityRef ref)
+		: LiveComponent(ref) { }
 
 	void OnUpdate(double dt) override;
 

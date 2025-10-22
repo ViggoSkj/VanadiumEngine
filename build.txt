@@ -1,17 +1,13 @@
-if i have interface 
-
-IA
+HashDigest har även
+Equals
+GetHashCode
+ToString
+implementerad.
+är det en rimlig ide att på de object som har ett sådant object att lägga till
+string DigestString
 {
- IB test
+	get { return Digest.ToString() }
 }
 
-can i make 
-
-D : IB
-{
-}
-
-C : IA
-{
-D test;
-}
+och sedan använda
+new FilterFieldEqualTo("DigestString", Digest.ToString())

@@ -11,8 +11,7 @@ public:
 	TransformComponent(TransformComponent&& other) noexcept = default;
 	TransformComponent& operator=(TransformComponent&& other) noexcept = default;
 
-	TransformComponent(unsigned int owner);
-
+	TransformComponent(EntityRef entityRef);
 
 	Vector2 Position;
 

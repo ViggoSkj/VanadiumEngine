@@ -14,7 +14,7 @@ public:
 		return s_main;
 	};
 
-	CameraComponent(unsigned int owner);
+	CameraComponent(EntityRef ref);
 
 	void OnUpdate(double dt) override;
 

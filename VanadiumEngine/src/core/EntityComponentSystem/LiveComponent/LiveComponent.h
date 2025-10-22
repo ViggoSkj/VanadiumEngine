@@ -1,6 +1,7 @@
 #pragma once
 #include "pch.h"
-#include "core/EntityComponentSystem/EntityComponentSystem.h"
+#include "core/EntityComponentSystem/Component.h"
+#include "core/EntityComponentSystem/EntityRef.h"
 
 class LiveComponent : public Component
 {
@@ -9,8 +10,8 @@ public:
 	LiveComponent& operator=(LiveComponent&&) noexcept = default;
 
 	LiveComponent(const LiveComponent&) = delete;
-	LiveComponent(unsigned int owner)
-		: Component(owner) {
+	LiveComponent(EntityRef ref)
+		: Component(ref) {
 	};
 
 	virtual void OnUpdate(double dt) {};

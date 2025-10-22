@@ -7,7 +7,7 @@ void PlayerMovementComponent::OnUpdate(double dt)
 	Application& app = Application::Get();
 	InputManager Input = app.GetWindow()->GetInputManager();
 
-	TransformComponent& transform = GetComponent<TransformComponent>();
+	TransformComponent& transform = *GetComponent<TransformComponent>().value();
 
 	speed += gravity * dt;
 	transform.Position += Vector2(0, speed) * (float) dt;

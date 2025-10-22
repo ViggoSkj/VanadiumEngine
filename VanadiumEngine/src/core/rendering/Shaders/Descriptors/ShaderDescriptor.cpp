@@ -34,9 +34,9 @@ ShaderDescriptor::ShaderDescriptor(TokenizedShader shader)
 	int vertexLength = SmallestPositiveDifference(vertexShaderHint, all);
 
 	if (fragmentShaderHint == -1)
-		std::cout << "no fragment shader hint";
+		std::cout << "no fragment shader hint" << std::endl;
 	if (vertexShaderHint== -1)
-		std::cout << "no vertex shader hint";
+		std::cout << "no vertex shader hint" << std::endl;
 
 	std::vector<Token> VertexTokens = std::vector<Token>(shader.Tokens().begin() + vertexShaderHint + 2, shader.Tokens().begin() + vertexShaderHint + vertexLength);
 	//VertexShader.Source = source.substr(VertexTokens.front().SourceIndex, VertexTokens.back().SourceIndex - VertexTokens.front().SourceIndex + 1);

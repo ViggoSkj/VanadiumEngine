@@ -14,6 +14,10 @@ void TokenizedVertexShaderAnalyzer::GetVertexAttributes(TokenizedShader& shader,
 		Token locationToken = tokens[cursor - 2];
 
 		unsigned int location = std::stoi(locationToken.Text);
+
+		if (!StringToShaderDataType.contains(typeToken.Text))
+			throw "No such shader type";
+
 		ShaderDataType type = StringToShaderDataType.at(typeToken.Text);
 
 		vertexAttributes.push_back(VertexAttribute(type, location));

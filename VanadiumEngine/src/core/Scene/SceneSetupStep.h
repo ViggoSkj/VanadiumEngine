@@ -1,15 +1,23 @@
 #pragma once
-#include "core/EntityComponentSystem/Entity.h"
+#include "core/EntityComponentSystem/EntityComponentSystem.h"
+
+class Scene;
+class EntityRef;
 
 class SceneSetupStep
 {
 public:
+	SceneSetupStep(Scene* scene)
+		: m_scene(scene)
+	{ }
+
 	virtual ~SceneSetupStep() = default;
 	virtual void Execute() {};
-	
-	unsigned int SceneId;
 protected:
 
 	// helper function
-	Entity& CreateEntity();
+	EntityRef CreateEntity();
+
+private:
+	Scene* m_scene;
 };

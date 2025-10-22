@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "SceneSetupStep.h"
+#include "Scene.h"
 #include "core/Application.h"
 
-Entity& SceneSetupStep::CreateEntity()
+EntityRef SceneSetupStep::CreateEntity()
 {
-	return Application::Get().GetECS()->CreateEntity(SceneId);
+	return m_scene->CreateEntity();
 }

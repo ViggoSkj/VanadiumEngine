@@ -3,6 +3,8 @@
 #include <memory>
 #include "SceneSetupStep.h"
 
+class EntityRef;
+
 class Scene
 {
 public:
@@ -15,11 +17,13 @@ public:
 		requires std::is_base_of_v<SceneSetupStep, TStep>
 	void AddSetupStep()
 	{
-		m_setupSteps.push_back(std::make_unique<TStep>());
+		m_setupSteps.push_back(std::make_unique<TStep>(this));
 	}
 
 	void Setup();
 	void Taredown();
+
+	EntityRef CreateEntity();
 
 	unsigned int GetId() { return m_id; };
 	bool Loaded() { return m_loaded; };
@@ -30,6 +34,7 @@ private:
 	bool m_loaded = false;
 
 	std::vector<std::unique_ptr<SceneSetupStep>> m_setupSteps;
+	UnorderedVector<EntityRef> m_entities;
 };
 
 inline unsigned int Scene::s_nextSceneId = 1;

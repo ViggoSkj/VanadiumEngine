@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "TransformComponent.h"
+#include "core/EntityComponentSystem/EntityRef.h"
 
-TransformComponent::TransformComponent(unsigned int owner)
-	: Component(owner)
+TransformComponent::TransformComponent(EntityRef entityRef)
+	: Component(entityRef), Position(glm::vec2(0, 0))
 {
-	Position = { rand() % 4 - 2, rand() % 4 - 2 };
 }

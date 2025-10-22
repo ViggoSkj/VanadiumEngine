@@ -2,8 +2,8 @@
 #include "CameraComponent.h"
 #include "TransformComponent.h"
 
-CameraComponent::CameraComponent(unsigned int owner)
-	: LiveComponent(owner)
+CameraComponent::CameraComponent(EntityRef ref)
+	: LiveComponent(ref)
 {
 	s_main = this;
 }
@@ -17,6 +17,6 @@ Camera CameraComponent::GetCamera()
 {
 	Camera cam;
 	cam.Zoom = Zoom;
-	cam.Position = GetComponent<TransformComponent>().Position;
+	cam.Position = GetComponent<TransformComponent>().value()->Position;
 	return cam;
 }

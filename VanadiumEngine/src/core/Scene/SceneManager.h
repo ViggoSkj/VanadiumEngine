@@ -3,7 +3,6 @@
 
 #include <queue>
 #include "core/Util/UnorderdVector.h"
-#include "Scene.h"
 
 enum SceneManagerCommandType
 {
@@ -17,17 +16,22 @@ struct SceneManagerCommand
 	unsigned int SceneId;
 };
 
+class SceneRef;
+class Scene;
+
 class SceneManager
 {
 public:
 	SceneManager() = default;
 	SceneManager(const SceneManager&) = delete;
 
-	Scene& ConstructScene();
+	SceneRef ConstructScene();
 	void LoadScene(unsigned int sceneId);
 	void UnloadScene(unsigned int sceneId);
 
 	void FlushCommands();
+
+	std::optional<Scene*> GetScene(u32 id);
 
 private:
 	void LoadSceneNow(unsigned int sceneId);

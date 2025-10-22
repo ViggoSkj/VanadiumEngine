@@ -13,5 +13,5 @@ void GridBackgroundLayer::OnRender(double dt)
 {
 	m_vao.Bind();
 	m_shader.GlShader().Use();
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	GL_CHECK(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0));
 }

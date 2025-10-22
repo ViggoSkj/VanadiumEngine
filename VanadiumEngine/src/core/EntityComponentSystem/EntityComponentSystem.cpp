@@ -1,37 +1,48 @@
 #include "pch.h"
 #include "EntityComponentSystem.h"
+#include "core/Debug/Log.h"
 
 EntityComponentSystem::~EntityComponentSystem()
 {
 	m_entities.clear();
 }
 
-Entity& EntityComponentSystem::CreateEntity(unsigned int owner)
+EntityRef EntityComponentSystem::CreateEntity(SceneRef sceneRef)
 {
-	m_entities.emplace_back(&m_storeManager, s_nextEntityId++, owner);
+	m_entities.emplace_back(&m_storeManager, s_nextEntityId++, sceneRef, this);
 	m_entityIdIndexMap.InsertLookup(m_entities.back().GetId(), m_entities.size() - 1);
-	return m_entities.back();
+	return EntityRef(m_entities.back().GetId(), this);
 }
 
-Entity& EntityComponentSystem::FindEntity(unsigned int id)
+std::optional<Entity*> EntityComponentSystem::FindEntity(u32 id)
 {
-	unsigned int entityIndex = m_entityIdIndexMap.GetIndex(id);
-	return m_entities[entityIndex];
+	size_t entityIndex = m_entityIdIndexMap.GetIndex(id);
+
+	if (entityIndex == -1)
+		return std::nullopt;
+
+	return std::optional<Entity*>(&m_entities[entityIndex]);
 }
 
-void EntityComponentSystem::DeleteEntity(unsigned int id)
+void EntityComponentSystem::DeleteEntity(u32 id)
 {
 	unsigned int index = m_entityIdIndexMap.MarkRemoved(id);
 	m_entities.remove(index);
+	LogDebug("Entity deleted");
+}
+
+void EntityComponentSystem::DeleteEntity(EntityRef ref)
+{
+	DeleteEntity(ref.GetId());
 }
 
 void EntityComponentSystem::SignalOwnerDeleted(unsigned int owner)
 {
-	while (m_entities.size() > 0)
-	{
-		if (m_entities.back().GetOwner() == owner)
-		{
-			DeleteEntity(m_entities.back().GetId());
-		}
-	}
+	throw "IMPLEMENT";
+}
+
+void EntityComponentSystem::Flush()
+{
+	m_entityIdIndexMap.Flush();
+	m_storeManager.Flush();
 }

@@ -22,10 +22,10 @@ void RectCollisionLayer::OnUpdate(double dt)
 		for (int j = i + 1; j < colliders.size(); j++)
 		{
 			RectCollisionComponent* a = &colliders[i];
-			TransformComponent& at = a->GetComponent<TransformComponent>();
+			TransformComponent* at = a->GetComponent<TransformComponent>().value();
 			RectCollisionComponent* b = &colliders[j];
-			TransformComponent& bt = b->GetComponent<TransformComponent>();
-			if (a->Rect.Overlaps(at.Position, b->Rect, bt.Position))
+			TransformComponent* bt = b->GetComponent<TransformComponent>().value();
+			if (a->Rect.Overlaps(at->Position, b->Rect, bt->Position))
 			{
 				a->Collisions.push_back(b);
 				b->Collisions.push_back(a);

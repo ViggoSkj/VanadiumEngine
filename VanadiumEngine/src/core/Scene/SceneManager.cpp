@@ -2,10 +2,10 @@
 #include "SceneManager.h"
 #include "core/Application.h"
 
-Scene& SceneManager::ConstructScene()
+SceneRef SceneManager::ConstructScene()
 {
 	m_scenes.emplace_back(Scene{});
-	return m_scenes.back();
+	return SceneRef(m_scenes.back().GetId(), this);
 }
 
 void SceneManager::LoadScene(unsigned int sceneId)
@@ -37,6 +37,17 @@ void SceneManager::FlushCommands()
 	}
 }
 
+std::optional<Scene*> SceneManager::GetScene(u32 id)
+{
+	for (int i = 0; i < m_scenes.size(); i++)
+	{
+		if (m_scenes[i].GetId() == id)
+			return std::optional<Scene*>(&m_scenes[i]);
+	}
+
+	return std::nullopt;
+}
+
 void SceneManager::LoadSceneNow(unsigned int sceneId)
 {
 	for (int i = 0; i < m_scenes.size(); i++)
@@ -54,7 +65,6 @@ void SceneManager::UnloadSceneNow(unsigned int sceneId)
 	{
 		if (m_scenes[i].GetId() == sceneId && m_scenes[i].Loaded())
 		{
-			Application::Get().GetECS()->SignalOwnerDeleted(sceneId);
 			m_scenes[i].Taredown();
 			break;
 		}

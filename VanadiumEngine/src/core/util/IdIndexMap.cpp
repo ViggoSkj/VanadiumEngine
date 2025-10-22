@@ -12,13 +12,15 @@ void IdIndexMap::InsertLookup(unsigned int id, unsigned int componentIndex)
 	Lookups[EmptySlots.back()] = IdIndexLookup(id, componentIndex);
 	EmptySlots.pop_back();
 
+	m_sorted = false;
 }
 
 
 // TODO: fix binary search
-unsigned int IdIndexMap::FindLookupIndex(unsigned int id)
+size_t IdIndexMap::FindLookupIndex(unsigned int id)
 {
-	Flush();
+	if (!m_sorted)
+		Flush();
 
 	if (Lookups.size() < 1)
 		return -1;
@@ -55,20 +57,31 @@ unsigned int IdIndexMap::FindLookupIndex(unsigned int id)
 	return (left + right) / 2;
 }
 
-unsigned int IdIndexMap::GetIndex(unsigned int id)
+size_t IdIndexMap::GetIndex(unsigned int id)
 {
-	unsigned int index = FindLookupIndex(id);
+	if (EmptySlotCount() > m_flushCount)
+		Flush();
+
+	for (int i = 0; i < EmptySlots.size(); i++)
+	{
+		if (Lookups[EmptySlots[i]].Id == id)
+			return -1;
+	}
+
+	size_t index = FindLookupIndex(id);
 	if (index == -1)
-		throw "a";
+		return -1;
 	return Lookups[index].Index;
 }
 
-unsigned int IdIndexMap::MarkRemoved(unsigned int id)
+size_t IdIndexMap::MarkRemoved(unsigned int id)
 {
 	unsigned int lookupIndex = FindLookupIndex(id);
 
 	if (lookupIndex == -1)
-		throw "dasdas";
+	{
+		return -1;
+	}
 
 	EmptySlots.push_back(lookupIndex);
 
@@ -77,9 +90,10 @@ unsigned int IdIndexMap::MarkRemoved(unsigned int id)
 
 void IdIndexMap::Sort()
 {
+	static std::vector<IdIndexLookup> buffer;
 
-
-	std::vector<IdIndexLookup> buffer(Lookups.size());
+	if (buffer.size() < Lookups.size())
+		buffer.resize(Lookups.size());
 
 	std::vector<IdIndexLookup>* writeTo = &buffer;
 	std::vector<IdIndexLookup>* readFrom = &Lookups;
@@ -124,7 +138,12 @@ void IdIndexMap::Sort()
 		layerSize *= 2;
 	}
 
-	Lookups.swap(*readFrom);
+	for (int i = 0; i < Lookups.size(); i++)
+	{
+		Lookups[i] = readFrom->at(i);
+	}
+
+	m_sorted = true;
 }
 
 void IdIndexMap::Flush()

@@ -6,3 +6,4 @@
 #include "Rendering.h"
 #include "Utility.h"
 #include "Components.h"
+#include "core/Debug/Log.h"
