@@ -4,6 +4,7 @@
 #include "Application.h"
 #include "GLCommon.h"
 #include <memory>
+#include "core/Debug/Log.h"
 
 Application* Application::s_instance = nullptr;
 
@@ -56,6 +57,8 @@ void Application::Run()
 			std::this_thread::sleep_for(std::chrono::microseconds((long long)((minDt - dt) * 1000000)));
 			dt = (double)glfwGetTime() - prevTime;
 		}
+
+		LogDebug(std::to_string(1.0 / dt));
 
 		m_time->TimeSinceStart += dt;
 		prevTime = (float)glfwGetTime();

@@ -9,11 +9,11 @@ class TransformComponent : public Component
 {
 public:
 	TransformComponent(TransformComponent&& other) noexcept = default;
-	TransformComponent& operator=(TransformComponent&& other) noexcept = default;
+	TransformComponent& operator=(TransformComponent&& other) noexcept = default; 
 
 	TransformComponent(EntityRef entityRef);
 
-	Vector2 Position;
+	Vector2 Position = glm::vec2(0, 0);
 
 	Matrix4x4 ModelMatrix()
 	{

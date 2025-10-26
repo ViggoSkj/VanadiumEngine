@@ -28,16 +28,16 @@ public:
 
 		EntityRef camera = CreateEntity();
 		camera.Get().AddComponent<TransformComponent>();
-		camera.Get().AddComponent<CameraComponent>()->Zoom = 1.0;
-		camera.Get().AddComponent<CameraMovementComponent>();
+		camera.Get().AddComponent<CameraComponent>()->Zoom = 10.0;
+		camera.Get().AddComponent<CameraMovementComponent>()->EnableMove = false;
+
+		EntityRef e1 = CreateEntity();
+		e1.Get().AddComponent<PlayerMovementComponent>();
+		e1.Get().AddComponent<SpriteRendererComponent>()->LoadRGBATexture("res/images/character.png");
+		e1.Get().AddComponent<TransformComponent>();
+		e1.Get().AddComponent<RectCollisionComponent>();
 
 		/*
-		Entity& e1 = CreateEntity();
-		e1.AddComponent<PlayerMovementComponent>();
-		e1.AddComponent<SpriteRendererComponent>().LoadRGBATexture("res/images/character.png");
-		e1.AddComponent<TransformComponent>();
-		e1.AddComponent<RectCollisionComponent>();
-
 		Entity& e2 = CreateEntity();
 		e2.AddComponent<SpriteRendererComponent>().LoadRGBATexture("res/images/player-running.png");
 		e2.AddComponent<TransformComponent>();
@@ -49,9 +49,9 @@ public:
 		e.Get().AddComponent<PixelWorld>();
 		PixelWorld& world = *PixelWorld::GetInstance();
 
-		for (int y = 0; y < 1000; y++)
+		for (int y = 0; y < 300; y++)
 		{
-			for (int x = 0; x < 1000; x++)
+			for (int x = 0; x < 300; x++)
 			{
 				if ((x + y) % 2 == 0)
 					world.AddPixel(Vector2I(x, y), rand() % 3);

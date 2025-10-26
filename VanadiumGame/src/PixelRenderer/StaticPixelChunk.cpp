@@ -3,14 +3,11 @@
 StaticPixelChunk::StaticPixelChunk(EntityRef ref)
 	: Component(ref), m_shader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/chunk.shader")->CreateShader())
 {
-
-	float chunkSize = 1.0;
-
 	float vertices[] = {
-	chunkSize / (float)(Size - 1),  chunkSize / (float)(Size - 1), 0.0f, 1.0f, 0.0f,  // top right
-	chunkSize / (float)(Size - 1),   0.0f, 0.0f, 1.0f, 1.0f,  // bottom right
+	ChunkSize / (float)(Size - 1),  ChunkSize / (float)(Size - 1), 0.0f, 1.0f, 0.0f,  // top right
+	ChunkSize / (float)(Size - 1),   0.0f, 0.0f, 1.0f, 1.0f,  // bottom right
 	  0.0f,   0.0f, 0.0f, 0.0f, 1.0f,  // bottom left
-	  0.0f,  chunkSize / (float)(Size - 1), 0.0f, 0.0f, 0.0f,  // top left 
+	  0.0f,  ChunkSize / (float)(Size - 1), 0.0f, 0.0f, 0.0f,  // top left 
 	};
 
 	unsigned int indices[] = {  // note that we start from 0!
@@ -20,7 +17,7 @@ StaticPixelChunk::StaticPixelChunk(EntityRef ref)
 
 
 	u32 loc = m_shader.GlShader().GetUniformLocation("u_size");
-	GL_CHECK(glUniform1f(loc, chunkSize - 1/(float)(Size)));
+	GL_CHECK(glUniform1f(loc, ChunkSize - 1 / (float)(Size)));
 
 	m_vao.Bind();
 
@@ -71,6 +68,33 @@ void StaticPixelChunk::AddPixel(u8 x, u8 y, u8 type)
 	m_buffersUpToDate = false;
 }
 
+void StaticPixelChunk::SetPixel(LocalChunkPosition position, u8 type)
+{
+	SetPixel(position.x, position.y, type);
+}
+
+void StaticPixelChunk::SetPixel(u8 x, u8 y, u8 type)
+{
+	std::vector<size_t> xs;
+	for (int i = 0; i < m_soa_x.size(); i++)
+	{
+		if (m_soa_x[i] == x)
+			xs.push_back(i);
+	}
+
+	for (int i = 0; i < xs.size(); i++)
+	{
+		if (m_soa_y[xs[i]] == y)
+		{
+			m_soa_type[xs[i]] = type;
+			m_buffersUpToDate = false;
+			return;
+		}
+	}
+
+	AddPixel(x, y, type);
+}
+
 void StaticPixelChunk::Draw()
 {
 	if (m_soa_x.size() < 1)
@@ -85,7 +109,7 @@ void StaticPixelChunk::Draw()
 	}
 
 	u32 loc = m_shader.GlShader().GetUniformLocation("model");
-	GL_CHECK(glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(glm::translate(glm::identity<glm::mat4>(), glm::vec3(Position, 0.0)))));
+	GL_CHECK(glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(glm::translate(glm::identity<glm::mat4>(), glm::vec3(((Vector2)Position) * ChunkSize, 0.0)))));
 
 	m_shader.GlShader().Use();
 	m_vao.Bind();

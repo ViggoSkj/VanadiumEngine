@@ -8,4 +8,7 @@ public:
 	CameraMovementComponent(EntityRef ref);
 
 	void OnUpdate(double dt) override;
+
+
+	bool EnableMove = false;
 };

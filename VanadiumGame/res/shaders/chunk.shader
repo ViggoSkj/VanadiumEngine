@@ -24,10 +24,6 @@ void main()
     gl_Position = projection * view * model * vec4(aPos.x + x * u_size, aPos.y + y * u_size, aPos.z, 1.0);
     
     color = colors[int(type*255)];
-
-    if (x * u_size >= 1)
-        color = vec4(1.0, 0.0, 1.0, 1.0); 
-
 }
 
 #shader fragment

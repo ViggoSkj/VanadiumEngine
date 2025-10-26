@@ -12,7 +12,7 @@ struct Camera
 	glm::mat4 GetViewMatrix()
 	{
 		glm::mat4 camera = glm::identity<glm::mat4>();
-		camera = glm::scale(camera, glm::vec3(Zoom, Zoom, 1.0f));
+		camera = glm::scale(camera, glm::vec3(1.0 / Zoom, 1.0 / Zoom, 1.0f));
 		camera = glm::translate(camera, glm::vec3(-Position.x, -Position.y, 0.0f));
 		return camera;
 	}

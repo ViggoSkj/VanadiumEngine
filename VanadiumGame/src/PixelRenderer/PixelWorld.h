@@ -21,14 +21,18 @@ public:
 
 	void OnRender(double dt) override;
 
+	void OnUpdate(double dt) override;
+
 	void AddPixel(Vector2I position, u8 type);
+	void SetPixel(Vector2I position, u8 type);
 
 	LocalChunkPosition ToLocal(Vector2I position);
-
 private:
 	static EntityRef* s_instance;
 
 	PixelRenderer m_renderer;
 
+	StaticPixelChunk* CreateChunk(Vector2I position);
+	StaticPixelChunk& GetChunk(Vector2I position);
 	std::optional<StaticPixelChunk*> FindChunk(Vector2I position);
 };

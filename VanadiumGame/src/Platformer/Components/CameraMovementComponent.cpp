@@ -6,7 +6,7 @@ CameraMovementComponent::CameraMovementComponent(EntityRef ref)
 {
 }
 
-void CameraMovementComponent::OnUpdate(double dt) 
+void CameraMovementComponent::OnUpdate(double dt)
 {
 	GLFWwindow* glfwWindow = Application::Get().GetWindow()->GetGLFWwindow().get();
 
@@ -23,14 +23,18 @@ void CameraMovementComponent::OnUpdate(double dt)
 		sceneManager->LoadScene(ECS->FindEntity(GetOwnerId()).value()->GetOwner());
 	}
 
-	if (Input.Down(Key::W))
-		Transform.Position.y += 1.0f * (float)dt / camera.Zoom;
-	if (Input.Down(Key::S))
-		Transform.Position.y -= 1.0f * (float)dt / camera.Zoom;
-	if (Input.Down(Key::A))
-		Transform.Position.x -= 1.0f * (float)dt / camera.Zoom;
-	if (Input.Down(Key::D))
-		Transform.Position.x += 1.0f * (float)dt / camera.Zoom;
+	if (EnableMove)
+	{
+		if (Input.Down(Key::W))
+			Transform.Position.y += 1.0f * (float)dt / camera.Zoom;
+		if (Input.Down(Key::S))
+			Transform.Position.y -= 1.0f * (float)dt / camera.Zoom;
+		if (Input.Down(Key::A))
+			Transform.Position.x -= 1.0f * (float)dt / camera.Zoom;
+		if (Input.Down(Key::D))
+			Transform.Position.x += 1.0f * (float)dt / camera.Zoom;
+	}
+
 
 	if (Input.Down(Key::Q))
 		camera.Zoom += 1.0f * (float)dt * camera.Zoom;
