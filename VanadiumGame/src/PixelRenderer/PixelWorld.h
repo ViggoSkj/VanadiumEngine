@@ -26,6 +26,10 @@ public:
 	void AddPixel(Vector2I position, u8 type);
 	void SetPixel(Vector2I position, u8 type);
 
+	void RemovePixels(ChunkedPixelRefs& refs);
+
+	PixelRefs RectCast(Rect cast);
+
 	LocalChunkPosition ToLocal(Vector2I position);
 private:
 	static EntityRef* s_instance;
@@ -35,4 +39,5 @@ private:
 	StaticPixelChunk* CreateChunk(Vector2I position);
 	StaticPixelChunk& GetChunk(Vector2I position);
 	std::optional<StaticPixelChunk*> FindChunk(Vector2I position);
+	UnorderedVector<StaticPixelChunk>& GetChunks();
 };

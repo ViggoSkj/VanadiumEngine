@@ -15,7 +15,7 @@ void CameraMovementComponent::OnUpdate(double dt)
 	SceneManager* sceneManager = Application::Get().GetSceneManager();
 
 	CameraComponent& camera = *GetComponent<CameraComponent>().value();
-	TransformComponent& Transform = *GetComponent<TransformComponent>().value();
+	TransformComponent& transform = *GetComponent<TransformComponent>().value();
 
 	if (Input.GetKey(Key::R) == KeyState::Pressed)
 	{
@@ -26,13 +26,18 @@ void CameraMovementComponent::OnUpdate(double dt)
 	if (EnableMove)
 	{
 		if (Input.Down(Key::W))
-			Transform.Position.y += 1.0f * (float)dt / camera.Zoom;
+			transform.Position.y += 1.0f * (float)dt / camera.Zoom;
 		if (Input.Down(Key::S))
-			Transform.Position.y -= 1.0f * (float)dt / camera.Zoom;
+			transform.Position.y -= 1.0f * (float)dt / camera.Zoom;
 		if (Input.Down(Key::A))
-			Transform.Position.x -= 1.0f * (float)dt / camera.Zoom;
+			transform.Position.x -= 1.0f * (float)dt / camera.Zoom;
 		if (Input.Down(Key::D))
-			Transform.Position.x += 1.0f * (float)dt / camera.Zoom;
+			transform.Position.x += 1.0f * (float)dt / camera.Zoom;
+	}
+	else
+	{
+		Vector2 targetPosition = Target.Get().GetComponent<TransformComponent>().value_or(nullptr)->Position;
+		transform.Position = glm::mix(transform.Position, targetPosition, 0.995f * dt);
 	}
 
 

@@ -1,7 +1,9 @@
 #include "StaticPixelChunk.h"
 
 StaticPixelChunk::StaticPixelChunk(EntityRef ref)
-	: Component(ref), m_shader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/chunk.shader")->CreateShader())
+	: Component(ref),
+	m_shader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/chunk.shader")->CreateShader()),
+	Position(Vector2(0, 0))
 {
 	float vertices[] = {
 	ChunkSize / (float)(Size - 1),  ChunkSize / (float)(Size - 1), 0.0f, 1.0f, 0.0f,  // top right
@@ -66,6 +68,7 @@ void StaticPixelChunk::AddPixel(u8 x, u8 y, u8 type)
 	m_soa_y.push_back(y);
 	m_soa_type.push_back(type);
 	m_buffersUpToDate = false;
+	m_chunkState++;
 }
 
 void StaticPixelChunk::SetPixel(LocalChunkPosition position, u8 type)
@@ -88,11 +91,25 @@ void StaticPixelChunk::SetPixel(u8 x, u8 y, u8 type)
 		{
 			m_soa_type[xs[i]] = type;
 			m_buffersUpToDate = false;
+			m_chunkState++;
 			return;
 		}
 	}
 
 	AddPixel(x, y, type);
+}
+
+void StaticPixelChunk::RemovePixels(ChunkedPixelRefs& refs)
+{
+	for (int i = refs.Size() - 1; i >= 0; i--)
+	{
+		m_soa_x.remove(refs[i]);
+		m_soa_y.remove(refs[i]);
+		m_soa_type.remove(refs[i]);
+	}
+
+	m_chunkState++;
+	m_buffersUpToDate = false;
 }
 
 void StaticPixelChunk::Draw()
@@ -115,4 +132,32 @@ void StaticPixelChunk::Draw()
 	m_vao.Bind();
 
 	GL_CHECK(glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, m_soa_x.size()));
+}
+
+ChunkedPixelRefs StaticPixelChunk::RectCast(Rect cast)
+{
+	std::vector<size_t> pixels;
+	for (int i = 0; i < m_soa_x.size(); i++)
+	{
+		float x = ChunkSize * (m_soa_x[i] + 0.5) / ((float)Size) + ((float)Position.x) * ChunkSize;
+		if (x >= cast.Start.x && x <= cast.End.x)
+			pixels.push_back(i);
+	}
+
+	for (int i = 0; i < pixels.size(); i++)
+	{
+		float y = ChunkSize * (m_soa_y[pixels[i]] + 0.5) / ((float)Size) + ((float)Position.y) * ChunkSize;
+		if (y < cast.Start.y || y > cast.End.y)
+		{
+			pixels.erase(pixels.begin() + i);
+			i--;
+		}
+	}
+
+	return ChunkedPixelRefs(std::move(pixels), this);
+}
+
+Rect StaticPixelChunk::GetRect()
+{
+	return Rect(((Vector2)Position) * ChunkSize, ((Vector2)Position) * ChunkSize + Vector2(ChunkSize, ChunkSize));
 }

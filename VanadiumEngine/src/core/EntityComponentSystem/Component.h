@@ -19,6 +19,8 @@ public:
 	u32 GetOwnerId() const;
 	Entity& GetEntity();
 
+	EntityRef GetEntityRef() const { return m_entityRef; }
+
 	template<typename TComponent>
 		requires std::is_base_of_v<Component, TComponent>
 	std::optional<TComponent*> GetComponent()

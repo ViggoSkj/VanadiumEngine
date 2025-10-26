@@ -37,6 +37,8 @@ public:
 		e1.Get().AddComponent<TransformComponent>();
 		e1.Get().AddComponent<RectCollisionComponent>();
 
+		camera.Get().GetComponent<CameraMovementComponent>().value_or(nullptr)->Target = e1;
+
 		/*
 		Entity& e2 = CreateEntity();
 		e2.AddComponent<SpriteRendererComponent>().LoadRGBATexture("res/images/player-running.png");
@@ -49,15 +51,14 @@ public:
 		e.Get().AddComponent<PixelWorld>();
 		PixelWorld& world = *PixelWorld::GetInstance();
 
-		for (int y = 0; y < 300; y++)
+		for (int y = 0; y < 256 * 5; y++)
 		{
-			for (int x = 0; x < 300; x++)
+			for (int x = 0; x < 256 * 5; x++)
 			{
 				if ((x + y) % 2 == 0)
 					world.AddPixel(Vector2I(x, y), rand() % 3);
 			}
 		}
-
 	}
 };
 

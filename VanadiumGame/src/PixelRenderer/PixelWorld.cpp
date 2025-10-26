@@ -10,7 +10,7 @@ void PixelWorld::OnRender(double dt)
 void PixelWorld::OnUpdate(double dt)
 {
 	static float changesToMakeBuffer = 0;
-	float changesPerSecond = 2000;
+	float changesPerSecond = 1000;
 
 	changesToMakeBuffer += dt * changesPerSecond;
 
@@ -47,6 +47,33 @@ void PixelWorld::SetPixel(Vector2I position, u8 type)
 	std::optional<StaticPixelChunk*> chunkOpt = FindChunk(chunkPosition);
 	StaticPixelChunk& chunk = GetChunk(chunkPosition);
 	chunk.SetPixel(ToLocal(position), type);
+}
+
+void PixelWorld::RemovePixels(ChunkedPixelRefs& refs)
+{
+	StaticPixelChunk* chunk = refs.GetChunk();
+	chunk->RemovePixels(refs);
+}
+
+PixelRefs PixelWorld::RectCast(Rect cast)
+{
+	UnorderedVector<StaticPixelChunk>& chunks = GetChunks();
+	UnorderedVector<StaticPixelChunk*> overlapingChunks;
+	
+	for (int i = 0; i < chunks.size(); i++)
+	{
+		if (cast.Overlaps(chunks[i].GetRect()))
+			overlapingChunks.push_back(&chunks[i]);
+	}
+
+	std::vector<ChunkedPixelRefs> refs;
+
+	for (int i = 0; i < overlapingChunks.size(); i++)
+	{
+		refs.push_back(overlapingChunks[i]->RectCast(cast));
+	}
+
+	return PixelRefs(std::move(refs));
 }
 
 LocalChunkPosition PixelWorld::ToLocal(Vector2I position)
@@ -87,9 +114,7 @@ std::optional<StaticPixelChunk*> PixelWorld::FindChunk(Vector2I position)
 	i32 chunkX = position.x / 32;
 	i32 chunkY = position.y / 32;
 
-	ComponentStore<StaticPixelChunk>* store = Application::Get().GetECS()->GetComponentStore<StaticPixelChunk>().value_or(nullptr);
-	UnorderedVector<StaticPixelChunk>& chunks = store->GetComponents();
-
+	UnorderedVector<StaticPixelChunk>& chunks = GetChunks();
 
 	for (int i = 0; i < chunks.size(); i++)
 	{
@@ -99,4 +124,10 @@ std::optional<StaticPixelChunk*> PixelWorld::FindChunk(Vector2I position)
 	}
 
 	return std::nullopt;
+}
+
+UnorderedVector<StaticPixelChunk>& PixelWorld::GetChunks()
+{
+	ComponentStore<StaticPixelChunk>* store = Application::Get().GetECS()->GetComponentStore<StaticPixelChunk>().value_or(nullptr);
+	return store->GetComponents();
 }

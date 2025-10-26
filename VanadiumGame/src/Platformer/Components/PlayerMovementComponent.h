@@ -10,7 +10,8 @@ public:
 
 	void OnUpdate(double dt) override;
 
+
+	float Speed = 3.5;
 private:
-	float speed = 0;
 	float gravity = -9.82;
 };

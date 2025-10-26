@@ -9,6 +9,6 @@ public:
 
 	void OnUpdate(double dt) override;
 
-
 	bool EnableMove = false;
+	EntityRef Target;
 };

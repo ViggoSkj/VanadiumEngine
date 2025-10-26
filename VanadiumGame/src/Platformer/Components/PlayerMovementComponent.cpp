@@ -1,6 +1,7 @@
 #include "Core.h"
 #include "PlayerMovementComponent.h"
 #include "Camera.h"
+#include "PixelRenderer/PixelWorld.h"
 
 void PlayerMovementComponent::OnUpdate(double dt)
 {
@@ -9,11 +10,21 @@ void PlayerMovementComponent::OnUpdate(double dt)
 
 	TransformComponent& transform = *GetComponent<TransformComponent>().value();
 
-	speed += gravity * dt;
-	transform.Position += Vector2(0, speed) * (float) dt;
+	if (Input.Down(Key::W))
+		transform.Position.y += Speed * dt;
+	if (Input.Down(Key::S))
+		transform.Position.y -= Speed * dt;
+	if (Input.Down(Key::A))
+		transform.Position.x -= Speed * dt;
+	if (Input.Down(Key::D))
+		transform.Position.x += Speed * dt;
 
-	if (Input.GetKey(Key::Space) == KeyState::Pressed)
-		speed = -gravity * 0.5;
 
-	transform.Position.x = sin(Application::Get().GetTime().TimeSinceStart) * 3.0f - 1.5f;
+	Rect rect(Vector2(transform.Position) - Vector2(1, 1), Vector2(transform.Position + Vector2(1, 1)));
+	PixelRefs refs = PixelWorld::GetInstance()->RectCast(rect);
+
+	for (int i = 0; i < refs.ChunkCount(); i++)
+	{
+		PixelWorld::GetInstance()->RemovePixels(*refs.GetChunkedPixelRef(i));
+	}
 }
