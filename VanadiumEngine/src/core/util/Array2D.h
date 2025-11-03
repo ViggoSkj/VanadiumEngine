@@ -14,7 +14,7 @@ public:
 		return m_data[x + y * m_width];
 	}
 
-	T Set(int x, int y, T value)
+	void Set(int x, int y, T value)
 	{
 		m_data[x + y * m_width] = value;
 	}

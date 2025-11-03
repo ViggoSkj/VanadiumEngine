@@ -32,7 +32,10 @@ void RectCollisionDebugLayer::OnRender(double dt)
 		RectCollisionComponent& r = colliders[i];
 		TransformComponent& t = *r.GetComponent<TransformComponent>().value();
 
-		GL_CHECK(glUniformMatrix4fv(loc2, 1, GL_FALSE, glm::value_ptr(t.ModelMatrix())));
+		float width = r.Rect.End.x - r.Rect.Start.x;
+		float height = r.Rect.End.y - r.Rect.Start.y;
+		glm::mat4 a = glm::scale(t.ModelMatrix(), glm::vec3(height, width, 1.0));
+		GL_CHECK(glUniformMatrix4fv(loc2, 1, GL_FALSE, glm::value_ptr(a)));
 
 		if (r.Collisions.size() > 0)
 		{

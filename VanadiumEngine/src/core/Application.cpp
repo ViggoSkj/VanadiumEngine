@@ -58,7 +58,7 @@ void Application::Run()
 			dt = (double)glfwGetTime() - prevTime;
 		}
 
-		//LogDebug(std::to_string(1.0 / dt));
+		// LogDebug(std::to_string(1.0 / dt));
 
 		m_time->TimeSinceStart += dt;
 		prevTime = (float)glfwGetTime();

@@ -9,6 +9,7 @@ layout (location = 4) in float type;
 #include res/lib/CameraUniformObject.shader
 
 out vec4 color;
+out vec2 uv;
 
 const vec4 colors[3] = vec4[3](
     vec4(1.0, 0.0, 0.0, 1.0),
@@ -22,14 +23,16 @@ uniform mat4 model;
 void main()
 {
     gl_Position = projection * view * model * vec4(aPos.x + x * u_size, aPos.y + y * u_size, aPos.z, 1.0);
-    
     color = colors[int(type*255)];
+    uv = aCoord;
 }
 
 #shader fragment
 #version 330 core
 out vec4 FragColor;
 in vec4 color;
+in vec2 uv;
+
 
 void main()
 {

@@ -25,6 +25,6 @@ void PlayerMovementComponent::OnUpdate(double dt)
 
 	for (int i = 0; i < refs.ChunkCount(); i++)
 	{
-		PixelWorld::GetInstance()->RemovePixels(*refs.GetChunkedPixelRef(i));
+		//PixelWorld::GetInstance()->RemovePixels(*refs.GetChunkedPixelRef(i));
 	}
 }
