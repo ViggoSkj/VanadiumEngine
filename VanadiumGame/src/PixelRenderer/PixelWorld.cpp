@@ -10,7 +10,7 @@ void PixelWorld::OnRender(double dt)
 void PixelWorld::OnUpdate(double dt)
 {
 	static float changesToMakeBuffer = 0;
-	float changesPerSecond = 0;
+	float changesPerSecond = 1000;
 
 	changesToMakeBuffer += dt * changesPerSecond;
 

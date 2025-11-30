@@ -1,25 +1,234 @@
 #include "PhysicsLayer.h"
 #include "SquareRigidbody.h"
+#include "Core.h"
+
+static float Length2(Vector2 vector)
+{
+	return vector.x * vector.x + vector.y * vector.y;
+}
+
+static Vector2 Cross(float a, Vector2 v)
+{
+	return Vector2(-a * v.y, a * v.x);
+}
+
+static float Cross(Vector2 a, Vector2 b)
+{
+	return a.x * b.y - a.y * b.x;
+}
+
+struct CollisionPair
+{
+	CircleRigidbody* A;
+	CircleRigidbody* B;
+	std::vector<Vector2> contacts; // 1-2 contact points
+	Vector2 normal;                // from A -> B
+	float penetration;
+	float lambda = 0.0f;
+};
+
+// Project 4 square vertices onto axis
+static void ProjectSquare(const std::vector<Vector2>& verts, const Vector2& axis, float& min, float& max)
+{
+	min = max = glm::dot(verts[0], axis);
+	for (int i = 1; i < 4; i++)
+	{
+		float p = glm::dot(verts[i], axis);
+		if (p < min) min = p;
+		if (p > max) max = p;
+	}
+}
+
+// Overlap along axis
+static float OverlapOnAxis(const std::vector<Vector2>& aVerts, const std::vector<Vector2>& bVerts, const Vector2& axis)
+{
+	float minA, maxA, minB, maxB;
+	ProjectSquare(aVerts, axis, minA, maxA);
+	ProjectSquare(bVerts, axis, minB, maxB);
+	return std::min(maxA, maxB) - std::max(minA, minB);
+}
+
+// SAT for squares
+bool SATCollisionSquares(CircleRigidbody* A, CircleRigidbody* B, CollisionPair& out)
+{
+	auto aVerts = A->GetComponent<RectCollisionComponent>().value_or(nullptr)->GetVerticesWorld();
+	auto bVerts = B->GetComponent<RectCollisionComponent>().value_or(nullptr)->GetVerticesWorld();
+
+	std::vector<Vector2> axes = {
+		glm::normalize(aVerts[1] - aVerts[0]),       // edge A0-A1
+		glm::normalize(aVerts[3] - aVerts[0]),       // edge A0-A3
+		glm::normalize(bVerts[1] - bVerts[0]),       // edge B0-B1
+		glm::normalize(bVerts[3] - bVerts[0])        // edge B0-B3
+	};
+
+	float minOverlap = std::numeric_limits<float>::max();
+	Vector2 smallestAxis;
+
+	for (auto& axis : axes)
+	{
+		Vector2 normal = Vector2(-axis.y, axis.x); // perpendicular
+		float overlap = OverlapOnAxis(aVerts, bVerts, normal);
+		if (overlap < 0.0f) return false; // separating axis found
+		if (overlap < minOverlap)
+		{
+			minOverlap = overlap;
+			smallestAxis = normal;
+		}
+	}
+
+	// Ensure normal points from A -> B
+	Vector2 d = B->GetPosition() - A->GetPosition();
+	if (glm::dot(d, smallestAxis) < 0) smallestAxis = -smallestAxis;
+
+	// Generate contact points (vertex clipping simplified for squares)
+	std::vector<Vector2> contacts;
+	for (auto& v : aVerts)
+		if (B->GetComponent<RectCollisionComponent>().value_or(nullptr)->PointInside_World(v))
+			contacts.push_back(v);
+	for (auto& v : bVerts)
+		if (A->GetComponent<RectCollisionComponent>().value_or(nullptr)->PointInside_World(v))
+			contacts.push_back(v);
+
+	// If no vertices inside, approximate midpoint along normal
+	if (contacts.empty())
+		contacts.push_back((A->GetPosition() + B->GetPosition()) * 0.5f);
+
+	out.A = A;
+	out.B = B;
+	out.normal = glm::normalize(smallestAxis);
+	out.penetration = minOverlap;
+	out.contacts = contacts;
+
+	return true;
+}
+
 
 void PhysicsLayer::OnUpdate(double dt)
 {
 	EntityComponentSystem& ECS = *Application::Get().GetECS();
 
-	UnorderedVector<SquareRigidbody>& rbs = ECS.GetComponentStore<SquareRigidbody>().value_or(nullptr)->GetComponents();
+	UnorderedVector<CircleRigidbody>& rbs = ECS.GetComponentStore<CircleRigidbody>().value_or(nullptr)->GetComponents();
+
+	std::vector<CollisionPair> collisionPairs;
+
+	// generate all square collisions
+	for (int i = 0; i < rbs.size(); i++)
+	{
+		CircleRigidbody* A = &rbs[i];
+		for (int j = i + 1; j < rbs.size(); j++)
+		{
+			CircleRigidbody* B = &rbs[j];
+			auto aVerts = A->GetComponent<RectCollisionComponent>().value_or(nullptr);
+			auto bVerts = B->GetComponent<RectCollisionComponent>().value_or(nullptr);
+
+			if (!aVerts->CollidesWith(bVerts))
+				continue;
+		
+			CollisionPair pair;
+			if (SATCollisionSquares(A, B, pair))
+				collisionPairs.push_back(pair);
+		}
+	}
+
+	// solver loop
+	const u32 iterations = 150;
+	const float beta = 0.2f;
+	const float penetrationSlop = 0.001f;
+	const float maxBias = 1.0f;
+
+	for (u32 c = 0; c < iterations; c++)
+	{
+		for (auto& pair : collisionPairs)
+		{
+			for (auto& contact : pair.contacts)
+			{
+				glm::vec2 n = pair.normal;
+
+				if (glm::dot(pair.A->LinearVelocity, pair.B->LinearVelocity) < 0)
+					continue;
+
+				float safeDt = (dt <= 1e-9) ? 1e-9f : (float)dt;
+				float bias = (pair.penetration > penetrationSlop) ? beta * (pair.penetration - penetrationSlop) / safeDt : 0.0f;
+				bias = glm::clamp(bias, 0.0f, maxBias);
+
+				glm::vec2 rA = contact - pair.A->GetPosition();
+				glm::vec2 rB = contact - pair.B->GetPosition();
+
+				glm::vec2 velA = pair.A->LinearVelocity + Cross(pair.A->AngularVelocity, rA);
+				glm::vec2 velB = pair.B->LinearVelocity + Cross(pair.B->AngularVelocity, rB);
+				float vRel = glm::dot(n, velB - velA);
+
+				float rnA = Cross(rA, n);
+				float rnB = Cross(rB, n);
+
+				float invMassA = (pair.A->Mass == 0.0f) ? 0.0f : 1.0f / pair.A->Mass;
+				float invMassB = (pair.B->Mass == 0.0f) ? 0.0f : 1.0f / pair.B->Mass;
+				float invInertiaA = (pair.A->GetInertia() == 0.0f) ? 0.0f : 1.0f / pair.A->GetInertia();
+				float invInertiaB = (pair.B->GetInertia() == 0.0f) ? 0.0f : 1.0f / pair.B->GetInertia();
+
+				float kNormal = invMassA + invMassB + invInertiaA * rnA * rnA + invInertiaB * rnB * rnB;
+				float effectiveMass = (kNormal == 0.0f) ? 0.0f : 1.0f / kNormal;
+
+				float deltaLambda = -(vRel + bias) * effectiveMass;
+				float newLambda = std::max(0.0f, pair.lambda + deltaLambda);
+				float appliedDelta = newLambda - pair.lambda;
+				pair.lambda = newLambda;
+
+				glm::vec2 P = n * appliedDelta;
+
+				pair.A->LinearVelocity -= P * invMassA;
+				pair.A->AngularVelocity -= invInertiaA * Cross(rA, P);
+				pair.B->LinearVelocity += P * invMassB;
+				pair.B->AngularVelocity += invInertiaB * Cross(rB, P);
+			}
+		}
+	}
+
+	const float percent = 0.8f;       // positional correction factor
+	const float EPS = 1e-6f;
+
+	for (auto& pair : collisionPairs)
+	{
+		if (pair.contacts.empty()) continue;
+
+		glm::vec2 totalCorrection(0.0f);
+		float invMassA = (pair.A->Mass == 0.0f) ? 0.0f : 1.0f / pair.A->Mass;
+		float invMassB = (pair.B->Mass == 0.0f) ? 0.0f : 1.0f / pair.B->Mass;
+		float invMassSum = invMassA + invMassB;
+		if (invMassSum < EPS) continue;
+
+		float invInertiaA = (pair.A->GetInertia() == 0.0f) ? 0.0f : 1.0f / pair.A->GetInertia();
+		float invInertiaB = (pair.B->GetInertia() == 0.0f) ? 0.0f : 1.0f / pair.B->GetInertia();
+
+		// average contact positions
+		glm::vec2 avgContact(0.0f);
+		for (auto& c : pair.contacts) avgContact += c;
+		avgContact /= (float)pair.contacts.size();
+
+		glm::vec2 rA = avgContact - pair.A->GetPosition();
+		glm::vec2 rB = avgContact - pair.B->GetPosition();
+
+		float correctionMag = std::max(pair.penetration - penetrationSlop, 0.0f) * percent / invMassSum;
+		glm::vec2 correction = pair.normal * correctionMag;
+
+		auto* transformA = pair.A->GetComponent<TransformComponent>().value_or(nullptr);
+		auto* transformB = pair.B->GetComponent<TransformComponent>().value_or(nullptr);
+		if (transformA) transformA->Position -= correction * invMassA;
+		if (transformB) transformB->Position += correction * invMassB;
+
+		// rotation
+		float torqueA = Cross(rA, -correction);
+		float torqueB = Cross(rB, correction);
+		pair.A->AngularVelocity += torqueA * invInertiaA;
+		pair.B->AngularVelocity += torqueB * invInertiaB;
+	}
 
 	if (!Application::Get().GetWindow()->GetInputManager().Down(Key::Space))
+	{
 		for (int i = 0; i < rbs.size(); i++)
 		{
 			rbs[i].GetComponent<TransformComponent>().value_or(nullptr)->Position += rbs[i].LinearVelocity * (float)dt;
-		}
-
-	for (int i = 0; i < rbs.size(); i++)
-	{
-		SquareRigidbody& A = rbs[i];
-		for (int j = i + 1; j < rbs.size(); j++)
-		{
-			SquareRigidbody& B = rbs[i];
-
+			rbs[i].GetComponent<TransformComponent>().value_or(nullptr)->RotateRads(rbs[i].AngularVelocity * (float)dt);
 		}
 	}
 }

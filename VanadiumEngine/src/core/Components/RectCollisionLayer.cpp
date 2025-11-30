@@ -21,14 +21,6 @@ Vector2 MinMaxProjectionScalars(glm::vec2 axis, glm::vec2 p1, glm::vec2 p2, glm:
 	return { min, max };
 }
 
-Vector2 Orient(Vector2 p, Vector2 up)
-{
-	Vector2 right = { up.y, -up.x };
-	Vector2 rotated = { p.x * right.x + p.y * up.x,
-						p.x * right.y + p.y * up.y };
-	return rotated;
-}
-
 void RectCollisionLayer::OnUpdate(double dt)
 {
 	EntityComponentSystem& ECS = *Application::Get().GetECS();
@@ -52,25 +44,15 @@ void RectCollisionLayer::OnUpdate(double dt)
 			RectCollisionComponent* b = &colliders[j];
 			TransformComponent* bt = b->GetComponent<TransformComponent>().value();
 
-			Vector2 a1 = a->Rect.Start;
-			Vector2 a2 = { a->Rect.Start.x , a->Rect.End.y };
-			Vector2 a3 = { a->Rect.End.x , a->Rect.Start.y };
-			Vector2 a4 = a->Rect.End;
+			Vector2 a1 = a->LocalToWorld(a->Rect.Start);
+			Vector2 a2 = a->LocalToWorld({ a->Rect.Start.x , a->Rect.End.y });
+			Vector2 a3 = a->LocalToWorld({ a->Rect.End.x , a->Rect.Start.y });
+			Vector2 a4 = a->LocalToWorld(a->Rect.End);
 
-			a1 = Orient(a1, at->Up) + at->Position;
-			a2 = Orient(a2, at->Up) + at->Position;
-			a3 = Orient(a3, at->Up) + at->Position;
-			a4 = Orient(a4, at->Up) + at->Position;
-
-			Vector2 b1 = b->Rect.Start;
-			Vector2 b2 = { b->Rect.Start.x , b->Rect.End.y };
-			Vector2 b3 = { b->Rect.End.x , b->Rect.Start.y };
-			Vector2 b4 = b->Rect.End;
-
-			b1 = Orient(b1, bt->Up) + bt->Position;
-			b2 = Orient(b2, bt->Up) + bt->Position;
-			b3 = Orient(b3, bt->Up) + bt->Position;
-				b4 = Orient(b4, bt->Up) + bt->Position;
+			Vector2 b1 = b->LocalToWorld(b->Rect.Start);
+			Vector2 b2 = b->LocalToWorld({ b->Rect.Start.x , b->Rect.End.y });
+			Vector2 b3 = b->LocalToWorld({ b->Rect.End.x , b->Rect.Start.y });
+			Vector2 b4 = b->LocalToWorld(b->Rect.End);
 
 			glm::vec2 axis1 = at->Up;
 			glm::vec2 axis2 = at->Right();

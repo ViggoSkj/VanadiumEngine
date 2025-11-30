@@ -20,6 +20,8 @@ public:
 
 	Vector2 Up = Vector2(1, 0);
 
+	float Angle = 0.0f;
+
 	Vector2 Right()
 	{
 		return { Up.y, -Up.x };
@@ -32,8 +34,16 @@ public:
 
 	void SetAngleDeg(float deg)
 	{
-		Up.x = sin(deg * DEG_TO_RAD);
-		Up.y = cos(deg * DEG_TO_RAD);
+		Angle = deg * DEG_TO_RAD;
+		Up.x = sin(deg * Angle);
+		Up.y = cos(deg * Angle);
+	}
+
+	void RotateRads(float rads)
+	{
+		Angle += rads;
+		Up.x = sin(Angle);
+		Up.y = cos(Angle);
 	}
 
 	Matrix4x4 ModelMatrix()
