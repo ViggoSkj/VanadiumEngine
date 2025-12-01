@@ -59,17 +59,7 @@ Vector2 RectCollisionComponent::CenterToWorld()
 
 Vector2 RectCollisionComponent::EscapeVector(Vector2 point)
 {
-	Vector2 v1 = Rect.Start;
-	Vector2 v2 = { Rect.Start.x , Rect.End.y };
-	Vector2 v3 = { Rect.End.x , Rect.End.y };
-	Vector2 v4 = { Rect.End.x , Rect.Start.y };
-
-	v1 = LocalToWorld(v1);
-	v2 = LocalToWorld(v2);
-	v3 = LocalToWorld(v3);
-	v4 = LocalToWorld(v4);
-
-	Vector2 vertices[] = { v1, v2, v3, v4 };
+	std::vector<Vector2> vertices = GetVerticesWorld();
 	Vector2 escapeVectors[4];
 
 	for (u32 i = 0; i < 4; i++)

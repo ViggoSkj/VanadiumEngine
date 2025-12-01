@@ -37,7 +37,7 @@ void RectCollisionDebugLayer::OnRender(double dt)
 		glm::mat4 a = glm::scale(t.ModelMatrix(), glm::vec3(height, width, 1.0));
 		GL_CHECK(glUniformMatrix4fv(loc2, 1, GL_FALSE, glm::value_ptr(a)));
 
-		if (r.Collisions.size() > 0 && false)
+		if (r.Collisions.size() > 0)
 		{
 			GL_CHECK(glUniform4f(loc, 1, 0, 0, 0.5));
 		}
