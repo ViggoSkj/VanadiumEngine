@@ -21,7 +21,7 @@ struct CollisionPair
 {
 	CircleRigidbody* A;
 	CircleRigidbody* B;
-	Vector2 contact; // 1-2 contact points
+	Vector2 contact; 
 	Vector2 normal;                // from A -> B
 	float penetration;
 	float lambda = 0.0f;
@@ -114,7 +114,7 @@ void PhysicsLayer::OnUpdate(double dt)
 	}
 
 	// solver loop
-	const u32 iterations = 150;
+	const u32 iterations = 100;
 	const float beta = 0.2f;
 	const float penetrationSlop = 0.001f;
 	const float maxBias = 1.0f;
@@ -125,15 +125,16 @@ void PhysicsLayer::OnUpdate(double dt)
 		{
 			glm::vec2 n = pair.normal;
 
+
 			glm::vec2 rA = pair.contact - pair.A->GetPosition();
 			glm::vec2 rB = pair.contact - pair.B->GetPosition();
 
 			float rnA = Cross(rA, n);
 			float rnB = Cross(rB, n);
 
-			glm::vec2 velA = pair.A->LinearVelocity + Cross(pair.A->AngularVelocity, rA);
 			glm::vec2 velB = pair.B->LinearVelocity + Cross(pair.B->AngularVelocity, rB);
-			float vRel = glm::dot(pair.normal, velB - velA);
+			glm::vec2 velA = pair.A->LinearVelocity + Cross(pair.A->AngularVelocity, rA);
+			float vRel = glm::dot(pair.normal, velA -velB );
 
 			if (vRel > 0)
 				continue;
@@ -157,10 +158,10 @@ void PhysicsLayer::OnUpdate(double dt)
 
 			glm::vec2 P = n * appliedDelta;
 
-			pair.A->LinearVelocity -= P * invMassA;
-			pair.A->AngularVelocity -= invInertiaA * Cross(rA, P);
-			pair.B->LinearVelocity += P * invMassB;
-			pair.B->AngularVelocity += invInertiaB * Cross(rB, P);
+			pair.A->LinearVelocity += P * invMassA;
+			pair.A->AngularVelocity += invInertiaA * Cross(rA, P);
+			pair.B->LinearVelocity -= P * invMassB;
+			pair.B->AngularVelocity -= invInertiaB * Cross(rB, P);
 		}
 	}
 
@@ -202,7 +203,7 @@ void PhysicsLayer::OnUpdate(double dt)
 		for (int i = 0; i < rbs.size(); i++)
 		{
 			rbs[i].GetComponent<TransformComponent>().value_or(nullptr)->Position += rbs[i].LinearVelocity * (float)dt;
-			rbs[i].GetComponent<TransformComponent>().value_or(nullptr)->RotateRads(rbs[i].AngularVelocity * (float)dt);
+			rbs[i].GetComponent<TransformComponent>().value_or(nullptr)->RotateRads(-rbs[i].AngularVelocity * (float)dt);
 		}
 	}
 }
