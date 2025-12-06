@@ -1,5 +1,5 @@
 #include "PhysicsLayer.h"
-#include "SquareRigidbody.h"
+#include "Rigidbody.h"
 #include "Core.h"
 
 static float Length2(Vector2 vector)
@@ -19,8 +19,8 @@ static float Cross(Vector2 a, Vector2 b)
 
 struct CollisionPair
 {
-	CircleRigidbody* A;
-	CircleRigidbody* B;
+	Rigidbody* A;
+	Rigidbody* B;
 	Vector2 contact; 
 	Vector2 normal;                // from A -> B
 	float penetration;
@@ -49,7 +49,7 @@ static float OverlapOnAxis(const std::vector<Vector2>& aVerts, const std::vector
 }
 
 // SAT for squares
-bool SATCollisionSquares(CircleRigidbody* A, CircleRigidbody* B, std::vector<CollisionPair>& pairVec)
+bool SATCollisionSquares(Rigidbody* A, Rigidbody* B, std::vector<CollisionPair>& pairVec)
 {
 	auto aVerts = A->GetComponent<RectCollisionComponent>().value_or(nullptr)->GetVerticesWorld();
 	auto bVerts = B->GetComponent<RectCollisionComponent>().value_or(nullptr)->GetVerticesWorld();
@@ -92,17 +92,17 @@ void PhysicsLayer::OnUpdate(double dt)
 {
 	EntityComponentSystem& ECS = *Application::Get().GetECS();
 
-	UnorderedVector<CircleRigidbody>& rbs = ECS.GetComponentStore<CircleRigidbody>().value_or(nullptr)->GetComponents();
+	UnorderedVector<Rigidbody>& rbs = ECS.GetComponentStore<Rigidbody>().value_or(nullptr)->GetComponents();
 
 	std::vector<CollisionPair> collisionPairs;
 
 	// generate all square collisions
 	for (int i = 0; i < rbs.size(); i++)
 	{
-		CircleRigidbody* A = &rbs[i];
+		Rigidbody* A = &rbs[i];
 		for (int j = i + 1; j < rbs.size(); j++)
 		{
-			CircleRigidbody* B = &rbs[j];
+			Rigidbody* B = &rbs[j];
 			auto aVerts = A->GetComponent<RectCollisionComponent>().value_or(nullptr);
 			auto bVerts = B->GetComponent<RectCollisionComponent>().value_or(nullptr);
 
@@ -190,12 +190,6 @@ void PhysicsLayer::OnUpdate(double dt)
 		auto* transformB = pair.B->GetComponent<TransformComponent>().value_or(nullptr);
 		if (transformA) transformA->Position -= correction * invMassA;
 		if (transformB) transformB->Position += correction * invMassB;
-
-		// rotation
-		float torqueA = Cross(rA, -correction);
-		float torqueB = Cross(rB, correction);
-		pair.A->AngularVelocity += torqueA * invInertiaA;
-		pair.B->AngularVelocity += torqueB * invInertiaB;
 	}
 
 	if (!Application::Get().GetWindow()->GetInputManager().Down(Key::Space))

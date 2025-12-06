@@ -1,7 +1,7 @@
 #pragma once
 #include "Core.h"
 
-class CircleRigidbody : public Component
+class Rigidbody : public Component
 {
 public:
 	Vector2 GetPosition();

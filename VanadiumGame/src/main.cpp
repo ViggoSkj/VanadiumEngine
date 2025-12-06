@@ -17,7 +17,7 @@
 #include "PixelRenderer/PixelWorld.h"
 #include "MapAsset.h"
 #include "PhysicsTest/PhysicsLayer.h"
-#include "PhysicsTest/SquareRigidbody.h"
+#include "PhysicsTest/Rigidbody.h"
 
 class TestSceneSetupStep : public SceneSetupStep
 {
@@ -129,9 +129,9 @@ public:
 		Vector2 size = GetRandomSize();
 		squareA.Get().AddComponent<TransformComponent>()->Position = position;
 		squareA.Get().GetComponent<TransformComponent>().value_or(nullptr)->SetAngleDeg(GetRandomRotation());
-		squareA.Get().AddComponent<CircleRigidbody>()->LinearVelocity = initialVelocity;
-		//squareA.Get().AddComponent<CircleRigidbody>()->AngularVelocity = 3.14;
-		squareA.Get().GetComponent<CircleRigidbody>().value_or(nullptr)->Mass = size.y * size.x;
+		squareA.Get().AddComponent<Rigidbody>()->LinearVelocity = initialVelocity;
+		//squareA.Get().AddComponent<Rigidbody>()->AngularVelocity = 3.14;
+		squareA.Get().GetComponent<Rigidbody>().value_or(nullptr)->Mass = size.y * size.x;
 		squareA.Get().AddComponent<RectCollisionComponent>()->SetSize(size);
 		if (i == 0)
 			i = 45;
@@ -187,16 +187,15 @@ public:
 
 		EntityRef camera = CreateEntity();
 		camera.Get().AddComponent<TransformComponent>();
-		camera.Get().AddComponent<CameraComponent>()->Zoom = 4.0;
+		camera.Get().AddComponent<CameraComponent>()->Zoom = 10.0;
 		camera.Get().AddComponent<CameraMovementComponent>()->EnableMove = false;
 
 		// A larger circular perimeter — increase the radius to spread bodies out.
 		// Tweak `count` and `radius` to control density and spread.
-		const int bodyCount = 100;
+		const int bodyCount = 40;
 		const float circleRadius = 8.0f;
 
-		CreateBodyAt({ -1.0f, 0.0f }, { 1.0f, 0.0f });
-		CreateBodyAt({ 1.0f, 0.0f }, { -1.0f, 0.0f });
+		CreateBodiesOnCircle(bodyCount, circleRadius, 8.0f);
 	}
 };
 
