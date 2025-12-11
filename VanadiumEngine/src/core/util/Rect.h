@@ -3,8 +3,11 @@
 
 struct Rect
 {
+	Rect(Vector2 start = Vector2(0, 0), Vector2 end = Vector2(1, 1))
+		: Start(start), End(end) {}
+
 	Vector2 Start;
-	Vector2 End = Vector2(2, 2);
+	Vector2 End = Vector2(1, 1);
 
 	float Width() const { return End.x - Start.x; }
 	float Height() const { return End.y - Start.y; }

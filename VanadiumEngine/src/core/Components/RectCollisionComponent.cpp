@@ -157,7 +157,7 @@ Vector2 RectCollisionComponent::MinimalPenetratingAxis(RectCollisionComponent* o
 
 		// if there's no overlap, no collision at all
 		if (overlap <= 0.0f)
-			return {0, 0}; // separating axis found
+			return { 0, 0 }; // separating axis found
 
 		// track smallest overlap
 		if (overlap < minPenetration)
@@ -205,4 +205,10 @@ Vector2 RectCollisionComponent::CollisionVertex(RectCollisionComponent* other)
 	}
 
 	return vertices[smallestIndex];
+}
+
+Rect RectCollisionComponent::WorldRect()
+{
+	TransformComponent& t = *GetComponent<TransformComponent>().value_or(nullptr);
+	return { Rect.Start + t.Position, Rect.End + t.Position };
 }

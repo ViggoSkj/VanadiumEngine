@@ -23,7 +23,7 @@ void CameraMovementComponent::OnUpdate(double dt)
 		sceneManager->LoadScene(ECS->FindEntity(GetOwnerId()).value()->GetOwner());
 	}
 
-	if (EnableMove)
+	if (EnableMove && !MoveToTarget)
 	{
 		if (Input.Down(Key::W))
 			transform.Position.y += 1.0f * (float)dt / camera.Zoom;
@@ -39,7 +39,6 @@ void CameraMovementComponent::OnUpdate(double dt)
 		Vector2 targetPosition = Target.Get().GetComponent<TransformComponent>().value_or(nullptr)->Position;
 		transform.Position = glm::mix(transform.Position, targetPosition, 0.995f * dt);
 	}
-
 
 	if (Input.Down(Key::Q))
 		camera.Zoom += 1.0f * (float)dt * camera.Zoom;

@@ -15,6 +15,7 @@
 #include "PixelRenderer/PixelRenderer.h"	
 #include "PixelRenderer/StaticPixelChunk.h"	
 #include "PixelRenderer/PixelWorld.h"
+#include "PixelRenderer/PixelBody.h"
 #include "MapAsset.h"
 #include "PhysicsTest/PhysicsLayer.h"
 #include "PhysicsTest/Rigidbody.h"
@@ -43,7 +44,21 @@ public:
 		e1.Get().AddComponent<TransformComponent>();
 		e1.Get().AddComponent<RectCollisionComponent>();
 
+
+		EntityRef e2 = CreateEntity();
+		e2.Get().AddComponent<TransformComponent>()->RotateRads(10);
+		PixelBody& b = *e2.Get().AddComponent<PixelBody>();
+
+		for (int y = 0; y < 32; y++)
+		{
+			for (int x = 0; x < 32; x++)
+			{
+				if ((x + y) % 2 == 0)
+					b.AddPixel(x, y, 1);
+			}
+		}
 		camera.Get().GetComponent<CameraMovementComponent>().value_or(nullptr)->Target = e1;
+		camera.Get().GetComponent<CameraMovementComponent>().value_or(nullptr)->MoveToTarget = true;
 
 		/*
 		Entity& e2 = CreateEntity();
@@ -85,7 +100,6 @@ public:
 						}
 					}
 				}
-
 			}
 		}
 	}
@@ -202,17 +216,16 @@ public:
 int main()
 {
 	Application app(2300, 1200);
-	app.PushLayer<GridBackgroundLayer>();
 	app.PushLayer<RectCollisionLayer>();
 	app.PushLayer<PhysicsLayer>();
 	app.PushLayer<SpriteRendererLayer>();
 	app.PushLayer<LiveComponentLayer<CameraMovementComponent>>();
 	app.PushLayer<LiveComponentLayer<PlayerMovementComponent>>();
-	app.PushLayer<LiveComponentLayer<PixelWorld>>();
 	app.PushLayer<RectCollisionDebugLayer>();
+	app.PushLayer<LiveComponentLayer<PixelWorld>>();
 
 	SceneRef testScene = app.GetSceneManager()->ConstructScene();
-	testScene.Get().AddSetupStep<PhysicsSceneSetup>();
+	testScene.Get().AddSetupStep<TestSceneSetupStep>();
 	app.GetSceneManager()->LoadScene(testScene.GetId());
 
 	app.Run();

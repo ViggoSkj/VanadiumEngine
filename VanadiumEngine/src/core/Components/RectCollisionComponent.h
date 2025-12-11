@@ -55,7 +55,9 @@ public:
 		};
 	}
 
-	Rect Rect;
+	Rect WorldRect();
+
+	Rect Rect = { Vector2({ -0.5, -0.5 }), Vector2(0.5, 0.5) };
 
 	UnorderedVector<RectCollisionComponent*> Collisions;
 };

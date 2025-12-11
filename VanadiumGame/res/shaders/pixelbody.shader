@@ -17,12 +17,13 @@ const vec4 colors[3] = vec4[3](
     vec4(0.0, 0.0, 1.0, 1.0)
 );
 
-uniform float u_size;
+uniform float u_pixelWidth;
+uniform float u_pixelHeight;
 uniform mat4 model;
 
 void main()
 {
-    gl_Position = projection * view * model * vec4(aPos.x + 255 * x * u_size, aPos.y + y * 255 * u_size, aPos.z, 1.0);
+    gl_Position = projection * view * model * vec4(aPos.x + x * u_pixelWidth, aPos.y + y * u_pixelHeight, aPos.z, 1.0);
     color = colors[int(type*255)];
     uv = aCoord;
 }

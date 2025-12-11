@@ -20,8 +20,8 @@ void PlayerMovementComponent::OnUpdate(double dt)
 		transform.Position.x += Speed * dt;
 
 
-	Rect rect(Vector2(transform.Position) - Vector2(1, 1), Vector2(transform.Position + Vector2(1, 1)));
-	PixelRefs refs = PixelWorld::GetInstance()->RectCast(rect);
+	RectCollisionComponent& collision = *GetComponent<RectCollisionComponent>().value();
+	PixelRefs refs = PixelWorld::GetInstance()->RectCast(collision.WorldRect());
 
 	for (int i = 0; i < refs.ChunkCount(); i++)
 	{

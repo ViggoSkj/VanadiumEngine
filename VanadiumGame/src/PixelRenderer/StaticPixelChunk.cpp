@@ -5,26 +5,21 @@ StaticPixelChunk::StaticPixelChunk(EntityRef ref)
 	m_shader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/chunk.shader")->CreateShader()),
 	Position(Vector2(0, 0))
 {
-	float vertices[] = {
-	ChunkSize / (float)(Size - 1),  ChunkSize / (float)(Size - 1), 0.0f, 1.0f, 0.0f,  // top right
-	ChunkSize / (float)(Size - 1),   0.0f, 0.0f, 1.0f, 1.0f,  // bottom right
-	  0.0f,   0.0f, 0.0f, 0.0f, 1.0f,  // bottom left
-	  0.0f,  ChunkSize / (float)(Size - 1), 0.0f, 0.0f, 0.0f,  // top left 
-	};
+	float pixelSize = ChunkSize / (float)(Size - 1);
+	float* vertices = Util::RectVertices(pixelSize, pixelSize);
 
 	unsigned int indices[] = {  // note that we start from 0!
 		0, 1, 3,   // first triangle
 		1, 2, 3    // second triangle
 	};
 
-
 	u32 loc = m_shader.GlShader().GetUniformLocation("u_size");
-	GL_CHECK(glUniform1f(loc, ChunkSize - 1 / (float)(Size)));
+	GL_CHECK(glUniform1f(loc, pixelSize));
 
 	m_vao.Bind();
 
 	VertexBuffer vertexBuffer;
-	vertexBuffer.SetVertecies(vertices, sizeof(vertices));
+	vertexBuffer.SetVertecies(vertices, sizeof(float) * 5 * 4);
 	vertexBuffer.Bind();
 
 	IndexBuffer indexBuffer;

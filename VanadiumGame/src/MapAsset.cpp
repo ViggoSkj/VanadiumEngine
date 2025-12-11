@@ -9,8 +9,13 @@ inline std::unordered_map<char, u8> map =
 
 MapAsset::MapAsset(std::filesystem::path path)
 {
-
 	std::fstream stream(path);
+		
+	if (stream.is_open() == false)
+	{
+		throw std::runtime_error("Failed to open map file: " + path.string());
+	}
+
 	std::string result;
 	std::string line;
 

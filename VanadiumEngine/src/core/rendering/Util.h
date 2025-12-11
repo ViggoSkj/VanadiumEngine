@@ -33,8 +33,18 @@ namespace Util
 		VAO.AssignVertexAttributes({
 			{sizeof(float), GL_FLOAT, 3},
 			{sizeof(float), GL_FLOAT, 2},
-		});
+			});
 
 		return VAO;
+	}
+
+	inline float* RectVertices(float width, float height) // with uv
+	{
+		return new float[4 * 5] {
+			width, height, 0.0f, 1.0f, 0.0f,  // top right
+			width, 0.0f,   0.0f, 1.0f, 1.0f,  // bottom right
+			0.0f,  0.0f,   0.0f, 0.0f, 1.0f,  // bottom left
+			0.0f,  height, 0.0f, 0.0f, 0.0f,  // top left 
+		};
 	}
 }

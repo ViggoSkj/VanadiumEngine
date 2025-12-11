@@ -35,7 +35,6 @@ public:
 
 	Vector2I Position;
 private:
-
 	UnorderedVector<u8> m_soa_x;
 	UnorderedVector<u8> m_soa_y;
 	UnorderedVector<u8> m_soa_type;

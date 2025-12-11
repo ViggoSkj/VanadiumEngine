@@ -8,7 +8,6 @@
 class Shader
 {
 public:
-	Shader();
 	Shader(std::string source, ShaderDescriptor descriptor);
 
 	// uses the uniform object if it is needed
