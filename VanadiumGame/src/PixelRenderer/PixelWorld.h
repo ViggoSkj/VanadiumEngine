@@ -7,6 +7,8 @@
 class PixelWorld : public LiveComponent
 {
 public:
+	static inline float PixelSize = 10.0f/256.0f;
+
 	static PixelWorld* GetInstance()
 	{
 		return s_instance->Get().GetComponent<PixelWorld>().value();

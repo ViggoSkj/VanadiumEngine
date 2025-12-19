@@ -30,10 +30,10 @@ void RenderingManager::ReturnuniformBindingSlot(UniformBindingSlot bindingSlot)
 	}
 }
 
-UniformObject& RenderingManager::CreateUniformObject(UniformObjectDescriptor descriptor)
+UniformObject* RenderingManager::CreateUniformObject(UniformObjectDescriptor descriptor)
 {
 	m_uniformObjects.emplace_back(descriptor);
-	return m_uniformObjects.back();
+	return &m_uniformObjects.back();
 }
 
 std::optional<UniformObject*> RenderingManager::FindUniformObject(std::string name)

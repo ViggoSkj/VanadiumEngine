@@ -17,7 +17,7 @@ public:
 	UniformBindingSlot LoanUniformBindingSlot(ShaderType shaderType);
 	void ReturnuniformBindingSlot(UniformBindingSlot bindingSlot);
 
-	UniformObject& CreateUniformObject(UniformObjectDescriptor descriptor);
+	UniformObject* CreateUniformObject(UniformObjectDescriptor descriptor);
 	std::optional<UniformObject*> FindUniformObject(std::string name);
 
 private:

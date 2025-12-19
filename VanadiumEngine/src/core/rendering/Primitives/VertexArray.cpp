@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "VertexArray.h"
 #include "GLCommon.h"
+#include "core/Debug/Log.h"
+
 
 VertexArray::VertexArray()
 {
@@ -10,6 +12,7 @@ VertexArray::VertexArray()
 
 VertexArray::~VertexArray()
 {
+	// LogDebug("Deleted vertex array with id " + std::to_string(m_vertexArrayId));
 	GL_CHECK(glDeleteVertexArrays(1, &m_vertexArrayId));
 }
 

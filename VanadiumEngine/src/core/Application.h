@@ -23,6 +23,8 @@ public:
 	void Run();
 	void Stop();
 
+	void PushDefaultPostLayers();
+
 	template <typename TLayer>
 		requires(std::is_base_of_v<ApplicationLayer, TLayer>)
 	void PushLayer()

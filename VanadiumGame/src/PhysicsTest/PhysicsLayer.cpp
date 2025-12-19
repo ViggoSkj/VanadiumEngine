@@ -1,6 +1,7 @@
 #include "PhysicsLayer.h"
 #include "Rigidbody.h"
 #include "Core.h"
+#include "PixelRenderer/PixelCollisionComponent.h"
 
 static float Length2(Vector2 vector)
 {
@@ -21,38 +22,17 @@ struct CollisionPair
 {
 	Rigidbody* A;
 	Rigidbody* B;
-	Vector2 contact; 
+	Vector2 contact;
 	Vector2 normal;                // from A -> B
 	float penetration;
 	float lambda = 0.0f;
 };
 
-// Project 4 square vertices onto axis
-static void ProjectSquare(const std::vector<Vector2>& verts, const Vector2& axis, float& min, float& max)
-{
-	min = max = glm::dot(verts[0], axis);
-	for (int i = 1; i < 4; i++)
-	{
-		float p = glm::dot(verts[i], axis);
-		if (p < min) min = p;
-		if (p > max) max = p;
-	}
-}
-
-// Overlap along axis
-static float OverlapOnAxis(const std::vector<Vector2>& aVerts, const std::vector<Vector2>& bVerts, const Vector2& axis)
-{
-	float minA, maxA, minB, maxB;
-	ProjectSquare(aVerts, axis, minA, maxA);
-	ProjectSquare(bVerts, axis, minB, maxB);
-	return std::min(maxA, maxB) - std::max(minA, minB);
-}
-
 // SAT for squares
-bool SATCollisionSquares(Rigidbody* A, Rigidbody* B, std::vector<CollisionPair>& pairVec)
+bool SATCollisionSquares(RotatableRect A, RotatableRect B, std::vector<CollisionPair>& pairVec)
 {
-	auto aVerts = A->GetComponent<RectCollisionComponent>().value_or(nullptr)->GetVerticesWorld();
-	auto bVerts = B->GetComponent<RectCollisionComponent>().value_or(nullptr)->GetVerticesWorld();
+	
+
 
 	// Generate contact points (vertex clipping simplified for squares)
 	std::vector<Vector2> contacts;
@@ -103,13 +83,23 @@ void PhysicsLayer::OnUpdate(double dt)
 		for (int j = i + 1; j < rbs.size(); j++)
 		{
 			Rigidbody* B = &rbs[j];
-			auto aVerts = A->GetComponent<RectCollisionComponent>().value_or(nullptr);
-			auto bVerts = B->GetComponent<RectCollisionComponent>().value_or(nullptr);
 
-			if (!aVerts->CollidesWith(bVerts))
-				continue;
+			PixelCollisionComponent& aCollider = *A->GetComponent<PixelCollisionComponent>().value_or(nullptr);
+			PixelCollisionComponent& bCollider = *B->GetComponent<PixelCollisionComponent>().value_or(nullptr);
+			
+			TransformComponent aT = A->GetPosition();
+			TransformComponent bT = B->GetPosition();
 
-			SATCollisionSquares(A, B, collisionPairs);
+			for (Rect localARect : aCollider.GetCollisionRects())
+			{
+				for (Rect localBRect : bCollider.GetCollisionRects())
+				{
+					RotatableRect globalARect(localARect.Offset(aT.Position), aT.RotationAngle());
+					RotatableRect globalBRect(localBRect.Offset(bT.Position), bT.RotationAngle());
+					
+					SATCollisionSquares(globalARect, globalBRect, collisionPairs);
+				}
+			}
 		}
 	}
 
@@ -134,7 +124,7 @@ void PhysicsLayer::OnUpdate(double dt)
 
 			glm::vec2 velB = pair.B->LinearVelocity + Cross(pair.B->AngularVelocity, rB);
 			glm::vec2 velA = pair.A->LinearVelocity + Cross(pair.A->AngularVelocity, rA);
-			float vRel = glm::dot(pair.normal, velA -velB );
+			float vRel = glm::dot(pair.normal, velA - velB);
 
 			if (vRel > 0)
 				continue;
@@ -143,12 +133,10 @@ void PhysicsLayer::OnUpdate(double dt)
 			float bias = (pair.penetration > penetrationSlop) ? beta * (pair.penetration - penetrationSlop) / safeDt : 0.0f;
 			bias = glm::clamp(bias, 0.0f, maxBias);
 
-			float invMassA = (pair.A->Mass == 0.0f) ? 0.0f : 1.0f / pair.A->Mass;
-			float invMassB = (pair.B->Mass == 0.0f) ? 0.0f : 1.0f / pair.B->Mass;
-			float invInertiaA = (pair.A->GetInertia() == 0.0f) ? 0.0f : 1.0f / pair.A->GetInertia();
-			float invInertiaB = (pair.B->GetInertia() == 0.0f) ? 0.0f : 1.0f / pair.B->GetInertia();
+			float kNormal = pair.A->InverseMass + pair.B->InverseMass
+				+ pair.A->InverseInertia * rnA * rnA
+				+ pair.B->InverseInertia * rnB * rnB;
 
-			float kNormal = invMassA + invMassB + invInertiaA * rnA * rnA + invInertiaB * rnB * rnB;
 			float effectiveMass = (kNormal == 0.0f) ? 0.0f : 1.0f / kNormal;
 
 			float deltaLambda = -(vRel - bias) * effectiveMass;
@@ -158,10 +146,10 @@ void PhysicsLayer::OnUpdate(double dt)
 
 			glm::vec2 P = n * appliedDelta;
 
-			pair.A->LinearVelocity += P * invMassA;
-			pair.A->AngularVelocity += invInertiaA * Cross(rA, P);
-			pair.B->LinearVelocity -= P * invMassB;
-			pair.B->AngularVelocity -= invInertiaB * Cross(rB, P);
+			pair.A->LinearVelocity += P * pair.A->InverseMass;
+			pair.A->AngularVelocity += pair.A->InverseInertia * Cross(rA, P);
+			pair.B->LinearVelocity -= P * pair.B->InverseMass;
+			pair.B->AngularVelocity -= pair.B->InverseInertia * Cross(rB, P);
 		}
 	}
 
@@ -172,13 +160,8 @@ void PhysicsLayer::OnUpdate(double dt)
 	{
 		break;
 		glm::vec2 totalCorrection(0.0f);
-		float invMassA = (pair.A->Mass == 0.0f) ? 0.0f : 1.0f / pair.A->Mass;
-		float invMassB = (pair.B->Mass == 0.0f) ? 0.0f : 1.0f / pair.B->Mass;
-		float invMassSum = invMassA + invMassB;
+		float invMassSum = pair.A->InverseMass + pair.B->InverseMass;
 		if (invMassSum < EPS) continue;
-
-		float invInertiaA = (pair.A->GetInertia() == 0.0f) ? 0.0f : 1.0f / pair.A->GetInertia();
-		float invInertiaB = (pair.B->GetInertia() == 0.0f) ? 0.0f : 1.0f / pair.B->GetInertia();
 
 		glm::vec2 rA = pair.contact - pair.A->GetPosition();
 		glm::vec2 rB = pair.contact - pair.B->GetPosition();
@@ -188,8 +171,8 @@ void PhysicsLayer::OnUpdate(double dt)
 
 		auto* transformA = pair.A->GetComponent<TransformComponent>().value_or(nullptr);
 		auto* transformB = pair.B->GetComponent<TransformComponent>().value_or(nullptr);
-		if (transformA) transformA->Position -= correction * invMassA;
-		if (transformB) transformB->Position += correction * invMassB;
+		if (transformA) transformA->Position -= correction * pair.A->InverseMass;
+		if (transformB) transformB->Position += correction * pair.B->InverseMass;
 	}
 
 	if (!Application::Get().GetWindow()->GetInputManager().Down(Key::Space))

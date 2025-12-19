@@ -5,16 +5,13 @@
 
 namespace Util
 {
+	float* RectVertices(float width, float height, bool centered, bool uvs);
+
 	inline VertexArray Square()
 	{
-		float vertices[] = {
-			 0.5f,  0.5f, 0.0f, 1.0f, 0.0f,  // top right
-			 0.5f, -0.5f, 0.0f, 1.0f, 1.0f,  // bottom right
-			-0.5f, -0.5f, 0.0f, 0.0f, 1.0f,  // bottom left
-			-0.5f,  0.5f, 0.0f, 0.0f, 0.0f,  // top left 
-		};
+		float* vertices = Util::RectVertices(1, 1, true, true);
 
-		unsigned int indices[] = {  // note that we start from 0!
+		unsigned int indices[] = {
 			0, 1, 3,   // first triangle
 			1, 2, 3    // second triangle
 		};
@@ -23,7 +20,7 @@ namespace Util
 		VAO.Bind();
 
 		VertexBuffer vertexBuffer;
-		vertexBuffer.SetVertecies(vertices, sizeof(vertices));
+		vertexBuffer.SetVertecies(vertices, sizeof(float) * 4 * 5);
 		vertexBuffer.Bind();
 
 		IndexBuffer indexBuffer;
@@ -36,15 +33,5 @@ namespace Util
 			});
 
 		return VAO;
-	}
-
-	inline float* RectVertices(float width, float height) // with uv
-	{
-		return new float[4 * 5] {
-			width, height, 0.0f, 1.0f, 0.0f,  // top right
-			width, 0.0f,   0.0f, 1.0f, 1.0f,  // bottom right
-			0.0f,  0.0f,   0.0f, 0.0f, 1.0f,  // bottom left
-			0.0f,  height, 0.0f, 0.0f, 0.0f,  // top left 
-		};
 	}
 }

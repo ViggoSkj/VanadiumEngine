@@ -5,6 +5,7 @@ EntityRef* PixelWorld::s_instance = nullptr;
 void PixelWorld::OnRender(double dt)
 {
 	m_renderer.OnRender(dt);
+	m_renderer.OnRenderDebug(dt);
 }
  
 void PixelWorld::OnUpdate(double dt)

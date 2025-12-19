@@ -5,5 +5,7 @@ class PixelRenderer
 {
 public:
 	PixelRenderer();
+
 	void OnRender(double dt);
+	void OnRenderDebug(double dt);
 };

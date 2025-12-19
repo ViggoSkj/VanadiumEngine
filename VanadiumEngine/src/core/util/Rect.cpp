@@ -1,6 +1,21 @@
 #include "pch.h"
 #include "Rect.h"
 
+Vector2 Rect::Size()
+{
+	return Start - End;
+}
+
+Vector2 Rect::Center()
+{
+	return Start + (End - Start) / 2.0f;
+}
+
+Rect Rect::Offset(Vector2 offset)
+{
+	return Rect(Start + offset, End + offset);
+}
+
 bool Rect::Overlaps(Rect other)
 {
 	if (other.Start.x > End.x)

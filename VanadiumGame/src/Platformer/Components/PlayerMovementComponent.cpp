@@ -2,6 +2,7 @@
 #include "PlayerMovementComponent.h"
 #include "Camera.h"
 #include "PixelRenderer/PixelWorld.h"
+#include "core/ShapeRenderer/ShapeRenderer.h"
 
 void PlayerMovementComponent::OnUpdate(double dt)
 {
@@ -22,6 +23,13 @@ void PlayerMovementComponent::OnUpdate(double dt)
 
 	RectCollisionComponent& collision = *GetComponent<RectCollisionComponent>().value();
 	PixelRefs refs = PixelWorld::GetInstance()->RectCast(collision.WorldRect());
+
+
+
+
+	Vector2 Size = { std::cos(app.GetTime().TimeSinceStart) * 0.5 + 0.5, std::sin(app.GetTime().TimeSinceStart) * 0.5  + 0.5};
+
+	ShapeRenderer::Get()->FillRect(transform.Position, Size, 0, { 1.0, 1.0, 1.0, 0.5 });
 
 	for (int i = 0; i < refs.ChunkCount(); i++)
 	{

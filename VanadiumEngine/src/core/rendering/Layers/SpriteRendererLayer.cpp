@@ -10,13 +10,11 @@
 SpriteRendererLayer::SpriteRendererLayer()
 	: m_textureShader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/texture.shader")->CreateShader()), m_VAO(Util::Square())
 {
-	RenderingManager man;
-
+	RenderingManager& man = *Application::Get().GetRenderingManager();
 	UniformBindingSlot slot = man.LoanUniformBindingSlot(ShaderType::VertexShader);
 	UniformObjectDescriptor matricesDescriptor = m_textureShader.Descriptor().FindUniformObjectDescriptor("Matrices");
-	m_matrices = man.CreateUniformObject(matricesDescriptor);
+	UniformObject& m_matrices = *man.CreateUniformObject(matricesDescriptor);
 	m_matrices.Bind(slot);
-
 	m_textureShader.ReportUniformObject(m_matrices);
 }
 
@@ -50,6 +48,8 @@ void SpriteRendererLayer::OnRender(double dt)
 
 	glm::mat4 view = oCameraComponent.value()->GetCamera().GetViewMatrix();
 
+	RenderingManager& man = *Application::Get().GetRenderingManager();
+	UniformObject& m_matrices = *man.FindUniformObject("Matrices").value();
 	m_matrices.Buffer.SetData(glm::value_ptr(proj), 0, 4 * 4 * 4);
 	m_matrices.Buffer.SetData(glm::value_ptr(view), 4 * 4 * 4, 4 * 4 * 4);
 

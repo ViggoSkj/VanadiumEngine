@@ -5,6 +5,7 @@
 #include "GLCommon.h"
 #include <memory>
 #include "core/Debug/Log.h"
+#include "core/ShapeRenderer/ShapeRendererLayer.h"
 
 Application* Application::s_instance = nullptr;
 
@@ -95,4 +96,8 @@ void Application::Run()
 void Application::Stop()
 {
 	m_running = false;
+}
+
+void Application::PushDefaultPostLayers()
+{
 }

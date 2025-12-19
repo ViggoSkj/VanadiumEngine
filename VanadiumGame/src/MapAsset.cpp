@@ -11,7 +11,7 @@ MapAsset::MapAsset(std::filesystem::path path)
 {
 	std::fstream stream(path);
 		
-	if (stream.is_open() == false)
+	if (!stream.is_open())
 	{
 		throw std::runtime_error("Failed to open map file: " + path.string());
 	}

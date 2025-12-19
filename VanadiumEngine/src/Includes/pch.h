@@ -3,6 +3,7 @@
 // data types
 #include <unordered_map>
 #include <vector>
+#include <array>
 #include <string>
 #include "glm/glm.hpp"
 

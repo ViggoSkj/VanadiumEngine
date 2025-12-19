@@ -106,6 +106,12 @@ bool GLShader::LoadSource(std::string source)
 	unsigned int vertexShader = CompileShader(sources.VertexSource.c_str(), sources.VertexStartLine, GL_VERTEX_SHADER);
 	unsigned int fragmentShader = CompileShader(sources.FragmentSource.c_str(), sources.FragmentStartLine, GL_FRAGMENT_SHADER);
 
+	if (!vertexShader)
+		throw "Could not compile vertex shader.";
+
+	if (!fragmentShader)
+		throw "Could not compile fragment shader.";
+
 	GL_CHECK(m_shaderProgramId = glCreateProgram());
 	GL_CHECK(glAttachShader(m_shaderProgramId, vertexShader));
 	GL_CHECK(glAttachShader(m_shaderProgramId, fragmentShader));

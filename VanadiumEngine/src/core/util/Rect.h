@@ -9,6 +9,12 @@ struct Rect
 	Vector2 Start;
 	Vector2 End = Vector2(1, 1);
 
+	Vector2 Size();
+
+	Vector2 Center();
+
+	Rect Offset(Vector2 offset);
+
 	float Width() const { return End.x - Start.x; }
 	float Height() const { return End.y - Start.y; }
 

@@ -1,0 +1,15 @@
+#pragma once
+#include "core/ApplicationLayer.h"
+#include "core/Rendering/Shaders/Shader.h"
+
+class ShapeRendererLayer : public ApplicationLayer
+{
+public:
+	ShapeRendererLayer();
+
+	void OnRender(double dt) override;
+
+private:
+
+	Shader m_squareShader;
+};

@@ -5,6 +5,7 @@
 #include "Platformer/PlatformerLayer.h"
 #include "Application.h"
 #include "Core.h"
+#include "core/ShapeRenderer/ShapeRendererLayer.h"
 #include "core/BuiltIn/Layers/GridBackgroundLayer.h"
 #include "core/Components/RectCollisionLayer.h"
 #include "core/Components/RectCollisionComponent.h"
@@ -19,6 +20,7 @@
 #include "MapAsset.h"
 #include "PhysicsTest/PhysicsLayer.h"
 #include "PhysicsTest/Rigidbody.h"
+#include "PixelRenderer/PixelCollisionComponent.h"
 
 class TestSceneSetupStep : public SceneSetupStep
 {
@@ -35,7 +37,7 @@ public:
 
 		EntityRef camera = CreateEntity();
 		camera.Get().AddComponent<TransformComponent>();
-		camera.Get().AddComponent<CameraComponent>()->Zoom = 30.0;
+		camera.Get().AddComponent<CameraComponent>()->Zoom = 2.0;
 		camera.Get().AddComponent<CameraMovementComponent>()->EnableMove = true;
 
 		EntityRef e1 = CreateEntity();
@@ -43,20 +45,20 @@ public:
 		e1.Get().AddComponent<SpriteRendererComponent>()->LoadRGBATexture("res/images/character.png");
 		e1.Get().AddComponent<TransformComponent>();
 		e1.Get().AddComponent<RectCollisionComponent>();
+		e1.Get().AddComponent<Rigidbody>();
+		PixelBody& body = *e1.Get().AddComponent<PixelBody>();
 
-
-		EntityRef e2 = CreateEntity();
-		e2.Get().AddComponent<TransformComponent>()->RotateRads(10);
-		PixelBody& b = *e2.Get().AddComponent<PixelBody>();
-
-		for (int y = 0; y < 32; y++)
+		for (int y = 0; y < 1 / PixelWorld::PixelSize; y++)
 		{
-			for (int x = 0; x < 32; x++)
+			for (int x = 0; x < 1 / PixelWorld::PixelSize; x++)
 			{
 				if ((x + y) % 2 == 0)
-					b.AddPixel(x, y, 1);
+					body.AddPixel(x, y, 1);
 			}
 		}
+		e1.Get().AddComponent<PixelCollisionComponent>()->RecalculateCollisionRects();
+
+
 		camera.Get().GetComponent<CameraMovementComponent>().value_or(nullptr)->Target = e1;
 		camera.Get().GetComponent<CameraMovementComponent>().value_or(nullptr)->MoveToTarget = true;
 
@@ -105,114 +107,6 @@ public:
 	}
 };
 
-
-class PhysicsSceneSetup : public SceneSetupStep
-{
-public:
-	PhysicsSceneSetup(Scene* scene)
-		: SceneSetupStep(scene) {
-	}
-
-	// utility: random float in [min, max)
-	float GetRandomFloat(float min, float max)
-	{
-		return min + (float)(rand()) / (float)(RAND_MAX) * (max - min);
-	}
-
-	float GetRandomRotation()
-	{
-		return GetRandomFloat(0.0f, 360.0f);
-	}
-
-	float GetRandomMass()
-	{
-		return GetRandomFloat(1.0f, 10.0f);
-	}
-
-	Vector2 GetRandomSize()
-	{
-		return { GetRandomFloat(0.1f, 1.0f), GetRandomFloat(0.1f, 1.0f) };
-	}
-
-	// Create a single body at a specific position with a given initial velocity and rotation
-	void CreateBodyAt(const Vector2& position, const Vector2& initialVelocity)
-	{
-		static u32 i = 0;
-
-		EntityRef squareA = CreateEntity();
-		Vector2 size = GetRandomSize();
-		squareA.Get().AddComponent<TransformComponent>()->Position = position;
-		squareA.Get().GetComponent<TransformComponent>().value_or(nullptr)->SetAngleDeg(GetRandomRotation());
-		squareA.Get().AddComponent<Rigidbody>()->LinearVelocity = initialVelocity;
-		//squareA.Get().AddComponent<Rigidbody>()->AngularVelocity = 3.14;
-		squareA.Get().GetComponent<Rigidbody>().value_or(nullptr)->Mass = size.y * size.x;
-		squareA.Get().AddComponent<RectCollisionComponent>()->SetSize(size);
-		if (i == 0)
-			i = 45;
-		else 
-			i = 0;
-	}
-
-	// Place `count` bodies roughly evenly around a circle of `radius`. Each body is given an inward-biased velocity
-	// so they "launch towards each other". A small tangential component is added for variety.
-	void CreateBodiesOnCircle(int count, float radius, float baseSpeed = 5.0f)
-	{
-		if (count <= 0) return;
-
-		const float twoPi = 3.14159265358979323846f * 2.0f;
-
-		for (int i = 0; i < count; ++i)
-		{
-			// distribute angles evenly but add a bit of jitter
-			float angle = ((float)i / (float)count) * twoPi + GetRandomFloat(-0.05f, 0.05f);
-
-			float px = std::cos(angle) * radius;
-			float py = std::sin(angle) * radius;
-			Vector2 position = { px, py };
-
-			// inward direction (towards center)
-			float invLen = std::sqrt(px * px + py * py);
-			Vector2 inward = { 0.0f, 0.0f };
-			if (invLen > 1e-6f)
-			{
-				inward = { -px / invLen, -py / invLen };
-			}
-
-			// small tangential component to cause glancing collisions
-			Vector2 tangential = { -inward.y, inward.x };
-
-			// vary speed a bit
-			float speed = baseSpeed * GetRandomFloat(0.7f, 1.3f);
-
-			// combine inward + tangential (weighted)
-			float tangentialWeight = GetRandomFloat(-0.5f, 0.5f);
-			Vector2 velocity = { inward.x * speed + tangential.x * speed * tangentialWeight,
-								 inward.y * speed + tangential.y * speed * tangentialWeight };
-
-			CreateBodyAt(position, velocity);
-		}
-	}
-
-	void Execute() override
-	{
-		Application& app = Application::Get();
-		EntityComponentSystem* ECS = app.GetECS();
-		AssetManager* assetMan = app.GetAssetManager();
-
-		EntityRef camera = CreateEntity();
-		camera.Get().AddComponent<TransformComponent>();
-		camera.Get().AddComponent<CameraComponent>()->Zoom = 10.0;
-		camera.Get().AddComponent<CameraMovementComponent>()->EnableMove = false;
-
-		// A larger circular perimeter — increase the radius to spread bodies out.
-		// Tweak `count` and `radius` to control density and spread.
-		const int bodyCount = 40;
-		const float circleRadius = 8.0f;
-
-		CreateBodiesOnCircle(bodyCount, circleRadius, 8.0f);
-	}
-};
-
 int main()
 {
 	Application app(2300, 1200);
@@ -223,6 +117,7 @@ int main()
 	app.PushLayer<LiveComponentLayer<PlayerMovementComponent>>();
 	app.PushLayer<RectCollisionDebugLayer>();
 	app.PushLayer<LiveComponentLayer<PixelWorld>>();
+	app.PushLayer<ShapeRendererLayer>();
 
 	SceneRef testScene = app.GetSceneManager()->ConstructScene();
 	testScene.Get().AddSetupStep<TestSceneSetupStep>();
@@ -232,8 +127,3 @@ int main()
 
 	return 0;
 }
-
-/*
-TODO:
- - fix background grid
-*/

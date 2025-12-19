@@ -15,7 +15,6 @@ namespace FileAsset
 {
 	static std::string ReadFile(std::filesystem::path file)
 	{
-
 		if (!std::filesystem::exists(file))
 		{
 			std::filesystem::path sub("../VanadiumEngine/");
@@ -24,6 +23,12 @@ namespace FileAsset
 		}
 
 		std::fstream stream(file);
+
+		if (!stream.is_open())
+		{
+			throw std::runtime_error("Failed to open asset file: " + file.string());
+		}
+
 		std::string result;
 		std::string line;
 

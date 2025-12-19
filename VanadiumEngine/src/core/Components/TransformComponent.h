@@ -1,8 +1,6 @@
 #pragma once
 #include "pch.h"
 #include "core/EntityComponentSystem/Component.h"
-#include "glm/glm.hpp"
-#include <glm/gtc/matrix_transform.hpp>
 
 # define M_PI           3.14159265358979323846  /* pi */
 
@@ -46,11 +44,5 @@ public:
 		Up.y = cos(Angle);
 	}
 
-	Matrix4x4 ModelMatrix()
-	{
-		glm::mat4 model = glm::identity<glm::mat4>();
-		model = glm::translate(model, glm::vec3(Position, 0.0));
-		model = glm::rotate(model, RotationAngle(), glm::vec3(0, 0, 1));
-		return model;
-	}
+	Matrix4x4 ModelMatrix();
 };

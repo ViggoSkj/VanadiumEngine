@@ -6,7 +6,7 @@ StaticPixelChunk::StaticPixelChunk(EntityRef ref)
 	Position(Vector2(0, 0))
 {
 	float pixelSize = ChunkSize / (float)(Size - 1);
-	float* vertices = Util::RectVertices(pixelSize, pixelSize);
+	float* vertices = Util::RectVertices(pixelSize, pixelSize, false, true);
 
 	unsigned int indices[] = {  // note that we start from 0!
 		0, 1, 3,   // first triangle
