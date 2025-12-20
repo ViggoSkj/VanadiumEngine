@@ -23,4 +23,10 @@ struct Rect
 
 	bool Overlaps(Rect other);
 	bool Overlaps(Vector2 offset, Rect other, Vector2 offsetOther);
+
+	bool PointInside(Vector2 point);
+
+	Vector2 EscapeVector(Vector2 point);
+	
+	Rect RotateAround(Vector2 point, float angle);
 };

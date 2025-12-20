@@ -6,6 +6,19 @@ void ShapeRenderer::FillRect(Vector2 Center, Vector2 Size, Vector4 color)
 {
 	FillRect(Center, Size, 0, color);
 }
+void ShapeRenderer::FillRect(Rect rect, float rotation, Vector4 color)
+{
+	FillRect(rect.Center(), rect.Size(), rotation, color);
+}
+void ShapeRenderer::FillRect(Rect rect, Vector4 color)
+{
+	FillRect(rect, 0, color);
+}
+void ShapeRenderer::FillRect(RotatableRect rect, Vector4 color)
+{
+	FillRect(rect.Rect, rect.Rotation, color);
+}
+
 
 void ShapeRenderer::FillRect(Vector2 Center, Vector2 Size, float rotation, Vector4 color)
 {

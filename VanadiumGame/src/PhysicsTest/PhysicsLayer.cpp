@@ -2,6 +2,7 @@
 #include "Rigidbody.h"
 #include "Core.h"
 #include "PixelRenderer/PixelCollisionComponent.h"
+#include "core/ShapeRenderer/ShapeRenderer.h"
 
 static float Length2(Vector2 vector)
 {
@@ -29,34 +30,35 @@ struct CollisionPair
 };
 
 // SAT for squares
-bool SATCollisionSquares(RotatableRect A, RotatableRect B, std::vector<CollisionPair>& pairVec)
+bool SATCollisionSquares(Rigidbody* rA, Rigidbody* rB, RotatableRect& A, RotatableRect& B, std::vector<CollisionPair>& pairVec)
 {
-	
+	std::array<Vector2, 4> aVerts = A.Vertices();
+	std::array<Vector2, 4> bVerts = B.Vertices();
 
 
 	// Generate contact points (vertex clipping simplified for squares)
 	std::vector<Vector2> contacts;
-	for (auto& v : aVerts) {
-		if (B->GetComponent<RectCollisionComponent>().value_or(nullptr)->PointInside_World(v))
+	for (Vector2 v : aVerts) {
+		if (B.PointInside(v))
 		{
-			Vector2 escape = B->GetComponent<RectCollisionComponent>().value_or(nullptr)->EscapeVector(v);
+			Vector2 escape = B.EscapeVector(v);
 			CollisionPair pair;
-			pair.A = A;
-			pair.B = B;
+			pair.A = rA;
+			pair.B = rB;
 			pair.contact = v;
 			pair.penetration = glm::length(escape);
 			pair.normal = glm::normalize(escape);
 			pairVec.push_back(pair);
 		}
 	}
-	for (auto& v : bVerts)
+	for (Vector2 v : bVerts)
 	{
-		if (A->GetComponent<RectCollisionComponent>().value_or(nullptr)->PointInside_World(v))
+		if (A.PointInside(v))
 		{
-			Vector2 escape = A->GetComponent<RectCollisionComponent>().value_or(nullptr)->EscapeVector(v);
+			Vector2 escape = A.EscapeVector(v);
 			CollisionPair pair;
-			pair.A = B;
-			pair.B = A;
+			pair.A = rB;
+			pair.B = rA;
 			pair.contact = v;
 			pair.penetration = glm::length(escape);
 			pair.normal = glm::normalize(escape);
@@ -75,7 +77,6 @@ void PhysicsLayer::OnUpdate(double dt)
 	UnorderedVector<Rigidbody>& rbs = ECS.GetComponentStore<Rigidbody>().value_or(nullptr)->GetComponents();
 
 	std::vector<CollisionPair> collisionPairs;
-
 	// generate all square collisions
 	for (int i = 0; i < rbs.size(); i++)
 	{
@@ -84,20 +85,32 @@ void PhysicsLayer::OnUpdate(double dt)
 		{
 			Rigidbody* B = &rbs[j];
 
+
 			PixelCollisionComponent& aCollider = *A->GetComponent<PixelCollisionComponent>().value_or(nullptr);
 			PixelCollisionComponent& bCollider = *B->GetComponent<PixelCollisionComponent>().value_or(nullptr);
-			
-			TransformComponent aT = A->GetPosition();
-			TransformComponent bT = B->GetPosition();
+
+			Rect bAABB = bCollider.GetAABB();
+			Rect aAABB = aCollider.GetAABB();
+
+			if (!aAABB.Overlaps(bAABB))
+				continue;
+
+			TransformComponent& aT = *A->GetTransform();
+			TransformComponent& bT = *B->GetTransform();
 
 			for (Rect localARect : aCollider.GetCollisionRects())
 			{
+				RotatableRect globalARect(localARect.Offset(aT.Position).RotateAround(aT.Position, aT.RotationAngle()), aT.RotationAngle());
+
+				if (!globalARect.GetAABB().Overlaps(bAABB))
+					continue;
+
 				for (Rect localBRect : bCollider.GetCollisionRects())
 				{
-					RotatableRect globalARect(localARect.Offset(aT.Position), aT.RotationAngle());
-					RotatableRect globalBRect(localBRect.Offset(bT.Position), bT.RotationAngle());
-					
-					SATCollisionSquares(globalARect, globalBRect, collisionPairs);
+					RotatableRect globalBRect(localBRect.Offset(bT.Position).RotateAround(bT.Position, bT.RotationAngle()), bT.RotationAngle());
+
+					if (globalARect.GetAABB().Overlaps(globalBRect.GetAABB()))
+						SATCollisionSquares(A, B, globalARect, globalBRect, collisionPairs);
 				}
 			}
 		}
@@ -114,7 +127,6 @@ void PhysicsLayer::OnUpdate(double dt)
 		for (auto& pair : collisionPairs)
 		{
 			glm::vec2 n = pair.normal;
-
 
 			glm::vec2 rA = pair.contact - pair.A->GetPosition();
 			glm::vec2 rB = pair.contact - pair.B->GetPosition();

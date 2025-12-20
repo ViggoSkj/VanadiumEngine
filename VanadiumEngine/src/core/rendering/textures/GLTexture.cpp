@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "GLTexture.h"
 #include "GLCommon.h"
+#include "core/Debug/Log.h"
 
 GLTexture::GLTexture()
 	: Config(TextureFiltering::Nearest, TextureWrap::MirroredRepeat)

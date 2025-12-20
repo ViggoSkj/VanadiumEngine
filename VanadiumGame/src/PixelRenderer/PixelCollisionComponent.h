@@ -14,13 +14,14 @@ public:
 
 	void PixelsChanged();
 
+	Rect GetAABB();
+
 	std::vector<Rect> GetCollisionRects() const { return m_collisionRects; }
 private:
-	std::vector<Rect> m_collisionRects;
 	void UpdateCenterOfMass();
 	void UpdateInverseMass();
 	void UpdateInverseInertia();
 
-
-	Vector2 m_centerOfMass;
+	std::vector<Rect> m_collisionRects;
+	Vector2 m_centerOfMass = { 0, 0 };
 };

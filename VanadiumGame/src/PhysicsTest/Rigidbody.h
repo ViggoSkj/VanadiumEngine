@@ -4,8 +4,15 @@
 class Rigidbody : public Component
 {
 public:
-	virtual Vector2 GetPosition();
-	virtual TransformComponent* GetTransform();
+	Rigidbody(EntityRef entityRef)
+		: Component(entityRef)
+	{
+		InverseMass = 1.0f;
+		InverseInertia = 1.0f;
+	}
+
+	Vector2 GetPosition();
+	TransformComponent* GetTransform();
 	float InverseInertia;
 	float InverseMass;
 	Vector2 LinearVelocity = { 0, 0 };

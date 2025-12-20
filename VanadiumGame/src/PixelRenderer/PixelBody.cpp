@@ -5,7 +5,8 @@
 
 PixelBody::PixelBody(EntityRef ref)
 	: Component(ref),
-	m_shader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/pixelbody.shader")->CreateShader())
+	m_shader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/pixelbody.shader")->CreateShader()),
+	m_pixelSoa()
 {
 	UpdateMesh();
 }
@@ -138,7 +139,7 @@ void PixelBody::AddPixel(i32 x, i32 y, u8 type)
 		ResizeBuffers(m_pixelSoa.Count() * 1.5f);
 	}
 
-	PixelCollisionComponent& c = *GetComponent<PixelCollisionComponent>().value_or(nullptr);
+	PixelCollisionComponent& c = *GetComponent<PixelCollisionComponent>().value();
 
 	c.PixelsChanged();
 }

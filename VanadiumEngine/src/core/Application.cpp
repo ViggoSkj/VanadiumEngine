@@ -14,7 +14,6 @@ Application::Application()
 
 Application::Application(unsigned int width, unsigned int height)
 {
-	
 	m_window = std::make_unique<Window>(width, height);
 
 
@@ -42,6 +41,7 @@ Application::Application(unsigned int width, unsigned int height)
 
 Application::~Application()
 {
+	m_applicationLayers.clear();
 }
 
 void Application::Run()

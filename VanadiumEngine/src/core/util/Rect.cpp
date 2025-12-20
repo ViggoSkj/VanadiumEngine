@@ -1,9 +1,11 @@
 #include "pch.h"
+#include "core/Math.h"
 #include "Rect.h"
 
 Vector2 Rect::Size()
 {
-	return Start - End;
+	// Ensure size is always positive (width/height)
+	return { End.x - Start.x, End.y - Start.y };
 }
 
 Vector2 Rect::Center()
@@ -44,4 +46,51 @@ bool Rect::Overlaps(Vector2 offset, Rect other, Vector2 offsetOther)
 		return false;
 
 	return true;
+}
+
+bool Rect::PointInside(Vector2 point)
+{
+	return point.x >= Start.x && point.x <= End.x
+		&& point.y >= Start.y && point.y <= End.y;
+}
+
+
+Vector2 Rect::EscapeVector(Vector2 point)
+{
+	if (!PointInside(point))
+		return { 0,0 };
+
+	Vector2 escape = { 0, 0 };
+
+	if (point.x - Start.x < End.x - point.x)
+		escape.x = Start.x - point.x;
+	else
+		escape.x = End.x - point.x;
+
+	if (point.y - Start.y < End.y - point.y)
+		escape.y = Start.y - point.y;
+	else
+		escape.y = End.y - point.y;
+
+	return escape;
+}
+
+Rect Rect::RotateAround(Vector2 point, float angle)
+{
+	// Preserve axis-aligned semantics: keep Start as min corner and End as max corner
+	Vector2 newCenter = Math::RotatePoint(Center(), point, angle);
+	Vector2 halfSize = Size() / 2.0f;
+
+	Vector2 newStart = newCenter - halfSize;
+	Vector2 newEnd = newCenter + halfSize;
+
+	// Enforce lower-left and top-right ordering without relying on Math::Min/Max
+	Vector2 minCorner(
+		newStart.x < newEnd.x ? newStart.x : newEnd.x,
+		newStart.y < newEnd.y ? newStart.y : newEnd.y);
+	Vector2 maxCorner(
+		newStart.x > newEnd.x ? newStart.x : newEnd.x,
+		newStart.y > newEnd.y ? newStart.y : newEnd.y);
+
+	return Rect(minCorner, maxCorner);
 }

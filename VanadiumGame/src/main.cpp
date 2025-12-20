@@ -29,6 +29,28 @@ public:
 		: SceneSetupStep(scene) {
 	}
 
+	EntityRef CreateBody(Vector2 position)
+	{
+		EntityRef entity = CreateEntity();
+		entity.Get().AddComponent<TransformComponent>()->Position = position;
+		entity.Get().GetComponent<TransformComponent>().value()->RotateRads(3.14/4);
+		entity.Get().AddComponent<Rigidbody>();
+		PixelCollisionComponent& c = *entity.Get().AddComponent<PixelCollisionComponent>();
+		PixelBody& body = *entity.Get().AddComponent<PixelBody>();
+
+		for (int y = 0; y < 1 / PixelWorld::PixelSize; y++)
+		{
+			for (int x = 0; x < 1 / PixelWorld::PixelSize; x++)
+			{
+					body.AddPixel(x, y, 1);
+			}
+		}
+
+		c.RecalculateCollisionRects();
+
+		return entity;
+	}
+
 	void Execute() override
 	{
 		Application& app = Application::Get();
@@ -37,29 +59,16 @@ public:
 
 		EntityRef camera = CreateEntity();
 		camera.Get().AddComponent<TransformComponent>();
-		camera.Get().AddComponent<CameraComponent>()->Zoom = 2.0;
+		camera.Get().AddComponent<CameraComponent>()->Zoom = 10.0;
 		camera.Get().AddComponent<CameraMovementComponent>()->EnableMove = true;
 
-		EntityRef e1 = CreateEntity();
-		e1.Get().AddComponent<PlayerMovementComponent>();
-		e1.Get().AddComponent<SpriteRendererComponent>()->LoadRGBATexture("res/images/character.png");
-		e1.Get().AddComponent<TransformComponent>();
-		e1.Get().AddComponent<RectCollisionComponent>();
-		e1.Get().AddComponent<Rigidbody>();
-		PixelBody& body = *e1.Get().AddComponent<PixelBody>();
+		EntityRef player = CreateBody({ 0, 0 });
+		EntityRef ground = CreateBody({ 0, -4 });
 
-		for (int y = 0; y < 1 / PixelWorld::PixelSize; y++)
-		{
-			for (int x = 0; x < 1 / PixelWorld::PixelSize; x++)
-			{
-				if ((x + y) % 2 == 0)
-					body.AddPixel(x, y, 1);
-			}
-		}
-		e1.Get().AddComponent<PixelCollisionComponent>()->RecalculateCollisionRects();
+		player.Get().AddComponent<PlayerMovementComponent>();
+		//player.Get().GetComponent<Rigidbody>().value()->LinearVelocity = { 0.0, -1.0 };
 
-
-		camera.Get().GetComponent<CameraMovementComponent>().value_or(nullptr)->Target = e1;
+		camera.Get().GetComponent<CameraMovementComponent>().value_or(nullptr)->Target = player;
 		camera.Get().GetComponent<CameraMovementComponent>().value_or(nullptr)->MoveToTarget = true;
 
 		/*
