@@ -1,9 +1,6 @@
 #pragma once
 #include "pch.h"
 #include "FileAsset.h"
-
-#include <filesystem>
-
 #include "core/CoreTypes.h"
 #include "core/IO/IFileLoader.h"
 
@@ -26,6 +23,12 @@ public:
 	FileAssetStore()
 		: IFileAssetStore(GetAssetTypeId<TFileAsset>()) {
 	};
+
+	void FlushAsset(std::filesystem::path path)
+	{
+		if (m_loadedFileAssets.contains(path.string()))
+			m_loadedFileAssets.erase(path.string());
+	}
 
 	std::shared_ptr<TFileAsset> GetAsset(std::filesystem::path path)
 	{

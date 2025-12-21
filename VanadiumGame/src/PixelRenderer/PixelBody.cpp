@@ -5,7 +5,7 @@
 
 PixelBody::PixelBody(EntityRef ref)
 	: Component(ref),
-	m_shader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/pixelbody.shader")->CreateShader()),
+	m_shader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/pixelbody.shader")->CreateShader().value()),
 	m_pixelSoa()
 {
 	UpdateMesh();
@@ -97,7 +97,7 @@ void PixelBody::Draw()
 	GL_CHECK(glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(m)));
 
 	loc = m_shader.GlShader().GetUniformLocation("u_offset");
-	glUniform2f(loc, -pc.GetCenterOfMass().x, -pc.GetCenterOfMass().y);
+	GL_CHECK(glUniform2f(loc, -pc.GetCenterOfMass().x, -pc.GetCenterOfMass().y));
 
 
 	m_vao.Bind();

@@ -5,7 +5,7 @@
 #include "AssetManager.h"
 
 ShapeRendererLayer::ShapeRendererLayer()
-	: m_squareShader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/shapes/rect.shader")->CreateShader())
+	: m_squareShader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/shapes/rect.shader")->CreateShader().value())
 {
 	RenderingManager& man = *Application::Get().GetRenderingManager();
 	UniformBindingSlot slot = man.LoanUniformBindingSlot(ShaderType::VertexShader);

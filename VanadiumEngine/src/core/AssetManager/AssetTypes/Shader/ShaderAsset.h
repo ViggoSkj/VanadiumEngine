@@ -10,5 +10,5 @@ struct ShaderCodeAsset
 
 	ShaderProcessingObject processingObject;
 
-	Shader CreateShader();
+	std::optional<Shader> CreateShader();
 };

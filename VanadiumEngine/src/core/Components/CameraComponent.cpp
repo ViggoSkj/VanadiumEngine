@@ -15,8 +15,13 @@ void CameraComponent::OnUpdate(double dt)
 
 Camera CameraComponent::GetCamera()
 {
+	TransformComponent* t = GetComponent<TransformComponent>().value_or(nullptr);
+
+	if (t == nullptr)
+		throw "Camera Component needs access to a transform;";
+
 	Camera cam;
 	cam.Zoom = Zoom;
-	cam.Position = GetComponent<TransformComponent>().value()->Position;
+	cam.Position = t->Position;
 	return cam;
 }

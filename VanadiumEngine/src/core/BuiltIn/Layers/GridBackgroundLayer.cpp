@@ -3,7 +3,7 @@
 #include "GLCommon.h"
 
 GridBackgroundLayer::GridBackgroundLayer()
-	: m_shader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/background.shader")->CreateShader()),
+	: m_shader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/background.shader")->CreateShader().value()),
 	m_vao(Util::Square())
 {
 

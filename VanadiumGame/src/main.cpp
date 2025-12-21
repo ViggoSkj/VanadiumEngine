@@ -21,6 +21,7 @@
 #include "PhysicsTest/PhysicsLayer.h"
 #include "PhysicsTest/Rigidbody.h"
 #include "PixelRenderer/PixelCollisionComponent.h"
+#include "ShaderToy.h"
 
 class TestSceneSetupStep : public SceneSetupStep
 {
@@ -178,9 +179,10 @@ int main()
 	app.PushLayer<RectCollisionDebugLayer>();
 	app.PushLayer<LiveComponentLayer<PixelWorld>>();
 	app.PushLayer<ShapeRendererLayer>();
+	app.PushLayer<LiveComponentLayer<ShaderToy>>();
 
 	SceneRef testScene = app.GetSceneManager()->ConstructScene();
-	testScene.Get().AddSetupStep<TestSceneSetupStep2>();
+	testScene.Get().AddSetupStep<ShaderToySetup>();
 	app.GetSceneManager()->LoadScene(testScene.GetId());
 
 	app.Run();

@@ -8,7 +8,7 @@
 #include "ECS.h"
 
 SpriteRendererLayer::SpriteRendererLayer()
-	: m_textureShader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/texture.shader")->CreateShader()), m_VAO(Util::Square())
+	: m_textureShader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/texture.shader")->CreateShader().value()), m_VAO(Util::Square())
 {
 	RenderingManager& man = *Application::Get().GetRenderingManager();
 	UniformBindingSlot slot = man.LoanUniformBindingSlot(ShaderType::VertexShader);
@@ -53,8 +53,8 @@ void SpriteRendererLayer::OnRender(double dt)
 	m_matrices.Buffer.SetData(glm::value_ptr(proj), 0, 4 * 4 * 4);
 	m_matrices.Buffer.SetData(glm::value_ptr(view), 4 * 4 * 4, 4 * 4 * 4);
 
-	glActiveTexture(GL_TEXTURE0);
-	glUniform1i(m_samplerId, 0);
+	GL_CHECK(glActiveTexture(GL_TEXTURE0));
+	GL_CHECK(glUniform1i(m_samplerId, 0));
 	m_textureShader.GlShader().Use();
 	m_VAO.Bind();
 
@@ -63,11 +63,11 @@ void SpriteRendererLayer::OnRender(double dt)
 		Entity& e = *ECS->FindEntity(sps[i].GetOwnerId()).value();
 		TransformComponent& tc = *e.GetComponent<TransformComponent>().value();
 
-		glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(tc.ModelMatrix()));
+		GL_CHECK(glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(tc.ModelMatrix())));
 
 		GLTexture& texture = GetTexture(sps[i].Texture);
 		texture.Use();
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		GL_CHECK(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0));
 	}
 }
 

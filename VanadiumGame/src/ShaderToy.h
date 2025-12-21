@@ -1,0 +1,31 @@
+#pragma once
+#include "Core.h"
+#include "core/IO/FileWatcher.h"
+
+class ShaderToySetup : public SceneSetupStep
+{
+public:
+	ShaderToySetup(Scene* scene)
+		: SceneSetupStep(scene) {
+	}
+
+	void Execute() override;
+};
+
+class ShaderToy : public LiveComponent
+{
+public:
+	ShaderToy(EntityRef ref);
+
+	void UpdateShader();
+
+	void OnRender(double dt) override;
+
+	void OnFileChange();
+private:
+	std::filesystem::path m_shaderPath;
+	FileWatcher m_fileWatcher;
+	std::optional<Shader> m_shader;
+	VertexArray m_VAO;
+	std::shared_ptr<std::atomic<bool>> m_needUpdate;
+};

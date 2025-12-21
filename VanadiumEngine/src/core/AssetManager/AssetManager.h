@@ -32,6 +32,13 @@ public:
 		FileAssetStore<TFileAsset>* store = GetAssetStore<TFileAsset>();
 		return store->GetAsset(path);
 	}
+
+	template<typename TFileAsset>
+	void FlushFileAsset(std::filesystem::path path)
+	{
+		FileAssetStore<TFileAsset>* store = GetAssetStore<TFileAsset>();
+		store->FlushAsset(path);
+	}
 private:
 
 	std::vector<std::unique_ptr<IFileAssetStore>> m_assetStores;

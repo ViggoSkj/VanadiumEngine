@@ -37,7 +37,8 @@ static int GetLineNumber(const char* err)
 			}
 		}
 	}
-
+	if (lineString == "")
+		return 0;
 	return std::stoi(lineString);
 }
 

@@ -2,7 +2,7 @@
 
 StaticPixelChunk::StaticPixelChunk(EntityRef ref)
 	: Component(ref),
-	m_shader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/chunk.shader")->CreateShader()),
+	m_shader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/chunk.shader")->CreateShader().value()),
 	Position(Vector2(0, 0))
 {
 	float pixelSize = ChunkSize / (float)(Size - 1);

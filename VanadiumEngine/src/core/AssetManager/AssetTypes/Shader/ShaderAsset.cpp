@@ -22,9 +22,14 @@ ShaderCodeAsset::ShaderCodeAsset(std::filesystem::path path)
 	ShaderCodeGenerator::ExecuteIncludes(processingObject, &loader);
 }
 
-Shader ShaderCodeAsset::CreateShader()
+std::optional<Shader> ShaderCodeAsset::CreateShader()
 {
-	ShaderDescriptor desc(processingObject.Tokenized);
-	Shader shader = Shader(processingObject.Source, desc);
-	return shader;
+	std::optional<ShaderDescriptor> created = ShaderDescriptor::Create(processingObject.Tokenized);
+
+	if (!created.has_value())
+	{
+		return std::nullopt;
+	}
+	
+	return Shader(processingObject.Source, created.value());
 }

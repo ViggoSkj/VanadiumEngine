@@ -35,7 +35,7 @@ Application::Application(unsigned int width, unsigned int height)
 
 	GL_CHECK(glEnable(GL_BLEND));
 
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	GL_CHECK(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
 	Application::s_instance = this;
 }
