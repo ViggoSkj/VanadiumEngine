@@ -131,12 +131,10 @@ void PixelCollisionComponent::UpdateInverseInertia()
 	float pixelMass = PixelWorld::PixelSize * PixelWorld::PixelSize * PixelBody::PixelDensity;
 
 	for (i32 x : pixelSoa.XPositions)
-	{
-		for (i32 y : pixelSoa.YPositions)
-		{
-			momentOfInertia += pixelMass * glm::length(m_centerOfMass.x - Vector2(x, y));
-		}
-	}
+		momentOfInertia += pixelMass * (m_centerOfMass.x - x) * (m_centerOfMass.x - x);
+	
+	for (i32 y : pixelSoa.YPositions)
+		momentOfInertia += pixelMass * (m_centerOfMass.y - y) * (m_centerOfMass.y - y);
 
 	rb.InverseInertia = 1 / momentOfInertia;
 }

@@ -10,7 +10,8 @@
 Application* Application::s_instance = nullptr;
 
 Application::Application()
-	: Application(1600, 1000) {};
+	: Application(1600, 1000) {
+};
 
 Application::Application(unsigned int width, unsigned int height)
 {
@@ -64,10 +65,6 @@ void Application::Run()
 		m_time->TimeSinceStart += dt;
 		prevTime = (float)glfwGetTime();
 
-
-		GL_CHECK(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
-		GL_CHECK(glClear(GL_COLOR_BUFFER_BIT));
-
 		m_window->ProcessInput();
 
 		if (m_window->ShouldClose())
@@ -76,18 +73,48 @@ void Application::Run()
 			continue;
 		}
 
-		for (int i = 0; i < m_applicationLayers.size(); i++)
+
+		bool paused = false;
+		if (m_window->GetInputManager().GetKey(Key::F1) == KeyState::Pressed)
+			m_steppingMode = !m_steppingMode;
+
+		if (m_steppingMode)
 		{
-			m_applicationLayers[i]->OnUpdate(dt);
+			if (m_stepBuffered)
+			{
+				dt = m_stepDt;
+				m_stepBuffered = false;
+				paused = false;
+			}
+			else
+			{
+				if (m_window->GetInputManager().GetKey(Key::F2) == KeyState::Pressed)
+					m_stepBuffered = true;
+
+				dt = 1.0f / 60.0f;
+				paused = true;
+			}
 		}
 
-		for (int i = 0; i < m_applicationLayers.size(); i++)
+		if (!paused)
 		{
-			m_applicationLayers[i]->OnRender(dt);
+			GL_CHECK(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
+			GL_CHECK(glClear(GL_COLOR_BUFFER_BIT));
+
+			for (int i = 0; i < m_applicationLayers.size(); i++)
+			{
+				m_applicationLayers[i]->OnUpdate(dt);
+			}
+
+			for (int i = 0; i < m_applicationLayers.size(); i++)
+			{
+				m_applicationLayers[i]->OnRender(dt);
+			}
+
+			m_window->SwapBuffers();
 		}
 
 		m_sceneManager->FlushCommands();
-		m_window->SwapBuffers();
 		m_ecs->Flush();
 		glfwPollEvents();
 	}

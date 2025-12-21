@@ -116,6 +116,57 @@ public:
 	}
 };
 
+class TestSceneSetupStep2 : public SceneSetupStep
+{
+public:
+	TestSceneSetupStep2(Scene* scene)
+		: SceneSetupStep(scene) {
+	}
+
+	EntityRef CreateBody(Vector2 position)
+	{
+		EntityRef entity = CreateEntity();
+		entity.Get().AddComponent<TransformComponent>()->Position = position;
+		entity.Get().GetComponent<TransformComponent>().value()->RotateRads(Math::Random() * 6.14);
+		entity.Get().AddComponent<Rigidbody>();
+		PixelCollisionComponent& c = *entity.Get().AddComponent<PixelCollisionComponent>();
+		PixelBody& body = *entity.Get().AddComponent<PixelBody>();
+		int count = 5;
+		for (int y = 0; y < count; y++)
+			for (int x = 0; x < count; x++)
+				body.AddPixel(x, y, 1);
+
+		c.RecalculateCollisionRects();
+
+		return entity;
+	}
+
+	void Execute() override
+	{
+		Application& app = Application::Get();
+		EntityComponentSystem* ECS = app.GetECS();
+		AssetManager* assetMan = app.GetAssetManager();
+
+		EntityRef e = CreateEntity();
+		e.Get().AddComponent<PixelWorld>();
+
+		EntityRef camera = CreateEntity();
+		camera.Get().AddComponent<TransformComponent>();
+		camera.Get().AddComponent<CameraComponent>()->Zoom = 3.0;
+		camera.Get().AddComponent<CameraMovementComponent>()->EnableMove = true;
+
+		EntityRef player = CreateBody({ -1, 0 });
+		player.Get().GetComponent<Rigidbody>().value()->LinearVelocity = { 2.0, 0.0 };
+		EntityRef ground = CreateBody({ 1, 0 });
+
+		player.Get().AddComponent<PlayerMovementComponent>();
+
+		camera.Get().GetComponent<CameraMovementComponent>().value_or(nullptr)->Target = player;
+		camera.Get().GetComponent<CameraMovementComponent>().value_or(nullptr)->MoveToTarget = true;
+	}
+};
+
+
 int main()
 {
 	Application app(2300, 1200);
@@ -129,7 +180,7 @@ int main()
 	app.PushLayer<ShapeRendererLayer>();
 
 	SceneRef testScene = app.GetSceneManager()->ConstructScene();
-	testScene.Get().AddSetupStep<TestSceneSetupStep>();
+	testScene.Get().AddSetupStep<TestSceneSetupStep2>();
 	app.GetSceneManager()->LoadScene(testScene.GetId());
 
 	app.Run();

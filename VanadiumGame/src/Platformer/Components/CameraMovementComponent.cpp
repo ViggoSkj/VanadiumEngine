@@ -37,7 +37,7 @@ void CameraMovementComponent::OnUpdate(double dt)
 	else if (MoveToTarget)
 	{
 		Vector2 targetPosition = Target.Get().GetComponent<TransformComponent>().value_or(nullptr)->Position;
-		transform.Position = glm::mix(transform.Position, targetPosition, 0.995f * dt);
+		transform.Position = glm::mix(transform.Position, targetPosition, 0.9995f * dt);
 	}
 
 	if (Input.Down(Key::Q))

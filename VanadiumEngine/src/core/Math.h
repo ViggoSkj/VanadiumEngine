@@ -8,4 +8,9 @@ namespace Math
 	{
 		return RotatePoint(point, Vector2(0.0f, 0.0f), rads);
 	}
+
+	inline float Random()
+	{
+		return abs(rand() / (float)INT_MAX);
+	}
 }

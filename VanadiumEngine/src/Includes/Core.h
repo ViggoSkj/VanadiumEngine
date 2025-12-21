@@ -7,3 +7,4 @@
 #include "Utility.h"
 #include "Components.h"
 #include "core/Debug/Log.h"
+#include "core/Math.h"

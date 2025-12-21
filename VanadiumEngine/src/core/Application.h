@@ -46,6 +46,11 @@ private:
 	std::vector<std::unique_ptr<ApplicationLayer>> m_applicationLayers;
 	bool m_running = true;
 
+	// steping mode
+	bool m_steppingMode = false;
+	bool m_stepBuffered = false;
+	float m_stepDt = 0.016f;
+
 	// Modules
 	std::unique_ptr<SceneManager> m_sceneManager;
 	std::unique_ptr<Window> m_window;
