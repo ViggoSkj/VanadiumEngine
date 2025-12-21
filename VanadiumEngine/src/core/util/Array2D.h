@@ -44,9 +44,9 @@ public:
 	u32 Count() { return m_width * m_height; }
 
 private:
-	T* m_data;
-	u32 m_width;
-	u32 m_height;
+	T* m_data = nullptr;
+	u32 m_width = 0;
+	u32 m_height = 0;
 };
 
 template<typename T>
@@ -74,10 +74,14 @@ inline void Array2D<T>::Resize(unsigned int width, unsigned int height)
 {
 	T* newValues = (T*)calloc(width * height, sizeof(width));
 
-	// copy rows
-	for (int y = 0; y < m_width; y++)
+	
+	if (width * height > 0 && m_height * m_width > 0 && m_data != nullptr)
 	{
-		memcpy(newValues + y * width, m_data + m_width * sizeof(T), m_width * sizeof(T));
+		// copy rows
+		for (int y = 0; y < m_width; y++)
+		{
+			memcpy(newValues + y * width, m_data + m_width * sizeof(T), m_width * sizeof(T));
+		}
 	}
 
 	m_data = newValues;

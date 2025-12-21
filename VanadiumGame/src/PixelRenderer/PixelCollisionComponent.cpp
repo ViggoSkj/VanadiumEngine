@@ -14,12 +14,60 @@ void PixelCollisionComponent::RecalculateCollisionRects()
 	PixelBody& pixelBody = *GetComponent<PixelBody>().value();
 	PixelSoa pixelSoa = pixelBody.GetSoa();
 
+	i32 minX = INT_MAX;
+	i32 minY = INT_MAX;
+	i32 maxX = INT_MIN;
+	i32 maxY = INT_MIN;
+
+	for (i32 x : pixelSoa.XPositions)
+	{
+		minX = glm::min(minX, x);
+		maxX = glm::max(maxX, x);
+	}
+	for (i32 y : pixelSoa.YPositions)
+	{
+		minY = glm::min(minY, y);
+		maxY = glm::max(maxY, y);
+	}
+
+	Array2D<bool> pixelGrid(maxX - minX + 1, maxY - minY + 1);
+
 	for (int i = 0; i < pixelSoa.Count(); i++)
 	{
-		Vector2 pixelPos = (pixelSoa.Position(i) - m_centerOfMass - Vector2(0.5f, 0.5f))* PixelWorld::PixelSize;
+		i32 x = pixelSoa.XPositions[i] - minX;
+		i32 y = pixelSoa.YPositions[i] - minY;
+		pixelGrid.Set(x, y, true);
+	}
 
-		Rect rect(pixelPos, pixelPos + Vector2(PixelWorld::PixelSize, PixelWorld::PixelSize));
-		m_collisionRects.push_back(rect);
+	Vector2 StartPos = Vector2(0, 0);
+	Vector2 EndPos = Vector2(0, 0);
+
+	while (StartPos.y < pixelGrid.GetHeight())
+	{
+		while (StartPos.x < pixelGrid.GetWidth())
+		{
+			while (EndPos.x < pixelGrid.GetWidth() && pixelGrid.Get(EndPos.x + 1, EndPos.y) == true)
+				EndPos.x++;
+
+			while (EndPos.y < pixelGrid.GetHeight())
+			{
+				for (i32 x = StartPos.x; x <= EndPos.x; x++)
+					if (pixelGrid.Get(x, EndPos.y) == false)
+						continue;
+				EndPos.y++;
+			}
+
+			Vector2 pixelStartPost = (StartPos + Vector2(minX, minY) - m_centerOfMass - Vector2(0.5f, 0.5f)) * PixelWorld::PixelSize;
+			Vector2 pixelEndPos = (EndPos + Vector2(minX, minY) - m_centerOfMass - Vector2(0.5f, 0.5f)) * PixelWorld::PixelSize;
+			Rect rect(pixelStartPost, pixelEndPos + Vector2(PixelWorld::PixelSize, PixelWorld::PixelSize));
+			m_collisionRects.push_back(rect);
+
+			StartPos.x = EndPos.x + 1;
+			StartPos.y = EndPos.y;
+		}
+
+		StartPos.x = 0;
+		StartPos.y = EndPos.y + 1;
 	}
 }
 
@@ -118,7 +166,8 @@ void PixelCollisionComponent::UpdateInverseMass()
 	Rigidbody& rb = *GetComponent<Rigidbody>().value();
 	PixelBody& pixelBody = *GetComponent<PixelBody>().value();
 	PixelSoa pixelSoa = pixelBody.GetSoa();
-	rb.InverseMass = pixelSoa.Count();
+	float pixelMass = PixelWorld::PixelSize * PixelWorld::PixelSize * PixelBody::PixelDensity;
+	rb.InverseMass = 1.0 / (pixelSoa.Count() * pixelMass);
 }
 
 void PixelCollisionComponent::UpdateInverseInertia()
@@ -131,10 +180,10 @@ void PixelCollisionComponent::UpdateInverseInertia()
 	float pixelMass = PixelWorld::PixelSize * PixelWorld::PixelSize * PixelBody::PixelDensity;
 
 	for (i32 x : pixelSoa.XPositions)
-		momentOfInertia += pixelMass * (m_centerOfMass.x - x) * (m_centerOfMass.x - x);
-	
+		momentOfInertia += pixelMass * (m_centerOfMass.x - x) * (m_centerOfMass.x - x) * (PixelWorld::PixelSize * PixelWorld::PixelSize);
+
 	for (i32 y : pixelSoa.YPositions)
-		momentOfInertia += pixelMass * (m_centerOfMass.y - y) * (m_centerOfMass.y - y);
+		momentOfInertia += pixelMass * (m_centerOfMass.y - y) * (m_centerOfMass.y - y) * (PixelWorld::PixelSize * PixelWorld::PixelSize);
 
 	rb.InverseInertia = 1 / momentOfInertia;
 }

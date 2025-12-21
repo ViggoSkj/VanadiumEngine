@@ -94,3 +94,8 @@ Rect Rect::RotateAround(Vector2 point, float angle)
 
 	return Rect(minCorner, maxCorner);
 }
+
+Rect Rect::Padded(Vector2 padding)
+{
+	return Rect(Start - padding, End + padding);
+}

@@ -29,4 +29,6 @@ struct Rect
 	Vector2 EscapeVector(Vector2 point);
 	
 	Rect RotateAround(Vector2 point, float angle);
+
+	Rect Padded(Vector2 padding);
 };

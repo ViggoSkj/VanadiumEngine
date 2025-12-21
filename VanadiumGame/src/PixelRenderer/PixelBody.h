@@ -7,7 +7,7 @@
 class PixelBody : public Component
 {
 public:
-	inline static float PixelDensity = 1000; // 1000 kg/m^2 (like water)
+	inline static float PixelDensity = 100; // 1000 kg/m^2 (like water)
 
 	PixelBody(EntityRef ref);
 

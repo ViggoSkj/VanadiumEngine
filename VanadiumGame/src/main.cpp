@@ -155,8 +155,8 @@ public:
 		camera.Get().AddComponent<CameraComponent>()->Zoom = 3.0;
 		camera.Get().AddComponent<CameraMovementComponent>()->EnableMove = true;
 
-		EntityRef player = CreateBody({ -1, 0 });
-		player.Get().GetComponent<Rigidbody>().value()->LinearVelocity = { 2.0, 0.0 };
+		EntityRef player = CreateBody({ -1, 0.1 });
+		//player.Get().GetComponent<Rigidbody>().value()->LinearVelocity = { 2.0, 0.0 };
 		EntityRef ground = CreateBody({ 1, 0 });
 
 		player.Get().AddComponent<PlayerMovementComponent>();

@@ -2,6 +2,7 @@
 #include "Rigidbody.h"
 #include "Core.h"
 #include "PixelRenderer/PixelCollisionComponent.h"
+#include "PixelRenderer/PixelWorld.h"
 #include "core/ShapeRenderer/ShapeRenderer.h"
 
 static float Length2(Vector2 vector)
@@ -34,7 +35,6 @@ bool SATCollisionSquares(Rigidbody* rA, Rigidbody* rB, RotatableRect& A, Rotatab
 {
 	std::array<Vector2, 4> aVerts = A.Vertices();
 	std::array<Vector2, 4> bVerts = B.Vertices();
-
 
 	// Generate contact points (vertex clipping simplified for squares)
 	std::vector<Vector2> contacts;
@@ -85,7 +85,6 @@ void PhysicsLayer::OnUpdate(double dt)
 		{
 			Rigidbody* B = &rbs[j];
 
-
 			PixelCollisionComponent& aCollider = *A->GetComponent<PixelCollisionComponent>().value_or(nullptr);
 			PixelCollisionComponent& bCollider = *B->GetComponent<PixelCollisionComponent>().value_or(nullptr);
 
@@ -95,21 +94,20 @@ void PhysicsLayer::OnUpdate(double dt)
 			if (!aAABB.Overlaps(bAABB))
 				continue;
 
+			Rect paddedBAABB = bAABB.Padded({ PixelWorld::PixelSize , PixelWorld::PixelSize });
+
 			TransformComponent& aT = *A->GetTransform();
 			TransformComponent& bT = *B->GetTransform();
 
 			for (Rect localARect : aCollider.GetCollisionRects())
 			{
 				RotatableRect globalARect(localARect.Offset(aT.Position).RotateAround(aT.Position, aT.RotationAngle()), aT.RotationAngle());
-
-				if (!globalARect.GetAABB().Overlaps(bAABB))
-					continue;
+				// if (!paddedBAABB.PointInside(aT.Position)) use this for single pixels?
 
 				for (Rect localBRect : bCollider.GetCollisionRects())
 				{
 					RotatableRect globalBRect(localBRect.Offset(bT.Position).RotateAround(bT.Position, bT.RotationAngle()), bT.RotationAngle());
 
-					if (globalARect.GetAABB().Overlaps(globalBRect.GetAABB()))
 						SATCollisionSquares(A, B, globalARect, globalBRect, collisionPairs);
 				}
 			}

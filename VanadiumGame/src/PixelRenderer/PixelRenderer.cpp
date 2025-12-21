@@ -46,7 +46,7 @@ void PixelRenderer::OnRenderDebug(double dt)
 
 		for (Rect rect : collider.GetCollisionRects())
 		{
-			ShapeRenderer::Get()->FillRect(Math::RotatePoint(rect.Center(), t.RotationAngle()) + t.Position, rect.Size(), t.RotationAngle(), {1.0, 0.0, 1.0, 0.5});
+			//ShapeRenderer::Get()->FillRect(Math::RotatePoint(rect.Center(), t.RotationAngle()) + t.Position, rect.Size(), t.RotationAngle(), {1.0, 0.0, 1.0, 0.5});
 		}
 	}
 }
