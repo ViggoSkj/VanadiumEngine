@@ -3,6 +3,15 @@
 #include "core/Processing/Shader/Tokenizer/ShaderTokenizer.h"
 #include "core/Processing/Shader/CodeGenerator/ShaderCodeGenerator.h"
 
+std::optional<Shader> Shader::CreateShader(std::string source, ShaderDescriptor descriptor)
+{
+	Shader shader(source, descriptor);
+	if (!shader.GlShader().Ready())
+		return std::nullopt;
+
+	return shader;
+}
+
 Shader::Shader(std::string source, ShaderDescriptor descriptor)
 	: m_shaderDescriptor(descriptor)
 {

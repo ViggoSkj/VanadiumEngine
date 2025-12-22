@@ -17,6 +17,8 @@ public:
 	void Use() const;
 	void ConfigureUniformBlock(const char* blockName, unsigned int bindingPoint) const;
 
+	bool Ready() const { return m_shaderProgramId != 0; };
+
 protected:
 	void Dispose() override {
 		GL_CHECK(glDeleteProgram(m_shaderProgramId));

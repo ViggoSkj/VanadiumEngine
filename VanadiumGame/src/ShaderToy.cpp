@@ -31,7 +31,6 @@ void ShaderToy::UpdateShader()
 		if (m_shader.has_value())
 		{
 			RenderingManager& renderingMan = *Application::Get().GetRenderingManager();
-			UniformBindingSlot slot = renderingMan.LoanUniformBindingSlot(ShaderType::VertexShader);
 			UniformObjectDescriptor matricesDescriptor = m_shader.value().Descriptor().FindUniformObjectDescriptor("Matrices");
 			m_shader.value().ReportUniformObject(*renderingMan.FindUniformObject("Matrices").value());
 		}

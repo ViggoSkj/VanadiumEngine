@@ -2,8 +2,8 @@
 #include "GLShader.h"
 #include <sstream>
 #include <glad/glad.h>
-
 #include <iostream>
+#include "core/Debug/Log.h"
 #include "ShaderType.h"
 
 struct ShaderProgramSource
@@ -108,10 +108,16 @@ bool GLShader::LoadSource(std::string source)
 	unsigned int fragmentShader = CompileShader(sources.FragmentSource.c_str(), sources.FragmentStartLine, GL_FRAGMENT_SHADER);
 
 	if (!vertexShader)
-		throw "Could not compile vertex shader.";
+	{
+		LogDebug("Could not compile vertex shader.");
+		return false;
+	}
 
 	if (!fragmentShader)
-		throw "Could not compile fragment shader.";
+	{
+		LogDebug("Could not compile fragment shader.");
+		return false;
+	}
 
 	GL_CHECK(m_shaderProgramId = glCreateProgram());
 	GL_CHECK(glAttachShader(m_shaderProgramId, vertexShader));
@@ -121,15 +127,17 @@ bool GLShader::LoadSource(std::string source)
 	GL_CHECK(glUseProgram(m_shaderProgramId));
 
 	GL_CHECK(glGetProgramiv(m_shaderProgramId, GL_LINK_STATUS, &success));
-	if (!success) {
-		GL_CHECK(glGetProgramInfoLog(m_shaderProgramId, 512, NULL, infoLog));
-		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-	}
 
 	GL_CHECK(glDeleteShader(vertexShader));
 	GL_CHECK(glDeleteShader(fragmentShader));
 
-	return false;
+	if (!success) {
+		GL_CHECK(glGetProgramInfoLog(m_shaderProgramId, 512, NULL, infoLog));
+		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
+		return true;
+	}
+
+	return true;
 }
 
 int GLShader::GetUniformLocation(const char* name) const

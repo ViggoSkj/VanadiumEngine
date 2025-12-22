@@ -30,6 +30,8 @@ std::optional<Shader> ShaderCodeAsset::CreateShader()
 	{
 		return std::nullopt;
 	}
+
+
 	
-	return Shader(processingObject.Source, created.value());
+	return Shader::CreateShader(processingObject.Source, created.value());
 }

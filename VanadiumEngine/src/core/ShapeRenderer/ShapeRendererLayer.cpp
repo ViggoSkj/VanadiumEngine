@@ -8,7 +8,6 @@ ShapeRendererLayer::ShapeRendererLayer()
 	: m_squareShader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/shapes/rect.shader")->CreateShader().value())
 {
 	RenderingManager& man = *Application::Get().GetRenderingManager();
-	UniformBindingSlot slot = man.LoanUniformBindingSlot(ShaderType::VertexShader);
 	UniformObjectDescriptor matricesDescriptor = m_squareShader.Descriptor().FindUniformObjectDescriptor("Matrices");
 	m_squareShader.ReportUniformObject(*man.FindUniformObject("Matrices").value());
 }
