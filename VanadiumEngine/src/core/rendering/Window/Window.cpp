@@ -10,10 +10,8 @@ void glfw_window_deleter(GLFWwindow* window) {
 
 Window::Window(int width, int height)
 {
-	m_width = width;	
-	m_height = height;	
-
-	
+	m_width = width;
+	m_height = height;
 
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -35,6 +33,23 @@ Window::Window(int width, int height)
 Window::~Window()
 {
 	glfwTerminate();
+}
+
+bool Window::WindowSizeChanged()
+{
+	int activeWidth = 0;
+	int activeHeight = 0;
+
+	glfwGetFramebufferSize(m_window.get(), &activeWidth, &activeHeight);
+
+	if (m_width != activeWidth || m_height != activeHeight)
+	{
+		m_width = activeWidth;
+		m_height = activeHeight;
+		return true;
+	}
+
+	return false;
 }
 
 glm::mat4 Window::GetOrthographicProjection()

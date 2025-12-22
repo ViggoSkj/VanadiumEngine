@@ -28,6 +28,13 @@ void ShaderToy::UpdateShader()
 	man.FlushFileAsset<ShaderCodeAsset>(m_shaderPath);
 	try {
 		m_shader = man.GetFileAsset<ShaderCodeAsset>(m_shaderPath)->CreateShader();
+		if (m_shader.has_value())
+		{
+			RenderingManager& renderingMan = *Application::Get().GetRenderingManager();
+			UniformBindingSlot slot = renderingMan.LoanUniformBindingSlot(ShaderType::VertexShader);
+			UniformObjectDescriptor matricesDescriptor = m_shader.value().Descriptor().FindUniformObjectDescriptor("Matrices");
+			m_shader.value().ReportUniformObject(*renderingMan.FindUniformObject("Matrices").value());
+		}
 	}
 	catch (int errorCode) {
 		m_shader = std::nullopt;

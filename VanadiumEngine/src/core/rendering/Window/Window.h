@@ -20,6 +20,8 @@ public:
 	bool ShouldClose() const { return glfwWindowShouldClose(m_window.get()); }
 	void SwapBuffers() const { glfwSwapBuffers(m_window.get()); }
 
+	bool WindowSizeChanged();
+
 	glm::mat4 GetOrthographicProjection();
 
 	std::shared_ptr<GLFWwindow> GetGLFWwindow() { return m_window; }
