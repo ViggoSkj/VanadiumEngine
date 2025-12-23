@@ -153,12 +153,12 @@ public:
 
 		EntityRef camera = CreateEntity();
 		camera.Get().AddComponent<TransformComponent>();
-		camera.Get().AddComponent<CameraComponent>()->Zoom = 3.0;
+		camera.Get().AddComponent<CameraComponent>()->Zoom = 1.0;
 		camera.Get().AddComponent<CameraMovementComponent>()->EnableMove = true;
 
 		EntityRef player = CreateBody({ -1, 0.1 });
-		//player.Get().GetComponent<Rigidbody>().value()->LinearVelocity = { 2.0, 0.0 };
-		EntityRef ground = CreateBody({ 1, 0 });
+		player.Get().GetComponent<Rigidbody>().value()->LinearVelocity = { 2.0, 0.0 };
+		EntityRef ground = CreateBody({ 0, 0 });
 
 		player.Get().AddComponent<PlayerMovementComponent>();
 
@@ -179,10 +179,9 @@ int main()
 	app.PushLayer<RectCollisionDebugLayer>();
 	app.PushLayer<LiveComponentLayer<PixelWorld>>();
 	app.PushLayer<ShapeRendererLayer>();
-	app.PushLayer<LiveComponentLayer<ShaderToy>>();
 
 	SceneRef testScene = app.GetSceneManager()->ConstructScene();
-	testScene.Get().AddSetupStep<ShaderToySetup>();
+	testScene.Get().AddSetupStep<TestSceneSetupStep2>();
 	app.GetSceneManager()->LoadScene(testScene.GetId());
 
 	app.Run();

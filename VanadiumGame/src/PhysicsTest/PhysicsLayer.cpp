@@ -107,7 +107,6 @@ void PhysicsLayer::OnUpdate(double dt)
 				for (Rect localBRect : bCollider.GetCollisionRects())
 				{
 					RotatableRect globalBRect(localBRect.Offset(bT.Position).RotateAround(bT.Position, bT.RotationAngle()), bT.RotationAngle());
-
 						SATCollisionSquares(A, B, globalARect, globalBRect, collisionPairs);
 				}
 			}
@@ -155,6 +154,8 @@ void PhysicsLayer::OnUpdate(double dt)
 			pair.lambda = newLambda;
 
 			glm::vec2 P = n * appliedDelta;
+
+			ShapeRenderer::Get()->DrawArrow(pair.contact, pair.contact + P, {0.0,0.0,0.0,0.0});
 
 			pair.A->LinearVelocity += P * pair.A->InverseMass;
 			pair.A->AngularVelocity += pair.A->InverseInertia * Cross(rA, P);
