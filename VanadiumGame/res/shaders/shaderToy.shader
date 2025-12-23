@@ -83,22 +83,25 @@ void main()
 {
     vec2 cord = uv * vec2(1.0, u_length);
 
-    vec2 box = vec2(0.5 * (u_thickness - 0.01 * 2), u_length * 0.5 - 0.05);
+    vec2 box = vec2(0.125, u_length * 0.5 - 0.3);
+
+    float d = 0.1;
 
     vec3 colorFill = vec3(0.44313725490196076, 0.19607843137254902, 0.792156862745098);
     vec3 colorEdge = colorFill * 2.0;
 
     colorFill *= (1.0 - uv.y) * 0.3 + 0.7;
 
-    float tri = sdEquilateralTriangle(vec2(0.5, 0.1) - cord, u_thickness);
+    float tri = sdEquilateralTriangle(vec2(0.5, 0.6) - cord, 0.5 - d);
     float c = 0.03;
-    float line = sdBox(vec2(0.5, u_length / 2.0 + 0.03) - cord, box);
+    float line = sdBox(vec2(0.5, u_length/2.0 + 0.1) - cord, box);
     float dist = min(tri, line);
     float s = smoothstep(0.011, 0.01, dist);
-    FragColor = vec4(0.0,0.0,0.0,0.0);
-
-    if (dist <= 0.01)
+    if (dist <= d)
     {
-        FragColor = vec4(colorFill, 1.0);
+        if (dist <= d/2.0)
+            FragColor = vec4(colorFill, 1.0);
+        else
+            FragColor = vec4(colorEdge, 1.0);
     }
 }

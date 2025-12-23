@@ -15,14 +15,7 @@ public:
     FileWatcher& operator=(const FileWatcher&) = delete;
 
     // movable
-    FileWatcher(FileWatcher&& other) noexcept
-        : m_path(std::move(other.m_path))
-        , m_onChange(std::move(other.m_onChange))
-        , m_watcherThread(std::move(other.m_watcherThread))
-        , m_running(other.m_running.load())
-    {
-        // mark source as stopped so its destructor doesn't try to stop again
-    }
+    FileWatcher(FileWatcher&& other) noexcept;
 
     FileWatcher& operator=(FileWatcher&& other) noexcept
     {
@@ -34,7 +27,6 @@ public:
         }
         m_path = std::move(other.m_path);
         m_onChange = std::move(other.m_onChange);
-        m_watcherThread = std::move(other.m_watcherThread);
         m_running.store(other.m_running.load(), std::memory_order_relaxed);
         other.m_running = false;
         return *this;

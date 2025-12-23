@@ -25,10 +25,16 @@ FileWatcher::FileWatcher(std::filesystem::path path, std::function<void()> onCha
 
 FileWatcher::~FileWatcher()
 {
-	if (m_path.empty())
-		return;
-
 	m_running.store(false, std::memory_order_relaxed);
 	if (m_watcherThread.joinable())
 		m_watcherThread.join();
+}
+
+FileWatcher::FileWatcher(FileWatcher&& other) noexcept
+	: m_path(std::move(other.m_path))
+	, m_onChange(std::move(other.m_onChange))
+	, m_running(other.m_running.load())
+
+{
+	m_watcherThread = std::thread(Watch, m_path, m_onChange, std::ref(m_running));
 }

@@ -1,6 +1,11 @@
 #include "pch.h"
 #include "Math.h"
 
+float Math::Angle(Vector2 point)
+{
+	return std::atan2(point.y, point.x);
+}
+
 Vector2 Math::RotatePoint(Vector2 point, Vector2 center, float rads)
 {
 	float s = glm::sin(rads);

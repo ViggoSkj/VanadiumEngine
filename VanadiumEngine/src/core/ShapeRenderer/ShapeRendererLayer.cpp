@@ -4,6 +4,7 @@
 #include "ShapeRenderer.h"
 #include "AssetManager.h"
 #include "core/Debug/Log.h"
+#include "core/Math.h"
 
 ShapeRendererLayer::ShapeRendererLayer()
 	: m_squareShader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/shapes/rect.shader")->CreateShader().value()),
@@ -18,7 +19,7 @@ ShapeRendererLayer::ShapeRendererLayer()
 
 void ShapeRendererLayer::OnRender(double dt)
 {
-	float* squareVertices = Util::RectVertices(1.0, 1.0, true, false);
+	float* squareVertices = Util::RectVertices(1.0, 1.0, true, true);
 
 	unsigned int indices[] = {
 		0, 1, 3,   // first triangle
@@ -29,7 +30,7 @@ void ShapeRendererLayer::OnRender(double dt)
 	VAO.Bind();
 
 	VertexBuffer VBO;
-	VBO.SetVertecies(squareVertices, sizeof(float) * 4 * 3, GL_STATIC_DRAW);
+	VBO.SetVertecies(squareVertices, sizeof(float) * 4 * 5, GL_STATIC_DRAW);
 	VBO.Bind();
 
 	IndexBuffer IBO;
@@ -38,6 +39,7 @@ void ShapeRendererLayer::OnRender(double dt)
 
 	VAO.AssignVertexAttributes({
 		{sizeof(float), GL_FLOAT, 3},
+		{sizeof(float), GL_FLOAT, 2},
 		});
 
 	std::optional<ShapeDrawCall> oCall;
@@ -60,7 +62,6 @@ void ShapeRendererLayer::OnRender(double dt)
 			mat = glm::rotate(mat, Shape.Rotation, glm::vec3(0, 0, 1));
 
 			GL_CHECK(glUniformMatrix4fv(locModel, 1, GL_FALSE, glm::value_ptr(mat)));
-
 			GL_CHECK(glUniform4f(loc, Call.Color.r, Call.Color.g, Call.Color.b, Call.Color.a));
 			break;
 		}
@@ -68,14 +69,22 @@ void ShapeRendererLayer::OnRender(double dt)
 		{
 			ArrowShape Shape = ShapeRenderer::Get()->PopArrowShape();
 			m_arrowShader.GlShader().Use();
-			u32 loc = m_arrowShader.GlShader().GetUniformLocation("u_color");
+			u32 loc = m_arrowShader.GlShader().GetUniformLocation("u_length");
 			u32 locModel = m_arrowShader.GlShader().GetUniformLocation("u_model");
 
+			Vector2 middle = Shape.Start + (Shape.End - Shape.Start) / 2.0f;
+			float length = glm::length(Shape.End - Shape.Start);
+			float angle = Math::Angle(Shape.End - Shape.Start) - Math::PI/2.0;
+
 			glm::mat4 mat = glm::identity<glm::mat4>();
+			mat = glm::translate(mat, glm::vec3(middle, 0.0));
+			mat = glm::rotate(mat, angle, glm::vec3(0, 0, 1));
+			mat = glm::scale(mat, glm::vec3(1.0 / 25.0, length, 1.0));
+
 
 			GL_CHECK(glUniformMatrix4fv(locModel, 1, GL_FALSE, glm::value_ptr(mat)));
-
-			GL_CHECK(glUniform4f(loc, Call.Color.r, Call.Color.g, Call.Color.b, Call.Color.a));
+			GL_CHECK(glUniform1f(loc, length * 25.0));
+			break;
 		}
 		default:
 			LogDebug("Invalid shape buffer.");
