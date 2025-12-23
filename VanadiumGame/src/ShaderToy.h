@@ -22,6 +22,9 @@ public:
 	void OnRender(double dt) override;
 
 	void OnFileChange();
+
+	float Length = 1.0;
+	float Thickness = 1.0;
 private:
 	std::filesystem::path m_shaderPath;
 	FileWatcher m_fileWatcher;

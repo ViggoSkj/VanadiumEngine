@@ -4,7 +4,7 @@
 #include "core/Components/TransformComponent.h"	
 
 RectCollisionDebugLayer::RectCollisionDebugLayer()
-	: shader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/pure_color.shader")->CreateShader().value()), vao(Util::Square())
+	: shader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/pure_color.shader")->CreateShader().value()), vao(Util::SquareVertexArray())
 {
 }
 

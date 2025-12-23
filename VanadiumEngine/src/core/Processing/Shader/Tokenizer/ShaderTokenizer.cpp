@@ -56,6 +56,8 @@ void Tokenizer::Tokenize()
 		case '{':
 		case '}':
 		case ',':
+		case '?':
+		case ':':
 			TokenizeFlowControl();
 			break;
 		case '+':

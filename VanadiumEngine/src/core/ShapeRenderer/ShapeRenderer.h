@@ -2,7 +2,7 @@
 #include "pch.h"
 #include "core/Util/Rect.h"
 #include "core/Util/RotatableRect.h"
-#include "Shapes/RectShape.h"
+#include "Shapes/Shapes.h"
 #include "ShapeDrawCall.h"
 
 
@@ -22,17 +22,22 @@ public:
 	void FillRect(Rect rect, Vector4 color);
 	void FillRect(RotatableRect rect, Vector4 color);
 
+	void DrawArrow(Vector2 start, Vector2 end, Vector4 color);
+
 	std::optional<ShapeDrawCall> PopDrawCall();
 	
 	RectShape PopRectShape();
+	ArrowShape PopArrowShape();
 private:
 	inline static ShapeRenderer* s_instance = nullptr;
 
 	std::vector<RectShape> m_rectShapes;
+	std::vector<ArrowShape> m_arrowShapes;
 	std::vector<ShapeDrawCall> m_drawCalls;
 };
 
 enum ShapeBuffers
 {
 	RectBuffer,
+	ArrowBuffer
 };

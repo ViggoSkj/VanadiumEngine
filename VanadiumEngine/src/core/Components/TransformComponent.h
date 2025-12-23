@@ -14,11 +14,12 @@ public:
 
 	TransformComponent(EntityRef entityRef);
 
-	Vector2 Position = glm::vec2(0, 0);
-
-	Vector2 Up = Vector2(1, 0);
+	Vector2 Position = Vector2(0.0, 0.0);
+	Vector2 Scale = Vector2(1.0, 1.0);
 
 	float Angle = 0.0f;
+	Vector2 Up = Vector2(1, 0);
+
 
 	Vector2 Right()
 	{

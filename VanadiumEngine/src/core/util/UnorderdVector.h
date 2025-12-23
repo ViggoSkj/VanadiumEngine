@@ -13,7 +13,7 @@ inline void UnorderedVector<T>::remove(size_t index)
 {
 	if (this->size() > 1)
 	{
-		(*this)[index] = std::move(this->back());
+		std::swap((*this)[index], (*this)[this->size() - 1]); // uses swap, safe for std::thread
 	}
 	this->pop_back();
 }

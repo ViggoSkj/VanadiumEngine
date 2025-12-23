@@ -8,7 +8,7 @@
 #include "ECS.h"
 
 SpriteRendererLayer::SpriteRendererLayer()
-	: m_textureShader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/texture.shader")->CreateShader().value()), m_VAO(Util::Square())
+	: m_textureShader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/texture.shader")->CreateShader().value()), m_VAO(Util::SquareVertexArray())
 {
 	RenderingManager& man = *Application::Get().GetRenderingManager();
 	UniformBindingSlot slot = man.LoanUniformBindingSlot(ShaderType::VertexShader);

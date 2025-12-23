@@ -22,19 +22,21 @@ public:
         , m_running(other.m_running.load())
     {
         // mark source as stopped so its destructor doesn't try to stop again
-        other.m_running = false;
     }
 
     FileWatcher& operator=(FileWatcher&& other) noexcept
     {
-        if (this != &other)
-        {
-            m_path = std::move(other.m_path);
-            m_onChange = std::move(other.m_onChange);
-            m_watcherThread = std::move(other.m_watcherThread);
-            m_running = other.m_running.load();
-            other.m_running = false;
+        if (this == &other) return *this;
+        // stop and join any running thread we own
+        if (m_running.load()) {
+            m_running.store(false, std::memory_order_relaxed);
+            if (m_watcherThread.joinable()) m_watcherThread.join();
         }
+        m_path = std::move(other.m_path);
+        m_onChange = std::move(other.m_onChange);
+        m_watcherThread = std::move(other.m_watcherThread);
+        m_running.store(other.m_running.load(), std::memory_order_relaxed);
+        other.m_running = false;
         return *this;
     }
 

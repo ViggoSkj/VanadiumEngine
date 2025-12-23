@@ -43,7 +43,7 @@ public:
 		{
 			for (int x = 0; x < 1 / PixelWorld::PixelSize; x++)
 			{
-					body.AddPixel(x, y, 1);
+				body.AddPixel(x, y, 1);
 			}
 		}
 
