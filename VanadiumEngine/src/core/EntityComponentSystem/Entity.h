@@ -49,7 +49,7 @@ public:
 	TComponent* AddComponent()
 	{
 		m_componentReferences.emplace_back(m_storeManager->AddComponent<TComponent>(EntityRef(m_id, m_ecs)));
-		return m_storeManager->GetComponent<TComponent>(m_componentReferences.back().GetComponentId()).value();
+		return m_storeManager->GetComponent<TComponent>(m_componentReferences.back().GetComponentId());
 	}
 
 	template<typename TComponent>

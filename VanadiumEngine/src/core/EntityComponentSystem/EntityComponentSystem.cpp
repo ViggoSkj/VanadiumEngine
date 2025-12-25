@@ -14,14 +14,14 @@ EntityRef EntityComponentSystem::CreateEntity(SceneRef sceneRef)
 	return EntityRef(m_entities.back().GetId(), this);
 }
 
-std::optional<Entity*> EntityComponentSystem::FindEntity(u32 id)
+Entity* EntityComponentSystem::FindEntity(u32 id)
 {
 	size_t entityIndex = m_entityIdIndexMap.GetIndex(id);
 
 	if (entityIndex == -1)
-		return std::nullopt;
+		return nullptr;
 
-	return std::optional<Entity*>(&m_entities[entityIndex]);
+	return &m_entities[entityIndex];
 }
 
 void EntityComponentSystem::DeleteEntity(u32 id)

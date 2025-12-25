@@ -88,8 +88,8 @@ void PixelBody::Draw()
 		m_buffersUpToDate = true;
 	}
 
-	TransformComponent& t = *GetComponent<TransformComponent>().value_or(nullptr);
-	PixelCollisionComponent& pc = *GetComponent<PixelCollisionComponent>().value_or(nullptr);
+	TransformComponent& t = *GetComponent<TransformComponent>();
+	PixelCollisionComponent& pc = *GetComponent<PixelCollisionComponent>();
 
 	m_shader.GlShader().Use();
 
@@ -138,7 +138,7 @@ void PixelBody::AddPixel(i32 x, i32 y, u8 type)
 		ResizeBuffers(m_pixelSoa.Count() * 1.5f);
 	}
 
-	PixelCollisionComponent& c = *GetComponent<PixelCollisionComponent>().value();
+	PixelCollisionComponent& c = *GetComponent<PixelCollisionComponent>();
 
 	c.PixelsChanged();
 }

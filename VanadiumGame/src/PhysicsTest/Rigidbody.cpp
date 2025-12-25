@@ -3,11 +3,11 @@
 
 Vector2 Rigidbody::GetPosition()
 {
-	TransformComponent& t = *GetComponent<TransformComponent>().value_or(nullptr);
+	TransformComponent& t = *GetComponent<TransformComponent>();
 	return t.Position;
 }
 
 TransformComponent* Rigidbody::GetTransform()
 {
-	return GetComponent<TransformComponent>().value_or(nullptr);
+	return GetComponent<TransformComponent>();
 }

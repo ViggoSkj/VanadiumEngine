@@ -19,7 +19,7 @@ public:
 	~EntityComponentSystem();
 
 	EntityRef CreateEntity(SceneRef sceneRef);
-	std::optional<Entity*> FindEntity(u32 id);
+	Entity* FindEntity(u32 id);
 	void DeleteEntity(u32 id);
 	void DeleteEntity(EntityRef ref);
 
@@ -27,7 +27,7 @@ public:
 
 	template<typename TComponent>
 		requires std::is_base_of_v<Component, TComponent>
-	std::optional<ComponentStore<TComponent>*> GetComponentStore()
+	ComponentStore<TComponent>* GetComponentStore()
 	{
 		return m_storeManager.GetComponentStore<TComponent>();
 	}

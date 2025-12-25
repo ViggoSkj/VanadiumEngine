@@ -20,10 +20,10 @@ ChunkedPixelRefs::ChunkedPixelRefs(std::vector<size_t> pixels, StaticPixelChunk*
 
 bool ChunkedPixelRefs::IsValid()
 {
-	return m_chunkEntityRef.Get().GetComponent<StaticPixelChunk>().value_or(nullptr)->GetChunkState() == m_chunkState;
+	return m_chunkEntityRef.Get().GetComponent<StaticPixelChunk>()->GetChunkState() == m_chunkState;
 }
 
 StaticPixelChunk* ChunkedPixelRefs::GetChunk()
 {
-	return m_chunkEntityRef.Get().GetComponent<StaticPixelChunk>().value_or(nullptr);
+	return m_chunkEntityRef.Get().GetComponent<StaticPixelChunk>();
 }

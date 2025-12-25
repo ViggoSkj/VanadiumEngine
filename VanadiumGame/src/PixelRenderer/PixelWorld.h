@@ -11,7 +11,7 @@ public:
 
 	static PixelWorld* GetInstance()
 	{
-		return s_instance->Get().GetComponent<PixelWorld>().value();
+		return s_instance->Get().GetComponent<PixelWorld>();
 	}
 
 	PixelWorld(EntityRef ref)

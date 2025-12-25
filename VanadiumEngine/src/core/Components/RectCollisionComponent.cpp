@@ -37,7 +37,7 @@ bool RectCollisionComponent::PointInside_World(Vector2 point)
 
 Vector2 RectCollisionComponent::LocalToWorld(Vector2 p)
 {
-	TransformComponent& t = *GetComponent<TransformComponent>().value_or(nullptr);
+	TransformComponent& t = *GetComponent<TransformComponent>();
 	Vector2 up = t.Up;
 	Vector2 right = { up.y, -up.x };
 	return t.Position + right * p.x + up * p.y;
@@ -45,7 +45,7 @@ Vector2 RectCollisionComponent::LocalToWorld(Vector2 p)
 
 Vector2 RectCollisionComponent::WorldToLocal(Vector2 p)
 {
-	TransformComponent& t = *GetComponent<TransformComponent>().value_or(nullptr);
+	TransformComponent& t = *GetComponent<TransformComponent>();
 	Vector2 up = t.Up; // normalized!
 	Vector2 right = { up.y, -up.x };
 	Vector2 v = p - t.Position;
@@ -209,6 +209,6 @@ Vector2 RectCollisionComponent::CollisionVertex(RectCollisionComponent* other)
 
 Rect RectCollisionComponent::WorldRect()
 {
-	TransformComponent& t = *GetComponent<TransformComponent>().value_or(nullptr);
+	TransformComponent& t = *GetComponent<TransformComponent>();
 	return { Rect.Start + t.Position, Rect.End + t.Position };
 }

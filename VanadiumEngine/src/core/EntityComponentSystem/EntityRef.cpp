@@ -2,12 +2,20 @@
 #include "EntityRef.h"
 #include "EntityComponentSystem.h"
 
-std::optional<Entity*> EntityRef::GetEntity()
+Entity* EntityRef::GetEntity()
 {
 	return m_system->FindEntity(m_entityId);
 }
 
 Entity& EntityRef::Get()
 {
-	return *GetEntity().value();
+	Entity* e = m_system->FindEntity(m_entityId);
+
+#ifndef DEBUG 
+	if (e == nullptr)
+		throw "Entity is nullptr";
+#endif // !DEBUG 
+
+
+	return *e;
 }

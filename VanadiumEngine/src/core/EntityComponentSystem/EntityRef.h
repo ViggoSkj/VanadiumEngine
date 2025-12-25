@@ -11,7 +11,7 @@ public:
 		: m_entityId(entityId), m_system(system) {
 	}
 
-	std::optional<Entity*> GetEntity();
+	Entity* GetEntity();
 	Entity& Get();
 
 	u32 GetId() const { return m_entityId; }

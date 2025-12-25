@@ -15,7 +15,7 @@ void PixelRenderer::OnRender(double dt)
 	EntityComponentSystem* ECS = Application::Get().GetECS();
 
 	// chunks
-	ComponentStore<StaticPixelChunk>* chunkStore = ECS->GetComponentStore<StaticPixelChunk>().value_or(nullptr);
+	ComponentStore<StaticPixelChunk>* chunkStore = ECS->GetComponentStore<StaticPixelChunk>();
 	UnorderedVector<StaticPixelChunk>& chunks = chunkStore->GetComponents();
 	for (int i = 0; i < chunks.size(); i++)
 	{
@@ -24,7 +24,7 @@ void PixelRenderer::OnRender(double dt)
 	}
 
 	// bodies
-	ComponentStore<PixelBody>* bodiesStore = ECS->GetComponentStore<PixelBody>().value_or(nullptr);
+	ComponentStore<PixelBody>* bodiesStore = ECS->GetComponentStore<PixelBody>();
 	UnorderedVector<PixelBody>& bodies = bodiesStore->GetComponents();
 	for (int i = 0; i < bodies.size(); i++)
 	{
@@ -37,12 +37,12 @@ void PixelRenderer::OnRenderDebug(double dt)
 {
 	EntityComponentSystem* ECS = Application::Get().GetECS();
 
-	ComponentStore<PixelCollisionComponent>* collidersStore = ECS->GetComponentStore<PixelCollisionComponent>().value_or(nullptr);
+	ComponentStore<PixelCollisionComponent>* collidersStore = ECS->GetComponentStore<PixelCollisionComponent>();
 	UnorderedVector<PixelCollisionComponent>& colliders = collidersStore->GetComponents();
 	for (int i = 0; i < colliders.size(); i++)
 	{
 		PixelCollisionComponent& collider = colliders[i];
-		TransformComponent& t = *collider.GetComponent<TransformComponent>().value_or(nullptr);
+		TransformComponent& t = *collider.GetComponent<TransformComponent>();
 
 		for (Rect rect : collider.GetCollisionRects())
 		{

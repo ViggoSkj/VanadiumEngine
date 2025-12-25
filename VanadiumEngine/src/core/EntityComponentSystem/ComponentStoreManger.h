@@ -28,7 +28,7 @@ public:
 	// TODO: test if it is faster to split creating and getting into two functions and having to manualy initialise component stores.
 	template <typename TComponent>
 		requires std::is_base_of_v<Component, TComponent>
-	std::optional<ComponentStore<TComponent>*> GetComponentStore()
+	ComponentStore<TComponent>* GetComponentStore()
 	{
 		for (int i = 0; i < m_stores.size(); i++)
 		{
@@ -56,16 +56,16 @@ public:
 		requires std::is_base_of_v<Component, TComponent>
 	ComponentRef AddComponent(EntityRef ref)
 	{
-		ComponentStore<TComponent>* componentStore = GetComponentStore<TComponent>().value();
+		ComponentStore<TComponent>* componentStore = GetComponentStore<TComponent>();
 		unsigned int componentId = componentStore->CreateInstance(ref);
 		return ComponentRef(componentId, componentStore->GetId());
 	}
 
 	template<typename TComponent>
 		requires std::is_base_of_v<Component, TComponent>
-	std::optional<TComponent*> GetComponent(unsigned int componentId)
+	TComponent* GetComponent(unsigned int componentId)
 	{
-		ComponentStore<TComponent>* store = GetComponentStore<TComponent>().value();
+		ComponentStore<TComponent>* store = GetComponentStore<TComponent>();
 		return store->GetComponent(componentId);
 	}
 

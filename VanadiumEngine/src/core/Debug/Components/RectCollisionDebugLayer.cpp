@@ -13,7 +13,7 @@ void RectCollisionDebugLayer::OnRender(double dt)
 
 	EntityComponentSystem& ECS = *Application::Get().GetECS();
 
-	ComponentStore<RectCollisionComponent>& store = *ECS.GetComponentStore<RectCollisionComponent>().value();
+	ComponentStore<RectCollisionComponent>& store = *ECS.GetComponentStore<RectCollisionComponent>();
 
 	UnorderedVector<RectCollisionComponent>& colliders = store.GetComponents();
 
@@ -30,7 +30,7 @@ void RectCollisionDebugLayer::OnRender(double dt)
 	for (int i = 0; i < colliders.size(); i++)
 	{
 		RectCollisionComponent& r = colliders[i];
-		TransformComponent& t = *r.GetComponent<TransformComponent>().value();
+		TransformComponent& t = *r.GetComponent<TransformComponent>();
 
 		float width = r.Rect.End.x - r.Rect.Start.x;
 		float height = r.Rect.End.y - r.Rect.Start.y;

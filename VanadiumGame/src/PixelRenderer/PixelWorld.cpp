@@ -129,6 +129,6 @@ std::optional<StaticPixelChunk*> PixelWorld::FindChunk(Vector2I position)
 
 UnorderedVector<StaticPixelChunk>& PixelWorld::GetChunks()
 {
-	ComponentStore<StaticPixelChunk>* store = Application::Get().GetECS()->GetComponentStore<StaticPixelChunk>().value_or(nullptr);
+	ComponentStore<StaticPixelChunk>* store = Application::Get().GetECS()->GetComponentStore<StaticPixelChunk>();
 	return store->GetComponents();
 }

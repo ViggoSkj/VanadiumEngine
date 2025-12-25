@@ -32,8 +32,8 @@ ShaderToy::ShaderToy(EntityRef ref)
 		[entityId = ref.GetId()]()
 		{
 			Application::Get().GetECS()
-				->FindEntity(entityId).value()
-				->GetComponent<ShaderToy>().value()
+				->FindEntity(entityId)
+				->GetComponent<ShaderToy>()
 				->OnFileChange();
 		}
 	),
@@ -62,7 +62,7 @@ void ShaderToy::UpdateShader()
 
 void ShaderToy::OnRender(double dt)
 {
-	TransformComponent* t = GetComponent<TransformComponent>().value_or(nullptr);
+	TransformComponent* t = GetComponent<TransformComponent>();
 
 	ShapeRenderer::Get()->FillCircle(t->Position, t->Scale.y, { 0.0, 0.0, 0.0, 1.0 });
 
@@ -80,7 +80,7 @@ void ShaderToy::OnRender(double dt)
 
 		int loc = m_shader.value().GlShader().GetUniformLocation("u_model");
 
-		TransformComponent* t = GetComponent<TransformComponent>().value_or(nullptr);
+		TransformComponent* t = GetComponent<TransformComponent>();
 
 		glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(t->ModelMatrix()));
 

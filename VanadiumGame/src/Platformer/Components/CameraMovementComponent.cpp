@@ -14,13 +14,13 @@ void CameraMovementComponent::OnUpdate(double dt)
 	EntityComponentSystem* ECS = Application::Get().GetECS();
 	SceneManager* sceneManager = Application::Get().GetSceneManager();
 
-	CameraComponent& camera = *GetComponent<CameraComponent>().value();
-	TransformComponent& transform = *GetComponent<TransformComponent>().value();
+	CameraComponent& camera = *GetComponent<CameraComponent>();
+	TransformComponent& transform = *GetComponent<TransformComponent>();
 
 	if (Input.GetKey(Key::R) == KeyState::Pressed)
 	{
-		sceneManager->UnloadScene(ECS->FindEntity(GetOwnerId()).value()->GetOwner());
-		sceneManager->LoadScene(ECS->FindEntity(GetOwnerId()).value()->GetOwner());
+		sceneManager->UnloadScene(ECS->FindEntity(GetOwnerId())->GetOwner());
+		sceneManager->LoadScene(ECS->FindEntity(GetOwnerId())->GetOwner());
 	}
 
 	if (EnableMove && !MoveToTarget)
@@ -36,7 +36,7 @@ void CameraMovementComponent::OnUpdate(double dt)
 	}
 	else if (MoveToTarget)
 	{
-		Vector2 targetPosition = Target.Get().GetComponent<TransformComponent>().value_or(nullptr)->Position;
+		Vector2 targetPosition = Target.Get().GetComponent<TransformComponent>()->Position;
 		transform.Position = glm::mix(transform.Position, targetPosition, 2.0f * dt);
 	}
 

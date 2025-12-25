@@ -15,7 +15,7 @@ void CameraComponent::OnUpdate(double dt)
 
 Camera CameraComponent::GetCamera()
 {
-	TransformComponent* t = GetComponent<TransformComponent>().value_or(nullptr);
+	TransformComponent* t = GetComponent<TransformComponent>();
 
 	if (t == nullptr)
 		throw "Camera Component needs access to a transform;";

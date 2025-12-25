@@ -25,12 +25,12 @@ public:
 		return m_components.back().GetId();
 	}
 
-	std::optional<TComponent*> GetComponent(unsigned int id)
+	TComponent* GetComponent(unsigned int id)
 	{
 		size_t index = m_idIndexMap.GetIndex(id);
 		if (index == -1)
-			return std::nullopt;
-		return std::optional<TComponent*>(&m_components[index]);
+			return nullptr;
+		return &m_components[index];
 	}
 
 	void DeleteInstance(u32 ref) override

@@ -111,14 +111,14 @@ void PhysicsLayer::OnUpdate(double dt)
 {
 	EntityComponentSystem& ECS = *Application::Get().GetECS();
 
-	UnorderedVector<Rigidbody>& rbs = ECS.GetComponentStore<Rigidbody>().value_or(nullptr)->GetComponents();
+	UnorderedVector<Rigidbody>& rbs = ECS.GetComponentStore<Rigidbody>()->GetComponents();
 
 	if (!Application::Get().GetWindow()->GetInputManager().Down(Key::Space))
 	{
 		for (int i = 0; i < rbs.size(); i++)
 		{
-			rbs[i].GetComponent<TransformComponent>().value_or(nullptr)->Position += rbs[i].LinearVelocity * (float)dt;
-			rbs[i].GetComponent<TransformComponent>().value_or(nullptr)->RotateRads(-rbs[i].AngularVelocity * (float)dt);
+			rbs[i].GetComponent<TransformComponent>()->Position += rbs[i].LinearVelocity * (float)dt;
+			rbs[i].GetComponent<TransformComponent>()->RotateRads(-rbs[i].AngularVelocity * (float)dt);
 		}
 	}
 
@@ -134,8 +134,8 @@ void PhysicsLayer::OnUpdate(double dt)
 		{
 			Rigidbody* B = &rbs[j];
 
-			PixelCollisionComponent& aCollider = *A->GetComponent<PixelCollisionComponent>().value_or(nullptr);
-			PixelCollisionComponent& bCollider = *B->GetComponent<PixelCollisionComponent>().value_or(nullptr);
+			PixelCollisionComponent& aCollider = *A->GetComponent<PixelCollisionComponent>();
+			PixelCollisionComponent& bCollider = *B->GetComponent<PixelCollisionComponent>();
 
 			Rect bAABB = bCollider.GetAABB();
 			Rect aAABB = aCollider.GetAABB();
@@ -285,8 +285,8 @@ void PhysicsLayer::OnUpdate(double dt)
 		float correctionMag = std::max(pair.penetration - penetrationSlop, 0.0f) * percent / invMassSum;
 		glm::vec2 correction = pair.normal * correctionMag;
 
-		auto* transformA = pair.A->GetComponent<TransformComponent>().value_or(nullptr);
-		auto* transformB = pair.B->GetComponent<TransformComponent>().value_or(nullptr);
+		auto* transformA = pair.A->GetComponent<TransformComponent>();
+		auto* transformB = pair.B->GetComponent<TransformComponent>();
 		if (transformA) transformA->Position -= correction * pair.A->InverseMass;
 		if (transformB) transformB->Position += correction * pair.B->InverseMass;
 	}

@@ -28,8 +28,8 @@ void SpriteRendererLayer::OnRender(double dt)
 	AssetManager* assetManager = Application::Get().GetAssetManager();
 	EntityComponentSystem* ECS = Application::Get().GetECS();
 
-	ComponentStore<SpriteRendererComponent>* spStore = ECS->GetComponentStore<SpriteRendererComponent>().value();
-	ComponentStore<TransformComponent>* tStore = ECS->GetComponentStore<TransformComponent>().value();
+	ComponentStore<SpriteRendererComponent>* spStore = ECS->GetComponentStore<SpriteRendererComponent>();
+	ComponentStore<TransformComponent>* tStore = ECS->GetComponentStore<TransformComponent>();
 
 	UnorderedVector<SpriteRendererComponent>& sps = spStore->GetComponents();
 	unsigned int m_samplerId = m_textureShader.GlShader().GetUniformLocation("u_sampler");
@@ -59,8 +59,8 @@ void SpriteRendererLayer::OnRender(double dt)
 
 	for (int i = 0; i < sps.size(); i++)
 	{
-		Entity& e = *ECS->FindEntity(sps[i].GetOwnerId()).value();
-		TransformComponent& tc = *e.GetComponent<TransformComponent>().value();
+		Entity& e = *ECS->FindEntity(sps[i].GetOwnerId());
+		TransformComponent& tc = *e.GetComponent<TransformComponent>();
 
 		GL_CHECK(glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(tc.ModelMatrix())));
 
