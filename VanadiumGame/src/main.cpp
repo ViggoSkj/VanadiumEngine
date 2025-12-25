@@ -141,6 +141,23 @@ public:
 		return entity;
 	}
 
+	EntityRef CreateMovingBody(Vector2 position, Vector2 velocity, Vector2 size)
+	{
+		EntityRef entity = CreateEntity();
+		entity.Get().AddComponent<TransformComponent>()->Position = position;
+		//entity.Get().GetComponent<TransformComponent>().value()->RotateRads(Math::Random() * 6.14);
+		entity.Get().AddComponent<Rigidbody>()->LinearVelocity = velocity;
+		PixelCollisionComponent& c = *entity.Get().AddComponent<PixelCollisionComponent>();
+		PixelBody& body = *entity.Get().AddComponent<PixelBody>();
+		for (int y = 0; y < size.y; y++)
+			for (int x = 0; x < size.x; x++)
+				body.AddPixel(x, y, 1);
+
+		c.RecalculateCollisionRects();
+
+		return entity;
+	}
+
 	void Execute() override
 	{
 		Application& app = Application::Get();
@@ -157,6 +174,8 @@ public:
 
 		EntityRef player = CreateBody({ 0, 0 }, { 5,5 });
 		player.Get().GetComponent<Rigidbody>().value()->LinearVelocity = { 2.0, 0.0 };
+
+		CreateMovingBody({ 2, 0 }, { 0.0, 0.0 }, { 5, 5 });
 
 		EntityRef ground = CreateBody({ 1, -1 }, { 100, 10 });
 		ground.Get().GetComponent<Rigidbody>().value()->Static = true;
