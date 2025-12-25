@@ -14,7 +14,9 @@ Vector2 RotatableRect::ToGlobal(Vector2 point)
 
 Vector2 RotatableRect::EscapeVector(Vector2 point)
 {
-	return Math::RotatePoint(Rect.EscapeVector(ToLocal(point)), Rotation);
+	Vector2 local = ToLocal(point);
+	Vector2 localEscape = Rect.EscapeVector(local);
+	return Math::RotatePoint(localEscape, Rotation);
 }
 
 std::array<Vector2, 4> RotatableRect::Vertices()
@@ -39,9 +41,9 @@ Rect RotatableRect::GetAABB()
 {
 	Vector2 center = Rect.Center();
 	Vector2 halfSize = (Rect.End - Rect.Start) / 2.0f;
-	
+
 	float maxExtent = glm::max(glm::abs(halfSize.x), glm::abs(halfSize.y)) * 1.42f;
-	
-	return ::Rect(Vector2(center.x - maxExtent, center.y - maxExtent), 
-	              Vector2(center.x + maxExtent, center.y + maxExtent));
+
+	return ::Rect(Vector2(center.x - maxExtent, center.y - maxExtent),
+		Vector2(center.x + maxExtent, center.y + maxExtent));
 }

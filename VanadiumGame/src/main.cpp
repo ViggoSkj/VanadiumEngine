@@ -34,7 +34,7 @@ public:
 	{
 		EntityRef entity = CreateEntity();
 		entity.Get().AddComponent<TransformComponent>()->Position = position;
-		entity.Get().GetComponent<TransformComponent>().value()->RotateRads(3.14/4);
+		entity.Get().GetComponent<TransformComponent>().value()->RotateRads(3.14 / 4);
 		entity.Get().AddComponent<Rigidbody>();
 		PixelCollisionComponent& c = *entity.Get().AddComponent<PixelCollisionComponent>();
 		PixelBody& body = *entity.Get().AddComponent<PixelBody>();
@@ -124,17 +124,16 @@ public:
 		: SceneSetupStep(scene) {
 	}
 
-	EntityRef CreateBody(Vector2 position)
+	EntityRef CreateBody(Vector2 position, Vector2 size)
 	{
 		EntityRef entity = CreateEntity();
 		entity.Get().AddComponent<TransformComponent>()->Position = position;
-		entity.Get().GetComponent<TransformComponent>().value()->RotateRads(Math::Random() * 6.14);
+		//entity.Get().GetComponent<TransformComponent>().value()->RotateRads(Math::Random() * 6.14);
 		entity.Get().AddComponent<Rigidbody>();
 		PixelCollisionComponent& c = *entity.Get().AddComponent<PixelCollisionComponent>();
 		PixelBody& body = *entity.Get().AddComponent<PixelBody>();
-		int count = 5;
-		for (int y = 0; y < count; y++)
-			for (int x = 0; x < count; x++)
+		for (int y = 0; y < size.y; y++)
+			for (int x = 0; x < size.x; x++)
 				body.AddPixel(x, y, 1);
 
 		c.RecalculateCollisionRects();
@@ -153,12 +152,15 @@ public:
 
 		EntityRef camera = CreateEntity();
 		camera.Get().AddComponent<TransformComponent>();
-		camera.Get().AddComponent<CameraComponent>()->Zoom = 1.0;
+		camera.Get().AddComponent<CameraComponent>()->Zoom = 4.0;
 		camera.Get().AddComponent<CameraMovementComponent>()->EnableMove = true;
 
-		EntityRef player = CreateBody({ -1, 0.1 });
+		EntityRef player = CreateBody({ 0, 0 }, { 5,5 });
 		player.Get().GetComponent<Rigidbody>().value()->LinearVelocity = { 2.0, 0.0 };
-		EntityRef ground = CreateBody({ 0, 0 });
+
+		EntityRef ground = CreateBody({ 1, -1 }, { 100, 10 });
+		ground.Get().GetComponent<Rigidbody>().value()->Static = true;
+		ground.Get().GetComponent<Rigidbody>().value()->Gravity = false;
 
 		player.Get().AddComponent<PlayerMovementComponent>();
 
@@ -179,8 +181,10 @@ int main()
 	app.PushLayer<RectCollisionDebugLayer>();
 	app.PushLayer<LiveComponentLayer<PixelWorld>>();
 	app.PushLayer<ShapeRendererLayer>();
+	app.PushLayer<LiveComponentLayer<ShaderToy>>();
 
 	SceneRef testScene = app.GetSceneManager()->ConstructScene();
+	// testScene.Get().AddSetupStep<ShaderToySetup>();
 	testScene.Get().AddSetupStep<TestSceneSetupStep2>();
 	app.GetSceneManager()->LoadScene(testScene.GetId());
 

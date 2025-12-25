@@ -17,4 +17,6 @@ public:
 	float InverseMass;
 	Vector2 LinearVelocity = { 0, 0 };
 	float AngularVelocity = 0;
+	bool Gravity = true;
+	bool Static = false;
 };

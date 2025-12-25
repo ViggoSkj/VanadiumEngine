@@ -13,7 +13,7 @@ PixelBody::PixelBody(EntityRef ref)
 
 void PixelBody::UpdateMesh()
 {
-	float pixelSize = StaticPixelChunk::ChunkSize / (float)(StaticPixelChunk::Size - 1);
+	float pixelSize = PixelWorld::PixelSize;
 	float* vertices = Util::RectVertices(pixelSize, pixelSize, true, true);
 
 	unsigned int indices[] = {  // note that we start from 0!
@@ -97,8 +97,7 @@ void PixelBody::Draw()
 	GL_CHECK(glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(m)));
 
 	loc = m_shader.GlShader().GetUniformLocation("u_offset");
-	GL_CHECK(glUniform2f(loc, -pc.GetCenterOfMass().x, -pc.GetCenterOfMass().y));
-
+	GL_CHECK(glUniform2f(loc, -pc.GetCenterOfMass().x + 0.5, -pc.GetCenterOfMass().y +0.5));
 
 	m_vao.Bind();
 

@@ -72,6 +72,11 @@ Vector2 Rect::EscapeVector(Vector2 point)
 	else
 		escape.y = End.y - point.y;
 
+	if (abs(escape.y) < abs(escape.x))
+		escape.x = 0;
+	else 
+		escape.y = 0;
+
 	return escape;
 }
 

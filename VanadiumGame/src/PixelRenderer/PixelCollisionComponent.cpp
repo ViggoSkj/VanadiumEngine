@@ -57,9 +57,9 @@ void PixelCollisionComponent::RecalculateCollisionRects()
 				EndPos.y++;
 			}
 
-			Vector2 pixelStartPost = (StartPos + Vector2(minX, minY) - m_centerOfMass - Vector2(0.5f, 0.5f)) * PixelWorld::PixelSize;
-			Vector2 pixelEndPos = (EndPos + Vector2(minX, minY) - m_centerOfMass - Vector2(0.5f, 0.5f)) * PixelWorld::PixelSize;
-			Rect rect(pixelStartPost, pixelEndPos + Vector2(PixelWorld::PixelSize, PixelWorld::PixelSize));
+			Vector2 pixelStartPost = (StartPos - m_centerOfMass) * PixelWorld::PixelSize;
+			Vector2 pixelEndPos = (EndPos - m_centerOfMass) * PixelWorld::PixelSize;
+			Rect rect(pixelStartPost, pixelEndPos);
 			m_collisionRects.push_back(rect);
 
 			StartPos.x = EndPos.x + 1;
@@ -154,9 +154,9 @@ void PixelCollisionComponent::UpdateCenterOfMass()
 	Vector2 totalPosition = { 0, 0 };
 
 	for (i32 x : pixelSoa.XPositions)
-		totalPosition.x += x;
+		totalPosition.x += x + 0.5;
 	for (i32 y : pixelSoa.YPositions)
-		totalPosition.y += y;
+		totalPosition.y += y + 0.5;
 
 	m_centerOfMass = totalPosition / (float)pixelSoa.Count();
 }
@@ -180,10 +180,10 @@ void PixelCollisionComponent::UpdateInverseInertia()
 	float pixelMass = PixelWorld::PixelSize * PixelWorld::PixelSize * PixelBody::PixelDensity;
 
 	for (i32 x : pixelSoa.XPositions)
-		momentOfInertia += pixelMass * (m_centerOfMass.x - x) * (m_centerOfMass.x - x) * (PixelWorld::PixelSize * PixelWorld::PixelSize);
+		momentOfInertia += pixelMass * (m_centerOfMass.x - x - 0.5) * (m_centerOfMass.x - x - 0.5) * (PixelWorld::PixelSize * PixelWorld::PixelSize);
 
 	for (i32 y : pixelSoa.YPositions)
-		momentOfInertia += pixelMass * (m_centerOfMass.y - y) * (m_centerOfMass.y - y) * (PixelWorld::PixelSize * PixelWorld::PixelSize);
+		momentOfInertia += pixelMass * (m_centerOfMass.y - y - 0.5) * (m_centerOfMass.y - y - 0.5) * (PixelWorld::PixelSize * PixelWorld::PixelSize);
 
 	rb.InverseInertia = 1 / momentOfInertia;
 }

@@ -34,7 +34,6 @@ out vec4 FragColor;
 in vec4 color;
 in vec2 uv;
 
-
 void main()
 {
     FragColor = color;

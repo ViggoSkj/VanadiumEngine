@@ -1,10 +1,9 @@
 #pragma once
 #include "pch.h"
+#include "core/Math.h"
 #include "core/EntityComponentSystem/Component.h"
 
-# define M_PI           3.14159265358979323846  /* pi */
-
-#define DEG_TO_RAD M_PI/180.0f
+#define DEG_TO_RAD E_PI/180.0f
 
 class TransformComponent : public Component
 {
@@ -28,7 +27,7 @@ public:
 
 	float RotationAngle()
 	{
-		return std::atan2(Up.y, Up.x);
+		return Math::Angle(Up) - Math::PI / 2.0;
 	}
 
 	void SetAngleDeg(float deg)

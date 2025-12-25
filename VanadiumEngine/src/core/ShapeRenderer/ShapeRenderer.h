@@ -21,23 +21,27 @@ public:
 	void FillRect(Rect rect, float rotation, Vector4 color);
 	void FillRect(Rect rect, Vector4 color);
 	void FillRect(RotatableRect rect, Vector4 color);
+	RectShape PopRectShape();
 
 	void DrawArrow(Vector2 start, Vector2 end, Vector4 color);
+	ArrowShape PopArrowShape();
+
+	void FillCircle(Vector2 center, float radius, Vector4 color);
+	CircleShape PopCircleShape();
 
 	std::optional<ShapeDrawCall> PopDrawCall();
-	
-	RectShape PopRectShape();
-	ArrowShape PopArrowShape();
 private:
 	inline static ShapeRenderer* s_instance = nullptr;
 
 	std::vector<RectShape> m_rectShapes;
 	std::vector<ArrowShape> m_arrowShapes;
+	std::vector<CircleShape> m_cirlceShapes;
 	std::vector<ShapeDrawCall> m_drawCalls;
 };
 
 enum ShapeBuffers
 {
 	RectBuffer,
-	ArrowBuffer
+	ArrowBuffer,
+	CirlceBuffer,
 };

@@ -20,7 +20,7 @@ void main()
 out vec4 FragColor;
 in vec2 uv;
 
-uniform vec3 m_color;
+uniform vec4 u_color;
 
 float sdCircle(vec2 p, float r)
 {
@@ -29,14 +29,10 @@ float sdCircle(vec2 p, float r)
 
 void main()
 {
-    vec2 cord = uv * vec2(1.0, u_length);
-
-    vec2 box = vec2(0.125, u_length * 0.5 - 0.3);
-
-    float d = 0.1;
-
-    vec3 colorFill = m_color;
-    vec3 colorEdge = m_color * 2.0;
+    const float d = 0.1;
+    
+    vec4 colorFill = u_color;
+    vec4 colorEdge = u_color * 2.0;
 
     colorFill *= (1.0 - uv.y) * 0.3 + 0.7;
 
@@ -44,8 +40,8 @@ void main()
     if (dist <= d)
     {
         if (dist <= d/2.0)
-            FragColor = vec4(colorFill, 1.0);
+            FragColor = colorFill;
         else
-            FragColor = vec4(colorEdge, 1.0);
+            FragColor = colorEdge;
     }
 }

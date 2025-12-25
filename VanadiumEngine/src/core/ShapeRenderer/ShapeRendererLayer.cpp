@@ -8,7 +8,8 @@
 
 ShapeRendererLayer::ShapeRendererLayer()
 	: m_squareShader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/shapes/rect.shader")->CreateShader().value()),
-	m_arrowShader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/shapes/arrow.shader")->CreateShader().value())
+	m_arrowShader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/shapes/arrow.shader")->CreateShader().value()),
+	m_cirlceShader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/shapes/circle.shader")->CreateShader().value())
 {
 	RenderingManager& man = *Application::Get().GetRenderingManager();
 	UniformObjectDescriptor matricesDescriptor = m_squareShader.Descriptor().FindUniformObjectDescriptor("Matrices");
@@ -84,6 +85,21 @@ void ShapeRendererLayer::OnRender(double dt)
 
 			GL_CHECK(glUniformMatrix4fv(locModel, 1, GL_FALSE, glm::value_ptr(mat)));
 			GL_CHECK(glUniform1f(loc, length * 25.0));
+			break;
+		}
+		case ShapeBuffers::CirlceBuffer:
+		{
+			CircleShape circle = ShapeRenderer::Get()->PopCircleShape();
+			m_cirlceShader.GlShader().Use();
+			u32 loc = m_cirlceShader.GlShader().GetUniformLocation("u_color");
+			u32 locModel = m_cirlceShader.GlShader().GetUniformLocation("u_model");
+
+			glm::mat4 mat = glm::identity<glm::mat4>();
+			mat = glm::translate(mat, glm::vec3(circle.Center, 0.0));
+			mat = glm::scale(mat, glm::vec3(circle.Radius, circle.Radius, 1.0));
+
+			GL_CHECK(glUniformMatrix4fv(locModel, 1, GL_FALSE, glm::value_ptr(mat)));
+			GL_CHECK(glUniform4f(loc, Call.Color.r, Call.Color.g, Call.Color.b, Call.Color.a));
 			break;
 		}
 		default:

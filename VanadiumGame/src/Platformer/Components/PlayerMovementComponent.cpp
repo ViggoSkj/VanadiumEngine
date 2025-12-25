@@ -50,12 +50,4 @@ void PlayerMovementComponent::OnUpdate(double dt)
 			PixelWorld::GetInstance()->RemovePixels(*refs.GetChunkedPixelRef(i));
 		}
 	}
-
-	PixelCollisionComponent* pixelCollision = GetComponent<PixelCollisionComponent>().value_or(nullptr);
-
-	if (pixelCollision != nullptr)
-	{
-		Rect AABB = pixelCollision->GetAABB();
-		ShapeRenderer::Get()->FillRect(AABB, { 1.0, 1.0, 1.0, 0.5 });
-	}
 }

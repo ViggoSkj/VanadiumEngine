@@ -17,6 +17,45 @@ namespace Math
 
 	inline float Random()
 	{
-		return abs(rand() / (float)INT_MAX);
+		return static_cast<float>(rand()) / RAND_MAX;
+	}
+
+	namespace Linear
+	{
+		inline Vector2 ProjectOnto(Vector2 point, Vector2 a, Vector2 b)
+		{
+			Vector2 AB = b - a;
+			Vector2 AP = point - a;
+
+			float k = glm::dot(AB, AP)/glm::dot(AB, AB);
+
+			return a + AB * k;
+		}
+
+		inline float Cross(Vector2 a, Vector2 b)
+		{
+			return a.x * b.y - a.y * b.x;
+		}
+
+		inline bool Intersects(Vector2 a1, Vector2 a2, Vector2 b1, Vector2 b2)
+		{
+			Vector2 r = a2 - a1;
+			Vector2 s = b2 - b1;
+
+			float denom = Cross(r, s);
+			float numer1 = Cross(b1 - a1, r);
+			float numer2 = Cross(b1 - a1, s);
+
+			if (denom == 0.0f)
+			{
+				// Parallel or collinear
+				return false; // handle separately if needed
+			}
+
+			float t = numer2 / denom;
+			float u = numer1 / denom;
+
+			return (t >= 0 && t <= 1 && u >= 0 && u <= 1);
+		}
 	}
 }
