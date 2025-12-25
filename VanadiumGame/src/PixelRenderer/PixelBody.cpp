@@ -2,6 +2,7 @@
 #include "StaticPixelChunk.h"
 #include "PixelCollisionComponent.h"
 #include "PixelWorld.h"
+#include "core/Util/StringHash.h"
 
 PixelBody::PixelBody(EntityRef ref)
 	: Component(ref),
@@ -92,11 +93,10 @@ void PixelBody::Draw()
 
 	m_shader.GlShader().Use();
 
-	u32 loc = m_shader.GlShader().GetUniformLocation("model");
 	glm::mat4 m = t.ModelMatrix();
-	GL_CHECK(glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(m)));
+	m_shader.SetUniformMatrix4("model"_id, m);
 
-	loc = m_shader.GlShader().GetUniformLocation("u_offset");
+	i32 loc = m_shader.GlShader().GetUniformLocation("u_offset");
 	GL_CHECK(glUniform2f(loc, -pc.GetCenterOfMass().x + 0.5, -pc.GetCenterOfMass().y +0.5));
 
 	m_vao.Bind();

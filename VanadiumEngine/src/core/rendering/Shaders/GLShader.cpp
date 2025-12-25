@@ -145,7 +145,7 @@ int GLShader::GetUniformLocation(const char* name) const
 	Use();
 	unsigned int id = GL_CHECK(glGetUniformLocation(m_shaderProgramId, name));
 	if (id == -1)
-		std::cout << "no such uniform" << std::endl;
+		LogDebug("no such uniform");
 	return id;
 }
 

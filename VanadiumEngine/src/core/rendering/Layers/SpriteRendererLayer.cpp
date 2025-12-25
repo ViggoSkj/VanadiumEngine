@@ -32,7 +32,6 @@ void SpriteRendererLayer::OnRender(double dt)
 	ComponentStore<TransformComponent>* tStore = ECS->GetComponentStore<TransformComponent>().value();
 
 	UnorderedVector<SpriteRendererComponent>& sps = spStore->GetComponents();
-
 	unsigned int m_samplerId = m_textureShader.GlShader().GetUniformLocation("u_sampler");
 	unsigned int m_modelMatrix = m_textureShader.GlShader().GetUniformLocation("u_model");
 

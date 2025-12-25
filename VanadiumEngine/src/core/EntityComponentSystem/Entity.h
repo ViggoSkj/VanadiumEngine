@@ -54,7 +54,7 @@ public:
 
 	template<typename TComponent>
 		requires std::is_base_of_v<Component, TComponent>
-	std::optional<TComponent*> GetComponent()
+	TComponent* GetComponent()
 	{
 		u32 componentTypeId = GetComponentTypeId<TComponent>();
 		u32 componentId = -1;
@@ -66,7 +66,7 @@ public:
 		}
 
 		if (componentId == -1)
-			return std::nullopt;
+			return nullptr;
 
 		return m_storeManager->GetComponent<TComponent>(componentId);
 	}
