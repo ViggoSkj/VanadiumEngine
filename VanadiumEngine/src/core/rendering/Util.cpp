@@ -1,11 +1,11 @@
 #include "pch.h"
 #include "Util.h"
 
-float* RectVerticesNoUvs(float width, float height, bool centered)
+std::array<float, 5 * 4> RectVerticesNoUvs(float width, float height, bool centered)
 {
 	if (centered)
 	{
-		return new float[4 * 5] {
+		return {
 			width / 2.0f, height / 2.0f, 1.0f,  // top right
 				width / 2.0f, -height / 2.0f, 1.0f, // bottom right
 				-width / 2.0f, -height / 2.0f, 1.0f,  // bottom left
@@ -14,7 +14,7 @@ float* RectVerticesNoUvs(float width, float height, bool centered)
 	}
 
 
-	return new float[4 * 5] {
+	return {
 		width, height, 1.0f,  // top right
 			width, 0.0f, 1.0f, // bottom right
 			0.0f, 0.0f, 1.0f,   // bottom left
@@ -22,11 +22,11 @@ float* RectVerticesNoUvs(float width, float height, bool centered)
 		};
 }
 
-float* RectVerticesUvs(float width, float height, bool centered)
+std::array<float, 5 * 4> RectVerticesUvs(float width, float height, bool centered)
 {
 	if (centered)
 	{
-		return new float[4 * 5] {
+		return {
 			width / 2.0f, height / 2.0f, 1.0f, 1.0f, 0.0f,  // top right
 				width / 2.0f, -height / 2.0f, 1.0f, 1.0f, 1.0f,  // bottom right
 				-width / 2.0f, -height / 2.0f, 1.0f, 0.0f, 1.0f,  // bottom left
@@ -35,7 +35,7 @@ float* RectVerticesUvs(float width, float height, bool centered)
 	}
 
 
-	return new float[4 * 5] {
+	return {
 		width, height, 1.0f, 1.0f, 0.0f,  // top right
 			width, 0.0f, 1.0f, 1.0f, 1.0f,  // bottom right
 			0.0f, 0.0f, 1.0f, 0.0f, 1.0f,  // bottom left
@@ -43,7 +43,7 @@ float* RectVerticesUvs(float width, float height, bool centered)
 		};
 }
 
-float* Util::RectVertices(float width, float height, bool centered, bool uvs)
+std::array<float, 5 * 4> Util::RectVertices(float width, float height, bool centered, bool uvs)
 {
 	if (uvs)
 		return RectVerticesUvs(width, height, centered);
@@ -53,7 +53,7 @@ float* Util::RectVertices(float width, float height, bool centered, bool uvs)
 
 VertexArray Util::SquareVertexArray()
 {
-	float* vertices = Util::RectVertices(1, 1, true, true);
+	std::array<float, 5 * 4> vertices = Util::RectVertices(1, 1, true, true);
 
 	unsigned int indices[] = {
 		0, 1, 3,   // first triangle
@@ -64,7 +64,7 @@ VertexArray Util::SquareVertexArray()
 	VAO.Bind();
 
 	VertexBuffer vertexBuffer;
-	vertexBuffer.SetVertecies(vertices, sizeof(float) * 4 * 5);
+	vertexBuffer.SetVertecies(vertices.data(), sizeof(float) * vertices.size());
 	vertexBuffer.Bind();
 
 	IndexBuffer indexBuffer;
@@ -81,7 +81,7 @@ VertexArray Util::SquareVertexArray()
 
 VertexArray Util::RectVertexArray(float width, float height)
 {
-	float* vertices = Util::RectVertices(width, height, true, true);
+	std::array<float, 5 * 4> vertices = Util::RectVertices(width, height, true, true);
 
 	unsigned int indices[] = {
 		0, 1, 3,   // first triangle
@@ -92,7 +92,7 @@ VertexArray Util::RectVertexArray(float width, float height)
 	VAO.Bind();
 
 	VertexBuffer vertexBuffer;
-	vertexBuffer.SetVertecies(vertices, sizeof(float) * 4 * 5);
+	vertexBuffer.SetVertecies(vertices.data(), sizeof(float) * vertices.size());
 	vertexBuffer.Bind();
 
 	IndexBuffer indexBuffer;

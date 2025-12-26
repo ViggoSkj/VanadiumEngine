@@ -4,9 +4,28 @@
 
 struct GLVertexAttribute
 {
+	GLVertexAttribute(int typeSize, int type, int count)
+		: TypeSize(typeSize)
+		, Type(type)
+		, Count(count)
+		, Normalize(GL_FALSE)
+	{
+
+	}
+
+	GLVertexAttribute(int typeSize, int type, int count, GLenum normalize)
+		: TypeSize(typeSize)
+		, Type(type)
+		, Count(count)
+		, Normalize(normalize)
+	{
+
+	}
+
 	int TypeSize;
 	int Type;
 	int Count;
+	GLenum Normalize;
 };
 
 class VertexArray
@@ -39,8 +58,7 @@ public:
 	void Bind();
 	void UnBind();
 
-	void AssignVertexAttributes(std::vector<GLVertexAttribute> attributes, int divisor = 0, bool normalize = GL_FALSE);
-
+	void AssignVertexAttributes(std::vector<GLVertexAttribute> attributes, int divisor = 0);
 private:
 	unsigned int m_vertexArrayId = 0;
 	unsigned int m_vertexAttributeCount = 0;

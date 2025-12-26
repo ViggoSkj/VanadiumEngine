@@ -5,7 +5,7 @@
 
 namespace Util
 {
-	float* RectVertices(float width, float height, bool centered, bool uvs);
+	std::array<float, 5 * 4> RectVertices(float width, float height, bool centered, bool uvs);
 	
 	VertexArray SquareVertexArray();
 	VertexArray RectVertexArray(float width, float height);

@@ -70,8 +70,91 @@ i32 Shader::GetUniformLocation(u64 uniformHash)
 
 #pragma region Set Uniforms
 
+void Shader::SetUniformBool(u64 uniformHash, bool value)
+{
+	m_shaderProgram.Use();
+	i32 location = GetUniformLocation(uniformHash);
+
+	if (location == -1)
+	{
+		LogDebug("No such uniform");
+		return;
+	}
+
+	glUniform1i(location, value);
+}
+
+void Shader::SetUniformFloat(u64 uniformHash, float value)
+{
+	m_shaderProgram.Use();
+	i32 location = GetUniformLocation(uniformHash);
+
+	if (location == -1)
+	{
+		LogDebug("No such uniform");
+		return;
+	}
+	glUniform1f(location, value);
+}
+
+void Shader::SetUniformInt(u64 uniformHash, int value)
+{
+	m_shaderProgram.Use();
+	i32 location = GetUniformLocation(uniformHash);
+
+	if (location == -1)
+	{
+		LogDebug("No such uniform");
+		return;
+	}
+	glUniform1i(location, value);
+}
+
+void Shader::SetUniformVec2(u64 uniformHash, Vector2 value)
+{
+	m_shaderProgram.Use();
+	i32 location = GetUniformLocation(uniformHash);
+
+	if (location == -1)
+	{
+		LogDebug("No such uniform");
+		return;
+	}
+
+	glUniform2fv(location, 1, glm::value_ptr(value));
+}
+
+void Shader::SetUniformVec3(u64 uniformHash, Vector3 value)
+{
+	m_shaderProgram.Use();
+	i32 location = GetUniformLocation(uniformHash);
+
+	if (location == -1)
+	{
+		LogDebug("No such uniform");
+		return;
+	}
+
+	glUniform3fv(location, 1, glm::value_ptr(value));
+}
+
+void Shader::SetUniformVec4(u64 uniformHash, Vector4 value)
+{
+	m_shaderProgram.Use();
+	i32 location = GetUniformLocation(uniformHash);
+
+	if (location == -1)
+	{
+		LogDebug("No such uniform");
+		return;
+	}
+
+	glUniform4fv(location, 1, glm::value_ptr(value));
+}
+
 void Shader::SetUniformMatrix4(u64 uniformHash, Matrix4x4 matrix)
 {
+	m_shaderProgram.Use();
 	i32 location = GetUniformLocation(uniformHash);
 
 	if (location == -1)

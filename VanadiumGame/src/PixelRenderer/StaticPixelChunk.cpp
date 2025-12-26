@@ -35,20 +35,20 @@ StaticPixelChunk::StaticPixelChunk(EntityRef ref)
 	m_xBuffer.SetVertecies(nullptr, sizeof(u8) * Size * Size, GL_DYNAMIC_DRAW);
 	m_xBuffer.Bind();
 	m_vao.AssignVertexAttributes({
-		{sizeof(u8), GL_UNSIGNED_BYTE, 1},
-		}, 1, GL_TRUE);
+		{sizeof(u8), GL_UNSIGNED_BYTE, 1, GL_TRUE},
+		}, 1); 
 
 	m_yBuffer.SetVertecies(nullptr, sizeof(u8) * Size * Size, GL_DYNAMIC_DRAW);
 	m_yBuffer.Bind();
 	m_vao.AssignVertexAttributes({
-		{sizeof(u8), GL_UNSIGNED_BYTE, 1},
-		}, 1, GL_TRUE);
+		{sizeof(u8), GL_UNSIGNED_BYTE, 1, GL_TRUE},
+		}, 1);
 
 	m_typeBuffer.SetVertecies(nullptr, sizeof(u8) * Size * Size, GL_DYNAMIC_DRAW);
 	m_typeBuffer.Bind();
 	m_vao.AssignVertexAttributes({
-		{sizeof(u8), GL_UNSIGNED_BYTE, 1},
-		}, 1, GL_TRUE);
+		{sizeof(u8), GL_UNSIGNED_BYTE, 1, GL_TRUE},
+		}, 1);
 
 }
 

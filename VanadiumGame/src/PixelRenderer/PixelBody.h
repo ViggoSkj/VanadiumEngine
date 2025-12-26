@@ -1,6 +1,7 @@
 #pragma once
 #include "Core.h"
 #include "core/Util/Array2D.h"
+#include "core/rendering/RenderSurface.h"
 #include "PixelSoa.h"
 #include "../PhysicsTest/Rigidbody.h"
 
@@ -29,11 +30,13 @@ private:
 	PixelSoa m_pixelSoa;
 
 	bool m_buffersUpToDate = true;
-	VertexBuffer m_xBuffer;
-	VertexBuffer m_yBuffer;
-	VertexBuffer m_typeBuffer;
-
 	VertexArray m_vao;
+
+	i32 m_xBuffer;
+	i32 m_yBuffer;
+	i32 m_typeBuffer;
+	RenderSurface m_surface;
+
 	Shader m_shader;
 
 	u32 m_currentCount = 0;
