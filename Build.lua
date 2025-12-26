@@ -2,7 +2,7 @@
 workspace "Vanadium"
    architecture "x64"
    configurations { "Debug", "Release", "Dist" }
-   startproject "CirclePhysics"
+   startproject "VanadiumGame"
 
    -- Workspace-wide build options for MSVC
    filter "system:windows"
@@ -17,4 +17,4 @@ include "VanadiumEngine/Build-VanadiumEngine.lua"
 
 include "VanadiumGame/Build-VanadiumGame.lua"
 
-include "CirclePhysics/Build-CirclePhysics.lua"
+-- include "CirclePhysics/Build-CirclePhysics.lua"

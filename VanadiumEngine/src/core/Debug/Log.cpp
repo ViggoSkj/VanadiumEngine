@@ -2,6 +2,8 @@
 #include "Log.h"
 #include "Application.h"
 
+using Vanadium::Application;
+
 void LogDebug(std::string message)
 {
 	Logger* logger = Application::Get().GetLogger();

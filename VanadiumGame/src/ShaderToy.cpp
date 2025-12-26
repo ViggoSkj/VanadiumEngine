@@ -2,6 +2,8 @@
 #include "core/EntityComponentSystem/EntityRef.h"
 #include "core/ShapeRenderer/ShapeRenderer.h"
 
+using Vanadium::Detail::Rendering::RenderingManager;
+
 void ShaderToySetup::Execute()
 {
 	EntityRef ref = CreateEntity();
@@ -24,7 +26,7 @@ void ShaderToySetup::Execute()
 
 ShaderToy::ShaderToy(EntityRef ref)
 	: LiveComponent(ref),
-	m_VAO(Util::RectVertexArray(1.0, 1.0)),
+	m_VAO(Util::SquareVertexArray()),
 	m_shaderPath("res/shaders/shaderToy.shader"),
 	m_shader(std::nullopt),
 	m_fileWatcher(

@@ -27,9 +27,12 @@ public:
 
 	void Bind() const;
 	void UnBind() const;
+
+	u32 Id() const { return m_id; }
+
 	void SetData(const unsigned int* data, unsigned int count);
 	inline unsigned int GetCount() const { return m_count; }
 private:
 	unsigned int m_id;
-	unsigned int m_count;	
+	unsigned int m_count;
 };

@@ -1,55 +1,26 @@
 #include "StaticPixelChunk.h"
+#include "PixelWorld.h"
+#include "core/API/Rendering.h"
+#include "core/Util/StringHash.h"
 
 StaticPixelChunk::StaticPixelChunk(EntityRef ref)
 	: Component(ref),
 	m_shader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/chunk.shader")->CreateShader().value()),
 	Position(Vector2(0, 0))
 {
-	float pixelSize = ChunkSize / (float)(Size - 1);
-	float* vertices = Util::RectVertices(pixelSize, pixelSize, false, true);
+	using namespace Vanadium::Rendering;
 
-	unsigned int indices[] = {  // note that we start from 0!
-		0, 1, 3,   // first triangle
-		1, 2, 3    // second triangle
-	};
+	m_vao = CreateVertexArray(CreateMesh(Util::SquareMeshData(PixelWorld::PixelSize)));
 
-	u32 loc = m_shader.GlShader().GetUniformLocation("u_size");
-	GL_CHECK(glUniform1f(loc, pixelSize));
+	m_vao.AddVertexBuffer({ GLVertexAttribute(GL_UNSIGNED_BYTE, 1, GL_TRUE) }, m_xBuffer, 1, 1);
+	m_vao.AddVertexBuffer({ GLVertexAttribute(GL_UNSIGNED_BYTE, 1, GL_TRUE) }, m_yBuffer, 2, 1);
+	m_vao.AddVertexBuffer({ GLVertexAttribute(GL_UNSIGNED_BYTE, 1, GL_TRUE) }, m_typeBuffer, 3, 1);
 
-	m_vao.Bind();
+	m_xBuffer.SetVertecies(nullptr, Size * Size, GL_DYNAMIC_DRAW);
+	m_yBuffer.SetVertecies(nullptr, Size * Size, GL_DYNAMIC_DRAW);
+	m_typeBuffer.SetVertecies(nullptr, Size * Size, GL_DYNAMIC_DRAW);
 
-	VertexBuffer vertexBuffer;
-	vertexBuffer.SetVertecies(vertices, sizeof(float) * 5 * 4);
-	vertexBuffer.Bind();
-
-	IndexBuffer indexBuffer;
-	indexBuffer.SetData(indices, sizeof(indices));
-	indexBuffer.Bind();
-
-	m_vao.AssignVertexAttributes({
-		{sizeof(float), GL_FLOAT, 3},
-		{sizeof(float), GL_FLOAT, 2},
-		});
-
-
-	m_xBuffer.SetVertecies(nullptr, sizeof(u8) * Size * Size, GL_DYNAMIC_DRAW);
-	m_xBuffer.Bind();
-	m_vao.AssignVertexAttributes({
-		{sizeof(u8), GL_UNSIGNED_BYTE, 1, GL_TRUE},
-		}, 1); 
-
-	m_yBuffer.SetVertecies(nullptr, sizeof(u8) * Size * Size, GL_DYNAMIC_DRAW);
-	m_yBuffer.Bind();
-	m_vao.AssignVertexAttributes({
-		{sizeof(u8), GL_UNSIGNED_BYTE, 1, GL_TRUE},
-		}, 1);
-
-	m_typeBuffer.SetVertecies(nullptr, sizeof(u8) * Size * Size, GL_DYNAMIC_DRAW);
-	m_typeBuffer.Bind();
-	m_vao.AssignVertexAttributes({
-		{sizeof(u8), GL_UNSIGNED_BYTE, 1, GL_TRUE},
-		}, 1);
-
+	m_shader.SetUniformFloat("u_size"_id, PixelWorld::PixelSize);
 }
 
 void StaticPixelChunk::AddPixel(LocalChunkPosition position, u8 type)

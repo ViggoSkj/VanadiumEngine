@@ -4,7 +4,7 @@
 
 IndexBuffer::IndexBuffer()
 {
-	GL_CHECK(glGenBuffers(1, &m_id));
+	GL_CHECK(glCreateBuffers(1, &m_id));
 	m_count = 0;
 }
 
@@ -24,8 +24,6 @@ void IndexBuffer::UnBind() const
 
 void IndexBuffer::SetData(const unsigned int* data, unsigned int count)
 {
-	Bind();
 	m_count = count;
-	GL_CHECK(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), data, GL_STATIC_DRAW));
-	UnBind();
+	GL_CHECK(glNamedBufferData(m_id, count * sizeof(unsigned int), data, GL_STATIC_DRAW));
 }

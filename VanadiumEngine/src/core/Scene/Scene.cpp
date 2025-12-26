@@ -3,6 +3,9 @@
 #include "Application.h"
 #include "core/Debug/Log.h"
 
+	
+using Vanadium::Application;
+
 Scene::Scene()
 	: m_id(s_nextSceneId++)
 {

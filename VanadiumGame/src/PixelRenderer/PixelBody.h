@@ -1,7 +1,6 @@
 #pragma once
 #include "Core.h"
 #include "core/Util/Array2D.h"
-#include "core/rendering/RenderSurface.h"
 #include "PixelSoa.h"
 #include "../PhysicsTest/Rigidbody.h"
 
@@ -32,10 +31,11 @@ private:
 	bool m_buffersUpToDate = true;
 	VertexArray m_vao;
 
-	i32 m_xBuffer;
-	i32 m_yBuffer;
-	i32 m_typeBuffer;
-	RenderSurface m_surface;
+	Vanadium::Rendering::MeshHandle m_pixelMeshHandle;
+
+	VertexBuffer m_xBuffer;
+	VertexBuffer m_yBuffer;
+	VertexBuffer m_typeBuffer;
 
 	Shader m_shader;
 

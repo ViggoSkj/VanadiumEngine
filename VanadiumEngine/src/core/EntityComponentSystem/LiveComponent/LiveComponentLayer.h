@@ -5,6 +5,8 @@
 #include "core/Application.h"
 #include "LiveComponent.h"
 
+using Vanadium::Application;
+
 template <typename TComponent>
 	requires std::is_base_of_v<LiveComponent, TComponent>
 class LiveComponentLayer : public ApplicationLayer

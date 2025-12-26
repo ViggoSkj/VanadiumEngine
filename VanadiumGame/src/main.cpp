@@ -6,7 +6,6 @@
 #include "Application.h"
 #include "Core.h"
 #include "core/ShapeRenderer/ShapeRendererLayer.h"
-#include "core/BuiltIn/Layers/GridBackgroundLayer.h"
 #include "core/Components/RectCollisionLayer.h"
 #include "core/Components/RectCollisionComponent.h"
 #include "core/Debug/Components/RectCollisionDebugLayer.h"
@@ -169,7 +168,7 @@ public:
 
 		EntityRef camera = CreateEntity();
 		camera.Get().AddComponent<TransformComponent>();
-		camera.Get().AddComponent<CameraComponent>()->Zoom = 4.0;
+		camera.Get().AddComponent<CameraComponent>()->Zoom = 2.0;
 		camera.Get().AddComponent<CameraMovementComponent>()->EnableMove = true;
 
 		EntityRef player = CreateBody({ 0, 0 }, { 5,5 });

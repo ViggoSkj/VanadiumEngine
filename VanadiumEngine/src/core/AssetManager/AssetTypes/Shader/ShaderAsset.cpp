@@ -5,6 +5,7 @@
 #include "core/Application.h"
 #include "core/Processing/Shader/IShaderCodeLoader.h"
 
+using Vanadium::Application;
 
 struct ShaderCodeAssetLoader : public IShaderCodeLoader
 {
@@ -31,7 +32,5 @@ std::optional<Shader> ShaderCodeAsset::CreateShader()
 		return std::nullopt;
 	}
 
-
-	
 	return Shader::CreateShader(processingObject.Source, created.value());
 }

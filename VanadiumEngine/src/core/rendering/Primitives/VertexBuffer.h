@@ -25,6 +25,8 @@ public:
 		return *this;
 	}
 
+	u32 Id() const { return m_vertexBufferId; }
+
 	void Bind();
 	void UnBind();
 

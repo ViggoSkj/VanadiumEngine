@@ -4,7 +4,7 @@
 
 VertexBuffer::VertexBuffer()
 {
-	GL_CHECK(glGenBuffers(1, &m_vertexBufferId));
+	GL_CHECK(glCreateBuffers(1, &m_vertexBufferId));
 }
 
 VertexBuffer::~VertexBuffer()
@@ -24,10 +24,8 @@ void VertexBuffer::UnBind()
 
 void VertexBuffer::SetVertecies(const void* data, int size, GLenum usage)
 {
-	Bind();
 	m_bufferSize = size;
-	GL_CHECK(glBufferData(GL_ARRAY_BUFFER, size, data, usage));
-	UnBind();
+	GL_CHECK(glNamedBufferData(m_vertexBufferId, size, data, usage));
 }
 
 void VertexBuffer::UpdateVertecies(const void* data, int size, int offset)

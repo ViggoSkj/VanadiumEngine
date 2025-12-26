@@ -3,35 +3,31 @@
 #include "PixelCollisionComponent.h"
 #include "PixelWorld.h"
 #include "core/Util/StringHash.h"
+#include "core/API/Rendering.h"
 
 PixelBody::PixelBody(EntityRef ref)
 	: Component(ref),
 	m_shader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/pixelbody.shader")->CreateShader().value()),
 	m_pixelSoa(),
-	m_surface(Util::RectVertices(PixelWorld::PixelSize, PixelWorld::PixelSize, true, true))
+	m_pixelMeshHandle(CreateMesh(Util::SquareMeshData(PixelWorld::PixelSize))),
+	m_currentCount(1000)
 {
 	UpdateMesh();
 }
 
 void PixelBody::UpdateMesh()
 {
-	float* vertices = ;
+	using namespace Vanadium::Rendering;
 
-	unsigned int indices[] = {  // note that we start from 0!
-		0, 1, 3,   // first triangle
-		1, 2, 3    // second triangle
-	};
+	m_vao = CreateVertexArray(m_pixelMeshHandle);
 
-	m_currentCount = 1000;
-
-
+	m_vao.AddVertexBuffer({ GLVertexAttribute(GL_INT, 1, GL_FALSE) }, m_xBuffer, 1, 1);
+	m_vao.AddVertexBuffer({ GLVertexAttribute(GL_INT, 1, GL_FALSE) }, m_yBuffer, 2, 1);
+	m_vao.AddVertexBuffer({ GLVertexAttribute(GL_UNSIGNED_BYTE, 1, GL_TRUE) }, m_typeBuffer, 3, 1);
 	
-
-	m_vao.Bind();
-
-	m_xBuffer = m_surface.CreateVertexBuffer({ {sizeof(i32), GL_INT, 1, GL_FALSE} }, 1, m_currentCount, GL_DYNAMIC_DRAW);
-	m_yBuffer = m_surface.CreateVertexBuffer({ {sizeof(i32), GL_INT, 1, GL_FALSE} }, 1, m_currentCount, GL_DYNAMIC_DRAW);
-	m_typeBuffer = m_surface.CreateVertexBuffer({ {sizeof(u8), GL_UNSIGNED_BYTE, 1, GL_TRUE}, }, 1, m_currentCount, GL_DYNAMIC_DRAW);
+	m_xBuffer.SetVertecies(nullptr, sizeof(float) * m_currentCount, GL_DYNAMIC_DRAW);
+	m_yBuffer.SetVertecies(nullptr, sizeof(float) * m_currentCount, GL_DYNAMIC_DRAW);
+	m_typeBuffer.SetVertecies(nullptr, m_currentCount, GL_DYNAMIC_DRAW);
 
 	m_shader.SetUniformFloat("u_size"_id, PixelWorld::PixelSize);
 }
@@ -39,13 +35,10 @@ void PixelBody::UpdateMesh()
 void PixelBody::ResizeBuffers(u32 count)
 {
 	m_xBuffer.SetVertecies(nullptr, sizeof(i32) * count, GL_DYNAMIC_DRAW);
-	m_xBuffer.Bind();
 
 	m_yBuffer.SetVertecies(nullptr, sizeof(i32) * count, GL_DYNAMIC_DRAW);
-	m_yBuffer.Bind();
 
 	m_typeBuffer.SetVertecies(nullptr, sizeof(u8) * count, GL_DYNAMIC_DRAW);
-	m_typeBuffer.Bind();
 	m_currentCount = count;
 }
 
@@ -70,7 +63,7 @@ void PixelBody::Draw()
 	glm::mat4 m = t.ModelMatrix();
 	m_shader.SetUniformMatrix4("model"_id, m);
 	m_shader.SetUniformVec2("u_offset"_id, Vector2(-pc.GetCenterOfMass().x + 0.5, -pc.GetCenterOfMass().y + 0.5));
-	
+
 	m_vao.Bind();
 
 	GL_CHECK(glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, m_pixelSoa.Count()));

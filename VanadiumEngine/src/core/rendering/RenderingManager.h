@@ -6,21 +6,27 @@
 #include "Shaders/UniformBinder.h"
 #include "Shaders/UniformBindingSlot.h"
 #include "Shaders/Shader.h"
+#include "Mesh/MeshStore.h"
 #include "core/Util/UnorderdVector.h"
 
-class RenderingManager
+namespace Vanadium::Detail::Rendering
 {
-public:
-	RenderingManager();
-	RenderingManager(const RenderingManager&) = delete;
+	class RenderingManager
+	{
+	public:
+		RenderingManager();
+		RenderingManager(const RenderingManager&) = delete;
 
-	UniformBindingSlot LoanUniformBindingSlot(ShaderType shaderType);
-	void ReturnuniformBindingSlot(UniformBindingSlot bindingSlot);
+		UniformBindingSlot LoanUniformBindingSlot(ShaderType shaderType);
+		void ReturnuniformBindingSlot(UniformBindingSlot bindingSlot);
 
-	UniformObject* CreateUniformObject(UniformObjectDescriptor descriptor);
-	std::optional<UniformObject*> FindUniformObject(std::string name);
+		UniformObject* CreateUniformObject(UniformObjectDescriptor descriptor);
+		std::optional<UniformObject*> FindUniformObject(std::string name);
+		
 
-private:
-	UniformBinder m_vertexUniformBinder;
-	std::vector<UniformObject> m_uniformObjects;
-};
+		MeshStore meshStore;
+	private:
+		UniformBinder m_vertexUniformBinder;
+		std::vector<UniformObject> m_uniformObjects;
+	};
+}

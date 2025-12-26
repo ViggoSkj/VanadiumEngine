@@ -2,11 +2,10 @@
 #include "Primitives/VertexArray.h"
 #include "Primitives/IndexBuffer.h"
 #include "Primitives/VertexBuffer.h"
+#include "Mesh/Mesh.h"
 
 namespace Util
 {
-	std::array<float, 5 * 4> RectVertices(float width, float height, bool centered, bool uvs);
-	
+	Vanadium::Rendering::MeshData SquareMeshData(float width);
 	VertexArray SquareVertexArray();
-	VertexArray RectVertexArray(float width, float height);
 }

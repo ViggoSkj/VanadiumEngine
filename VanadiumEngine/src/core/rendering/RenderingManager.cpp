@@ -1,50 +1,53 @@
 #include "pch.h"
 #include "RenderingManager.h"
 
-RenderingManager::RenderingManager()
-	: m_vertexUniformBinder(ShaderType::VertexShader, UniformBinder::BlockCount(GL_MAX_VERTEX_UNIFORM_BLOCKS))
+namespace Vanadium::Detail::Rendering
 {
-}
-
-UniformBindingSlot RenderingManager::LoanUniformBindingSlot(ShaderType shaderType)
-{
-	switch (shaderType)
+	RenderingManager::RenderingManager()
+		: m_vertexUniformBinder(ShaderType::VertexShader, UniformBinder::BlockCount(GL_MAX_VERTEX_UNIFORM_BLOCKS))
 	{
-	case None:
-		break;
-	case VertexShader:
-		return m_vertexUniformBinder.LoneBindingSlot();
-	case FragmentShader:
-		break;
-	default:
-		break;
 	}
-}
 
-void RenderingManager::ReturnuniformBindingSlot(UniformBindingSlot bindingSlot)
-{
-	switch (bindingSlot.ShaderType)
+	UniformBindingSlot RenderingManager::LoanUniformBindingSlot(ShaderType shaderType)
 	{
-	case VertexShader:
-		m_vertexUniformBinder.ReturnBindingSlot(bindingSlot);
-	}
-}
-
-UniformObject* RenderingManager::CreateUniformObject(UniformObjectDescriptor descriptor)
-{
-	m_uniformObjects.emplace_back(descriptor);
-	return &m_uniformObjects.back();
-}
-
-std::optional<UniformObject*> RenderingManager::FindUniformObject(std::string name)
-{
-	for (int i = 0; i < m_uniformObjects.size(); i++)
-	{
-		if (m_uniformObjects[i].GetName() == name)
+		switch (shaderType)
 		{
-			return &m_uniformObjects[i];
+		case None:
+			break;
+		case VertexShader:
+			return m_vertexUniformBinder.LoneBindingSlot();
+		case FragmentShader:
+			break;
+		default:
+			break;
 		}
 	}
 
-	return std::nullopt;
+	void RenderingManager::ReturnuniformBindingSlot(UniformBindingSlot bindingSlot)
+	{
+		switch (bindingSlot.ShaderType)
+		{
+		case VertexShader:
+			m_vertexUniformBinder.ReturnBindingSlot(bindingSlot);
+		}
+	}
+
+	UniformObject* RenderingManager::CreateUniformObject(UniformObjectDescriptor descriptor)
+	{
+		m_uniformObjects.emplace_back(descriptor);
+		return &m_uniformObjects.back();
+	}
+
+	std::optional<UniformObject*> RenderingManager::FindUniformObject(std::string name)
+	{
+		for (int i = 0; i < m_uniformObjects.size(); i++)
+		{
+			if (m_uniformObjects[i].GetName() == name)
+			{
+				return &m_uniformObjects[i];
+			}
+		}
+
+		return std::nullopt;
+	}
 }

@@ -2,21 +2,32 @@
 #include "pch.h"
 #include "Mesh.h"
 
-namespace Vanadium::Rendering
+namespace Vanadium::Detail::Rendering
 {
+	using Vanadium::Rendering::Mesh;
+	using Vanadium::Rendering::MeshData;
+	using Vanadium::Rendering::MeshHandle;
+
 	struct MeshSlot
 	{
-		Mesh mesh;
-		u32 generation;
-		bool alive;
+		std::optional<Mesh> mesh;
+		u32 generation = 0;
+		bool alive = false;
 	};
 
 	class MeshStore
 	{
 	public:
+		MeshHandle CreateMesh(MeshData data);
+		MeshHandle CreateMesh(Mesh mesh);
+
 		Mesh* GetMesh(MeshHandle handle);
+		void RemoveMesh(MeshHandle handle);
 
 	private:
+		bool IsValid(MeshHandle handle);
+
 		std::vector<MeshSlot> m_slots;
+		std::vector<size_t> m_freeSlots;
 	};
 }

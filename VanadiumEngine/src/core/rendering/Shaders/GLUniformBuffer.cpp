@@ -6,7 +6,7 @@
 GLUniformBuffer::GLUniformBuffer(unsigned int size, GLenum usage)
 	: m_size(size)
 {
-	GL_CHECK(glGenBuffers(1, &m_id));
+	GL_CHECK(glCreateBuffers(1, &m_id));
 	Bind();
 	GL_CHECK(glBufferData(GL_UNIFORM_BUFFER, m_size, NULL, usage));
 

@@ -4,6 +4,8 @@
 #include "Application.h"
 #include "core/EntityComponentSystem/EntityComponentSystem.h"
 
+using Vanadium::Application;
+
 Component::Component(EntityRef entityRef)
 	: m_id(Component::m_nextId++), m_entityRef(entityRef)
 {
