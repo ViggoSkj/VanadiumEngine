@@ -60,7 +60,7 @@ void PixelBody::Draw()
 
 	m_shader.GlShader().Use();
 
-	glm::mat4 m = t.ModelMatrix();
+	glm::mat4 m = t.ModelMatrix(z);
 	m_shader.SetUniformMatrix4("model"_id, m);
 	m_shader.SetUniformVec2("u_offset"_id, Vector2(-pc.GetCenterOfMass().x + 0.5, -pc.GetCenterOfMass().y + 0.5));
 

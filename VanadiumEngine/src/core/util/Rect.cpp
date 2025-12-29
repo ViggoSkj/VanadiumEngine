@@ -2,23 +2,23 @@
 #include "core/Math.h"
 #include "Rect.h"
 
-Vector2 Rect::Size()
+Vector2 Rect::Size() const
 {
 	// Ensure size is always positive (width/height)
 	return { End.x - Start.x, End.y - Start.y };
 }
 
-Vector2 Rect::Center()
+Vector2 Rect::Center() const 
 {
 	return Start + (End - Start) / 2.0f;
 }
 
-Rect Rect::Offset(Vector2 offset)
+Rect Rect::Offset(Vector2 offset) const
 {
 	return Rect(Start + offset, End + offset);
 }
 
-bool Rect::Overlaps(Rect other)
+bool Rect::Overlaps(Rect other) const
 {
 	if (other.Start.x > End.x)
 		return false;
@@ -33,7 +33,7 @@ bool Rect::Overlaps(Rect other)
 	return true;
 }
 
-bool Rect::Overlaps(Vector2 offset, Rect other, Vector2 offsetOther)
+bool Rect::Overlaps(Vector2 offset, Rect other, Vector2 offsetOther) const
 {
 	if (other.Start.x + offsetOther.x > End.x + offset.x)
 		return false;
@@ -48,14 +48,14 @@ bool Rect::Overlaps(Vector2 offset, Rect other, Vector2 offsetOther)
 	return true;
 }
 
-bool Rect::PointInside(Vector2 point)
+bool Rect::PointInside(Vector2 point) const
 {
 	return point.x >= Start.x && point.x <= End.x
 		&& point.y >= Start.y && point.y <= End.y;
 }
 
 
-Vector2 Rect::EscapeVector(Vector2 point)
+Vector2 Rect::EscapeVector(Vector2 point) const
 {
 	if (!PointInside(point))
 		return { 0,0 };
@@ -80,7 +80,7 @@ Vector2 Rect::EscapeVector(Vector2 point)
 	return escape;
 }
 
-Rect Rect::RotateAround(Vector2 point, float angle)
+Rect Rect::RotateAround(Vector2 point, float angle) const
 {
 	// Preserve axis-aligned semantics: keep Start as min corner and End as max corner
 	Vector2 newCenter = Math::RotatePoint(Center(), point, angle);
@@ -100,7 +100,7 @@ Rect Rect::RotateAround(Vector2 point, float angle)
 	return Rect(minCorner, maxCorner);
 }
 
-Rect Rect::Padded(Vector2 padding)
+Rect Rect::Padded(Vector2 padding) const
 {
 	return Rect(Start - padding, End + padding);
 }

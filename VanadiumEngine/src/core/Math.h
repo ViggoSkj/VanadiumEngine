@@ -15,9 +15,33 @@ namespace Math
 		return RotatePoint(point, Vector2(0.0f, 0.0f), rads);
 	}
 
+	inline float Sqrt(float v)
+	{
+		return sqrt(v);
+	}
+
+	inline float Sqr(float v)
+	{
+		return v * v;
+	}
+
 	inline float Random()
 	{
 		return static_cast<float>(rand()) / RAND_MAX;
+	}
+
+	inline float Clamp(float value, float min , float max)
+	{
+		if (value < min)
+			return min;
+		if (value > max)
+			return max;
+		return value;
+	}
+
+	inline float Length2(Vector2 v)
+	{
+		return v.x * v.x + v.y * v.y;
 	}
 
 	namespace Linear
@@ -30,6 +54,16 @@ namespace Math
 			float k = glm::dot(AB, AP)/glm::dot(AB, AB);
 
 			return a + AB * k;
+		}
+
+		inline float PointToLineDistance2(Vector2 point, Vector2 a, Vector2 b)
+		{
+			return Length2(point - ProjectOnto(point, a, b));
+		}
+
+		inline float PointToLineDistance(Vector2 point, Vector2 a, Vector2 b)
+		{
+			return sqrt(PointToLineDistance2(point, a, b));
 		}
 
 		inline float Cross(Vector2 a, Vector2 b)

@@ -25,6 +25,7 @@ public:
 
 	Vector2 LinearVelocity;
 	float AngularVelocity;
+	float z = 0;
 private:
 	PixelSoa m_pixelSoa;
 

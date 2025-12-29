@@ -11,11 +11,19 @@ public:
 
 	T Get(int x, int y)
 	{
+#ifdef DEBUG
+		if (x >= m_width || y >= m_height)
+			throw std::exception("Out of range.");
+#endif
 		return m_data[x + y * m_width];
 	}
 
 	void Set(int x, int y, T value)
 	{
+#ifdef DEBUG
+		if (x >= m_width || y >= m_height)
+			throw std::exception("Out of range.");
+#endif
 		m_data[x + y * m_width] = value;
 	}
 

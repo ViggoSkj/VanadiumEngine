@@ -25,7 +25,7 @@ public:
 		return { Up.y, -Up.x };
 	}
 
-	float RotationAngle()
+	float RotationAngle() const
 	{
 		return Math::Angle(Up) - Math::PI / 2.0;
 	}
@@ -45,4 +45,5 @@ public:
 	}
 
 	Matrix4x4 ModelMatrix();
+	Matrix4x4 ModelMatrix(float z);
 };

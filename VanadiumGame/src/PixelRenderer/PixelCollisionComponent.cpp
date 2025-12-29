@@ -42,14 +42,23 @@ void PixelCollisionComponent::RecalculateCollisionRects()
 	Vector2 StartPos = Vector2(0, 0);
 	Vector2 EndPos = Vector2(0, 0);
 
+	// TODO: Optimize
 	while (StartPos.y < pixelGrid.GetHeight())
 	{
 		while (StartPos.x < pixelGrid.GetWidth())
 		{
-			while (EndPos.x < pixelGrid.GetWidth() && pixelGrid.Get(EndPos.x + 1, EndPos.y) == true)
+			EndPos = StartPos;
+
+			if (pixelGrid.Get(StartPos.x, StartPos.y) == false)
+			{
+				StartPos.x++;
+				continue;
+			}
+
+			while (EndPos.x < pixelGrid.GetWidth() - 1 && pixelGrid.Get(EndPos.x + 1, EndPos.y) == true)
 				EndPos.x++;
 
-			while (EndPos.y < pixelGrid.GetHeight())
+			while (EndPos.y < pixelGrid.GetHeight() - 1)
 			{
 				for (i32 x = StartPos.x; x <= EndPos.x; x++)
 					if (pixelGrid.Get(x, EndPos.y) == false)
@@ -57,17 +66,19 @@ void PixelCollisionComponent::RecalculateCollisionRects()
 				EndPos.y++;
 			}
 
+			for (i32 y = StartPos.y; y <= EndPos.y; y++)
+				for (i32 x = StartPos.x; x <= EndPos.x; x++)
+					pixelGrid.Set(x, y, false);
+
 			Vector2 pixelStartPost = (StartPos - m_centerOfMass) * PixelWorld::PixelSize;
-			Vector2 pixelEndPos = (EndPos - m_centerOfMass) * PixelWorld::PixelSize;
+			Vector2 pixelEndPos = (EndPos - m_centerOfMass + Vector2(1, 1)) * PixelWorld::PixelSize;
 			Rect rect(pixelStartPost, pixelEndPos);
 			m_collisionRects.push_back(rect);
 
-			StartPos.x = EndPos.x + 1;
-			StartPos.y = EndPos.y;
+			StartPos.x++;
 		}
-
 		StartPos.x = 0;
-		StartPos.y = EndPos.y + 1;
+		StartPos.y++;
 	}
 }
 

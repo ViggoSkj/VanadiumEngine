@@ -123,7 +123,7 @@ public:
 		: SceneSetupStep(scene) {
 	}
 
-	EntityRef CreateBody(Vector2 position, Vector2 size)
+	EntityRef CreateBody(Vector2 position, Vector2 size, u8 c2)
 	{
 		EntityRef entity = CreateEntity();
 		entity.Get().AddComponent<TransformComponent>()->Position = position;
@@ -133,7 +133,29 @@ public:
 		PixelBody& body = *entity.Get().AddComponent<PixelBody>();
 		for (int y = 0; y < size.y; y++)
 			for (int x = 0; x < size.x; x++)
-				body.AddPixel(x, y, 1);
+				body.AddPixel(x, y, c2);
+
+		c.RecalculateCollisionRects();
+
+		return entity;
+	}
+
+	EntityRef CreateWeirdBody(Vector2 position, Vector2 size, u8 c2)
+	{
+		EntityRef entity = CreateEntity();
+		entity.Get().AddComponent<TransformComponent>()->Position = position;
+		entity.Get().GetComponent<TransformComponent>()->RotateRads(Math::Random() * 6.14);
+		entity.Get().AddComponent<Rigidbody>();
+		PixelCollisionComponent& c = *entity.Get().AddComponent<PixelCollisionComponent>();
+		PixelBody& body = *entity.Get().AddComponent<PixelBody>();
+		for (int y = 0; y < size.y; y++)
+		{
+			for (int x = 0; x < size.x; x++)
+			{
+				if (x >= 5 || y >= 5)
+					body.AddPixel(x, y, c2);
+			}
+		}
 
 		c.RecalculateCollisionRects();
 
@@ -157,7 +179,7 @@ public:
 		return entity;
 	}
 
-	void Execute() override
+	void ExecuteSlide()
 	{
 		Application& app = Application::Get();
 		EntityComponentSystem* ECS = app.GetECS();
@@ -171,12 +193,12 @@ public:
 		camera.Get().AddComponent<CameraComponent>()->Zoom = 2.0;
 		camera.Get().AddComponent<CameraMovementComponent>()->EnableMove = true;
 
-		EntityRef player = CreateBody({ 0, 0 }, { 5,5 });
+		EntityRef player = CreateBody({ 0, 0 }, { 5, 5 }, 1);
 		player.Get().GetComponent<Rigidbody>()->LinearVelocity = { 2.0, 0.0 };
 
 		CreateMovingBody({ 2, 0 }, { 0.0, 0.0 }, { 5, 5 });
 
-		EntityRef ground = CreateBody({ 1, -1 }, { 100, 10 });
+		EntityRef ground = CreateBody({ 1, -1 }, { 100, 10 }, 2);
 		ground.Get().GetComponent<Rigidbody>()->Static = true;
 		ground.Get().GetComponent<Rigidbody>()->Gravity = false;
 
@@ -185,6 +207,48 @@ public:
 		camera.Get().GetComponent<CameraMovementComponent>()->Target = player;
 		camera.Get().GetComponent<CameraMovementComponent>()->MoveToTarget = true;
 	}
+
+	void ExecuteStack()
+	{
+		Application& app = Application::Get();
+		EntityComponentSystem* ECS = app.GetECS();
+		AssetManager* assetMan = app.GetAssetManager();
+
+		EntityRef e = CreateEntity();
+		e.Get().AddComponent<PixelWorld>();
+
+		EntityRef camera = CreateEntity();
+		camera.Get().AddComponent<TransformComponent>();
+		camera.Get().AddComponent<CameraComponent>()->Zoom = 3.0;
+		camera.Get().AddComponent<CameraMovementComponent>()->EnableMove = true;
+
+		EntityRef player = CreateWeirdBody({ 0, 0 }, { 10, 10 }, 1);
+		player.Get().AddComponent<PlayerMovementComponent>();
+		player.Get().GetComponent<PixelBody>()->z = 0.9;
+
+
+		CreateWeirdBody({ 0.2, 0.5 }, { 10, 10 }, 1);
+		CreateWeirdBody({ 0, 1 }, { 10, 10 }, 1);
+		CreateWeirdBody({ 0, 1.5 }, { 10, 10 }, 1);
+		CreateWeirdBody({ 0, 2 }, { 10, 10 }, 1);
+		CreateWeirdBody({ 0, 2.5 }, { 10, 10 }, 1);
+		CreateWeirdBody({ 0, 3 }, { 10, 10 }, 1);
+
+		// CreateMovingBody({ 0, 0.5 }, { 0.0, 0.0 }, { 5, 5 });
+		// CreateMovingBody({ 0, 1.0 }, { 0.0, 0.0 }, { 5, 5 });
+
+		EntityRef ground = CreateBody({ 0, -1 }, { 100, 10 }, 2);
+		ground.Get().GetComponent<Rigidbody>()->Static = true;
+		ground.Get().GetComponent<Rigidbody>()->Gravity = false;
+
+		camera.Get().GetComponent<CameraMovementComponent>()->Target = player;
+		camera.Get().GetComponent<CameraMovementComponent>()->MoveToTarget = true;
+	}
+
+	void Execute() override
+	{
+		ExecuteStack();
+	}
 };
 
 
@@ -192,7 +256,6 @@ int main()
 {
 	Application app(2300, 1200);
 	app.PushLayer<RectCollisionLayer>();
-	app.PushLayer<PhysicsLayer>();
 	app.PushLayer<SpriteRendererLayer>();
 	app.PushLayer<LiveComponentLayer<CameraMovementComponent>>();
 	app.PushLayer<LiveComponentLayer<PlayerMovementComponent>>();
@@ -200,6 +263,7 @@ int main()
 	app.PushLayer<LiveComponentLayer<PixelWorld>>();
 	app.PushLayer<ShapeRendererLayer>();
 	app.PushLayer<LiveComponentLayer<ShaderToy>>();
+	app.PushLayer<PhysicsLayer>();
 
 	SceneRef testScene = app.GetSceneManager()->ConstructScene();
 	// testScene.Get().AddSetupStep<ShaderToySetup>();

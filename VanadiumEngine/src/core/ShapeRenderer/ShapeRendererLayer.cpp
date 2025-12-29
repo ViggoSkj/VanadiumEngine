@@ -41,8 +41,8 @@ void ShapeRendererLayer::OnRender(double dt)
 
 			glm::mat4 mat = glm::identity<glm::mat4>();
 			mat = glm::translate(mat, glm::vec3(Shape.Center, 0.0));
-			mat = glm::scale(mat, glm::vec3(Shape.Size, 0.0));
 			mat = glm::rotate(mat, Shape.Rotation, glm::vec3(0, 0, 1));
+			mat = glm::scale(mat, glm::vec3(Shape.Size, 0.0));
 
 			GL_CHECK(glUniformMatrix4fv(locModel, 1, GL_FALSE, glm::value_ptr(mat)));
 			GL_CHECK(glUniform4f(loc, Call.Color.r, Call.Color.g, Call.Color.b, Call.Color.a));
@@ -89,6 +89,8 @@ void ShapeRendererLayer::OnRender(double dt)
 
 		}
 		VAO.Bind();
+		GL_CHECK(glDepthFunc(GL_ALWAYS));
 		GL_CHECK(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0));
+		GL_CHECK(glDepthFunc(GL_LESS));
 	}
 }

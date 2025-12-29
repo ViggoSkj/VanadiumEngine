@@ -35,6 +35,10 @@ namespace Vanadium
 
 		GL_CHECK(glViewport(0, 0, m_window->GetWidth(), m_window->GetHeight()));
 
+		GL_CHECK(glEnable(GL_DEPTH_TEST));
+
+		GL_CHECK(glDepthFunc(GL_LESS));
+
 		GL_CHECK(glEnable(GL_BLEND));
 
 		GL_CHECK(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
@@ -100,7 +104,7 @@ namespace Vanadium
 			if (!paused)
 			{
 				GL_CHECK(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
-				GL_CHECK(glClear(GL_COLOR_BUFFER_BIT));
+				GL_CHECK(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
 				for (int i = 0; i < m_applicationLayers.size(); i++)
 				{
