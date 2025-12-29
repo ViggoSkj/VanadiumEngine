@@ -2,78 +2,81 @@
 #include "Window.h"
 #include "core/InputManager/KeyMaps.h"
 
-void glfw_window_deleter(GLFWwindow* window) {
-	if (window) {
-		glfwDestroyWindow(window);
-	}
-}
-
-Window::Window(int width, int height)
+namespace Vanadium
 {
-	m_width = width;
-	m_height = height;
+	void glfw_window_deleter(GLFWwindow* window) {
+		if (window) {
+			glfwDestroyWindow(window);
+		}
+	}
 
-	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-
-	m_window = std::shared_ptr<GLFWwindow>(glfwCreateWindow(m_width, m_height, "LearnOpenGL", NULL, NULL), glfw_window_deleter);
-	if (m_window == NULL)
+	Window::Window(int width, int height)
 	{
-		std::cout << "Failed to create GLFW window" << std::endl;
+		m_width = width;
+		m_height = height;
+
+		glfwInit();
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+		//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
+		m_window = std::shared_ptr<GLFWwindow>(glfwCreateWindow(m_width, m_height, "LearnOpenGL", NULL, NULL), glfw_window_deleter);
+		if (m_window == NULL)
+		{
+			std::cout << "Failed to create GLFW window" << std::endl;
+			glfwTerminate();
+			return;
+		}
+
+		glfwMakeContextCurrent(m_window.get());
+	}
+
+	Window::~Window()
+	{
 		glfwTerminate();
-		return;
 	}
 
-	glfwMakeContextCurrent(m_window.get());
-}
-
-Window::~Window()
-{
-	glfwTerminate();
-}
-
-bool Window::WindowSizeChanged()
-{
-	int activeWidth = 0;
-	int activeHeight = 0;
-
-	glfwGetFramebufferSize(m_window.get(), &activeWidth, &activeHeight);
-
-	if (m_width != activeWidth || m_height != activeHeight)
+	bool Window::WindowSizeChanged()
 	{
-		m_width = activeWidth;
-		m_height = activeHeight;
-		return true;
+		int activeWidth = 0;
+		int activeHeight = 0;
+
+		glfwGetFramebufferSize(m_window.get(), &activeWidth, &activeHeight);
+
+		if (m_width != activeWidth || m_height != activeHeight)
+		{
+			m_width = activeWidth;
+			m_height = activeHeight;
+			return true;
+		}
+
+		return false;
 	}
 
-	return false;
-}
-
-glm::mat4 Window::GetOrthographicProjection()
-{
-	float sw = (float)m_width / (float)m_height;
-	float sh = 1.0;
-
-	float left = -sw / 2.0f;
-	float right = sw / 2.0f;
-	float bottom = -sh / 2.0f;
-	float top = sh / 2.0f;
-
-	return glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
-}
-
-void Window::ProcessInput()
-{
-	bool states[Key::_LAST];
-
-	for (int i = 0; i < Key::_LAST; i++)
+	glm::mat4 Window::GetOrthographicProjection()
 	{
-		int glfwKey = GlfwKeyMappings[i];
-		states[i] = glfwGetKey(m_window.get(), glfwKey) == GLFW_PRESS;
+		float sw = (float)m_width / (float)m_height;
+		float sh = 1.0;
+
+		float left = -sw / 2.0f;
+		float right = sw / 2.0f;
+		float bottom = -sh / 2.0f;
+		float top = sh / 2.0f;
+
+		return glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
 	}
 
-	m_inputManager.ReportNewKeyStates(states);
+	void Window::ProcessInput()
+	{
+		bool states[Key::_LAST];
+
+		for (int i = 0; i < Key::_LAST; i++)
+		{
+			int glfwKey = GlfwKeyMappings[i];
+			states[i] = glfwGetKey(m_window.get(), glfwKey) == GLFW_PRESS;
+		}
+
+		m_inputManager.ReportNewKeyStates(states);
+	}
 }

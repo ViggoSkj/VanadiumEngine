@@ -2,7 +2,9 @@
 #include "core/Application.h"
 #include "Rendering.h"
 
-#define Get() Application& app = Application::Get(); RenderingManager& renderingManager = *app.GetRenderingManager();
+#define Get() \
+Vanadium::Application& app = Application::Get(); \
+Vanadium::Detail::Rendering::RenderingManager& renderingManager = *app.GetRenderingManager();
 
 namespace Vanadium::Rendering
 {

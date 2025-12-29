@@ -4,21 +4,24 @@
 #include "GLUniformBuffer.h"
 #include "UniformBindingSlot.h"
 
-class UniformObject
+namespace Vanadium
 {
-public:
-	UniformObject() = default;
-	UniformObject(const UniformObjectDescriptor& descriptor);
+	class UniformObject
+	{
+	public:
+		UniformObject() = default;
+		UniformObject(const UniformObjectDescriptor& descriptor);
 
-	void Bind(UniformBindingSlot bindingSlot);
+		void Bind(UniformBindingSlot bindingSlot);
 
-	const std::string_view GetName() const { return Descriptor.Name; };
+		const std::string_view GetName() const { return Descriptor.Name; };
 
-	UniformObjectDescriptor Descriptor;
-	GLUniformBuffer Buffer;
+		UniformObjectDescriptor Descriptor;
+		GLUniformBuffer Buffer;
 
-	std::optional<UniformBindingSlot> GetBindingSlot() const { return m_bindingSlot; };
+		std::optional<UniformBindingSlot> GetBindingSlot() const { return m_bindingSlot; };
 
-private:
-	std::optional<UniformBindingSlot> m_bindingSlot;
-};
+	private:
+		std::optional<UniformBindingSlot> m_bindingSlot;
+	};
+}

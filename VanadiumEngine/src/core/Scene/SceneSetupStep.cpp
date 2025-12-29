@@ -3,7 +3,10 @@
 #include "Scene.h"
 #include "core/Application.h"
 
-EntityRef SceneSetupStep::CreateEntity()
+namespace Vanadium
 {
-	return m_scene->CreateEntity();
+	EntityRef SceneSetupStep::CreateEntity()
+	{
+		return m_scene->CreateEntity();
+	}
 }

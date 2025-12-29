@@ -5,41 +5,44 @@
 #include "core/Application.h"
 #include "LiveComponent.h"
 
-using Vanadium::Application;
-
-template <typename TComponent>
-	requires std::is_base_of_v<LiveComponent, TComponent>
-class LiveComponentLayer : public ApplicationLayer
+namespace Vanadium
 {
-public:
-	void OnUpdate(double dt) override;
-	void OnRender(double dt) override;
-};
+	using Vanadium::Application;
 
-template <typename TComponent>
-	requires std::is_base_of_v<LiveComponent, TComponent>
-void LiveComponentLayer<TComponent>::OnUpdate(double dt)
-{
-	EntityComponentSystem* ECS = Application::Get().GetECS();
-	ComponentStore<TComponent>* store = ECS->GetComponentStore<TComponent>();
-	UnorderedVector<TComponent>& components = store->GetComponents();
-
-	for (int i = 0; i < components.size(); i++)
+	template <typename TComponent>
+		requires std::is_base_of_v<LiveComponent, TComponent>
+	class LiveComponentLayer : public ApplicationLayer
 	{
-		components[i].OnUpdate(dt);
+	public:
+		void OnUpdate(double dt) override;
+		void OnRender(double dt) override;
+	};
+
+	template <typename TComponent>
+		requires std::is_base_of_v<LiveComponent, TComponent>
+	void LiveComponentLayer<TComponent>::OnUpdate(double dt)
+	{
+		EntityComponentSystem* ECS = Application::Get().GetECS();
+		ComponentStore<TComponent>* store = ECS->GetComponentStore<TComponent>();
+		UnorderedVector<TComponent>& components = store->GetComponents();
+
+		for (int i = 0; i < components.size(); i++)
+		{
+			components[i].OnUpdate(dt);
+		}
 	}
-}
 
-template <typename TComponent>
-	requires std::is_base_of_v<LiveComponent, TComponent>
-void LiveComponentLayer<TComponent>::OnRender(double dt)
-{
-	EntityComponentSystem* ECS = Application::Get().GetECS();
-	ComponentStore<TComponent>* store = ECS->GetComponentStore<TComponent>();
-	UnorderedVector<TComponent>& components = store->GetComponents();
-
-	for (int i = 0; i < components.size(); i++)
+	template <typename TComponent>
+		requires std::is_base_of_v<LiveComponent, TComponent>
+	void LiveComponentLayer<TComponent>::OnRender(double dt)
 	{
-		components[i].OnRender(dt);
+		EntityComponentSystem* ECS = Application::Get().GetECS();
+		ComponentStore<TComponent>* store = ECS->GetComponentStore<TComponent>();
+		UnorderedVector<TComponent>& components = store->GetComponents();
+
+		for (int i = 0; i < components.size(); i++)
+		{
+			components[i].OnRender(dt);
+		}
 	}
 }

@@ -4,37 +4,40 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "GLCommon.h"
+#include "core/Rendering/GLCommon.h"
 #include "core/InputManager/InputManager.h"
 
-class Window
+namespace Vanadium
 {
-public:
-	Window(int width, int height);
-	Window(const Window&) = delete;
-	~Window();
+	class Window
+	{
+	public:
+		Window(int width, int height);
+		Window(const Window&) = delete;
+		~Window();
 
-	int GetWidth() const { return m_width; }
-	int GetHeight() const { return m_height; }
+		int GetWidth() const { return m_width; }
+		int GetHeight() const { return m_height; }
 
-	bool ShouldClose() const { return glfwWindowShouldClose(m_window.get()); }
-	void SwapBuffers() const { glfwSwapBuffers(m_window.get()); }
+		bool ShouldClose() const { return glfwWindowShouldClose(m_window.get()); }
+		void SwapBuffers() const { glfwSwapBuffers(m_window.get()); }
 
-	bool WindowSizeChanged();
+		bool WindowSizeChanged();
 
-	glm::mat4 GetOrthographicProjection();
+		glm::mat4 GetOrthographicProjection();
 
-	std::shared_ptr<GLFWwindow> GetGLFWwindow() { return m_window; }
-	
-	void ProcessInput();
+		std::shared_ptr<GLFWwindow> GetGLFWwindow() { return m_window; }
 
-	const InputManager& GetInputManager() const { return m_inputManager; };
+		void ProcessInput();
 
-private:
-	int m_width;
-	int m_height;
-	
-	InputManager m_inputManager;
+		const InputManager& GetInputManager() const { return m_inputManager; };
 
-	std::shared_ptr<GLFWwindow> m_window;
-};
+	private:
+		int m_width;
+		int m_height;
+
+		InputManager m_inputManager;
+
+		std::shared_ptr<GLFWwindow> m_window;
+	};
+}

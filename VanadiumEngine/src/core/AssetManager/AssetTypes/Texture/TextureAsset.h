@@ -3,9 +3,12 @@
 #include "core/AssetManager/FileAsset.h"
 #include "Texture.h"
 
-struct TextureRGBAAsset
+namespace Vanadium
 {
-public:
-	TextureRGBAAsset(std::filesystem::path path);
-	TextureRGBA Texture;
-};
+	struct TextureRGBAAsset
+	{
+	public:
+		TextureRGBAAsset(std::filesystem::path path);
+		TextureRGBA Texture;
+	};
+}

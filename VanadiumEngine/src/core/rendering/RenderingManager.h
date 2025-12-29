@@ -1,6 +1,5 @@
 #pragma once
 #include <memory>
-
 #include "Shaders/ShaderUniform.h"
 #include "Shaders/ShaderType.h"
 #include "Shaders/UniformBinder.h"

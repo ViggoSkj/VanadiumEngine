@@ -1,9 +1,13 @@
 #pragma once
 
-enum ShaderType
+namespace Vanadium
 {
-	None,
-	VertexShader,
-	FragmentShader
-};
+	enum ShaderType
+	{
+		None,
+		VertexShader,
+		FragmentShader
+	};
 
+
+}

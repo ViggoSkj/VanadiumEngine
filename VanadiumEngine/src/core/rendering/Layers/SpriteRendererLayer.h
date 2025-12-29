@@ -3,19 +3,22 @@
 #include "Rendering.h"
 #include <unordered_map>
 
-class SpriteRendererLayer : public ApplicationLayer
+namespace Vanadium
 {
-public:
-	SpriteRendererLayer();
+	class SpriteRendererLayer : public ApplicationLayer
+	{
+	public:
+		SpriteRendererLayer();
 
-	void OnUpdate(double dt) override;
-	void OnRender(double dt) override;
+		void OnUpdate(double dt) override;
+		void OnRender(double dt) override;
 
 
-private:
-	GLTexture& GetTexture(std::shared_ptr<TextureRGBAAsset> texture);
+	private:
+		GLTexture& GetTexture(std::shared_ptr<TextureRGBAAsset> texture);
 
-	VertexArray m_VAO;
-	Shader m_textureShader;
-	std::unordered_map<std::shared_ptr<TextureRGBAAsset>, GLTexture> m_readyTexture;
-};
+		VertexArray m_VAO;
+		Shader m_textureShader;
+		std::unordered_map<std::shared_ptr<TextureRGBAAsset>, GLTexture> m_readyTexture;
+	};
+}

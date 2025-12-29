@@ -1,12 +1,15 @@
 #pragma once
-#include "Shaders/ShaderType.h"
+#include "core/Rendering/Shaders/ShaderType.h"
 
-struct UniformBindingSlot
+namespace Vanadium
 {
-	UniformBindingSlot(ShaderType shaderType, unsigned int slot)
-		: ShaderType(shaderType), Slot(slot) {
-	};
+	struct UniformBindingSlot
+	{
+		UniformBindingSlot(ShaderType shaderType, unsigned int slot)
+			: ShaderType(shaderType), Slot(slot) {
+		};
 
-	unsigned int Slot;
-	ShaderType ShaderType;
-};
+		unsigned int Slot;
+		ShaderType ShaderType;
+	};
+}

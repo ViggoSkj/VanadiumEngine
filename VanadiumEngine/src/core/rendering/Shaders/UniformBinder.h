@@ -5,16 +5,19 @@
 #include "ShaderType.h"
 #include "UniformBindingSlot.h"
 
-class UniformBinder
+namespace Vanadium
 {
-public:
-	static unsigned int BlockCount(GLenum block);
+	class UniformBinder
+	{
+	public:
+		static unsigned int BlockCount(GLenum block);
 
-	UniformBinder(ShaderType shaderType, unsigned int count);
+		UniformBinder(ShaderType shaderType, unsigned int count);
 
-	UniformBindingSlot LoneBindingSlot();
-	void ReturnBindingSlot(UniformBindingSlot bindingSlot);
+		UniformBindingSlot LoneBindingSlot();
+		void ReturnBindingSlot(UniformBindingSlot bindingSlot);
 
-private:
-	std::vector<UniformBindingSlot> m_bindingSlots;
-};
+	private:
+		std::vector<UniformBindingSlot> m_bindingSlots;
+	};
+}

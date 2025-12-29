@@ -2,21 +2,24 @@
 #include "core/AssetManager/AssetTypes/Texture/Texture.h"
 #include "core/Rendering/textures/TextureConfiguration.h"
 
-class GLTexture
+namespace Vanadium
 {
-public:
-	GLTexture();
-	GLTexture(const GLTexture&) = delete;
-	~GLTexture();
+	class GLTexture
+	{
+	public:
+		GLTexture();
+		GLTexture(const GLTexture&) = delete;
+		~GLTexture();
 
-	void AssignTexture(Texture* texture);
+		void AssignTexture(Texture* texture);
 
-	void Bind();
-	void UnBind();
+		void Bind();
+		void UnBind();
 
-	void Use();
+		void Use();
 
-	TextureConfiguration Config;
-private:
-	unsigned int m_id = 0;
-};
+		TextureConfiguration Config;
+	private:
+		unsigned int m_id = 0;
+	};
+}

@@ -2,24 +2,28 @@
 #include "UniformObject.h"
 #include "ShaderDataTypeMaps.h"
 
-static unsigned int UniformVectorSize(std::vector<UniformDescriptor> vector)
+namespace Vanadium
 {
-	unsigned int total = 0;
-	for (int i = 0; i < vector.size(); i++)
+	static unsigned int UniformVectorSize(std::vector<UniformDescriptor> vector)
 	{
-		total += ShaderDataTypeToSize.at(vector[i].type);
+		unsigned int total = 0;
+		for (int i = 0; i < vector.size(); i++)
+		{
+			total += ShaderDataTypeToSize.at(vector[i].type);
+		}
+		return total;
 	}
-	return total;
-}
 
-UniformObject::UniformObject(const UniformObjectDescriptor& descriptor)
-	: Descriptor(descriptor), Buffer(UniformVectorSize(descriptor.Uniforms), GL_STREAM_DRAW)
-{
-}
+	UniformObject::UniformObject(const UniformObjectDescriptor& descriptor)
+		: Descriptor(descriptor), Buffer(UniformVectorSize(descriptor.Uniforms), GL_STREAM_DRAW)
+	{
+	}
 
-void UniformObject::Bind(UniformBindingSlot bindingSlot)
-{
-	Buffer.SetBindingPoint(bindingSlot);
-	m_bindingSlot.emplace(bindingSlot);
-}
+	void UniformObject::Bind(UniformBindingSlot bindingSlot)
+	{
+		Buffer.SetBindingPoint(bindingSlot);
+		m_bindingSlot.emplace(bindingSlot);
+	}
 
+
+}

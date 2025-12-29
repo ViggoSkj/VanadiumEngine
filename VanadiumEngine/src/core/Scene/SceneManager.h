@@ -1,43 +1,46 @@
 #pragma once
 #include <memory>
-
 #include <queue>
 #include "core/Util/UnorderdVector.h"
 
-enum SceneManagerCommandType
+namespace Vanadium
 {
-	Load,
-	Unload,
-};
+	enum SceneManagerCommandType
+	{
+		Load,
+		Unload,
+	};
 
-struct SceneManagerCommand
-{
-	SceneManagerCommandType Type;
-	unsigned int SceneId;
-};
+	struct SceneManagerCommand
+	{
+		SceneManagerCommandType Type;
+		unsigned int SceneId;
+	};
 
-class SceneRef;
-class Scene;
+	class SceneRef;
+	class Scene;
 
-class SceneManager
-{
-public:
-	SceneManager() = default;
-	SceneManager(const SceneManager&) = delete;
+	class SceneManager
+	{
+	public:
+		SceneManager() = default;
+		SceneManager(const SceneManager&) = delete;
 
-	SceneRef ConstructScene();
-	void LoadScene(unsigned int sceneId);
-	void UnloadScene(unsigned int sceneId);
+		SceneRef ConstructScene();
+		void LoadScene(unsigned int sceneId);
+		void UnloadScene(unsigned int sceneId);
+		void ReloadScene(u32 sceneId);
 
-	void FlushCommands();
+		void FlushCommands();
 
-	std::optional<Scene*> GetScene(u32 id);
+		std::optional<Scene*> GetScene(u32 id);
 
-private:
-	void LoadSceneNow(unsigned int sceneId);
-	void UnloadSceneNow(unsigned int sceneId);
+	private:
+		void LoadSceneNow(unsigned int sceneId);
+		void UnloadSceneNow(unsigned int sceneId);
 
 
-	UnorderedVector<Scene> m_scenes;
-	std::queue<SceneManagerCommand> m_commands;
-};
+		UnorderedVector<Scene> m_scenes;
+		std::queue<SceneManagerCommand> m_commands;
+	};
+}

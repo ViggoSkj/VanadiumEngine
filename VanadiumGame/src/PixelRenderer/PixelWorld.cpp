@@ -87,7 +87,6 @@ LocalChunkPosition PixelWorld::ToLocal(Vector2I position)
 
 StaticPixelChunk* PixelWorld::CreateChunk(Vector2I position)
 {
-	EntityComponentSystem* ECS = Application::Get().GetECS();
 	EntityRef e = GetEntity().GetScene().CreateEntity();
 	StaticPixelChunk* chunk = e.Get().AddComponent<StaticPixelChunk>();
 	chunk->Position = position;
@@ -129,6 +128,6 @@ std::optional<StaticPixelChunk*> PixelWorld::FindChunk(Vector2I position)
 
 UnorderedVector<StaticPixelChunk>& PixelWorld::GetChunks()
 {
-	ComponentStore<StaticPixelChunk>* store = Application::Get().GetECS()->GetComponentStore<StaticPixelChunk>();
+	Vanadium::ComponentStore<StaticPixelChunk>* store = Application::Get().GetECS()->GetComponentStore<StaticPixelChunk>();
 	return store->GetComponents();
 }

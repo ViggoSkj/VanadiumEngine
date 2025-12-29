@@ -2,7 +2,10 @@
 #include "pch.h"
 #include "SpriteRendererComponent.h"
 
-void SpriteRendererComponent::LoadRGBATexture(std::string filePath)
+namespace Vanadium
 {
-	Texture = Application::Get().GetAssetManager()->GetFileAsset<TextureRGBAAsset>(filePath);
+	void SpriteRendererComponent::LoadRGBATexture(std::string filePath)
+	{
+		Texture = Application::Get().GetAssetManager()->GetFileAsset<TextureRGBAAsset>(filePath);
+	}
 }

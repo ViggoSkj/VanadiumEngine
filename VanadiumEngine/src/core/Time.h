@@ -1,6 +1,9 @@
 #pragma once
 
-struct Time
+namespace Vanadium
 {
-	double TimeSinceStart = 0;
-};
+	struct Time
+	{
+		double TimeSinceStart = 0;
+	};
+}

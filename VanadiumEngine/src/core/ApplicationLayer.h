@@ -1,10 +1,13 @@
 #pragma once
 
-class ApplicationLayer
+namespace Vanadium
 {
-public:
-	virtual ~ApplicationLayer() = default;
+	class ApplicationLayer
+	{
+	public:
+		virtual ~ApplicationLayer() = default;
 
-	virtual void OnUpdate(double dt) {};
-	virtual void OnRender(double dt) {};
-};
+		virtual void OnUpdate(double dt) {};
+		virtual void OnRender(double dt) {};
+	};
+}

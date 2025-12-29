@@ -2,7 +2,7 @@
 #include <thread>
 #include <chrono>
 #include "Application.h"
-#include "GLCommon.h"
+#include "core/Rendering/GLCommon.h"
 #include <memory>
 #include "core/Debug/Log.h"
 #include "core/ShapeRenderer/ShapeRendererLayer.h"

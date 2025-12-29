@@ -1,13 +1,16 @@
 #include "pch.h"
 #include "ShaderDescriptorBase.h"
 
-bool ShaderBaseDescriptor::UsesUniformObject(std::string name)
+namespace Vanadium
 {
-    for (int i = 0; i < UniformObjects.size(); i++)
+    bool ShaderBaseDescriptor::UsesUniformObject(std::string name)
     {
-        if (UniformObjects[i].Name == name)
-            return true;
-    }
+        for (int i = 0; i < UniformObjects.size(); i++)
+        {
+            if (UniformObjects[i].Name == name)
+                return true;
+        }
 
-    return false;
+        return false;
+    }
 }

@@ -1,5 +1,5 @@
 #include "CameraMovementComponent.h"
-#include "Components.h"
+#include "Core.h"
 
 CameraMovementComponent::CameraMovementComponent(EntityRef ref)
 	: LiveComponent(ref)
@@ -11,7 +11,6 @@ void CameraMovementComponent::OnUpdate(double dt)
 	GLFWwindow* glfwWindow = Application::Get().GetWindow()->GetGLFWwindow().get();
 
 	const InputManager& Input = Application::Get().GetWindow()->GetInputManager();
-	EntityComponentSystem* ECS = Application::Get().GetECS();
 	SceneManager* sceneManager = Application::Get().GetSceneManager();
 
 	CameraComponent& camera = *GetComponent<CameraComponent>();
@@ -19,8 +18,7 @@ void CameraMovementComponent::OnUpdate(double dt)
 
 	if (Input.GetKey(Key::R) == KeyState::Pressed)
 	{
-		sceneManager->UnloadScene(ECS->FindEntity(GetOwnerId())->GetOwner());
-		sceneManager->LoadScene(ECS->FindEntity(GetOwnerId())->GetOwner());
+		sceneManager->ReloadScene(GetSceneRef().GetId());
 	}
 
 	if (EnableMove && !MoveToTarget)

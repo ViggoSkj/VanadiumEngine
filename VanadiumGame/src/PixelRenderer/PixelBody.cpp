@@ -3,13 +3,14 @@
 #include "PixelCollisionComponent.h"
 #include "PixelWorld.h"
 #include "core/Util/StringHash.h"
-#include "core/API/Rendering.h"
+#include "Rendering.h"
+#include "Util.h"
 
 PixelBody::PixelBody(EntityRef ref)
 	: Component(ref),
-	m_shader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/pixelbody.shader")->CreateShader().value()),
+	m_shader(Application::Get().GetAssetManager()->GetFileAsset<Vanadium::ShaderCodeAsset>("res/shaders/pixelbody.shader")->CreateShader().value()),
 	m_pixelSoa(),
-	m_pixelMeshHandle(CreateMesh(Util::SquareMeshData(PixelWorld::PixelSize))),
+	m_pixelMeshHandle(Vanadium::Rendering::CreateMesh(Vanadium::Util::SquareMeshData(PixelWorld::PixelSize))),
 	m_currentCount(1000)
 {
 	UpdateMesh();
@@ -21,9 +22,9 @@ void PixelBody::UpdateMesh()
 
 	m_vao = CreateVertexArray(m_pixelMeshHandle);
 
-	m_vao.AddVertexBuffer({ GLVertexAttribute(GL_INT, 1, GL_FALSE) }, m_xBuffer, 1, 1);
-	m_vao.AddVertexBuffer({ GLVertexAttribute(GL_INT, 1, GL_FALSE) }, m_yBuffer, 2, 1);
-	m_vao.AddVertexBuffer({ GLVertexAttribute(GL_UNSIGNED_BYTE, 1, GL_TRUE) }, m_typeBuffer, 3, 1);
+	m_vao.AddVertexBuffer({ Vanadium::GLVertexAttribute(GL_INT, 1, GL_FALSE) }, m_xBuffer, 1, 1);
+	m_vao.AddVertexBuffer({ Vanadium::GLVertexAttribute(GL_INT, 1, GL_FALSE) }, m_yBuffer, 2, 1);
+	m_vao.AddVertexBuffer({ Vanadium::GLVertexAttribute(GL_UNSIGNED_BYTE, 1, GL_TRUE) }, m_typeBuffer, 3, 1);
 	
 	m_xBuffer.SetVertecies(nullptr, sizeof(float) * m_currentCount, GL_DYNAMIC_DRAW);
 	m_yBuffer.SetVertecies(nullptr, sizeof(float) * m_currentCount, GL_DYNAMIC_DRAW);

@@ -4,8 +4,10 @@
 #include "Primitives/VertexBuffer.h"
 #include "Mesh/Mesh.h"
 
-namespace Util
+namespace Vanadium::Util
 {
-	Vanadium::Rendering::MeshData SquareMeshData(float width);
+	using Vanadium::Rendering::MeshData;
+
+	MeshData SquareMeshData(float width);
 	VertexArray SquareVertexArray();
 }

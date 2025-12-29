@@ -8,3 +8,6 @@
 #include "Components.h"
 #include "core/Debug/Log.h"
 #include "core/Math.h"
+#include "Scene.h"
+#include "AssetManager.h"
+#include "ShapeRenderer.h"

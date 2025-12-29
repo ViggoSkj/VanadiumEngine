@@ -2,31 +2,34 @@
 #include "pch.h"
 #include "Key.h"
 
-class InputManager
+namespace Vanadium
 {
-public:
-	InputManager();
-
-	void ReportNewKeyStates(bool keys[Key::_LAST]);
-
-	KeyState GetKey(Key key) const
+	class InputManager
 	{
-		return m_keyStates[key];
-	}
+	public:
+		InputManager();
 
-	bool Down(Key key) const
-	{
-		return m_keyStates[key] == KeyState::Pressed || m_keyStates[key] == KeyState::Down;
-	}
+		void ReportNewKeyStates(bool keys[Key::_LAST]);
 
-	const bool& ShiftDown = m_leftShiftDown;
-	const bool& AltDown = m_leftAltDown;
-	const bool& CtrlDown = m_leftCtrlDown;
+		KeyState GetKey(Key key) const
+		{
+			return m_keyStates[key];
+		}
 
-private:
-	bool m_leftShiftDown = false;
-	bool m_leftCtrlDown = false;
-	bool m_leftAltDown = false;
+		bool Down(Key key) const
+		{
+			return m_keyStates[key] == KeyState::Pressed || m_keyStates[key] == KeyState::Down;
+		}
 
-	KeyState m_keyStates[Key::_LAST];
-};
+		const bool& ShiftDown = m_leftShiftDown;
+		const bool& AltDown = m_leftAltDown;
+		const bool& CtrlDown = m_leftCtrlDown;
+
+	private:
+		bool m_leftShiftDown = false;
+		bool m_leftCtrlDown = false;
+		bool m_leftAltDown = false;
+
+		KeyState m_keyStates[Key::_LAST];
+	};
+}

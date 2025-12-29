@@ -8,7 +8,6 @@
 #include "core/ShapeRenderer/ShapeRendererLayer.h"
 #include "core/Components/RectCollisionLayer.h"
 #include "core/Components/RectCollisionComponent.h"
-#include "core/Debug/Components/RectCollisionDebugLayer.h"
 #include "core/Rendering/Layers/SpriteRendererLayer.h"
 #include "Platformer/Components/CameraMovementComponent.h"
 #include "Platformer/Components/PlayerMovementComponent.h"
@@ -54,7 +53,6 @@ public:
 	void Execute() override
 	{
 		Application& app = Application::Get();
-		EntityComponentSystem* ECS = app.GetECS();
 		AssetManager* assetMan = app.GetAssetManager();
 
 		EntityRef camera = CreateEntity();
@@ -144,7 +142,7 @@ public:
 	{
 		EntityRef entity = CreateEntity();
 		entity.Get().AddComponent<TransformComponent>()->Position = position;
-		entity.Get().GetComponent<TransformComponent>()->RotateRads(Math::Random() * 6.14);
+		//entity.Get().GetComponent<TransformComponent>()->RotateRads(Math::Random() * 6.14);
 		entity.Get().AddComponent<Rigidbody>();
 		PixelCollisionComponent& c = *entity.Get().AddComponent<PixelCollisionComponent>();
 		PixelBody& body = *entity.Get().AddComponent<PixelBody>();
@@ -182,7 +180,7 @@ public:
 	void ExecuteSlide()
 	{
 		Application& app = Application::Get();
-		EntityComponentSystem* ECS = app.GetECS();
+		Vanadium::EntityComponentSystem* ECS = app.GetECS();
 		AssetManager* assetMan = app.GetAssetManager();
 
 		EntityRef e = CreateEntity();
@@ -211,7 +209,7 @@ public:
 	void ExecuteStack()
 	{
 		Application& app = Application::Get();
-		EntityComponentSystem* ECS = app.GetECS();
+		Vanadium::EntityComponentSystem* ECS = app.GetECS();
 		AssetManager* assetMan = app.GetAssetManager();
 
 		EntityRef e = CreateEntity();
@@ -255,15 +253,14 @@ public:
 int main()
 {
 	Application app(2300, 1200);
-	app.PushLayer<RectCollisionLayer>();
-	app.PushLayer<SpriteRendererLayer>();
+	app.PushLayer<Vanadium::RectCollisionLayer>();
+	app.PushLayer<Vanadium::SpriteRendererLayer>();
 	app.PushLayer<LiveComponentLayer<CameraMovementComponent>>();
 	app.PushLayer<LiveComponentLayer<PlayerMovementComponent>>();
-	app.PushLayer<RectCollisionDebugLayer>();
 	app.PushLayer<LiveComponentLayer<PixelWorld>>();
-	app.PushLayer<ShapeRendererLayer>();
 	app.PushLayer<LiveComponentLayer<ShaderToy>>();
 	app.PushLayer<PhysicsLayer>();
+	app.PushLayer<Vanadium::ShapeRendererLayer>();
 
 	SceneRef testScene = app.GetSceneManager()->ConstructScene();
 	// testScene.Get().AddSetupStep<ShaderToySetup>();

@@ -12,10 +12,10 @@ PixelRenderer::PixelRenderer()
 
 void PixelRenderer::OnRender(double dt)
 {
-	EntityComponentSystem* ECS = Application::Get().GetECS();
+	Vanadium::EntityComponentSystem* ECS = Application::Get().GetECS();
 
 	// chunks
-	ComponentStore<StaticPixelChunk>* chunkStore = ECS->GetComponentStore<StaticPixelChunk>();
+	Vanadium::ComponentStore<StaticPixelChunk>* chunkStore = ECS->GetComponentStore<StaticPixelChunk>();
 	UnorderedVector<StaticPixelChunk>& chunks = chunkStore->GetComponents();
 	for (int i = 0; i < chunks.size(); i++)
 	{
@@ -24,7 +24,7 @@ void PixelRenderer::OnRender(double dt)
 	}
 
 	// bodies
-	ComponentStore<PixelBody>* bodiesStore = ECS->GetComponentStore<PixelBody>();
+	Vanadium::ComponentStore<PixelBody>* bodiesStore = ECS->GetComponentStore<PixelBody>();
 	UnorderedVector<PixelBody>& bodies = bodiesStore->GetComponents();
 	for (int i = 0; i < bodies.size(); i++)
 	{
@@ -35,9 +35,9 @@ void PixelRenderer::OnRender(double dt)
 
 void PixelRenderer::OnRenderDebug(double dt)
 {
-	EntityComponentSystem* ECS = Application::Get().GetECS();
+	Vanadium::EntityComponentSystem* ECS = Application::Get().GetECS();
 
-	ComponentStore<PixelCollisionComponent>* collidersStore = ECS->GetComponentStore<PixelCollisionComponent>();
+	Vanadium::ComponentStore<PixelCollisionComponent>* collidersStore = ECS->GetComponentStore<PixelCollisionComponent>();
 	UnorderedVector<PixelCollisionComponent>& colliders = collidersStore->GetComponents();
 	for (int i = 0; i < colliders.size(); i++)
 	{

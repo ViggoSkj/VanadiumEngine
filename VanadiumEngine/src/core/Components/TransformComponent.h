@@ -3,47 +3,28 @@
 #include "core/Math.h"
 #include "core/EntityComponentSystem/Component.h"
 
-#define DEG_TO_RAD E_PI/180.0f
-
-class TransformComponent : public Component
+namespace Vanadium
 {
-public:
-	TransformComponent(TransformComponent&& other) noexcept = default;
-	TransformComponent& operator=(TransformComponent&& other) noexcept = default;
-
-	TransformComponent(EntityRef entityRef);
-
-	Vector2 Position = Vector2(0.0, 0.0);
-	Vector2 Scale = Vector2(1.0, 1.0);
-
-	float Angle = 0.0f;
-	Vector2 Up = Vector2(1, 0);
-
-
-	Vector2 Right()
+	class TransformComponent : public Component
 	{
-		return { Up.y, -Up.x };
-	}
+	public:
+		TransformComponent(TransformComponent&& other) noexcept = default;
+		TransformComponent& operator=(TransformComponent&& other) noexcept = default;
 
-	float RotationAngle() const
-	{
-		return Math::Angle(Up) - Math::PI / 2.0;
-	}
+		TransformComponent(EntityRef entityRef);
 
-	void SetAngleDeg(float deg)
-	{
-		Angle = deg * DEG_TO_RAD;
-		Up.x = sin(deg * Angle);
-		Up.y = cos(deg * Angle);
-	}
+		Vector2 Position = Vector2(0.0, 0.0);
+		Vector2 Scale = Vector2(1.0, 1.0);
 
-	void RotateRads(float rads)
-	{
-		Angle += rads;
-		Up.x = sin(Angle);
-		Up.y = cos(Angle);
-	}
+		float Angle = 0.0f;
+		Vector2 Up = Vector2(1, 0);
 
-	Matrix4x4 ModelMatrix();
-	Matrix4x4 ModelMatrix(float z);
-};
+		Vector2 Right() const { return { Up.y, -Up.x }; }
+
+		void SetAngleDeg(float deg);
+		void RotateRads(float rads);
+
+		Matrix4x4 ModelMatrix();
+		Matrix4x4 ModelMatrix(float z);
+	};
+}

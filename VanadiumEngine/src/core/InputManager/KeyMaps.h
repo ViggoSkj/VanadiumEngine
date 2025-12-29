@@ -1,7 +1,9 @@
 #pragma once
-#include "GLCommon.h"
+#include "core/Rendering/GLCommon.h"
 
-inline const int GlfwKeyMappings[] = {
+namespace Vanadium
+{
+	inline const int GlfwKeyMappings[] = {
 	GLFW_KEY_A,
 	GLFW_KEY_B,
 	GLFW_KEY_C,
@@ -61,4 +63,5 @@ inline const int GlfwKeyMappings[] = {
 	GLFW_KEY_F10,
 	GLFW_KEY_F11,
 	GLFW_KEY_F12,
-};
+	};
+}

@@ -44,6 +44,14 @@ namespace Math
 		return v.x * v.x + v.y * v.y;
 	}
 
+	namespace Units
+	{
+		inline float DegToRad(float deg)
+		{
+			return (deg / 360.0) * 2 * E_PI;
+		}
+	}
+
 	namespace Linear
 	{
 		inline Vector2 ProjectOnto(Vector2 point, Vector2 a, Vector2 b)

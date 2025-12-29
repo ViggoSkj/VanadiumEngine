@@ -2,7 +2,10 @@
 #include "pch.h"
 #include "ShaderProcessingObject.h"
 
-struct IShaderCodeLoader
+namespace Vanadium::Detail
 {
-	virtual ShaderProcessingObject* LoadShaderCode(std::filesystem::path path) { return (ShaderProcessingObject*) 1; };
-};
+	struct IShaderCodeLoader
+	{
+		virtual ShaderProcessingObject* LoadShaderCode(std::filesystem::path path) { return (ShaderProcessingObject*)1; };
+	};
+}

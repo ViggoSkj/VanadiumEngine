@@ -2,16 +2,19 @@
 #include "core/ApplicationLayer.h"
 #include "core/Rendering/Shaders/Shader.h"
 
-class ShapeRendererLayer : public ApplicationLayer
+namespace Vanadium
 {
-public:
-	ShapeRendererLayer();
+	class ShapeRendererLayer : public ApplicationLayer
+	{
+	public:
+		ShapeRendererLayer();
 
-	void OnRender(double dt) override;
+		void OnRender(double dt) override;
 
-private:
+	private:
 
-	Shader m_squareShader;
-	Shader m_arrowShader;
-	Shader m_cirlceShader;
-};
+		Shader m_squareShader;
+		Shader m_arrowShader;
+		Shader m_cirlceShader;
+	};
+}

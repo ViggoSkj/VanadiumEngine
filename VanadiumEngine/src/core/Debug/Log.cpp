@@ -2,16 +2,19 @@
 #include "Log.h"
 #include "Application.h"
 
-using Vanadium::Application;
-
-void LogDebug(std::string message)
+namespace Vanadium
 {
-	Logger* logger = Application::Get().GetLogger();
-	logger->Log(message, LogLevel::Verbose);
-}
+	using Vanadium::Application;
 
-void LogInfo(std::string message)
-{
-	Logger* logger = Application::Get().GetLogger();
-	logger->Log(message, LogLevel::Info);
+	void LogDebug(std::string message)
+	{
+		Logger* logger = Application::Get().GetLogger();
+		logger->Log(message, LogLevel::Verbose);
+	}
+
+	void LogInfo(std::string message)
+	{
+		Logger* logger = Application::Get().GetLogger();
+		logger->Log(message, LogLevel::Info);
+	}
 }

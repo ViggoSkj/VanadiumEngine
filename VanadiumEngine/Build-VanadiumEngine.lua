@@ -11,8 +11,6 @@ project "VanadiumEngine"
    {
       "src",
       "src/Includes",
-      "src/core/AssetManager",
-      "src/core/rendering",
 
       -- libraries
       "../Vendor/includes"

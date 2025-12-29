@@ -2,26 +2,29 @@
 #include "CameraComponent.h"
 #include "TransformComponent.h"
 
-CameraComponent::CameraComponent(EntityRef ref)
-	: LiveComponent(ref)
+namespace Vanadium
 {
-	s_main = this;
-}
+	CameraComponent::CameraComponent(EntityRef ref)
+		: LiveComponent(ref)
+	{
+		s_main = this;
+	}
 
-void CameraComponent::OnUpdate(double dt)
-{
+	void CameraComponent::OnUpdate(double dt)
+	{
 
-}
+	}
 
-Camera CameraComponent::GetCamera()
-{
-	TransformComponent* t = GetComponent<TransformComponent>();
+	Camera CameraComponent::GetCamera()
+	{
+		TransformComponent* t = GetComponent<TransformComponent>();
 
-	if (t == nullptr)
-		throw "Camera Component needs access to a transform;";
+		if (t == nullptr)
+			throw "Camera Component needs access to a transform;";
 
-	Camera cam;
-	cam.Zoom = Zoom;
-	cam.Position = t->Position;
-	return cam;
+		Camera cam;
+		cam.Zoom = Zoom;
+		cam.Position = t->Position;
+		return cam;
+	}
 }

@@ -5,42 +5,46 @@
 #include "ComponentStore.h"
 #include "core/Util/UnorderdVector.h"
 #include "core/Util/IdIndexMap.h"
+#include "core/Scene/SceneRef.h"
 #include "ComponentStoreManger.h"
 #include "EntityRef.h"
 
-class Entity;
-
-class EntityComponentSystem
+namespace Vanadium
 {
-public:
-	EntityComponentSystem() = default;
-	EntityComponentSystem(const EntityComponentSystem&) = delete;
+	class Entity;
 
-	~EntityComponentSystem();
-
-	EntityRef CreateEntity(SceneRef sceneRef);
-	Entity* FindEntity(u32 id);
-	void DeleteEntity(u32 id);
-	void DeleteEntity(EntityRef ref);
-
-	void SignalOwnerDeleted(unsigned int owner);
-
-	template<typename TComponent>
-		requires std::is_base_of_v<Component, TComponent>
-	ComponentStore<TComponent>* GetComponentStore()
+	class EntityComponentSystem
 	{
-		return m_storeManager.GetComponentStore<TComponent>();
-	}
+	public:
+		EntityComponentSystem() = default;
+		EntityComponentSystem(const EntityComponentSystem&) = delete;
 
-	void Flush();
+		~EntityComponentSystem();
 
-private:
-	static unsigned int s_nextEntityId;
+		EntityRef CreateEntity(SceneRef sceneRef);
+		Entity* FindEntity(u32 id);
+		void DeleteEntity(u32 id);
+		void DeleteEntity(EntityRef ref);
 
-	UnorderedVector<Entity> m_entities;
-	IdIndexMap m_entityIdIndexMap;
+		void SignalOwnerDeleted(unsigned int owner);
 
-	ComponentStoreManager m_storeManager;
-};
+		template<typename TComponent>
+			requires std::is_base_of_v<Component, TComponent>
+		ComponentStore<TComponent>* GetComponentStore()
+		{
+			return m_storeManager.GetComponentStore<TComponent>();
+		}
 
-inline unsigned int EntityComponentSystem::s_nextEntityId = 1;
+		void Flush();
+
+	private:
+		static unsigned int s_nextEntityId;
+
+		UnorderedVector<Entity> m_entities;
+		IdIndexMap m_entityIdIndexMap;
+
+		ComponentStoreManager m_storeManager;
+	};
+
+	inline unsigned int EntityComponentSystem::s_nextEntityId = 1;
+}

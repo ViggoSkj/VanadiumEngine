@@ -1,13 +1,16 @@
 #pragma once
 #include "core/CoreTypes.h"
 
-struct CircleShape
+namespace Vanadium
 {
-	CircleShape(Vector2 center, float radius)
-		: Center(center), Radius(radius)
+	struct CircleShape
 	{
+		CircleShape(Vector2 center, float radius)
+			: Center(center), Radius(radius)
+		{
 
-	}
-	Vector2 Center;
-	float Radius;
-};
+		}
+		Vector2 Center;
+		float Radius;
+	};
+}

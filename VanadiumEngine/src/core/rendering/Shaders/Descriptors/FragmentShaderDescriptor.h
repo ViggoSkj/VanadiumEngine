@@ -1,8 +1,10 @@
 #pragma once
 #include "ShaderDescriptorBase.h"
 
-struct FragmentShaderDescriptor : public ShaderBaseDescriptor
+namespace Vanadium
 {
+	struct FragmentShaderDescriptor : public ShaderBaseDescriptor
+	{
 
-};
-
+	};
+}

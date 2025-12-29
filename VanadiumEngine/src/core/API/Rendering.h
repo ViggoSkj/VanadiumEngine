@@ -1,6 +1,6 @@
 #pragma once
-#include "Mesh/MeshStore.h"	
-#include "Primitives/VertexArray.h"
+#include "core/Rendering/Mesh/MeshStore.h"	
+#include "core/Rendering/Primitives/VertexArray.h"
 
 namespace Vanadium::Rendering
 {

@@ -1,22 +1,26 @@
 #pragma once
 #include "pch.h"
-class EntityComponentSystem;
-class Entity;
 
-class EntityRef
+namespace Vanadium
 {
-public:
-	EntityRef() = default;
-	EntityRef(u32 entityId, EntityComponentSystem* system)
-		: m_entityId(entityId), m_system(system) {
-	}
+	class EntityComponentSystem;
+	class Entity;
 
-	Entity* GetEntity();
-	Entity& Get();
+	class EntityRef
+	{
+	public:
+		EntityRef() = default;
+		EntityRef(u32 entityId, EntityComponentSystem* system)
+			: m_entityId(entityId), m_system(system) {
+		}
 
-	u32 GetId() const { return m_entityId; }
+		Entity* GetEntity();
+		Entity& Get();
 
-private:
-	u32 m_entityId;
-	EntityComponentSystem* m_system;
-};
+		u32 GetId() const { return m_entityId; }
+
+	private:
+		u32 m_entityId;
+		EntityComponentSystem* m_system;
+	};
+}

@@ -2,7 +2,7 @@
 #include <memory>
 #include "core/Rendering/Window/Window.h"
 #include "core/Rendering/RenderingManager.h"
-#include "AssetManager.h"
+#include "core/AssetManager/AssetManager.h"
 #include "core/Time.h"
 #include "core/ApplicationLayer.h"
 #include "core/EntityComponentSystem/EntityComponentSystem.h"

@@ -1,7 +1,10 @@
 #pragma once
 
+#include "core/API/Rendering.h"
+
 // Main
 #include "core/Rendering/RenderingManager.h"
+#include "core/Rendering/Util.h"
 
 // Shaders
 #include "core/Rendering/Shaders/Descriptors/ShaderDescriptorBase.h"
@@ -29,3 +32,8 @@
 #include "core/AssetManager/AssetTypes/Texture/Texture.h"
 #include "core/AssetManager/AssetTypes/Texture/TextureAsset.h"
 
+using Vanadium::VertexArray;
+using Vanadium::IndexBuffer;
+using Vanadium::VertexBuffer;
+
+using Vanadium::Shader;

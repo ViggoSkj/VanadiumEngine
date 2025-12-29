@@ -6,40 +6,43 @@
 #include "AssetTypes/Texture/Texture.h"
 #include "FileAssetStore.h"
 
-class AssetManager
+namespace Vanadium
 {
-public:
-	AssetManager() = default;
-	AssetManager(const AssetManager&) = delete;
-
-	template<typename TFileAsset>
-	FileAssetStore<TFileAsset>* GetAssetStore()
+	class AssetManager
 	{
-		for (int i = 0; i < m_assetStores.size(); i++)
+	public:
+		AssetManager() = default;
+		AssetManager(const AssetManager&) = delete;
+
+		template<typename TFileAsset>
+		FileAssetStore<TFileAsset>* GetAssetStore()
 		{
-			if (m_assetStores[i]->GetId() == GetAssetTypeId<TFileAsset>())
-				return static_cast<FileAssetStore<TFileAsset>*>(m_assetStores[i].get());
+			for (int i = 0; i < m_assetStores.size(); i++)
+			{
+				if (m_assetStores[i]->GetId() == Detail::GetAssetTypeId<TFileAsset>())
+					return static_cast<FileAssetStore<TFileAsset>*>(m_assetStores[i].get());
+			}
+			// create component store
+			std::unique_ptr<FileAssetStore<TFileAsset>> store();
+			m_assetStores.push_back(std::make_unique<FileAssetStore<TFileAsset>>());
+			return static_cast<FileAssetStore<TFileAsset>*>(m_assetStores.back().get());
 		}
-		// create component store
-		std::unique_ptr<FileAssetStore<TFileAsset>> store();
-		m_assetStores.push_back(std::make_unique<FileAssetStore<TFileAsset>>());
-		return static_cast<FileAssetStore<TFileAsset>*>(m_assetStores.back().get());
-	}
 
-	template<typename TFileAsset>
-	std::shared_ptr<TFileAsset> GetFileAsset(std::filesystem::path path)
-	{
-		FileAssetStore<TFileAsset>* store = GetAssetStore<TFileAsset>();
-		return store->GetAsset(path);
-	}
+		template<typename TFileAsset>
+		std::shared_ptr<TFileAsset> GetFileAsset(std::filesystem::path path)
+		{
+			FileAssetStore<TFileAsset>* store = GetAssetStore<TFileAsset>();
+			return store->GetAsset(path);
+		}
 
-	template<typename TFileAsset>
-	void FlushFileAsset(std::filesystem::path path)
-	{
-		FileAssetStore<TFileAsset>* store = GetAssetStore<TFileAsset>();
-		store->FlushAsset(path);
-	}
-private:
+		template<typename TFileAsset>
+		void FlushFileAsset(std::filesystem::path path)
+		{
+			FileAssetStore<TFileAsset>* store = GetAssetStore<TFileAsset>();
+			store->FlushAsset(path);
+		}
+	private:
 
-	std::vector<std::unique_ptr<IFileAssetStore>> m_assetStores;
-};
+		std::vector<std::unique_ptr<IFileAssetStore>> m_assetStores;
+	};
+}

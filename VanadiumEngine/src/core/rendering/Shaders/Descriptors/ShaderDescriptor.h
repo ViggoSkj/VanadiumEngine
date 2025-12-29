@@ -1,18 +1,21 @@
 #pragma once
-#include "GLCommon.h"
+#include "core/Rendering/GLCommon.h"
 #include "core/Processing/Shader/Tokenizer/TokenizedShader.h"
 #include "VertexShaderDescriptor.h"
 #include "FragmentShaderDescriptor.h"
 
-class ShaderDescriptor
+namespace Vanadium
 {
-public:
-	static std::optional<ShaderDescriptor> Create(TokenizedShader tokenizedShader);
+	class ShaderDescriptor
+	{
+	public:
+		static std::optional<ShaderDescriptor> Create(Vanadium::Detail::TokenizedShader tokenizedShader);
 
-	ShaderDescriptor() = default;
-	
-	const UniformObjectDescriptor& FindUniformObjectDescriptor(std::string name) const;
+		ShaderDescriptor() = default;
 
-	VertexShaderDescriptor VertexShader;
-	FragmentShaderDescriptor FragmentShader;
-};
+		const UniformObjectDescriptor& FindUniformObjectDescriptor(std::string name) const;
+
+		VertexShaderDescriptor VertexShader;
+		FragmentShaderDescriptor FragmentShader;
+	};
+}

@@ -1,14 +1,17 @@
 #pragma once
 #include "pch.h"
-#include "Shaders/Shader.h"
-#include "FileAsset.h"
+#include "core/Rendering/Shaders/Shader.h"
+#include "core/AssetManager/FileAsset.h"
 #include "core/Processing/Shader/ShaderProcessingObject.h"
 
-struct ShaderCodeAsset
+namespace Vanadium
 {
-	ShaderCodeAsset(std::filesystem::path path);
+	struct ShaderCodeAsset
+	{
+		ShaderCodeAsset(std::filesystem::path path);
 
-	ShaderProcessingObject processingObject;
+		Detail::ShaderProcessingObject processingObject;
 
-	std::optional<Shader> CreateShader();
-};
+		std::optional<Shader> CreateShader();
+	};
+}

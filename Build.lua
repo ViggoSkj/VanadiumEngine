@@ -2,7 +2,7 @@
 workspace "Vanadium"
    architecture "x64"
    configurations { "Debug", "Release", "Dist" }
-   startproject "VanadiumGame"
+   startproject "VanadiumUi"
 
    -- Workspace-wide build options for MSVC
    filter "system:windows"
@@ -16,5 +16,7 @@ OutputDir = "%{cfg.system}-%{cfg.architecture}/%{cfg.buildcfg}"
 include "VanadiumEngine/Build-VanadiumEngine.lua"
 
 include "VanadiumGame/Build-VanadiumGame.lua"
+
+include "VanadiumUi/Build-VanadiumUi.lua"
 
 -- include "CirclePhysics/Build-CirclePhysics.lua"

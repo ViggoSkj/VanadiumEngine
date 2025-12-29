@@ -1,24 +1,27 @@
 #pragma once
-#include "GLCommon.h"
+#include "core/Rendering/GLCommon.h"
 
-enum TextureFiltering
+namespace Vanadium
 {
-	Linear = GL_LINEAR,
-	Nearest = GL_NEAREST
-};
-
-enum TextureWrap
-{
-	MirroredRepeat = GL_MIRRORED_REPEAT
-};
-
-struct TextureConfiguration
-{
-	TextureFiltering Filtering;
-	TextureWrap TopWrap;
-	TextureWrap SideWrap;
-
-	TextureConfiguration(TextureFiltering filtering, TextureWrap wrap)
-		: Filtering(filtering), TopWrap(wrap), SideWrap(wrap) {
+	enum TextureFiltering
+	{
+		Linear = GL_LINEAR,
+		Nearest = GL_NEAREST
 	};
-};
+
+	enum TextureWrap
+	{
+		MirroredRepeat = GL_MIRRORED_REPEAT
+	};
+
+	struct TextureConfiguration
+	{
+		TextureFiltering Filtering;
+		TextureWrap TopWrap;
+		TextureWrap SideWrap;
+
+		TextureConfiguration(TextureFiltering filtering, TextureWrap wrap)
+			: Filtering(filtering), TopWrap(wrap), SideWrap(wrap) {
+		};
+	};
+}

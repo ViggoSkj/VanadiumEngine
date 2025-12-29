@@ -2,12 +2,10 @@
 #include "Util.h"
 #include "core/API/Rendering.h"
 
-namespace Util
+namespace Vanadium::Util
 {
-	Vanadium::Rendering::MeshData SquareMeshData(float width)
+	MeshData SquareMeshData(float width)
 	{
-		using namespace Vanadium::Rendering;
-
 		MeshData data;
 
 		data.AddVertex({ -width / 2.0,  width / 2.0, 0.0 }, { 0.0, 0.0 }); // top-left

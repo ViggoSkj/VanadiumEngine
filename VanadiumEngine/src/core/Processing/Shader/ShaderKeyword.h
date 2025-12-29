@@ -1,11 +1,14 @@
 #pragma once
 #include "pch.h"
 
-enum ShaderKeyword
+namespace Vanadium::Detail
 {
-	Layout,
-	In,
-	Uniform,
-	Location,
-	Const
-};
+	enum ShaderKeyword
+	{
+		Layout,
+		In,
+		Uniform,
+		Location,
+		Const
+	};
+}

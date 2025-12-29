@@ -2,10 +2,13 @@
 #include "ECS.h"
 #include "Rendering.h"
 
-class SpriteRendererComponent : public Component
+namespace Vanadium
 {
-public:
-	void LoadRGBATexture(std::string filePath);
+	class SpriteRendererComponent : public Component
+	{
+	public:
+		void LoadRGBATexture(std::string filePath);
 
-	std::shared_ptr<TextureRGBAAsset> Texture;
-};
+		std::shared_ptr<TextureRGBAAsset> Texture;
+	};
+}

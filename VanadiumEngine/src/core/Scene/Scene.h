@@ -1,40 +1,41 @@
 #pragma once
-
-#include <memory>
 #include "SceneSetupStep.h"
 
-class EntityRef;
-
-class Scene
+namespace Vanadium
 {
-public:
-	Scene(const Scene&) = delete;
-	Scene(Scene&&) noexcept = default;
-	Scene();
-	~Scene();
+	class EntityRef;
 
-	template<typename TStep>
-		requires std::is_base_of_v<SceneSetupStep, TStep>
-	void AddSetupStep()
+	class Scene
 	{
-		m_setupSteps.push_back(std::make_unique<TStep>(this));
-	}
+	public:
+		Scene(const Scene&) = delete;
+		Scene(Scene&&) noexcept = default;
+		Scene();
+		~Scene();
 
-	void Setup();
-	void Taredown();
+		template<typename TStep>
+			requires std::is_base_of_v<SceneSetupStep, TStep>
+		void AddSetupStep()
+		{
+			m_setupSteps.push_back(std::make_unique<TStep>(this));
+		}
 
-	EntityRef CreateEntity();
+		void Setup();
+		void Taredown();
 
-	unsigned int GetId() { return m_id; };
-	bool Loaded() { return m_loaded; };
+		EntityRef CreateEntity();
 
-private:
-	static unsigned int s_nextSceneId;
-	unsigned int m_id;
-	bool m_loaded = false;
+		unsigned int GetId() { return m_id; };
+		bool Loaded() { return m_loaded; };
 
-	std::vector<std::unique_ptr<SceneSetupStep>> m_setupSteps;
-	UnorderedVector<EntityRef> m_entities;
-};
+	private:
+		static unsigned int s_nextSceneId;
+		unsigned int m_id;
+		bool m_loaded = false;
 
-inline unsigned int Scene::s_nextSceneId = 1;
+		std::vector<std::unique_ptr<SceneSetupStep>> m_setupSteps;
+		UnorderedVector<EntityRef> m_entities;
+	};
+
+	inline unsigned int Scene::s_nextSceneId = 1;
+}

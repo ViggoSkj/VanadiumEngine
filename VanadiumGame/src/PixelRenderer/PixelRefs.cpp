@@ -11,7 +11,6 @@ bool PixelRefs::IsValid()
 	return true;
 }
 
-
 ChunkedPixelRefs::ChunkedPixelRefs(std::vector<size_t> pixels, StaticPixelChunk* chunk)
 	: m_pixels(pixels), m_chunkEntityRef(chunk->GetEntityRef()), m_chunkState(chunk->GetChunkState())
 {

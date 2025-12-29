@@ -65,12 +65,11 @@ static std::vector<u32> deleteCache;
 
 RotatableRect GlobalRect(const Rect& rect, const TransformComponent& transform)
 {
-	return RotatableRect(rect.Offset(transform.Position).RotateAround(transform.Position, transform.RotationAngle()), transform.RotationAngle());
+	return RotatableRect(rect.Offset(transform.Position).RotateAround(transform.Position, transform.Angle), transform.Angle);
 }
 
 void DebugCollisions(const std::vector<Manifold>& pairs)
 {
-	return;
 	for (i32 i = pairs.size() - 1; i >= 0; i--)
 	{
 		const Manifold& m = pairs[i];
@@ -84,7 +83,6 @@ void DebugCollisions(const std::vector<Manifold>& pairs)
 
 void DebugPixelCollisionComponent(const PixelCollisionComponent& component, const TransformComponent& transform)
 {
-	return;
 	for (const Rect& rect : component.GetCollisionRects())
 	{
 		RotatableRect rRect = GlobalRect(rect, transform);
@@ -299,7 +297,7 @@ void SATCollisionSquares(Rigidbody* rA, Rigidbody* rB, RotatableRect& A, Rotatab
 
 void PhysicsLayer::OnUpdate(double dt)
 {
-	EntityComponentSystem& ECS = *Application::Get().GetECS();
+	Vanadium::EntityComponentSystem& ECS = *Application::Get().GetECS();
 
 	UnorderedVector<Rigidbody>& rbs = ECS.GetComponentStore<Rigidbody>()->GetComponents();
 
@@ -536,7 +534,7 @@ void PhysicsLayer::OnUpdate(double dt)
 				rb.AngularVelocity = 0.0f;
 
 			rb.GetComponent<TransformComponent>()->Position += rb.LinearVelocity * (float)dt;
-			rb.GetComponent<TransformComponent>()->RotateRads(-rb.AngularVelocity * (float)dt);
+			rb.GetComponent<TransformComponent>()->RotateRads(rb.AngularVelocity * (float)dt);
 		}
 	}
 

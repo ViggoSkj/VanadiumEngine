@@ -2,15 +2,16 @@
 #include "PixelWorld.h"
 #include "core/API/Rendering.h"
 #include "core/Util/StringHash.h"
+#include "Util.h"
 
 StaticPixelChunk::StaticPixelChunk(EntityRef ref)
 	: Component(ref),
 	m_shader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/chunk.shader")->CreateShader().value()),
 	Position(Vector2(0, 0))
 {
-	using namespace Vanadium::Rendering;
+	using namespace Vanadium;
 
-	m_vao = CreateVertexArray(CreateMesh(Util::SquareMeshData(PixelWorld::PixelSize)));
+	m_vao = CreateVertexArray(CreateMesh(Vanadium::Util::SquareMeshData(PixelWorld::PixelSize)));
 
 	m_vao.AddVertexBuffer({ GLVertexAttribute(GL_UNSIGNED_BYTE, 1, GL_TRUE) }, m_xBuffer, 1, 1);
 	m_vao.AddVertexBuffer({ GLVertexAttribute(GL_UNSIGNED_BYTE, 1, GL_TRUE) }, m_yBuffer, 2, 1);

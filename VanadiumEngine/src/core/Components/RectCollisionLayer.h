@@ -1,8 +1,11 @@
 #pragma once
 #include "Application.h"
 
-class RectCollisionLayer : public ApplicationLayer
+namespace Vanadium
 {
-public:
-	void OnUpdate(double dt) override;
-};
+	class RectCollisionLayer : public ApplicationLayer
+	{
+	public:
+		void OnUpdate(double dt) override;
+	};
+}

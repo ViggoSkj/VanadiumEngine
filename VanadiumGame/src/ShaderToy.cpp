@@ -1,6 +1,5 @@
 #include "ShaderToy.h"
-#include "core/EntityComponentSystem/EntityRef.h"
-#include "core/ShapeRenderer/ShapeRenderer.h"
+#include "Core.h"
 
 using Vanadium::Detail::Rendering::RenderingManager;
 
@@ -26,7 +25,7 @@ void ShaderToySetup::Execute()
 
 ShaderToy::ShaderToy(EntityRef ref)
 	: LiveComponent(ref),
-	m_VAO(Util::SquareVertexArray()),
+	m_VAO(Vanadium::Util::SquareVertexArray()),
 	m_shaderPath("res/shaders/shaderToy.shader"),
 	m_shader(std::nullopt),
 	m_fileWatcher(
@@ -52,7 +51,7 @@ void ShaderToy::UpdateShader()
 		if (m_shader.has_value())
 		{
 			RenderingManager& renderingMan = *Application::Get().GetRenderingManager();
-			UniformObjectDescriptor matricesDescriptor = m_shader.value().Descriptor().FindUniformObjectDescriptor("Matrices");
+			Vanadium::UniformObjectDescriptor matricesDescriptor = m_shader.value().Descriptor().FindUniformObjectDescriptor("Matrices");
 			m_shader.value().ReportUniformObject(*renderingMan.FindUniformObject("Matrices").value());
 		}
 	}

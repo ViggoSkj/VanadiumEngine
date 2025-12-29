@@ -5,14 +5,15 @@
 #include <fstream>
 #include <concepts>
 
-template<typename T>
-concept LoadableAsset = requires(std::filesystem::path path) {
-	{ T(path) }; // T must be constructible from std::filesystem::path
-	{ std::declval<T>().Load(path) }; // optional if you want a Load() method
-};
 
-namespace FileAsset
+namespace Vanadium::Detail
 {
+	template<typename T>
+	concept LoadableAsset = requires(std::filesystem::path path) {
+		{ T(path) }; // T must be constructible from std::filesystem::path
+		{ std::declval<T>().Load(path) }; // optional if you want a Load() method
+	};
+
 	static std::string ReadFile(std::filesystem::path file)
 	{
 		if (!std::filesystem::exists(file))
@@ -40,20 +41,19 @@ namespace FileAsset
 
 		return result;
 	}
+
+	template<typename TAsset>
+	struct AssetTypeId
+	{
+		static u32 Id;
+	};
+
+	template<typename TAsset>
+	inline u32 AssetTypeId<TAsset>::Id;
+
+	template<typename TAsset>
+	u32 GetAssetTypeId()
+	{
+		return reinterpret_cast<u32>(&AssetTypeId<TAsset>::Id);
+	}
 };
-
-
-template<typename TAsset>
-struct AssetTypeId
-{
-	static u32 Id;
-};
-
-template<typename TAsset>
-inline u32 AssetTypeId<TAsset>::Id;
-
-template<typename TAsset>
-u32 GetAssetTypeId()
-{
-	return reinterpret_cast<u32>(&AssetTypeId<TAsset>::Id);
-}

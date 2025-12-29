@@ -1,12 +1,15 @@
 #pragma once
 #include "ShaderDataType.h"
 
-struct VertexAttribute
+namespace Vanadium
 {
-	ShaderDataType Type;
-	unsigned int Location;
+	struct VertexAttribute
+	{
+		ShaderDataType Type;
+		unsigned int Location;
 
-	VertexAttribute(ShaderDataType type, unsigned int location)
-		: Type(type), Location(location) {
+		VertexAttribute(ShaderDataType type, unsigned int location)
+			: Type(type), Location(location) {
+		};
 	};
-};
+}

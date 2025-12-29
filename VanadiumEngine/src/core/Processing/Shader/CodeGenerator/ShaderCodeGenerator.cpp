@@ -4,9 +4,8 @@
 #include "core/AssetManager/AssetManager.h"
 #include "core/AssetManager/AssetTypes/Shader/ShaderAsset.h"
 
-namespace ShaderCodeGenerator
+namespace Vanadium::Detail::ShaderCodeGenerator
 {
-
 	// TODO: make able to import multiple things
 	void ExecuteIncludes(ShaderProcessingObject& processingObject, IShaderCodeLoader* codeLoader)
 	{

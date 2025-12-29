@@ -1,5 +1,5 @@
 #pragma once
-#include "core/EntityComponentSystem/EntityRef.h"
+#include "Core.h"
 
 class StaticPixelChunk;
 

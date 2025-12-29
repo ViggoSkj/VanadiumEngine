@@ -1,23 +1,24 @@
 #pragma once
 #include "core/EntityComponentSystem/EntityComponentSystem.h"
 
-class Scene;
-class EntityRef;
-
-class SceneSetupStep
+namespace Vanadium
 {
-public:
-	SceneSetupStep(Scene* scene)
-		: m_scene(scene)
-	{ }
+	class Scene;
+	class EntityRef;
 
-	virtual ~SceneSetupStep() = default;
-	virtual void Execute() {};
-protected:
+	class SceneSetupStep
+	{
+	public:
+		SceneSetupStep(Scene* scene)
+			: m_scene(scene)
+		{
+		}
 
-	// helper function
-	EntityRef CreateEntity();
+		virtual ~SceneSetupStep() = default;
+		virtual void Execute() {};
+		EntityRef CreateEntity();
 
-private:
-	Scene* m_scene;
-};
+	private:
+		Scene* m_scene;
+	};
+}

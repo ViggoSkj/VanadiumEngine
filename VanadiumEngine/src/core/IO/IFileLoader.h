@@ -1,8 +1,10 @@
 #pragma once
 #include "pch.h"
 
-
-struct IFileLoader
+namespace Vanadium
 {
-	virtual std::string LoadFile(std::filesystem::path path) {};
-};
+	struct IFileLoader
+	{
+		virtual std::string LoadFile(std::filesystem::path path) {};
+	};
+}

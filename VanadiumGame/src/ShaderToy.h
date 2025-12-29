@@ -27,7 +27,7 @@ public:
 	float Thickness = 1.0;
 private:
 	std::filesystem::path m_shaderPath;
-	FileWatcher m_fileWatcher;
+	Vanadium::FileWatcher m_fileWatcher;
 	std::optional<Shader> m_shader;
 	VertexArray m_VAO;
 	std::shared_ptr<std::atomic<bool>> m_needUpdate;

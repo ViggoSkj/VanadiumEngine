@@ -1,11 +1,14 @@
 #pragma once
 
-#include "Shaders/ShaderDataType.h"
-#include "Shaders/ShaderUniform.h"
-#include "Shaders/VertexAttribute.h"
-#include "Shaders/Descriptors/ShaderDescriptorBase.h"
+#include "core/Rendering/Shaders/ShaderDataType.h"
+#include "core/Rendering/Shaders/ShaderUniform.h"
+#include "core/Rendering/Shaders/VertexAttribute.h"
+#include "core/Rendering/Shaders/Descriptors/ShaderDescriptorBase.h"
 
-struct VertexShaderDescriptor : public ShaderBaseDescriptor
+namespace Vanadium
 {
-	std::vector<VertexAttribute> VertexAttributes;
-};
+	struct VertexShaderDescriptor : public ShaderBaseDescriptor
+	{
+		std::vector<VertexAttribute> VertexAttributes;
+	};
+}

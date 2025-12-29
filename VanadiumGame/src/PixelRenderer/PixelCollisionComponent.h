@@ -1,5 +1,6 @@
 #pragma once
 #include "pch.h"
+#include "Core.h"
 #include "core/Util/Rect.h"
 #include "core/EntityComponentSystem/Component.h"
 

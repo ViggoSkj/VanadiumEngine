@@ -4,7 +4,7 @@
 #include "core/Processing/Shader/ShaderProcessingObject.h"
 
 
-namespace ShaderCodeGenerator
+namespace Vanadium::Detail::ShaderCodeGenerator
 {
 	void ExecuteIncludes(ShaderProcessingObject& processingObject, IShaderCodeLoader* codeLoader);
 }

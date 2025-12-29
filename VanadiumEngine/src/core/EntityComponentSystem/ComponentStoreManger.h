@@ -4,79 +4,82 @@
 #include "ComponentStore.h"
 #include "Component.h"
 
-class ComponentRef
+namespace Vanadium
 {
-public:
-	ComponentRef(unsigned int componentId, unsigned int componentTypeId)
-		: m_componentId(componentId), m_componentTypeId(componentTypeId)
+	class ComponentRef
 	{
+	public:
+		ComponentRef(unsigned int componentId, unsigned int componentTypeId)
+			: m_componentId(componentId), m_componentTypeId(componentTypeId)
+		{
 
+		};
+
+		unsigned int GetComponentId() const { return m_componentId; };
+		unsigned int GetComponentTypeId() const { return m_componentTypeId; };
+
+	private:
+		unsigned int m_componentId;
+		unsigned int m_componentTypeId;
 	};
 
-	unsigned int GetComponentId() const { return m_componentId; };
-	unsigned int GetComponentTypeId() const { return m_componentTypeId; };
-
-private:
-	unsigned int m_componentId;
-	unsigned int m_componentTypeId;
-};
-
-class ComponentStoreManager
-{
-public:
-
-	// TODO: test if it is faster to split creating and getting into two functions and having to manualy initialise component stores.
-	template <typename TComponent>
-		requires std::is_base_of_v<Component, TComponent>
-	ComponentStore<TComponent>* GetComponentStore()
+	class ComponentStoreManager
 	{
-		for (int i = 0; i < m_stores.size(); i++)
-		{
-			if (m_stores[i]->GetId() == GetComponentTypeId<TComponent>())
-				return static_cast<ComponentStore<TComponent>*>(m_stores[i].get());
-		}
-		// create component store
-		std::unique_ptr<ComponentStore<TComponent>> store();
-		m_stores.push_back(std::make_unique<ComponentStore<TComponent>>());
-		return static_cast<ComponentStore<TComponent>*>(m_stores.back().get());
-	}
+	public:
 
-	std::optional<IComponentStore*> GetComponentStore(unsigned int id)
-	{
-		for (int i = 0; i < m_stores.size(); i++)
+		// TODO: test if it is faster to split creating and getting into two functions and having to manualy initialise component stores.
+		template <typename TComponent>
+			requires std::is_base_of_v<Component, TComponent>
+		ComponentStore<TComponent>* GetComponentStore()
 		{
-			if (m_stores[i]->GetId() == id)
-				return m_stores[i].get();
+			for (int i = 0; i < m_stores.size(); i++)
+			{
+				if (m_stores[i]->GetId() == GetComponentTypeId<TComponent>())
+					return static_cast<ComponentStore<TComponent>*>(m_stores[i].get());
+			}
+			// create component store
+			std::unique_ptr<ComponentStore<TComponent>> store();
+			m_stores.push_back(std::make_unique<ComponentStore<TComponent>>());
+			return static_cast<ComponentStore<TComponent>*>(m_stores.back().get());
 		}
 
-		return std::nullopt;
-	}
-
-	template <typename TComponent>
-		requires std::is_base_of_v<Component, TComponent>
-	ComponentRef AddComponent(EntityRef ref)
-	{
-		ComponentStore<TComponent>* componentStore = GetComponentStore<TComponent>();
-		unsigned int componentId = componentStore->CreateInstance(ref);
-		return ComponentRef(componentId, componentStore->GetId());
-	}
-
-	template<typename TComponent>
-		requires std::is_base_of_v<Component, TComponent>
-	TComponent* GetComponent(unsigned int componentId)
-	{
-		ComponentStore<TComponent>* store = GetComponentStore<TComponent>();
-		return store->GetComponent(componentId);
-	}
-
-	void Flush()
-	{
-		for (int i = 0; i < m_stores.size(); i++)
+		std::optional<IComponentStore*> GetComponentStore(unsigned int id)
 		{
-			m_stores[i]->Flush();
-		}
-	}
+			for (int i = 0; i < m_stores.size(); i++)
+			{
+				if (m_stores[i]->GetId() == id)
+					return m_stores[i].get();
+			}
 
-private:
-	std::vector<std::unique_ptr<IComponentStore>> m_stores;
-};
+			return std::nullopt;
+		}
+
+		template <typename TComponent>
+			requires std::is_base_of_v<Component, TComponent>
+		ComponentRef AddComponent(EntityRef ref)
+		{
+			ComponentStore<TComponent>* componentStore = GetComponentStore<TComponent>();
+			unsigned int componentId = componentStore->CreateInstance(ref);
+			return ComponentRef(componentId, componentStore->GetId());
+		}
+
+		template<typename TComponent>
+			requires std::is_base_of_v<Component, TComponent>
+		TComponent* GetComponent(unsigned int componentId)
+		{
+			ComponentStore<TComponent>* store = GetComponentStore<TComponent>();
+			return store->GetComponent(componentId);
+		}
+
+		void Flush()
+		{
+			for (int i = 0; i < m_stores.size(); i++)
+			{
+				m_stores[i]->Flush();
+			}
+		}
+
+	private:
+		std::vector<std::unique_ptr<IComponentStore>> m_stores;
+	};
+}

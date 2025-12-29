@@ -1,11 +1,14 @@
 #pragma once
 
-#include "Shaders/ShaderUniform.h"
+#include "core/Rendering/Shaders/ShaderUniform.h"
 
-struct ShaderBaseDescriptor
+namespace Vanadium
 {
-	bool UsesUniformObject(std::string name);
+	struct ShaderBaseDescriptor
+	{
+		bool UsesUniformObject(std::string name);
 
-	std::vector<UniformObjectDescriptor> UniformObjects;
-	std::vector<UniformDescriptor> Uniforms;
-};
+		std::vector<UniformObjectDescriptor> UniformObjects;
+		std::vector<UniformDescriptor> Uniforms;
+	};
+}
