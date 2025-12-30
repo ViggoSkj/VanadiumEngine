@@ -2,7 +2,7 @@
 
 int main()
 {
-	Vanadium::Application app(1000, 1000);
+	Application app(Vanadium::WindowOptions(1600, 1000, 3));
 
 	app.Run();
 

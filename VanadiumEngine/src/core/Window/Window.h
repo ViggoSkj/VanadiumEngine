@@ -1,11 +1,11 @@
 #pragma once
 #include <iostream>
 #include <memory>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 #include "core/Rendering/GLCommon.h"
 #include "core/InputManager/InputManager.h"
+#include "WindowOptions.h"
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace Vanadium
 {
@@ -13,6 +13,7 @@ namespace Vanadium
 	{
 	public:
 		Window(int width, int height);
+		Window(WindowOptions options);
 		Window(const Window&) = delete;
 		~Window();
 
@@ -21,6 +22,9 @@ namespace Vanadium
 
 		bool ShouldClose() const { return glfwWindowShouldClose(m_window.get()); }
 		void SwapBuffers() const { glfwSwapBuffers(m_window.get()); }
+
+		void SetPosition(WindowMonitorPosition position);
+		void SetPosition(Vector2I position);
 
 		bool WindowSizeChanged();
 

@@ -15,10 +15,15 @@ namespace Vanadium
 		: Application(1600, 1000) {
 	};
 
-	Application::Application(unsigned int width, unsigned int height)
+	Application::Application(u32 width, u32 height)
+		: Application(WindowOptions(width, height, 0))
 	{
-		m_window = std::make_unique<Window>(width, height);
 
+	}
+
+	Application::Application(WindowOptions windowOptions)
+	{
+		m_window = std::make_unique<Window>(windowOptions);
 
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		{

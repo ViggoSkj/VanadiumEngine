@@ -1,6 +1,6 @@
 #pragma once
 #include <memory>
-#include "core/Rendering/Window/Window.h"
+#include "core/Window/Window.h"
 #include "core/Rendering/RenderingManager.h"
 #include "core/AssetManager/AssetManager.h"
 #include "core/Time.h"
@@ -19,6 +19,7 @@ namespace Vanadium
 	public:
 		Application();
 		Application(unsigned int width, unsigned int height);
+		Application(WindowOptions windowOptions);
 		Application(const Application&) = delete;
 		~Application();
 
