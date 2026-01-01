@@ -6,6 +6,7 @@
 #include "Shaders/Shader.h"
 #include "Mesh/MeshStore.h"
 #include "core/Util/UnorderdVector.h"
+#include "core/HandleStore.h"
 
 namespace Vanadium::Detail::Rendering
 {
@@ -17,12 +18,13 @@ namespace Vanadium::Detail::Rendering
 
 		UniformBindingVoucher ClaimBindingSlot();
 
-		UniformObject* CreateUniformObject(UniformObjectDescriptor descriptor);
+		Handle<UniformObject> CreateUniformObject(UniformObjectDescriptor& descriptor);
+		UniformObject* GetUniformObject(Handle<UniformObject> handle);
 		std::optional<UniformObject*> FindUniformObject(std::string name);
 
 		MeshStore meshStore;
 	private:
 		UniformBinder m_uniformBinder;
-		std::vector<UniformObject> m_uniformObjects;
+		HandleStore<UniformObject> m_uniformObjects;
 	};
 }

@@ -18,9 +18,10 @@ namespace Vanadium
 		RenderingManager& man = *Application::Get().GetRenderingManager();
 		UniformBindingVoucher bindingVoucher = man.ClaimBindingSlot();
 		UniformObjectDescriptor matricesDescriptor = m_textureShader.Descriptor().FindUniformObjectDescriptor("Matrices");
-		UniformObject& m_matrices = *man.CreateUniformObject(matricesDescriptor);
-		m_matrices.Bind(std::move(bindingVoucher));
-		m_textureShader.TryUseUniformObject(m_matrices, ShaderType::VertexShader);
+		Handle<UniformObject> handle = man.CreateUniformObject(matricesDescriptor);
+		UniformObject* object = man.GetUniformObject(handle);
+		object->Bind(std::move(bindingVoucher));
+		m_textureShader.TryUseUniformObject(*object, ShaderType::VertexShader);
 	}
 
 	void SpriteRendererLayer::OnUpdate(double dt)

@@ -7,9 +7,10 @@ UiRenderingLayer::UiRenderingLayer()
 	Vanadium::RenderingManager& man = *Application::Get().GetRenderingManager();
 	Vanadium::UniformBindingVoucher bindingSlot = man.ClaimBindingSlot();
 	Vanadium::UniformObjectDescriptor matricesDescriptor = m_shader.Descriptor().FindUniformObjectDescriptor("Matrices");
-	Vanadium::UniformObject& m_matrices = *man.CreateUniformObject(matricesDescriptor);
-	m_matrices.Bind(std::move(bindingSlot));
-	m_shader.TryUseUniformObject(m_matrices, Vanadium::ShaderType::VertexShader);
+	Vanadium::Handle<Vanadium::UniformObject> m_matricesUniformObjectHandle = man.CreateUniformObject(matricesDescriptor);
+	Vanadium::UniformObject* object = man.GetUniformObject(m_matricesUniformObjectHandle);
+	object->Bind(std::move(bindingSlot));
+	m_shader.TryUseUniformObject(*object, Vanadium::ShaderType::VertexShader);
 }
 
 void UiRenderingLayer::OnRender(double dt)

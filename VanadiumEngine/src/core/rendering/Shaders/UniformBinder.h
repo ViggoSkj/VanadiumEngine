@@ -13,6 +13,7 @@ namespace Vanadium
 		friend UniformBindingVoucher::~UniformBindingVoucher();
 
 		UniformBinder();
+		~UniformBinder();
 
 		UniformBindingVoucher ClaimBindingSlot();
 	private:

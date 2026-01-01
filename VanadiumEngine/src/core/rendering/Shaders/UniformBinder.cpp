@@ -15,6 +15,14 @@ namespace Vanadium
 		}
 	}
 
+	UniformBinder::~UniformBinder()
+	{
+		for (i32 i = 0; i < m_bindingSlots.size(); i++)
+		{
+			m_bindingSlots[i].m_binder = nullptr;
+		}
+	}
+
 	UniformBindingVoucher UniformBinder::ClaimBindingSlot()
 	{
 		UniformBindingVoucher v = std::move(m_bindingSlots.back());

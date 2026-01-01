@@ -12,22 +12,25 @@ namespace Vanadium::Detail::Rendering
 		return m_uniformBinder.ClaimBindingSlot();
 	}
 
-	UniformObject* RenderingManager::CreateUniformObject(UniformObjectDescriptor descriptor)
+	Handle<UniformObject>RenderingManager::CreateUniformObject(UniformObjectDescriptor& descriptor)
 	{
-		m_uniformObjects.emplace_back(descriptor);
-		return &m_uniformObjects.back();
+		return m_uniformObjects.Create(descriptor);
+	}
+
+	UniformObject* RenderingManager::GetUniformObject(Handle<UniformObject> handle)
+	{
+		return m_uniformObjects.Get(handle);
 	}
 
 	std::optional<UniformObject*> RenderingManager::FindUniformObject(std::string name)
 	{
-		for (int i = 0; i < m_uniformObjects.size(); i++)
+		for (UniformObject& object : m_uniformObjects)
 		{
-			if (m_uniformObjects[i].GetName() == name)
+			if (object.GetName() == name)
 			{
-				return &m_uniformObjects[i];
+				return &object;
 			}
 		}
-
 		return std::nullopt;
 	}
 }
