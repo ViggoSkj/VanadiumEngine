@@ -42,9 +42,9 @@ namespace Vanadium
 			for (int j = i + 1; j < colliders.size(); j++)
 			{
 				RectCollisionComponent* a = &colliders[i];
-				TransformComponent* at = a->GetComponent<TransformComponent>();
+				TransformComponent* at = a->GetEntity().GetComponent<TransformComponent>();
 				RectCollisionComponent* b = &colliders[j];
-				TransformComponent* bt = b->GetComponent<TransformComponent>();
+				TransformComponent* bt = b->GetEntity().GetComponent<TransformComponent>();
 
 				Vector2 a1 = a->LocalToWorld(a->Rect.Start);
 				Vector2 a2 = a->LocalToWorld({ a->Rect.Start.x , a->Rect.End.y });

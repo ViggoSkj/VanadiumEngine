@@ -4,24 +4,40 @@
 #include "core/Util/IdIndexMap.h"
 #include "core/Util/UnorderdVector.h"
 #include "IComponentStore.h"
+#include "ComponentHandle.h"
 
 namespace Vanadium
 {
-	class Component;
+	template<typename TComponent>
+	struct ComponentTypeId
+	{
+		static unsigned int Id;
+	};
+
+	template<typename TComponent>
+	inline uint32_t ComponentTypeId<TComponent>::Id;
+
+	template<typename TComponent>
+	unsigned int GetComponentTypeId()
+	{
+		return reinterpret_cast<unsigned int>(&ComponentTypeId<TComponent>::Id);
+	}
 
 	template <typename TComponent>
-		requires std::is_base_of_v<Component, TComponent>
 	class ComponentStore : public IComponentStore
 	{
 	public:
 		ComponentStore()
-			: IComponentStore(GetComponentTypeId<TComponent>()) {
+			: IComponentStore(GetComponentTypeId<TComponent>())
+		{
+
 		}
+
 		ComponentStore(const ComponentStore<TComponent>&) = delete;
 
-		u32 CreateInstance(EntityRef ref)
+		u32 CreateInstance(EntityRef ref, u32 id)
 		{
-			m_components.emplace_back(ref);
+			m_components.push_back(ComponentData(id, ref));
 			m_idIndexMap.InsertLookup(m_components.back().GetId(), m_components.size() - 1);
 			return m_components.back().GetId();
 		}
@@ -45,18 +61,12 @@ namespace Vanadium
 			m_components.remove(componentIndex);
 		}
 
-		void MarkOwnerRemoved(unsigned int ownerId)
-		{
-			// TODO: Implement
-		}
-
 		void Flush() override
 		{
 			m_idIndexMap.Flush();
 		}
 
 		UnorderedVector<TComponent>& GetComponents() { return m_components; };
-
 	private:
 		struct ComponentLookup
 		{

@@ -5,7 +5,7 @@
 
 namespace Vanadium
 {
-	class CameraComponent : public LiveComponent
+	class CameraComponent : public LiveComponent<CameraComponent>
 	{
 	public:
 		static std::optional<CameraComponent*> GetMain()
@@ -15,8 +15,6 @@ namespace Vanadium
 
 			return s_main;
 		};
-
-		CameraComponent(EntityRef ref);
 
 		void OnUpdate(double dt) override;
 

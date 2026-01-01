@@ -5,11 +5,6 @@
 
 namespace Vanadium
 {
-	TransformComponent::TransformComponent(EntityRef entityRef)
-		: Component(entityRef)
-	{
-	}
-
 	void TransformComponent::SetAngleDeg(float deg)
 	{
 		Angle = Math::Units::DegToRad(deg);

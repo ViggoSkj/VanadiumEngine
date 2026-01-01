@@ -4,12 +4,6 @@
 
 namespace Vanadium
 {
-	CameraComponent::CameraComponent(EntityRef ref)
-		: LiveComponent(ref)
-	{
-		s_main = this;
-	}
-
 	void CameraComponent::OnUpdate(double dt)
 	{
 
@@ -17,7 +11,7 @@ namespace Vanadium
 
 	Camera CameraComponent::GetCamera()
 	{
-		TransformComponent* t = GetComponent<TransformComponent>();
+		TransformComponent* t = GetEntity().GetComponent<TransformComponent>();
 
 		if (t == nullptr)
 			throw "Camera Component needs access to a transform;";

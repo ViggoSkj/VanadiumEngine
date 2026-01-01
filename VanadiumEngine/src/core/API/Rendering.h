@@ -6,8 +6,16 @@ namespace Vanadium::Rendering
 {
 	constexpr std::vector<GLVertexAttribute> MeshDataAttributes();
 
+#pragma region Mesh
+
 	MeshHandle CreateMesh(MeshData mesh);
 	Mesh* GetMesh(MeshHandle handle);
 
+#pragma endregion
+
+#pragma region Vertex Array
+
 	VertexArray CreateVertexArray(MeshHandle handle);
+#pragma endregion
+
 }

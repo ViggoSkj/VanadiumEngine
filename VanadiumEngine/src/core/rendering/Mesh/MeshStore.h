@@ -24,8 +24,8 @@ namespace Vanadium::Detail::Rendering
 		Mesh* GetMesh(MeshHandle handle);
 		void RemoveMesh(MeshHandle handle);
 
-	private:
 		bool IsValid(MeshHandle handle);
+	private:
 
 		std::vector<MeshSlot> m_slots;
 		std::vector<size_t> m_freeSlots;

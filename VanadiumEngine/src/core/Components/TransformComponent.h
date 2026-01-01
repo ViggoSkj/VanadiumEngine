@@ -8,10 +8,7 @@ namespace Vanadium
 	class TransformComponent : public Component
 	{
 	public:
-		TransformComponent(TransformComponent&& other) noexcept = default;
-		TransformComponent& operator=(TransformComponent&& other) noexcept = default;
-
-		TransformComponent(EntityRef entityRef);
+		using Component::Component;
 
 		Vector2 Position = Vector2(0.0, 0.0);
 		Vector2 Scale = Vector2(1.0, 1.0);

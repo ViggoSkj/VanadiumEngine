@@ -8,6 +8,7 @@
 #include "core/EntityComponentSystem/LiveComponent/LiveComponent.h"
 #include "core/EntityComponentSystem/LiveComponent/LiveComponentLayer.h"
 
+
 using Vanadium::Component;
 using Vanadium::LiveComponent;
 using Vanadium::EntityRef;

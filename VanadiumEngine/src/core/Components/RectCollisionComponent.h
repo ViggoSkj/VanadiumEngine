@@ -7,6 +7,8 @@ namespace Vanadium
 	class RectCollisionComponent : public Component
 	{
 	public:
+		using Component::Component;
+
 		void SetSize(Vector2 size)
 		{
 			SetSize(size.x, size.y);

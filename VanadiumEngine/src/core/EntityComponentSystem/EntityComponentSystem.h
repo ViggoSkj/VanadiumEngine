@@ -29,7 +29,7 @@ namespace Vanadium
 		void SignalOwnerDeleted(unsigned int owner);
 
 		template<typename TComponent>
-			requires std::is_base_of_v<Component, TComponent>
+			
 		ComponentStore<TComponent>* GetComponentStore()
 		{
 			return m_storeManager.GetComponentStore<TComponent>();

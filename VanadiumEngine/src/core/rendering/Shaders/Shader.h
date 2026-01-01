@@ -28,6 +28,8 @@ namespace Vanadium
 		void SetUniformVec4(u64 uniformHash, Vector4 value);
 		void SetUniformMatrix4(u64 uniformHash, Matrix4x4 matrix);
 
+		void Use() { return m_shaderProgram.Use(); }
+
 		const GLShader& GlShader() { return m_shaderProgram; };
 		const ShaderDescriptor& Descriptor() { return m_shaderDescriptor; };
 	private:

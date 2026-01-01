@@ -29,7 +29,7 @@ namespace Vanadium
 
 	Vector2 RectCollisionComponent::LocalToWorld(Vector2 p)
 	{
-		TransformComponent& t = *GetComponent<TransformComponent>();
+		TransformComponent& t = *GetEntity().GetComponent<TransformComponent>();
 		Vector2 up = t.Up;
 		Vector2 right = { up.y, -up.x };
 		return t.Position + right * p.x + up * p.y;
@@ -37,7 +37,7 @@ namespace Vanadium
 
 	Vector2 RectCollisionComponent::WorldToLocal(Vector2 p)
 	{
-		TransformComponent& t = *GetComponent<TransformComponent>();
+		TransformComponent& t = *GetEntity().GetComponent<TransformComponent>();
 		Vector2 up = t.Up; // normalized!
 		Vector2 right = { up.y, -up.x };
 		Vector2 v = p - t.Position;
@@ -201,7 +201,7 @@ namespace Vanadium
 
 	Rect RectCollisionComponent::WorldRect()
 	{
-		TransformComponent& t = *GetComponent<TransformComponent>();
+		TransformComponent& t = *GetEntity().GetComponent<TransformComponent>();
 		return { Rect.Start + t.Position, Rect.End + t.Position };
 	}
 }

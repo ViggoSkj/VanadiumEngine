@@ -64,8 +64,7 @@ namespace Vanadium
 
 		for (int i = 0; i < sps.size(); i++)
 		{
-			Entity& e = *ECS->FindEntity(sps[i].GetOwnerId());
-			TransformComponent& tc = *e.GetComponent<TransformComponent>();
+			TransformComponent& tc = *sps[i].GetEntity().GetComponent<TransformComponent>();
 
 			GL_CHECK(glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(tc.ModelMatrix())));
 

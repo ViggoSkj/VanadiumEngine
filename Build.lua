@@ -15,7 +15,7 @@ OutputDir = "%{cfg.system}-%{cfg.architecture}/%{cfg.buildcfg}"
 
 include "VanadiumEngine/Build-VanadiumEngine.lua"
 
-include "VanadiumGame/Build-VanadiumGame.lua"
+-- include "VanadiumGame/Build-VanadiumGame.lua"
 
 include "VanadiumUi/Build-VanadiumUi.lua"
 

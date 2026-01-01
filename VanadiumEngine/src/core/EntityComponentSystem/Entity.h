@@ -8,7 +8,6 @@
 namespace Vanadium
 {
 	class EntityComponentSystem;
-	class Component; // for requires-constraints
 
 	class Entity
 	{
@@ -47,7 +46,7 @@ namespace Vanadium
 		}
 
 		template<typename TComponent>
-			requires std::is_base_of_v<Component, TComponent>
+			
 		TComponent* AddComponent()
 		{
 			m_componentReferences.emplace_back(m_storeManager->AddComponent<TComponent>(EntityRef(m_id, m_ecs)));
@@ -55,7 +54,7 @@ namespace Vanadium
 		}
 
 		template<typename TComponent>
-			requires std::is_base_of_v<Component, TComponent>
+			
 		TComponent* GetComponent()
 		{
 			u32 componentTypeId = GetComponentTypeId<TComponent>();

@@ -29,7 +29,6 @@ namespace Vanadium
 
 		// TODO: test if it is faster to split creating and getting into two functions and having to manualy initialise component stores.
 		template <typename TComponent>
-			requires std::is_base_of_v<Component, TComponent>
 		ComponentStore<TComponent>* GetComponentStore()
 		{
 			for (int i = 0; i < m_stores.size(); i++)
@@ -50,21 +49,20 @@ namespace Vanadium
 				if (m_stores[i]->GetId() == id)
 					return m_stores[i].get();
 			}
-
 			return std::nullopt;
 		}
 
 		template <typename TComponent>
-			requires std::is_base_of_v<Component, TComponent>
+			
 		ComponentRef AddComponent(EntityRef ref)
 		{
 			ComponentStore<TComponent>* componentStore = GetComponentStore<TComponent>();
-			unsigned int componentId = componentStore->CreateInstance(ref);
+			unsigned int componentId = componentStore->CreateInstance(ref, m_nextId++);
 			return ComponentRef(componentId, componentStore->GetId());
 		}
 
 		template<typename TComponent>
-			requires std::is_base_of_v<Component, TComponent>
+			
 		TComponent* GetComponent(unsigned int componentId)
 		{
 			ComponentStore<TComponent>* store = GetComponentStore<TComponent>();
@@ -80,6 +78,8 @@ namespace Vanadium
 		}
 
 	private:
+		u32 m_nextId = 0;
+
 		std::vector<std::unique_ptr<IComponentStore>> m_stores;
 	};
 }

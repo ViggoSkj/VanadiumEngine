@@ -1,10 +1,12 @@
 #pragma once
 
-#include "core/API/Rendering.h"
 
 // Main
-#include "core/Rendering/RenderingManager.h"
+#include "core/API/Rendering.h"
 #include "core/Rendering/Util.h"
+
+// Higher Level
+#include "core/Rendering/RenderObject.h"
 
 // Shaders
 #include "core/Rendering/Shaders/Descriptors/ShaderDescriptorBase.h"
@@ -28,12 +30,15 @@
 // Texture
 #include "core/Rendering/Textures/GLTexture.h"
 #include "core/Rendering/Textures/TextureConfiguration.h"
-
 #include "core/AssetManager/AssetTypes/Texture/Texture.h"
 #include "core/AssetManager/AssetTypes/Texture/TextureAsset.h"
+
+// Mesh
+#include "core/Rendering/Mesh/Mesh.h"
 
 using Vanadium::VertexArray;
 using Vanadium::IndexBuffer;
 using Vanadium::VertexBuffer;
 
+using Vanadium::RenderObject;
 using Vanadium::Shader;

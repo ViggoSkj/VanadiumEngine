@@ -224,7 +224,6 @@ public:
 		player.Get().AddComponent<PlayerMovementComponent>();
 		player.Get().GetComponent<PixelBody>()->z = 0.9;
 
-
 		CreateWeirdBody({ 0.2, 0.5 }, { 10, 10 }, 1);
 		CreateWeirdBody({ 0, 1 }, { 10, 10 }, 1);
 		CreateWeirdBody({ 0, 1.5 }, { 10, 10 }, 1);

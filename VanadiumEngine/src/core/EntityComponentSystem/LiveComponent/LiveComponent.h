@@ -5,16 +5,11 @@
 
 namespace Vanadium
 {
+	template<typename Derived>
 	class LiveComponent : public Component
 	{
 	public:
-		LiveComponent(LiveComponent&&) noexcept = default;
-		LiveComponent& operator=(LiveComponent&&) noexcept = default;
-
-		LiveComponent(const LiveComponent&) = delete;
-		LiveComponent(EntityRef ref)
-			: Component(ref) {
-		};
+		using Component::Component;
 
 		virtual void OnUpdate(double dt) {};
 		virtual void OnRender(double dt) {};
