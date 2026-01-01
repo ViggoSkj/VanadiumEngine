@@ -35,10 +35,9 @@ namespace Vanadium
 		UnBind();
 	}
 
-	void GLUniformBuffer::SetBindingPoint(UniformBindingSlot& uniformBindingSlot)
+	void GLUniformBuffer::SetBindingPoint(i32 uniformBindingSlot)
 	{
 		Bind();
-		GL_CHECK(glBindBufferRange(GL_UNIFORM_BUFFER, uniformBindingSlot.Slot, m_id, 0, m_size));
+		GL_CHECK(glBindBufferRange(GL_UNIFORM_BUFFER, uniformBindingSlot, m_id, 0, m_size));
 	}
-
 }

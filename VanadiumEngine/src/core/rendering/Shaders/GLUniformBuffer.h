@@ -1,7 +1,6 @@
 #pragma once
 #include "ShaderDataType.h"
 #include "core/Util/ReferenceCounting.h"
-#include "core/Rendering/Shaders/UniformBindingSlot.h"
 
 namespace Vanadium
 {
@@ -18,7 +17,7 @@ namespace Vanadium
 
 		void SetData(void* data, unsigned int offset, unsigned int size);
 
-		void SetBindingPoint(UniformBindingSlot& uniformBindingSlot);
+		void SetBindingPoint(i32 uniformBindingSlot);
 
 	protected:
 		void Dispose() override {

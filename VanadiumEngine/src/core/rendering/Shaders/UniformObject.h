@@ -2,7 +2,7 @@
 #include <optional>
 #include "Descriptors/ShaderDescriptor.h"
 #include "GLUniformBuffer.h"
-#include "UniformBindingSlot.h"
+#include "UniformBindingVoucher.h"
 
 namespace Vanadium
 {
@@ -12,16 +12,15 @@ namespace Vanadium
 		UniformObject() = default;
 		UniformObject(const UniformObjectDescriptor& descriptor);
 
-		void Bind(UniformBindingSlot bindingSlot);
+		void Bind(UniformBindingVoucher bindingSlot);
 
 		const std::string_view GetName() const { return Descriptor.Name; };
 
+		i32 BindingSlot() const { return m_bindingSlot.has_value() ? m_bindingSlot.value().Slot() : -1; };
+
 		UniformObjectDescriptor Descriptor;
 		GLUniformBuffer Buffer;
-
-		std::optional<UniformBindingSlot> GetBindingSlot() const { return m_bindingSlot; };
-
 	private:
-		std::optional<UniformBindingSlot> m_bindingSlot;
+		std::optional<UniformBindingVoucher> m_bindingSlot;
 	};
 }

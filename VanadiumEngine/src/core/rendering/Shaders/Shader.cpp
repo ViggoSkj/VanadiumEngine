@@ -41,26 +41,26 @@ namespace Vanadium
 		}
 	}
 
-	void Shader::ReportUniformObject(UniformObject object)
+	bool Shader::TryUseUniformObject(UniformObject& object, ShaderType shaderType)
 	{
-		std::optional<UniformBindingSlot> oslot = object.GetBindingSlot();
+		i32 slot = object.BindingSlot();
 
-		if (!oslot.has_value())
-			return;
+		if (slot < 0)
+			return false;
 
-		UniformBindingSlot slot = oslot.value();
-
-		switch (slot.ShaderType)
+		switch (shaderType)
 		{
 		case (ShaderType::VertexShader):
 			if (!m_shaderDescriptor.VertexShader.UsesUniformObject(object.Descriptor.Name))
-				return;
+				return false;
 			break;
 		default:
-			return;
+			return false;
 		}
 
-		m_shaderProgram.ConfigureUniformBlock(object.Descriptor.Name.data(), slot.Slot);
+		m_shaderProgram.ConfigureUniformBlock(object.Descriptor.Name.data(), slot);
+
+		return true;
 	}
 
 	i32 Shader::GetUniformLocation(u64 uniformHash)

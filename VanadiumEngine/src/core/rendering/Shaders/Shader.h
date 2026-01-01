@@ -16,7 +16,7 @@ namespace Vanadium
 		Shader(std::string source, ShaderDescriptor descriptor);
 
 		// uses the uniform object if it is needed
-		void ReportUniformObject(UniformObject object);
+		bool TryUseUniformObject(UniformObject& object, ShaderType shaderType);
 
 		i32 GetUniformLocation(u64 uniformHash);
 

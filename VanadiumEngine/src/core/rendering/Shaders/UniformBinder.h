@@ -3,21 +3,21 @@
 #include "Descriptors/ShaderDescriptor.h"
 #include "UniformObject.h"
 #include "ShaderType.h"
-#include "UniformBindingSlot.h"
+#include "UniformBindingVoucher.h"
 
 namespace Vanadium
 {
 	class UniformBinder
 	{
 	public:
-		static unsigned int BlockCount(GLenum block);
+		friend UniformBindingVoucher::~UniformBindingVoucher();
 
-		UniformBinder(ShaderType shaderType, unsigned int count);
+		UniformBinder();
 
-		UniformBindingSlot LoneBindingSlot();
-		void ReturnBindingSlot(UniformBindingSlot bindingSlot);
-
+		UniformBindingVoucher ClaimBindingSlot();
 	private:
-		std::vector<UniformBindingSlot> m_bindingSlots;
+		void ReturnBindingSlot(UniformBindingVoucher& voucher);
+
+		std::vector<UniformBindingVoucher> m_bindingSlots;
 	};
 }

@@ -1,33 +1,31 @@
 #include "pch.h"
 #include "UniformBinder.h"
+#include "core/Rendering/GLCommon.h"
+
 namespace Vanadium
 {
+	UniformBinder::UniformBinder()
+	{
+		int maxBindingSlot;
+		GL_CHECK(glGetIntegerv(GL_MAX_UNIFORM_BUFFER_BINDINGS, &maxBindingSlot));
 
-    unsigned int UniformBinder::BlockCount(GLenum block)
-    {
-        int count;
-        GL_CHECK(glGetIntegerv(block, &count));
-        return count;
-    }
+		for (i32 i = maxBindingSlot - 1; i >= 0; i--)
+		{
+			m_bindingSlots.push_back(UniformBindingVoucher(this, i));
+		}
+	}
 
-    UniformBinder::UniformBinder(ShaderType shaderType, unsigned int count)
-    {
-        for (int i = 0; i < count; i++)
-        {
-            m_bindingSlots.emplace_back(UniformBindingSlot(shaderType, count - i - 1));
-        }
-    }
+	UniformBindingVoucher UniformBinder::ClaimBindingSlot()
+	{
+		UniformBindingVoucher v = std::move(m_bindingSlots.back());
+		m_bindingSlots.pop_back();
+		return v;
+	}
 
-    UniformBindingSlot UniformBinder::LoneBindingSlot()
-    {
-        UniformBindingSlot b = m_bindingSlots.back();
-        m_bindingSlots.pop_back();
-        return b;
-    }
-
-    void UniformBinder::ReturnBindingSlot(UniformBindingSlot bindingSlot)
-    {
-        m_bindingSlots.push_back(bindingSlot);
-    }
-
+	void UniformBinder::ReturnBindingSlot(UniformBindingVoucher& voucher)
+	{
+		m_bindingSlots.push_back(UniformBindingVoucher(this, voucher.Slot()));
+		voucher.m_slot = 0;
+		voucher.m_binder = nullptr;
+	}
 }

@@ -4,10 +4,10 @@
 
 namespace Vanadium
 {
-	static unsigned int UniformVectorSize(std::vector<UniformDescriptor> vector)
+	static i32 UniformVectorSize(std::vector<UniformDescriptor> vector)
 	{
-		unsigned int total = 0;
-		for (int i = 0; i < vector.size(); i++)
+		i32 total = 0;
+		for (i32 i = 0; i < vector.size(); i++)
 		{
 			total += ShaderDataTypeToSize.at(vector[i].type);
 		}
@@ -19,11 +19,9 @@ namespace Vanadium
 	{
 	}
 
-	void UniformObject::Bind(UniformBindingSlot bindingSlot)
+	void UniformObject::Bind(UniformBindingVoucher bindingSlot)
 	{
-		Buffer.SetBindingPoint(bindingSlot);
-		m_bindingSlot.emplace(bindingSlot);
+		Buffer.SetBindingPoint(bindingSlot.Slot());
+		m_bindingSlot.emplace(std::move(bindingSlot));
 	}
-
-
 }

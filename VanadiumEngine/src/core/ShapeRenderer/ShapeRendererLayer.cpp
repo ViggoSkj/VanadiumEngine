@@ -20,8 +20,8 @@ namespace Vanadium
 		RenderingManager& man = *Application::Get().GetRenderingManager();
 		UniformObjectDescriptor matricesDescriptor = m_squareShader.Descriptor().FindUniformObjectDescriptor("Matrices");
 
-		m_squareShader.ReportUniformObject(*man.FindUniformObject("Matrices").value());
-		m_arrowShader.ReportUniformObject(*man.FindUniformObject("Matrices").value());
+		m_squareShader.TryUseUniformObject(*man.FindUniformObject("Matrices").value(), ShaderType::VertexShader);
+		m_arrowShader.TryUseUniformObject(*man.FindUniformObject("Matrices").value(), ShaderType::VertexShader);
 	}
 
 	void ShapeRendererLayer::OnRender(double dt)
