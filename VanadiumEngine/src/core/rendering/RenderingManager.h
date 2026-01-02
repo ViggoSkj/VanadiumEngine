@@ -24,6 +24,8 @@ namespace Vanadium::Detail::Rendering
 
 		MeshStore meshStore;
 	private:
+		void InitializeDefaultUniformObjects();
+
 		UniformBinder m_uniformBinder;
 		HandleStore<UniformObject> m_uniformObjects;
 	};

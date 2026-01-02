@@ -3,7 +3,9 @@
 #include "core/Processing/Shader/Tokenizer/ShaderTokenizer.h"
 #include "core/Processing/Shader/CodeGenerator/ShaderCodeGenerator.h"
 #include "core/Application.h"
+
 #include "core/Processing/Shader/IShaderCodeLoader.h"
+#include "core/Processing/Shader/Tokenizer/TokenAnalyzer.h"
 
 namespace Vanadium
 {
@@ -14,26 +16,38 @@ namespace Vanadium
 		Detail::ShaderProcessingObject* LoadShaderCode(std::filesystem::path path) override
 		{
 			FileAssetStore<ShaderCodeAsset>* store = Application::Get().GetAssetManager()->GetAssetStore<ShaderCodeAsset>();
-			return &store->GetAsset(path)->processingObject;
+			return &store->GetAsset(path)->m_processingObject;
 		}
 	};
 
 	ShaderCodeAsset::ShaderCodeAsset(std::filesystem::path path)
-		: processingObject(Vanadium::Detail::ReadFile(path))
+		: m_processingObject(Vanadium::Detail::ReadFile(path))
 	{
 		ShaderCodeAssetLoader loader;
-		Detail::ShaderCodeGenerator::ExecuteIncludes(processingObject, &loader);
+		Detail::ShaderCodeGenerator::ExecuteIncludes(m_processingObject, &loader);
+	}
+
+	std::vector<UniformObjectDescriptor> ShaderCodeAsset::GetUniformObjectDescriptors()
+	{
+		std::vector<UniformObjectDescriptor> descs;
+		Vanadium::Detail::TokenAnalyzer::GetUniformObjects(m_processingObject.Tokenized, descs);
+		return descs;
+	}
+
+	std::optional<ShaderDescriptor> ShaderCodeAsset::CreateShaderDescriptor()
+	{
+		return ShaderDescriptor::Create(m_processingObject.Tokenized);
 	}
 
 	std::optional<Shader> ShaderCodeAsset::CreateShader()
 	{
-		std::optional<ShaderDescriptor> created = ShaderDescriptor::Create(processingObject.Tokenized);
+		std::optional<ShaderDescriptor> created = ShaderDescriptor::Create(m_processingObject.Tokenized);
 
 		if (!created.has_value())
 		{
 			return std::nullopt;
 		}
 
-		return Shader::CreateShader(processingObject.Source, created.value());
+		return Shader::CreateShader(m_processingObject.Source, created.value());
 	}
 }

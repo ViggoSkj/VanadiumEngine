@@ -67,6 +67,18 @@ namespace Vanadium
 		return descriptor;
 	}
 
+	std::vector<UniformObjectDescriptor*> ShaderDescriptor::GetDescriptors()
+	{
+		std::vector<UniformObjectDescriptor*> descriptors;
+		for (int i = 0; i < VertexShader.UniformObjects.size(); i++)
+			descriptors.push_back(&VertexShader.UniformObjects[i]);
+
+		for (int i = 0; i < FragmentShader.UniformObjects.size(); i++)
+			descriptors.push_back(&FragmentShader.UniformObjects[i]);
+
+		return descriptors;
+	}
+
 	const UniformObjectDescriptor& ShaderDescriptor::FindUniformObjectDescriptor(std::string name) const
 	{
 		for (int i = 0; i < VertexShader.UniformObjects.size(); i++)
@@ -81,5 +93,4 @@ namespace Vanadium
 				return FragmentShader.UniformObjects[i];
 		}
 	}
-
 }

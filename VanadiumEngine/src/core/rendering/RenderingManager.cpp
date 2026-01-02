@@ -1,10 +1,13 @@
 #include "pch.h"
 #include "RenderingManager.h"
+#include "core/Application.h"
+#include "core/AssetManager/AssetTypes/Shader/ShaderAsset.h"
 
 namespace Vanadium::Detail::Rendering
 {
 	RenderingManager::RenderingManager()
 	{
+		InitializeDefaultUniformObjects();
 	}
 
 	UniformBindingVoucher RenderingManager::ClaimBindingSlot()
@@ -32,5 +35,26 @@ namespace Vanadium::Detail::Rendering
 			}
 		}
 		return std::nullopt;
+	}
+
+	void RenderingManager::InitializeDefaultUniformObjects()
+	{
+		std::string definitions[] = {
+			"res/lib/CameraUniformObject.shader"
+		};
+
+		AssetManager& man = *Application::Get().GetAssetManager();
+
+		for (std::string_view path : definitions)
+		{
+			std::vector<UniformObjectDescriptor> descs = man.GetFileAsset<ShaderCodeAsset>(path)->GetUniformObjectDescriptors();
+			for (auto& desc : descs)
+			{
+				auto handle = m_uniformObjects.Create(desc);
+				UniformBindingVoucher voucher = ClaimBindingSlot();
+				UniformObject* o = GetUniformObject(handle);
+				o->Bind(std::move(voucher));
+			}
+		}
 	}
 }

@@ -5,11 +5,7 @@ UiRenderingLayer::UiRenderingLayer()
 	, m_shader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/box.shader")->CreateShader().value())
 {
 	Vanadium::RenderingManager& man = *Application::Get().GetRenderingManager();
-	Vanadium::UniformBindingVoucher bindingSlot = man.ClaimBindingSlot();
-	Vanadium::UniformObjectDescriptor matricesDescriptor = m_shader.Descriptor().FindUniformObjectDescriptor("Matrices");
-	Vanadium::Handle<Vanadium::UniformObject> m_matricesUniformObjectHandle = man.CreateUniformObject(matricesDescriptor);
-	Vanadium::UniformObject* object = man.GetUniformObject(m_matricesUniformObjectHandle);
-	object->Bind(std::move(bindingSlot));
+	Vanadium::UniformObject* object = man.FindUniformObject("Matrices").value();
 	m_shader.TryUseUniformObject(*object, Vanadium::ShaderType::VertexShader);
 }
 

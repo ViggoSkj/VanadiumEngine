@@ -17,8 +17,6 @@ namespace Vanadium
 	class Application
 	{
 	public:
-		Application();
-		Application(unsigned int width, unsigned int height);
 		Application(WindowOptions windowOptions);
 		Application(const Application&) = delete;
 		~Application();

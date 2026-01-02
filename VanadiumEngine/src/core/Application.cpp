@@ -11,18 +11,10 @@ namespace Vanadium
 {
 	Application* Application::s_instance = nullptr;
 
-	Application::Application()
-		: Application(1600, 1000) {
-	};
-
-	Application::Application(u32 width, u32 height)
-		: Application(WindowOptions(width, height, 0))
-	{
-
-	}
-
 	Application::Application(WindowOptions windowOptions)
 	{
+		Application::s_instance = this;
+
 		m_window = std::make_unique<Window>(windowOptions);
 
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -31,12 +23,12 @@ namespace Vanadium
 			return;
 		}
 
-		m_sceneManager = std::make_unique<SceneManager>();
-		m_renderingManager = std::make_unique<RenderingManager>();
-		m_assetManager = std::make_unique<AssetManager>();
-		m_ecs = std::make_unique<EntityComponentSystem>();
 		m_time = std::make_unique<Time>();
 		m_logger = std::make_unique<Logger>();
+		m_ecs = std::make_unique<EntityComponentSystem>();
+		m_assetManager = std::make_unique<AssetManager>();
+		m_renderingManager = std::make_unique<RenderingManager>();
+		m_sceneManager = std::make_unique<SceneManager>();
 
 		GL_CHECK(glViewport(0, 0, m_window->GetWidth(), m_window->GetHeight()));
 
@@ -48,7 +40,6 @@ namespace Vanadium
 
 		GL_CHECK(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
-		Application::s_instance = this;
 	}
 
 	Application::~Application()
