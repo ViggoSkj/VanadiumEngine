@@ -58,4 +58,30 @@ namespace Vanadium::Detail
 
 		return -1;
 	}
+	void TokenizedShader::Replace(u32 begin, u32 end, const TokenizedShader& other)
+	{
+		u32 beforeBeginIndex = begin == 0 ? 0 : m_tokens[begin].SourceIndex;
+		u32 beforeBeingLine = end == 0 ? 0 : m_tokens[begin - 1].SourceLine;
+
+		u32 removedChars = m_tokens[end].SourceIndex - beforeBeginIndex;
+		
+		u32 otherLineCount = other.m_tokens.back().SourceLine + 1;
+		u32 otherCharCount = other.m_tokens.back().SourceIndex + other.m_tokens.back().Text.size();
+
+		for (u32 i = end; i < m_tokens.size(); i++)
+		{
+			m_tokens[i].SourceLine += otherLineCount;
+			m_tokens[i].SourceIndex += otherCharCount - removedChars;
+		}
+
+		m_tokens.erase(m_tokens.begin() + begin, m_tokens.begin() + end);
+
+		m_tokens.insert(m_tokens.begin() + begin, other.Tokens().begin(), other.Tokens().end());
+
+		for (u32 i = begin; i < begin + other.Tokens().size(); i++)
+		{
+			m_tokens[i].SourceIndex += beforeBeginIndex + 1;
+			m_tokens[i].SourceLine += beforeBeingLine;
+		}
+	}
 }

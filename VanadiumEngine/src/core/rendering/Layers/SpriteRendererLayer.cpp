@@ -54,7 +54,7 @@ namespace Vanadium
 		glm::mat4 view = oCameraComponent.value()->GetCamera().GetViewMatrix();
 
 		RenderingManager& man = *Application::Get().GetRenderingManager();
-		UniformObject& m_matrices = *man.FindUniformObject("Matrices").value();
+		UniformObject& m_matrices = *man.FindUniformObject("Matrices");
 		m_matrices.Buffer.SetData(glm::value_ptr(proj), 0, 4 * 4 * 4);
 		m_matrices.Buffer.SetData(glm::value_ptr(view), 4 * 4 * 4, 4 * 4 * 4);
 

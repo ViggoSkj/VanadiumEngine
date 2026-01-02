@@ -20,7 +20,7 @@ namespace Vanadium::Detail::Rendering
 
 		Handle<UniformObject> CreateUniformObject(UniformObjectDescriptor& descriptor);
 		UniformObject* GetUniformObject(Handle<UniformObject> handle);
-		std::optional<UniformObject*> FindUniformObject(std::string name);
+		UniformObject* FindUniformObject(std::string name);
 
 		MeshStore meshStore;
 	private:

@@ -14,6 +14,8 @@ namespace Vanadium::Detail
 			: Source(source), Tokenized(tokenizedShader) {
 		}
 
+		void Replace(u32 firstToken, u32 endToken, const ShaderProcessingObject& other);
+
 		TokenizedShader Tokenized;
 		std::string Source;
 	};

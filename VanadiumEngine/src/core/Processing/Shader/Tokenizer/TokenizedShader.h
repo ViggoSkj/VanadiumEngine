@@ -17,7 +17,9 @@ namespace Vanadium::Detail
 		int FindHint(std::string hintCommand, std::string hintArgument, unsigned int offset = 0);
 		i32 FindHint(std::string hintCommand, unsigned int offset = 0);
 
-		const std::vector<Token>& Tokens() {
+		void Replace(u32 begin, u32 end, const TokenizedShader& other);
+
+		const std::vector<Token>& Tokens() const {
 			return m_tokens;
 		};
 

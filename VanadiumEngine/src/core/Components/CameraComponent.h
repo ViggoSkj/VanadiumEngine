@@ -10,10 +10,10 @@ namespace Vanadium
 	public:
 		static std::optional<CameraComponent*> GetMain()
 		{
-			if (s_main == nullptr)
+			if (s_active == nullptr)
 				return std::nullopt;
 
-			return s_main;
+			return s_active;
 		};
 
 		void OnUpdate(double dt) override;
@@ -22,6 +22,6 @@ namespace Vanadium
 
 		float Zoom = 1.0;
 	private:
-		inline static CameraComponent* s_main = nullptr;
+		inline static CameraComponent* s_active = nullptr;
 	};
 }

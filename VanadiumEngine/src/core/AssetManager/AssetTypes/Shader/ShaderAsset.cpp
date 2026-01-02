@@ -44,10 +44,36 @@ namespace Vanadium
 		std::optional<ShaderDescriptor> created = ShaderDescriptor::Create(m_processingObject.Tokenized);
 
 		if (!created.has_value())
-		{
 			return std::nullopt;
+
+		std::optional<Shader> shaderOpt = Shader::CreateShader(m_processingObject.Source, created.value());
+
+		if (!shaderOpt.has_value())
+			return std::nullopt;
+
+		Shader shader = shaderOpt.value();
+		// auto bind ubos;
+
+		RenderingManager& man = *Application::Get().GetRenderingManager();
+
+		for (auto desc : shader.Descriptor().VertexShader.UniformObjects)
+		{
+			UniformObject* object = man.FindUniformObject(desc.Name);
+			if (object == nullptr)
+				continue;
+
+			shader.TryUseUniformObject(*object, ShaderType::VertexShader);
 		}
 
-		return Shader::CreateShader(m_processingObject.Source, created.value());
+		for (auto desc : shader.Descriptor().FragmentShader.UniformObjects)
+		{
+			UniformObject* object = man.FindUniformObject(desc.Name);
+			if (object == nullptr)
+				continue;
+
+			shader.TryUseUniformObject(*object, ShaderType::FragmentShader);
+		}
+
+		return shader;
 	}
 }

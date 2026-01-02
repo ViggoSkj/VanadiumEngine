@@ -25,7 +25,7 @@ namespace Vanadium::Detail::Rendering
 		return m_uniformObjects.Get(handle);
 	}
 
-	std::optional<UniformObject*> RenderingManager::FindUniformObject(std::string name)
+	UniformObject* RenderingManager::FindUniformObject(std::string name)
 	{
 		for (UniformObject& object : m_uniformObjects)
 		{
@@ -34,13 +34,14 @@ namespace Vanadium::Detail::Rendering
 				return &object;
 			}
 		}
-		return std::nullopt;
+		return nullptr;
 	}
 
 	void RenderingManager::InitializeDefaultUniformObjects()
 	{
 		std::string definitions[] = {
-			"res/lib/CameraUniformObject.shader"
+			"res/shaders/ubos/renderSurface.shader",
+			"res/shaders/ubos/camera.shader"
 		};
 
 		AssetManager& man = *Application::Get().GetAssetManager();

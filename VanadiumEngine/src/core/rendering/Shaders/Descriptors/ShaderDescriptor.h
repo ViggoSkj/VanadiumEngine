@@ -13,7 +13,7 @@ namespace Vanadium
 
 		ShaderDescriptor() = default;
 
-		std::vector<UniformObjectDescriptor*> GetDescriptors();
+		const std::vector<const UniformObjectDescriptor*> GetUbos() const;
 		const UniformObjectDescriptor& FindUniformObjectDescriptor(std::string name) const;
 
 		VertexShaderDescriptor VertexShader;

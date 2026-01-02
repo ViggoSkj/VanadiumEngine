@@ -242,5 +242,4 @@ namespace Vanadium::Detail
 		}
 		return lineNumber;
 	}
-
 }
