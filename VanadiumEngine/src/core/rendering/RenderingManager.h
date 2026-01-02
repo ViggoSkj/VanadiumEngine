@@ -22,6 +22,8 @@ namespace Vanadium::Detail::Rendering
 		UniformObject* GetUniformObject(Handle<UniformObject> handle);
 		UniformObject* FindUniformObject(std::string name);
 
+		void UpdateRenderSurfaceUBO();
+
 		MeshStore meshStore;
 	private:
 		void InitializeDefaultUniformObjects();

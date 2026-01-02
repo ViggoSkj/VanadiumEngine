@@ -8,12 +8,6 @@ UiRenderingLayer::UiRenderingLayer()
 
 void UiRenderingLayer::OnRender(double dt)
 {
-	glm::mat4 proj = Application::Get().GetWindow()->GetOrthographicProjection();
-
-	Vanadium::RenderingManager& man = *Application::Get().GetRenderingManager();
-	Vanadium::UniformObject& m_matrices = *man.FindUniformObject("RenderSurface");
-	m_matrices.Buffer.SetData(glm::value_ptr(proj), 0, 4 * 4 * 4);
-
 	m_shader.Use();
 	m_quad.Render();
 }

@@ -37,6 +37,14 @@ namespace Vanadium::Detail::Rendering
 		return nullptr;
 	}
 
+	void Rendering::RenderingManager::UpdateRenderSurfaceUBO()
+	{
+		Window& window = *Application::Get().GetWindow();
+		glm::mat4 proj = window.GetOrthographicProjection();
+		UniformObject& m_matrices = *FindUniformObject("RenderSurface");
+		m_matrices.Buffer.SetData(glm::value_ptr(proj), 0, 4 * 4 * 4);
+	}
+
 	void RenderingManager::InitializeDefaultUniformObjects()
 	{
 		std::string definitions[] = {

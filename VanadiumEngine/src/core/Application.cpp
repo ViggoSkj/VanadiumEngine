@@ -107,6 +107,8 @@ namespace Vanadium
 					m_applicationLayers[i]->OnUpdate(dt);
 				}
 
+				m_renderingManager->UpdateRenderSurfaceUBO();
+
 				for (int i = 0; i < m_applicationLayers.size(); i++)
 				{
 					m_applicationLayers[i]->OnRender(dt);
