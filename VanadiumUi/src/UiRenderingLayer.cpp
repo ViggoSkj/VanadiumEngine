@@ -1,5 +1,5 @@
 #include "UiRenderingLayer.h"
-#include "ScreenTransform.h"
+#include "ScreenElement.h"
 #include "UiTree.h"
 #include "core/Util/StringHash.h"
 
@@ -11,40 +11,40 @@ UiRenderingLayer::UiRenderingLayer()
 
 void UiRenderingLayer::OnRender(double dt)
 {
-	UnorderedVector<ScreenTransform>& elements = Application::Get().GetECS()->GetComponentStore<ScreenTransform>()->GetComponents();
+	UnorderedVector<ScreenElement>& elements = Application::Get().GetECS()->GetComponentStore<ScreenElement>()->GetComponents();
+
+	if (elements.size() == 0)
+		return;
 
 	UiTree tree;
-	std::shared_ptr<UiNode> rootNode = std::make_shared<UiNode>();
-
-	for (ScreenTransform& transform : elements)
+	for (ScreenElement& transform : elements)
 	{
 		if (transform.Parent.IsEmpty())
 		{
-			rootNode->transform = Vanadium::ECS::CreateHandle(transform);
-			rootNode->resolvedProperties.height = 400;
-			rootNode->resolvedProperties.width = 400;
-			rootNode->resolvedProperties.xPosition = 400;
-			rootNode->resolvedProperties.yPosition = 400;
-			transform.Surface = Rect(
-				Vector2(rootNode->resolvedProperties.xPosition, rootNode->resolvedProperties.yPosition),
-				Vector2(
-					rootNode->resolvedProperties.xPosition + rootNode->resolvedProperties.width,
-					rootNode->resolvedProperties.yPosition + rootNode->resolvedProperties.height
-				)
-			);
-
-			tree.root = rootNode;
+			UiNode root;
+			root.transform = Vanadium::ECS::CreateHandle(transform);
+			root.style = transform.style;
+			tree.root = root;
 			break;
 		}
 	}
 
-	m_shader.Use();
+	ResolveChildren(tree.root);
+	CalculateLayout(tree);
 
-	for (ScreenTransform& transform : elements)
+	m_shader.Use();
+	GL_CHECK(glDepthFunc(GL_ALWAYS));
+	for (UiNode* node : tree.GetNodes())
 	{
-		m_shader.SetUniformVec4("u_rect"_id, transform.Surface);
-		GL_CHECK(glDepthFunc(GL_ALWAYS));
+		ScreenElement& t = node->transform.Get();
+		m_shader.SetUniformVec2("u_position"_id, t.box.position);
+		m_shader.SetUniformVec2("u_content"_id, t.box.content);
+		
+		m_shader.SetUniformVec4("u_border"_id, t.box.border);
+		m_shader.SetUniformVec4("u_padding"_id, t.box.padding);
+
+		m_shader.SetUniformVec4("u_color"_id, node->style.backgroundColor);
 		m_quad.Render();
-		GL_CHECK(glDepthFunc(GL_LESS));
 	}
+	GL_CHECK(glDepthFunc(GL_LESS));
 }

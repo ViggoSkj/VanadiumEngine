@@ -1,31 +1,31 @@
 #pragma once
 #include "pch.h"
 #include "Components.h"
-#include "ScreenTransform.h"
-
-struct NodeStyle
-{
-	i32 width = 0;
-	i32 height = 0;
-};
+#include "ScreenElement.h"
+#include "Style.h"
+#include "UiBox.h"
 
 struct ResolvedNodeProperties
 {
-	i32 width = 0;
-	i32 height = 0;
-	i32 xPosition = 0;
-	i32 yPosition = 0;
+	UiBox box;
 };
 
 struct UiNode
 {
+	UiNode* parent = nullptr;
 	std::vector<UiNode> children;
-	NodeStyle stlye;
+	Style style;
 	ResolvedNodeProperties resolvedProperties;
-	Vanadium::ComponentHandle<ScreenTransform> transform;
+	Vanadium::ComponentHandle<ScreenElement> transform;
 };
 
 struct UiTree
 {
-	std::shared_ptr<UiNode> root;
+	UiNode root;
+
+	std::vector<UiNode*> GetNodes();
 };
+
+void CalculateLayout(UiTree& tree);
+
+void ResolveChildren(UiNode& node);

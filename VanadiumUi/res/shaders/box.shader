@@ -6,13 +6,25 @@ layout (location = 1) in vec2 aCoord;
 #include res/shaders/ubos/renderSurface.shader
 #include res/shaders/ubos/camera.shader
 
-uniform vec4 u_rect;
- 
+uniform vec2 u_position;
+
+uniform vec4 u_border;
+uniform vec4 u_padding;
+uniform vec2 u_content;
+
 out vec2 uv;
 
 void main()
 {
-    vec2 pixelCoordinates = (u_rect.xy * 2 + aPos.xy * (u_rect.zw - u_rect.xy))/resolution.xy;
+    float width = u_border.y + u_border.w +
+                  u_padding.y + u_padding.w +
+                  u_content.x;
+    
+    float height = u_border.x + u_border.z +
+                  u_padding.x + u_padding.z +
+                  u_content.y;
+
+    vec2 pixelCoordinates = (u_position * 2 + aPos.xy * vec2(width, height))/resolution.xy;
     gl_Position = vec4(pixelCoordinates, aPos.z, 1.0);
     gl_Position.x -= 1.0;
     gl_Position.y = 1.0 - gl_Position.y;
@@ -24,7 +36,9 @@ void main()
 out vec4 FragColor;
 in vec2 uv;
 
+uniform vec4 u_color; 
+
 void main()
 {
-    FragColor = vec4(uv, 0.0, 1.0);
+    FragColor = u_color;
 }

@@ -24,6 +24,17 @@ namespace Vanadium
 
 		}
 
+		bool operator==(const TComponent& other)
+		{
+			if (m_store == nullptr)
+				return false;
+
+			if (m_componentId != other.GetId())
+				return false;
+
+			return true;
+		}
+
 		bool IsEmpty() const;
 		u32 GetId() const;
 		TComponent& Get();
@@ -35,12 +46,14 @@ namespace Vanadium
 	template<typename TComponent>
 	inline u32 ComponentHandle<TComponent>::GetId() const
 	{
+		assert(m_store != nullptr);
 		return m_componentId;
 	}
 
 	template<typename TComponent>
 	inline TComponent& ComponentHandle<TComponent>::Get()
 	{
+		assert(m_store != nullptr);
 		TComponent* component = m_store->GetComponent(m_componentId);
 		assert(component != nullptr);
 		return *component;

@@ -39,6 +39,19 @@ namespace Vanadium
 
 			m_uniformLocations.insert({ hash_sv(std::string_view(u.name)), location });
 		}
+
+		for (UniformDescriptor u : descriptor.FragmentShader.Uniforms)
+		{
+			i32 location = m_shaderProgram.GetUniformLocation(u.name.c_str());
+
+			if (location == -1)
+			{
+				LogDebug("Shader uniform unused.");
+				continue;
+			}
+
+			m_uniformLocations.insert({ hash_sv(std::string_view(u.name)), location });
+		}
 	}
 
 	bool Shader::TryUseUniformObject(UniformObject& object, ShaderType shaderType)

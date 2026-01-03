@@ -18,6 +18,8 @@ typedef glm::vec2 Vector2;
 typedef glm::vec3 Vector3;
 typedef glm::vec4 Vector4;
 
-typedef glm::mat4 Matrix4;
-
 typedef glm::ivec2 Vector2I;
+typedef glm::ivec3 Vector3I;
+typedef glm::ivec4 Vector4I;
+
+typedef glm::mat4 Matrix4;
