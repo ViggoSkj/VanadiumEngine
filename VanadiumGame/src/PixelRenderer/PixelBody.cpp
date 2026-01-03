@@ -6,8 +6,8 @@
 #include "Rendering.h"
 #include "Util.h"
 
-PixelBody::PixelBody(EntityRef ref)
-	: Component(ref),
+PixelBody::PixelBody(Vanadium::ComponentData data)
+	: Component(data),
 	m_shader(Application::Get().GetAssetManager()->GetFileAsset<Vanadium::ShaderCodeAsset>("res/shaders/pixelbody.shader")->CreateShader().value()),
 	m_pixelSoa(),
 	m_pixelMeshHandle(Vanadium::Rendering::CreateMesh(Vanadium::Util::SquareMeshData(PixelWorld::PixelSize))),
@@ -56,8 +56,8 @@ void PixelBody::Draw()
 		m_buffersUpToDate = true;
 	}
 
-	TransformComponent& t = *GetComponent<TransformComponent>();
-	PixelCollisionComponent& pc = *GetComponent<PixelCollisionComponent>();
+	TransformComponent& t = *GetEntity().GetComponent<TransformComponent>();
+	PixelCollisionComponent& pc = *GetEntity().GetComponent<PixelCollisionComponent>();
 
 	m_shader.GlShader().Use();
 
@@ -102,7 +102,7 @@ void PixelBody::AddPixel(i32 x, i32 y, u8 type)
 	if (m_pixelSoa.Count() >= m_currentCount)
 		ResizeBuffers(m_pixelSoa.Count() * 1.5f);
 
-	PixelCollisionComponent& c = *GetComponent<PixelCollisionComponent>();
+	PixelCollisionComponent& c = *GetEntity().GetComponent<PixelCollisionComponent>();
 
 	c.PixelsChanged();
 }

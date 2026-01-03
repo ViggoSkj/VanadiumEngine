@@ -15,7 +15,7 @@ public:
 class ShaderToy : public LiveComponent
 {
 public:
-	ShaderToy(EntityRef ref);
+	ShaderToy(Vanadium::ComponentData data);
 
 	void UpdateShader();
 

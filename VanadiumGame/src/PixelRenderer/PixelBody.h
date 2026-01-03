@@ -9,7 +9,7 @@ class PixelBody : public Component
 public:
 	inline static float PixelDensity = 100; // 1000 kg/m^2 (like water)
 
-	PixelBody(EntityRef ref);
+	PixelBody(Vanadium::ComponentData data);
 
 	void AddPixel(i32 x, i32 y, u8 type);
 

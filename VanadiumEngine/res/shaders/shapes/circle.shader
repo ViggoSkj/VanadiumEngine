@@ -7,7 +7,8 @@ uniform mat4 u_model;
 
 out vec2 uv;
 
-#include res/lib/CameraUniformObject.shader
+#include res/shaders/ubos/renderSurface.shader
+#include res/shaders/ubos/camera.shader
 
 void main()
 {

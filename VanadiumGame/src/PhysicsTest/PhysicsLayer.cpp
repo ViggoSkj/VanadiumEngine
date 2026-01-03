@@ -307,14 +307,14 @@ void PhysicsLayer::OnUpdate(double dt)
 	for (int i = 0; i < rbs.size(); i++)
 	{
 		Rigidbody* A = &rbs[i];
-		PixelCollisionComponent& aCollider = *A->GetComponent<PixelCollisionComponent>();
+		PixelCollisionComponent& aCollider = *A->GetEntity().GetComponent<PixelCollisionComponent>();
 		TransformComponent& aT = *A->GetTransform();
 
 		for (int j = i + 1; j < rbs.size(); j++)
 		{
 			Rigidbody* B = &rbs[j];
 
-			PixelCollisionComponent& bCollider = *B->GetComponent<PixelCollisionComponent>();
+			PixelCollisionComponent& bCollider = *B->GetEntity().GetComponent<PixelCollisionComponent>();
 
 			Rect bAABB = bCollider.GetAABB();
 			Rect aAABB = aCollider.GetAABB();
@@ -511,8 +511,8 @@ void PhysicsLayer::OnUpdate(double dt)
 			float correctionMag = std::max(contact.penetration - penetrationSlop, 0.0f) * percent / invMassSum;
 			glm::vec2 correction = manifold.normal * correctionMag;
 
-			auto* transformA = manifold.A->GetComponent<TransformComponent>();
-			auto* transformB = manifold.B->GetComponent<TransformComponent>();
+			auto* transformA = manifold.A->GetEntity().GetComponent<TransformComponent>();
+			auto* transformB = manifold.B->GetEntity().GetComponent<TransformComponent>();
 			if (transformA) transformA->Position += correction * inverseAMass;
 			if (transformB) transformB->Position -= correction * inverseBMass;
 		}
@@ -533,8 +533,8 @@ void PhysicsLayer::OnUpdate(double dt)
 			if (std::abs(rb.AngularVelocity) < angularEpsilon)
 				rb.AngularVelocity = 0.0f;
 
-			rb.GetComponent<TransformComponent>()->Position += rb.LinearVelocity * (float)dt;
-			rb.GetComponent<TransformComponent>()->RotateRads(rb.AngularVelocity * (float)dt);
+			rb.GetEntity().GetComponent<TransformComponent>()->Position += rb.LinearVelocity * (float)dt;
+			rb.GetEntity().GetComponent<TransformComponent>()->RotateRads(rb.AngularVelocity * (float)dt);
 		}
 	}
 
@@ -545,15 +545,11 @@ void PhysicsLayer::OnUpdate(double dt)
 	}
 	deleteCache.clear();
 
-
-
-
-
 	// generate all square collisions
 	for (int i = 0; i < rbs.size(); i++)
 	{
 		Rigidbody* A = &rbs[i];
-		PixelCollisionComponent& aCollider = *A->GetComponent<PixelCollisionComponent>();
+		PixelCollisionComponent& aCollider = *A->GetEntity().GetComponent<PixelCollisionComponent>();
 		TransformComponent& aT = *A->GetTransform();
 		DebugPixelCollisionComponent(aCollider, aT);
 	}

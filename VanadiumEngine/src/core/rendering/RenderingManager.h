@@ -23,6 +23,7 @@ namespace Vanadium::Detail::Rendering
 		UniformObject* FindUniformObject(std::string name);
 
 		void UpdateRenderSurfaceUBO();
+		void UpdateCameraUBO();
 
 		MeshStore meshStore;
 	private:

@@ -19,12 +19,12 @@ namespace Vanadium
 		Up.y = cos(Angle);
 	}
 
-	Matrix4x4 TransformComponent::ModelMatrix()
+	Matrix4 TransformComponent::ModelMatrix()
 	{
 		return ModelMatrix(0.5);
 	}
 
-	Matrix4x4 TransformComponent::ModelMatrix(float z)
+	Matrix4 TransformComponent::ModelMatrix(float z)
 	{
 		glm::mat4 model = glm::identity<glm::mat4>();
 		model = glm::translate(model, glm::vec3(Position, z));

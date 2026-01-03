@@ -3,7 +3,8 @@
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec2 aCoord;
 
-#include res/lib/CameraUniformObject.shader
+#include res/shaders/ubos/renderSurface.shader
+#include res/shaders/ubos/camera.shader
 
 uniform mat4 u_model;
  

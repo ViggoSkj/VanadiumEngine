@@ -69,12 +69,7 @@ public:
 		camera.Get().GetComponent<CameraMovementComponent>()->Target = player;
 		camera.Get().GetComponent<CameraMovementComponent>()->MoveToTarget = true;
 
-		/*
-		Entity& e2 = CreateEntity();
-		e2.AddComponent<SpriteRendererComponent>().LoadRGBATexture("res/images/player-running.png");
-		e2.AddComponent<TransformComponent>();
-		e2.AddComponent<RectCollisionComponent>();
-		*/
+
 
 
 		EntityRef e = CreateEntity();
@@ -215,6 +210,11 @@ public:
 		EntityRef e = CreateEntity();
 		e.Get().AddComponent<PixelWorld>();
 
+		EntityRef e2 = CreateEntity();
+		e2.Get().AddComponent<SpriteRendererComponent>()->LoadRGBATexture("res/images/player-running.png");
+		e2.Get().AddComponent<TransformComponent>();
+		e2.Get().AddComponent<RectCollisionComponent>();
+
 		EntityRef camera = CreateEntity();
 		camera.Get().AddComponent<TransformComponent>();
 		camera.Get().AddComponent<CameraComponent>()->Zoom = 3.0;
@@ -251,7 +251,7 @@ public:
 
 int main()
 {
-	Application app(2300, 1200);
+	Application app(Vanadium::WindowOptions(2300, 1200, 0));
 	app.PushLayer<Vanadium::RectCollisionLayer>();
 	app.PushLayer<Vanadium::SpriteRendererLayer>();
 	app.PushLayer<LiveComponentLayer<CameraMovementComponent>>();

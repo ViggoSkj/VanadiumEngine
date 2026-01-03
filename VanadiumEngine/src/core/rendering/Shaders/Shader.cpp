@@ -154,7 +154,7 @@ namespace Vanadium
 		glUniform4fv(location, 1, glm::value_ptr(value));
 	}
 
-	void Shader::SetUniformMatrix4(u64 uniformHash, Matrix4x4 matrix)
+	void Shader::SetUniformMatrix4(u64 uniformHash, Matrix4 matrix)
 	{
 		m_shaderProgram.Use();
 		i32 location = GetUniformLocation(uniformHash);

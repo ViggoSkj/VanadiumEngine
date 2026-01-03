@@ -4,17 +4,12 @@
 class Rigidbody : public Component
 {
 public:
-	Rigidbody(EntityRef entityRef)
-		: Component(entityRef)
-	{
-		InverseMass = 1.0f;
-		InverseInertia = 1.0f;
-	}
+	using Component::Component;
 
 	Vector2 GetPosition();
 	TransformComponent* GetTransform();
-	float InverseInertia;
-	float InverseMass;
+	float InverseInertia = 1.0f;
+	float InverseMass = 1.0f;
 	Vector2 LinearVelocity = { 0, 0 };
 	float AngularVelocity = 0;
 	bool Gravity = true;

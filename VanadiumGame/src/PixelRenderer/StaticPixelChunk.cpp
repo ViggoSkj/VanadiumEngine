@@ -4,8 +4,8 @@
 #include "core/Util/StringHash.h"
 #include "Util.h"
 
-StaticPixelChunk::StaticPixelChunk(EntityRef ref)
-	: Component(ref),
+StaticPixelChunk::StaticPixelChunk(Vanadium::ComponentData data)
+	: Component(data),
 	m_shader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/chunk.shader")->CreateShader().value()),
 	Position(Vector2(0, 0))
 {

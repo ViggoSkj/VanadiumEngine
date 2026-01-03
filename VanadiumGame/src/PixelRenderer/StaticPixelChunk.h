@@ -15,7 +15,7 @@ class StaticPixelChunk : public Component
 public:
 	inline const static float ChunkSize = 10.0;
 	static const u32 Size = 256;
-	StaticPixelChunk(EntityRef ref);
+	StaticPixelChunk(Vanadium::ComponentData data);
 
 	void AddPixel(LocalChunkPosition position, u8 type);
 	void AddPixel(u8 x, u8 y, u8 type);

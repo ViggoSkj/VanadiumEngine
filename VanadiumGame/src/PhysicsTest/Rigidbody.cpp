@@ -3,11 +3,11 @@
 
 Vector2 Rigidbody::GetPosition()
 {
-	TransformComponent& t = *GetComponent<TransformComponent>();
+	TransformComponent& t = *GetEntity().GetComponent<TransformComponent>();
 	return t.Position;
 }
 
 TransformComponent* Rigidbody::GetTransform()
 {
-	return GetComponent<TransformComponent>();
+	return GetEntity().GetComponent<TransformComponent>();
 }

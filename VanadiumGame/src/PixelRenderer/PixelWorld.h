@@ -14,12 +14,11 @@ public:
 		return s_instance->Get().GetComponent<PixelWorld>();
 	}
 
-	PixelWorld(EntityRef ref)
-		: LiveComponent(ref)
+	PixelWorld(Vanadium::ComponentData data)
+		: LiveComponent(data)
 	{
-		s_instance = new EntityRef(ref); // memory leak?;
+		s_instance = new EntityRef(data.GetEntityRef()); // memory leak?;
 	}
-
 
 	void OnRender(double dt) override;
 

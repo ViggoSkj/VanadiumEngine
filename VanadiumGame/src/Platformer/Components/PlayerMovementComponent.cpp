@@ -11,9 +11,9 @@ void PlayerMovementComponent::OnUpdate(double dt)
 	Application& app = Application::Get();
 	InputManager Input = app.GetWindow()->GetInputManager();
 
-	TransformComponent& transform = *GetComponent<TransformComponent>();
+	TransformComponent& transform = *GetEntity().GetComponent<TransformComponent>();
 
-	Rigidbody* rb = GetComponent<Rigidbody>();
+	Rigidbody* rb = GetEntity().GetComponent<Rigidbody>();
 
 	if (rb != nullptr)
 	{
@@ -40,7 +40,7 @@ void PlayerMovementComponent::OnUpdate(double dt)
 
 
 
-	RectCollisionComponent* collision = GetComponent<RectCollisionComponent>();
+	RectCollisionComponent* collision = GetEntity().GetComponent<RectCollisionComponent>();
 
 	if (collision != nullptr)
 	{

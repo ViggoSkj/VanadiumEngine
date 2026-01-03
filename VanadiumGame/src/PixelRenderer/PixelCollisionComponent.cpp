@@ -2,16 +2,12 @@
 #include "PixelBody.h"
 #include "PixelWorld.h"
 
-PixelCollisionComponent::PixelCollisionComponent(EntityRef ref)
-	: Component(ref)
-{
-}
 
 void PixelCollisionComponent::RecalculateCollisionRects()
 {
 	m_collisionRects.clear();
 
-	PixelBody& pixelBody = *GetComponent<PixelBody>();
+	PixelBody& pixelBody = *GetEntity().GetComponent<PixelBody>();
 	PixelSoa pixelSoa = pixelBody.GetSoa();
 
 	i32 minX = INT_MAX;
@@ -96,7 +92,7 @@ void PixelCollisionComponent::PixelsChanged()
 
 Rect PixelCollisionComponent::GetAABB()
 {
-	PixelBody& pixelBody = *GetComponent<PixelBody>();
+	PixelBody& pixelBody = *GetEntity().GetComponent<PixelBody>();
 	PixelSoa pixelSoa = pixelBody.GetSoa();
 
 	i32 minX = INT_MAX;
@@ -115,7 +111,7 @@ Rect PixelCollisionComponent::GetAABB()
 		maxY = glm::max(maxY, y);
 	}
 
-	TransformComponent& transform = *GetComponent<TransformComponent>();
+	TransformComponent& transform = *GetEntity().GetComponent<TransformComponent>();
 
 	Rect localAABB(
 		(Vector2(minX, minY) - m_centerOfMass) * PixelWorld::PixelSize,
@@ -159,7 +155,7 @@ Rect PixelCollisionComponent::GetAABB()
 // Potential overflow
 void PixelCollisionComponent::UpdateCenterOfMass()
 {
-	PixelBody& pixelBody = *GetComponent<PixelBody>();
+	PixelBody& pixelBody = *GetEntity().GetComponent<PixelBody>();
 	PixelSoa pixelSoa = pixelBody.GetSoa();
 
 	Vector2 totalPosition = { 0, 0 };
@@ -174,8 +170,8 @@ void PixelCollisionComponent::UpdateCenterOfMass()
 
 void PixelCollisionComponent::UpdateInverseMass()
 {
-	Rigidbody& rb = *GetComponent<Rigidbody>();
-	PixelBody& pixelBody = *GetComponent<PixelBody>();
+	Rigidbody& rb = *GetEntity().GetComponent<Rigidbody>();
+	PixelBody& pixelBody = *GetEntity().GetComponent<PixelBody>();
 	PixelSoa pixelSoa = pixelBody.GetSoa();
 	float pixelMass = PixelWorld::PixelSize * PixelWorld::PixelSize * PixelBody::PixelDensity;
 	rb.InverseMass = 1.0 / (pixelSoa.Count() * pixelMass);
@@ -183,8 +179,8 @@ void PixelCollisionComponent::UpdateInverseMass()
 
 void PixelCollisionComponent::UpdateInverseInertia()
 {
-	Rigidbody& rb = *GetComponent<Rigidbody>();
-	PixelBody& pixelBody = *GetComponent<PixelBody>();
+	Rigidbody& rb = *GetEntity().GetComponent<Rigidbody>();
+	PixelBody& pixelBody = *GetEntity().GetComponent<PixelBody>();
 	PixelSoa pixelSoa = pixelBody.GetSoa();
 
 	float momentOfInertia = 0;

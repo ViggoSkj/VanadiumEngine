@@ -23,14 +23,14 @@ void ShaderToySetup::Execute()
 	ref3.Get().AddComponent<ShaderToy>();
 }
 
-ShaderToy::ShaderToy(EntityRef ref)
-	: LiveComponent(ref),
+ShaderToy::ShaderToy(Vanadium::ComponentData data)
+	: LiveComponent(data),
 	m_VAO(Vanadium::Util::SquareVertexArray()),
 	m_shaderPath("res/shaders/shaderToy.shader"),
 	m_shader(std::nullopt),
 	m_fileWatcher(
 		m_shaderPath,
-		[entityId = ref.GetId()]()
+		[entityId = data.GetEntityRef().GetId()]()
 		{
 			Application::Get().GetECS()
 				->FindEntity(entityId)
@@ -52,7 +52,7 @@ void ShaderToy::UpdateShader()
 		{
 			RenderingManager& renderingMan = *Application::Get().GetRenderingManager();
 			Vanadium::UniformObjectDescriptor matricesDescriptor = m_shader.value().Descriptor().FindUniformObjectDescriptor("Matrices");
-			m_shader.value().ReportUniformObject(*renderingMan.FindUniformObject("Matrices").value());
+			// m_shader.value().ReportUniformObject(*renderingMan.FindUniformObject("Matrices").value());
 		}
 	}
 	catch (int errorCode) {
@@ -63,7 +63,7 @@ void ShaderToy::UpdateShader()
 
 void ShaderToy::OnRender(double dt)
 {
-	TransformComponent* t = GetComponent<TransformComponent>();
+	TransformComponent* t = GetEntity().GetComponent<TransformComponent>();
 
 	ShapeRenderer::Get()->FillCircle(t->Position, t->Scale.y, { 0.0, 0.0, 0.0, 1.0 });
 
@@ -81,7 +81,7 @@ void ShaderToy::OnRender(double dt)
 
 		int loc = m_shader.value().GlShader().GetUniformLocation("u_model");
 
-		TransformComponent* t = GetComponent<TransformComponent>();
+		TransformComponent* t = GetEntity().GetComponent<TransformComponent>();
 
 		glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(t->ModelMatrix()));
 

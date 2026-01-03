@@ -108,6 +108,7 @@ namespace Vanadium
 				}
 
 				m_renderingManager->UpdateRenderSurfaceUBO();
+				m_renderingManager->UpdateCameraUBO();
 
 				for (int i = 0; i < m_applicationLayers.size(); i++)
 				{

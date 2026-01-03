@@ -26,7 +26,7 @@ namespace Vanadium
 		void SetUniformVec2(u64 uniformHash, Vector2 value);
 		void SetUniformVec3(u64 uniformHash, Vector3 value);
 		void SetUniformVec4(u64 uniformHash, Vector4 value);
-		void SetUniformMatrix4(u64 uniformHash, Matrix4x4 matrix);
+		void SetUniformMatrix4(u64 uniformHash, Matrix4 matrix);
 
 		void Use() { return m_shaderProgram.Use(); }
 

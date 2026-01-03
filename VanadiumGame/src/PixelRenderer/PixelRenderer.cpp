@@ -42,7 +42,7 @@ void PixelRenderer::OnRenderDebug(double dt)
 	for (int i = 0; i < colliders.size(); i++)
 	{
 		PixelCollisionComponent& collider = colliders[i];
-		TransformComponent& t = *collider.GetComponent<TransformComponent>();
+		TransformComponent& t = *collider.GetEntity().GetComponent<TransformComponent>();
 
 		for (Rect rect : collider.GetCollisionRects())
 		{

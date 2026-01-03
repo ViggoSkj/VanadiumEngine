@@ -21,7 +21,7 @@ namespace Vanadium
 		void SetAngleDeg(float deg);
 		void RotateRads(float rads);
 
-		Matrix4x4 ModelMatrix();
-		Matrix4x4 ModelMatrix(float z);
+		Matrix4 ModelMatrix();
+		Matrix4 ModelMatrix(float z);
 	};
 }

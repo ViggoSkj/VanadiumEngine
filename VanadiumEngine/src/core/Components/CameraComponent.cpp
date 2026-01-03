@@ -1,9 +1,16 @@
 #include "pch.h"
 #include "CameraComponent.h"
 #include "TransformComponent.h"
+#include "ECS.h"
 
 namespace Vanadium
 {
+	CameraComponent::CameraComponent(Vanadium::ComponentData data)
+		: LiveComponent(data)
+	{
+		CameraComponent::s_active = Vanadium::ECS::CreateHandle(*this);
+	}
+
 	void CameraComponent::OnUpdate(double dt)
 	{
 

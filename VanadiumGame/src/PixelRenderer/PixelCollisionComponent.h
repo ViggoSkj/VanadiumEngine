@@ -7,7 +7,7 @@
 class PixelCollisionComponent : public Component
 {
 public:
-	PixelCollisionComponent(EntityRef ref);
+	using Component::Component;
 
 	void RecalculateCollisionRects();
 

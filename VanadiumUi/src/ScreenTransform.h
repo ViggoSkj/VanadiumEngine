@@ -9,5 +9,5 @@ public:
 	Rect Surface;
 	Vanadium::ComponentHandle<ScreenTransform> Parent;
 
-	Matrix4x4 ModelMatrix();
+	Matrix4 ModelMatrix();
 };

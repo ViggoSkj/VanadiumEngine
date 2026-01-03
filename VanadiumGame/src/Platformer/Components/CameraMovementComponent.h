@@ -5,7 +5,7 @@
 class CameraMovementComponent : public LiveComponent
 {
 public:
-	CameraMovementComponent(EntityRef ref);
+	using LiveComponent::LiveComponent;
 
 	void OnUpdate(double dt) override;
 

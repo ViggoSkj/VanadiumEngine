@@ -6,7 +6,8 @@ layout (location = 2) in float x;
 layout (location = 3) in float y;
 layout (location = 4) in float type;
 
-#include res/lib/CameraUniformObject.shader
+#include res/shaders/ubos/renderSurface.shader
+#include res/shaders/ubos/camera.shader
 
 out vec4 color;
 out vec2 uv;

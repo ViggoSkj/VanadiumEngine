@@ -41,23 +41,7 @@ namespace Vanadium
 		unsigned int m_samplerId = m_textureShader.GlShader().GetUniformLocation("u_sampler");
 		unsigned int m_modelMatrix = m_textureShader.GlShader().GetUniformLocation("u_model");
 
-		glm::mat4 proj = Application::Get().GetWindow()->GetOrthographicProjection();
-
-		std::optional<CameraComponent*> oCameraComponent = CameraComponent::GetMain();
-
-		if (!oCameraComponent.has_value())
-		{
-			std::cout << "no main camera" << std::endl;
-			return;
-		}
-
-		glm::mat4 view = oCameraComponent.value()->GetCamera().GetViewMatrix();
-
 		RenderingManager& man = *Application::Get().GetRenderingManager();
-		UniformObject& m_matrices = *man.FindUniformObject("Matrices");
-		m_matrices.Buffer.SetData(glm::value_ptr(proj), 0, 4 * 4 * 4);
-		m_matrices.Buffer.SetData(glm::value_ptr(view), 4 * 4 * 4, 4 * 4 * 4);
-
 		GL_CHECK(glActiveTexture(GL_TEXTURE0));
 		GL_CHECK(glUniform1i(m_samplerId, 0));
 		m_textureShader.GlShader().Use();

@@ -5,14 +5,13 @@
 
 namespace Vanadium
 {
-	class CameraComponent : public LiveComponent<CameraComponent>
+	class CameraComponent : public LiveComponent
 	{
 	public:
-		static std::optional<CameraComponent*> GetMain()
-		{
-			if (s_active == nullptr)
-				return std::nullopt;
+		CameraComponent(Vanadium::ComponentData data);
 
+		static ComponentHandle<CameraComponent> GetMain()
+		{
 			return s_active;
 		};
 
@@ -22,6 +21,6 @@ namespace Vanadium
 
 		float Zoom = 1.0;
 	private:
-		inline static CameraComponent* s_active = nullptr;
+		inline static ComponentHandle<CameraComponent> s_active;
 	};
 }

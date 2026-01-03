@@ -41,6 +41,7 @@ namespace Vanadium
 		}
 		u32 GetId() const { return m_data.GetId(); }
 		Entity& GetEntity() { return m_data.GetEntity(); }
+		EntityRef GetEntityRef() const { return m_data.GetEntityRef(); }
 
 	private:
 		ComponentData m_data;

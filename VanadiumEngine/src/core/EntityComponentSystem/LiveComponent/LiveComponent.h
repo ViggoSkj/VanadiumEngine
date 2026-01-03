@@ -5,7 +5,6 @@
 
 namespace Vanadium
 {
-	template<typename Derived>
 	class LiveComponent : public Component
 	{
 	public:

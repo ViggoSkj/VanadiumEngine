@@ -2,6 +2,7 @@
 #include "RenderingManager.h"
 #include "core/Application.h"
 #include "core/AssetManager/AssetTypes/Shader/ShaderAsset.h"
+#include "core/Components/CameraComponent.h"
 
 namespace Vanadium::Detail::Rendering
 {
@@ -48,6 +49,18 @@ namespace Vanadium::Detail::Rendering
 		m_matrices.Buffer.SetData(glm::value_ptr(proj), 0, sizeof(float) * 4 * 4);
 		m_matrices.Buffer.SetData(&width, sizeof(float) * 4 * 4, sizeof(u32));
 		m_matrices.Buffer.SetData(&height, sizeof(float) * 4 * 4 + sizeof(u32), sizeof(u32));
+	}
+
+	void Rendering::RenderingManager::UpdateCameraUBO()
+	{
+		if (CameraComponent::GetMain().IsEmpty())
+			return;
+		
+		CameraComponent& cam = CameraComponent::GetMain().Get();
+
+		Matrix4 mat = cam.GetCamera().GetViewMatrix();
+		UniformObject& m_matrices = *FindUniformObject("Matrices");
+		m_matrices.Buffer.SetData(glm::value_ptr(mat), 0, sizeof(float) * 4 * 4);
 	}
 
 	void RenderingManager::InitializeDefaultUniformObjects()

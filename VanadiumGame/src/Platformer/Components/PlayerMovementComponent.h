@@ -5,11 +5,9 @@
 class PlayerMovementComponent : public LiveComponent
 {
 public:
-	PlayerMovementComponent(EntityRef ref)
-		: LiveComponent(ref) { }
+	using LiveComponent::LiveComponent;
 
 	void OnUpdate(double dt) override;
-
 
 	float Speed = 3.5;
 private:
