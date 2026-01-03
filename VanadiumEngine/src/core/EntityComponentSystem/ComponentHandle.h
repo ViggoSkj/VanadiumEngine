@@ -11,18 +11,23 @@ namespace Vanadium
 	class ComponentHandle
 	{
 	public:
-		ComponentHandle(ComponentStore<TComponent>* store, u32 componentId, u32 generation)
-			: m_generation(generation)
-			, m_store(store)
+		ComponentHandle()
+			: m_componentId(0), m_store(nullptr)
+		{
+
+		}
+
+		ComponentHandle(ComponentStore<TComponent>* store, u32 componentId)
+			: m_store(store)
 			, m_componentId(componentId)
 		{
 
 		}
 
+		bool IsEmpty() const;
 		u32 GetId() const;
 		TComponent& Get();
 	private:
-		u32 m_generation;
 		u32 m_componentId;
 		ComponentStore<TComponent>* m_store;
 	};
@@ -39,5 +44,13 @@ namespace Vanadium
 		TComponent* component = m_store->GetComponent(m_componentId);
 		assert(component != nullptr);
 		return *component;
+	}
+
+	template<typename TComponent>
+	inline bool ComponentHandle<TComponent>::IsEmpty() const
+	{
+		if (m_store == nullptr)
+			return true;
+		return false;
 	}
 }

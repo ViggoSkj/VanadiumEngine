@@ -6,13 +6,16 @@ layout (location = 1) in vec2 aCoord;
 #include res/shaders/ubos/renderSurface.shader
 #include res/shaders/ubos/camera.shader
 
-uniform mat4 u_model;
+uniform vec4 u_rect;
  
 out vec2 uv;
 
 void main()
 {
-    gl_Position = projection * vec4(aPos.x, aPos.y, aPos.z, 1.0);
+    vec2 pixelCoordinates = (u_rect.xy * 2 + aPos.xy * (u_rect.zw - u_rect.xy))/resolution.xy;
+    gl_Position = vec4(pixelCoordinates, aPos.z, 1.0);
+    gl_Position.x -= 1.0;
+    gl_Position.y = 1.0 - gl_Position.y;
     uv = aCoord;
 }
 
@@ -23,5 +26,5 @@ in vec2 uv;
 
 void main()
 {
-    FragColor = vec4(uv, 1.0, 1.0);
+    FragColor = vec4(uv, 0.0, 1.0);
 }

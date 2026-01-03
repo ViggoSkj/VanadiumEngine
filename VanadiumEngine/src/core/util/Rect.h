@@ -6,6 +6,11 @@ struct Rect
 	Rect(Vector2 start = Vector2(0, 0), Vector2 end = Vector2(1, 1))
 		: Start(start), End(end) {}
 
+	operator Vector4()
+	{
+		return Vector4(Start.x, Start.y, End.x, End.y);
+	}
+
 	Vector2 Start;
 	Vector2 End = Vector2(1, 1);
 

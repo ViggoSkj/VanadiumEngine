@@ -1,5 +1,7 @@
 #pragma once
 
+#include "core/API/EntityComponentSystemApi.h"
+
 #include "core/EntityComponentSystem/Component.h"
 #include "core/EntityComponentSystem/ComponentStore.h"
 #include "core/EntityComponentSystem/Entity.h"

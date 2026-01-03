@@ -8,6 +8,7 @@ namespace Vanadium::Util
 {
 	using Vanadium::Rendering::MeshData;
 
+	MeshData SquareMeshData(float width, bool centered);
 	MeshData SquareMeshData(float width);
 	VertexArray SquareVertexArray();
 }

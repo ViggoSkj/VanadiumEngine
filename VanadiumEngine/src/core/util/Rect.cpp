@@ -4,8 +4,7 @@
 
 Vector2 Rect::Size() const
 {
-	// Ensure size is always positive (width/height)
-	return { End.x - Start.x, End.y - Start.y };
+	return End - Start;
 }
 
 Vector2 Rect::Center() const 

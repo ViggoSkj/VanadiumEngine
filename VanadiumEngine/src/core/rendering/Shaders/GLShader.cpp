@@ -106,6 +106,13 @@ namespace Vanadium
 		ShaderProgramSource sources;
 		LoadShaderSource(source, sources);
 
+		if (sources.VertexStartLine == -1)
+			throw "e";
+
+		if (sources.FragmentStartLine == -1)
+			throw "e";
+
+
 		unsigned int vertexShader = CompileShader(sources.VertexSource.c_str(), sources.VertexStartLine, GL_VERTEX_SHADER);
 		unsigned int fragmentShader = CompileShader(sources.FragmentSource.c_str(), sources.FragmentStartLine, GL_FRAGMENT_SHADER);
 

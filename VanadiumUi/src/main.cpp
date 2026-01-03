@@ -24,12 +24,14 @@ int main()
 
 	app.PushLayer<UiRenderingLayer>();
 
-	app.Run();
-
 	SceneManager& man = *app.GetSceneManager();
+
 	SceneRef ref = man.ConstructScene();
 	ref.Get().AddSetupStep<UiSetup>();
+
 	man.LoadScene(ref.GetId());
+	
+	app.Run();
 
 	return 0;
 }

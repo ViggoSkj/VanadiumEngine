@@ -41,8 +41,13 @@ namespace Vanadium::Detail::Rendering
 	{
 		Window& window = *Application::Get().GetWindow();
 		glm::mat4 proj = window.GetOrthographicProjection();
+		u32 width = window.GetWidth();
+		u32 height = window.GetHeight();
+
 		UniformObject& m_matrices = *FindUniformObject("RenderSurface");
-		m_matrices.Buffer.SetData(glm::value_ptr(proj), 0, 4 * 4 * 4);
+		m_matrices.Buffer.SetData(glm::value_ptr(proj), 0, sizeof(float) * 4 * 4);
+		m_matrices.Buffer.SetData(&width, sizeof(float) * 4 * 4, sizeof(u32));
+		m_matrices.Buffer.SetData(&height, sizeof(float) * 4 * 4 + sizeof(u32), sizeof(u32));
 	}
 
 	void RenderingManager::InitializeDefaultUniformObjects()

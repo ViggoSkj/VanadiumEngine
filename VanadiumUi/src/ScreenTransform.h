@@ -7,5 +7,7 @@ public:
 	using Component::Component;
 
 	Rect Surface;
-	ScreenTransform* Parent;
+	Vanadium::ComponentHandle<ScreenTransform> Parent;
+
+	Matrix4x4 ModelMatrix();
 };

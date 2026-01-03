@@ -117,7 +117,6 @@ namespace Vanadium
 				m_window->SwapBuffers();
 			}
 
-
 			if (m_window->WindowSizeChanged())
 			{
 				GL_CHECK(glViewport(0, 0, m_window->GetWidth(), m_window->GetHeight()));
