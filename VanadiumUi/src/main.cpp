@@ -27,9 +27,12 @@ public:
 		style.width = 700;
 		style.height = 400;
 		style.heightAuto = true;
+		style.border = { 10, 10, 10, 10 };
 		style.padding = { 100, 100, 100, 100 };
 
 		Style style2;
+		style2.padding = 10;
+		style2.margin.margin = 10;
 		style2.margin.marginAuto = { true, true, true ,true };
 		style2.backgroundColor = Vanadium::Colors::red;
 		style2.backgroundColor.w = 0.5;

@@ -3,20 +3,7 @@
 
 void CalculateLayout(UiTree& tree)
 {
-	std::vector<UiNode*> nodes = { &tree.root };
-
-	i32 lastLayerIndex = 0;
-
-	// bfs
-	while (lastLayerIndex < nodes.size())
-	{
-		i32 newLast = nodes.size();
-		for (i32 i = lastLayerIndex; i < nodes.size(); i++)
-			for (auto& child : nodes[i]->children)
-				nodes.push_back(&child);
-		lastLayerIndex = newLast;
-	}
-
+	std::vector<UiNode*> nodes = tree.GetNodes();
 
 	for (u32 i = 0; i < 3; i++)
 	{
@@ -30,6 +17,7 @@ void CalculateLayout(UiTree& tree)
 				previous = nullptr;
 
 			node.resolvedProperties.box.padding = style.padding;
+			node.resolvedProperties.box.border = style.border;
 
 			if (style.position == Style::Absolute)
 			{
@@ -38,13 +26,14 @@ void CalculateLayout(UiTree& tree)
 
 				if (style.heightAuto)
 				{
-					float goalBottom = node.children.back().resolvedProperties.box.position.y + node.children.back().resolvedProperties.box.Full().y;
-					float bottom = node.resolvedProperties.box.position.y + 
-						node.resolvedProperties.box.content.y +
-						node.resolvedProperties.box.border.top +
-						node.resolvedProperties.box.padding.top;
+					i32 yContentTop = node.children.back().resolvedProperties.box.position.y + node.children.back().resolvedProperties.box.Visible().y - node.children.front().resolvedProperties.box.position.y;
+					i32 marginTop = node.children.front().resolvedProperties.box.margin.top;
+					i32 marginBottom = node.children.back().resolvedProperties.box.margin.bottom;
 
-					node.resolvedProperties.box.content.y += goalBottom - bottom;
+					marginTop = std::max(0, marginTop - node.resolvedProperties.box.padding.top);
+					marginBottom = std::max(0, marginBottom - node.resolvedProperties.box.padding.bottom);
+
+					node.resolvedProperties.box.content.y = marginTop + yContentTop + marginBottom;
 				}
 			}
 
@@ -71,7 +60,8 @@ void CalculateLayout(UiTree& tree)
 
 				if (node.parent != nullptr)
 				{
-					i32 y = 0;
+					i32 paddingOverhead = 0;
+					i32 minY = 0;
 					i32 x = node.parent->resolvedProperties.box.position.x +
 						node.parent->resolvedProperties.box.border.left +
 						node.parent->resolvedProperties.box.padding.left;
@@ -79,17 +69,18 @@ void CalculateLayout(UiTree& tree)
 
 					if (previous != nullptr)
 					{
-						y = previous->resolvedProperties.box.Visible().y + previous->resolvedProperties.box.position.y;
+						minY = previous->resolvedProperties.box.Visible().y + previous->resolvedProperties.box.position.y;
 						prevMarginBottom = previous->resolvedProperties.box.margin.bottom;
 					}
 					else
 					{
-						y = node.parent->resolvedProperties.box.position.y +
+						minY = node.parent->resolvedProperties.box.position.y +
 							node.parent->resolvedProperties.box.border.top +
 							node.parent->resolvedProperties.box.padding.top;
+						paddingOverhead = node.parent->resolvedProperties.box.padding.top;
 					}
 
-					y += std::max(prevMarginBottom, node.resolvedProperties.box.margin.top);
+					i32 y = minY + std::max((std::max(prevMarginBottom, node.resolvedProperties.box.margin.top) - paddingOverhead), 0);
 					x += node.resolvedProperties.box.margin.left;
 
 					node.resolvedProperties.box.position = Vector2(x, y);

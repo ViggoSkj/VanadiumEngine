@@ -20,6 +20,7 @@ struct Style
 
 	Position position = Position::Flow;
 	Margin margin;
+	BoxDirections<i32> border;
 	BoxDirections<i32> padding;
 
 	bool widthAuto = false;

@@ -31,6 +31,15 @@ public:
 
 	}
 
+	BoxDirections(T value)
+		: top(value)
+		, right(value)
+		, bottom(value)
+		, left(value)
+	{
+
+	}
+
 	// i32-only: vertical/horizontal split ctor
 	BoxDirections(i32 vertical, i32 horizontal)
 		requires (std::is_same_v<T, i32>)
