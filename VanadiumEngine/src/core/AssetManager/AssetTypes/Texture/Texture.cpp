@@ -20,4 +20,9 @@ namespace Vanadium
 
 		m_data = Array2D<ColorRGBA>((ColorRGBA*)image, width, height);
 	}
+
+	void TextureRGBA::Copy(TextureRGBA& destination) const
+	{
+		m_data.Copy(destination.m_data);
+	}
 }

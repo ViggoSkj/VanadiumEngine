@@ -1,99 +1,102 @@
 #pragma once
-#include <memory>
+#include "core/CoreTypes.h"
+#include <vector>
+#include <cassert>
+#include <algorithm>
 
 template<typename T>
 class Array2D
 {
 public:
-	Array2D();
-	Array2D(T* data, unsigned int width, unsigned int height);
-	Array2D(unsigned int width, unsigned int height);
+    Array2D() = default;
+    Array2D(unsigned int width, unsigned int height);
+    Array2D(const T* data, unsigned int width, unsigned int height);
 
-	T Get(int x, int y)
-	{
-#ifdef DEBUG
-		if (x >= m_width || y >= m_height)
-			throw std::exception("Out of range.");
-#endif
-		return m_data[x + y * m_width];
-	}
+    void Copy(Array2D<T>& destination) const;
 
-	void Set(int x, int y, T value)
-	{
-#ifdef DEBUG
-		if (x >= m_width || y >= m_height)
-			throw std::exception("Out of range.");
-#endif
-		m_data[x + y * m_width] = value;
-	}
+    T Get(int x, int y) const
+    {
+        assert(x >= 0 && y >= 0);
+        assert(x < (int)m_width && y < (int)m_height);
+        return m_data[x + y * m_width];
+    }
 
-	void SetResize(int x, int y, T value)
-	{
-		if (x >= m_width && y >= m_height)
-			Resize(x + 1, y + 1);
-		else if (x >= m_width)
-			Resize(x + 1, m_height);
-		else if (y >= m_height)
-			Resize(m_width, y);
+    void Set(int x, int y, const T& value)
+    {
+        assert(x >= 0 && y >= 0);
+        assert(x < (int)m_width && y < (int)m_height);
+        m_data[x + y * m_width] = value;
+    }
 
-		Set(x, y, value);
-	}
+    void SetResize(int x, int y, const T& value)
+    {
+        if (x >= (int)m_width || y >= (int)m_height)
+        {
+            Resize(
+                std::max(m_width, (u32)(x + 1)),
+                std::max(m_height, (u32)(y + 1))
+            );
+        }
+        Set(x, y, value);
+    }
 
-	T* Data()
-	{
-		return m_data;
-	}
+    T* Data() { return m_data.data(); }
+    const T* Data() const { return m_data.data(); }
 
-	unsigned int GetWidth() { return m_width; }
-	unsigned int GetHeight() { return m_height; }
+    u32 GetWidth() const { return m_width; }
+    u32 GetHeight() const { return m_height; }
+    u32 Count() const { return m_width * m_height; }
 
-	void Resize(unsigned int width, unsigned int height);
-
-	u32 Count() { return m_width * m_height; }
+    void Resize(unsigned int width, unsigned int height);
 
 private:
-	T* m_data = nullptr;
-	u32 m_width = 0;
-	u32 m_height = 0;
+    std::vector<T> m_data;
+    u32 m_width = 0;
+    u32 m_height = 0;
 };
 
 template<typename T>
-inline Array2D<T>::Array2D()
-	: m_data(nullptr), m_width(0), m_height(0)
+Array2D<T>::Array2D(unsigned int width, unsigned int height)
 {
+    Resize(width, height);
 }
 
 template<typename T>
-inline Array2D<T>::Array2D(T* data, unsigned int width, unsigned int height)
+Array2D<T>::Array2D(const T* data, unsigned int width, unsigned int height)
+    : m_width(width), m_height(height), m_data(width* height)
 {
-	m_width = width;
-	m_height = height;
-	m_data = data;
+    std::copy(data, data + m_data.size(), m_data.begin());
 }
 
 template<typename T>
-inline Array2D<T>::Array2D(unsigned int width, unsigned int height)
+void Array2D<T>::Copy(Array2D<T>& destination) const
 {
-	Resize(width, height);
+    destination.m_width = m_width;
+    destination.m_height = m_height;
+    destination.m_data = m_data;
 }
 
 template<typename T>
-inline void Array2D<T>::Resize(unsigned int width, unsigned int height)
+void Array2D<T>::Resize(unsigned int width, unsigned int height)
 {
-	T* newValues = (T*)calloc(width * height, sizeof(width));
+    if (width == m_width && height == m_height)
+        return;
 
-	
-	if (width * height > 0 && m_height * m_width > 0 && m_data != nullptr)
-	{
-		// copy rows
-		for (int y = 0; y < m_width; y++)
-		{
-			memcpy(newValues + y * width, m_data + m_width * sizeof(T), m_width * sizeof(T));
-		}
-	}
+    std::vector<T> newData(width * height);
 
-	m_data = newValues;
+    unsigned int copyWidth = std::min(m_width, width);
+    unsigned int copyHeight = std::min(m_height, height);
 
-	m_width = width;
-	m_height = height;
+    for (unsigned int y = 0; y < copyHeight; ++y)
+    {
+        std::copy(
+            m_data.begin() + y * m_width,
+            m_data.begin() + y * m_width + copyWidth,
+            newData.begin() + y * width
+        );
+    }
+
+    m_data = std::move(newData);
+    m_width = width;
+    m_height = height;
 }

@@ -11,7 +11,26 @@ namespace Vanadium
 		GLTexture(const GLTexture&) = delete;
 		~GLTexture();
 
-		void AssignTexture(Texture* texture);
+		GLTexture(GLTexture&& other) noexcept
+			: m_id(other.m_id), Config(other.Config)
+		{
+			other.m_id = 0;
+		}
+
+		GLTexture& operator=(GLTexture&& other) noexcept
+		{
+			if (&other == this)
+				return *this;
+
+			m_id = other.m_id;
+			Config = other.Config;
+
+			other.m_id = 0;
+
+			return *this;
+		}
+
+		void AssignTexture(const Texture& texture);
 
 		void Bind();
 		void UnBind();

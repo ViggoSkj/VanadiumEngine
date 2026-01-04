@@ -1,5 +1,6 @@
 #include "UiTree.h"
 #include "ECS.h"
+#include "TextElement.h"
 
 void CalculateLayout(UiTree& tree)
 {
@@ -112,6 +113,12 @@ void ResolveChildren(UiNode& node)
 		childNode.transform = Vanadium::ECS::CreateHandle(*child);
 		childNode.style = child->style;
 		childNode.parent = &node;
+
+		if (TextElement* textElement = child->GetEntity().GetComponent<TextElement>())
+		{
+			childNode.special.variant = TextProperties(textElement->text);
+		}
+
 		ResolveChildren(childNode);
 		node.children.push_back(childNode);
 	}

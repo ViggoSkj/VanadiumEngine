@@ -4,6 +4,23 @@
 #include "ScreenElement.h"
 #include "Style.h"
 #include "UiBox.h"
+#include <string_view>
+
+struct TextProperties
+{
+	std::string text;
+};
+
+enum PropType
+{
+	None,
+	Text
+};
+
+struct SpecialProperties
+{
+	std::variant<TextProperties> variant;
+};
 
 struct ResolvedNodeProperties
 {
@@ -17,6 +34,8 @@ struct UiNode
 	Style style;
 	ResolvedNodeProperties resolvedProperties;
 	Vanadium::ComponentHandle<ScreenElement> transform;
+
+	SpecialProperties special;
 };
 
 struct UiTree

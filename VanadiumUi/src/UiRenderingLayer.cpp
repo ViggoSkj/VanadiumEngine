@@ -6,7 +6,9 @@
 UiRenderingLayer::UiRenderingLayer()
 	: m_quad(Vanadium::Rendering::CreateMesh(Vanadium::Util::SquareMeshData(2.0, false)))
 	, m_shader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/box.shader")->CreateShader().value())
+	, m_symbolSheet("res/textures/font.png", 16, 16, 10, 10)
 {
+
 }
 
 void UiRenderingLayer::OnRender(double dt)
@@ -39,12 +41,18 @@ void UiRenderingLayer::OnRender(double dt)
 		ScreenElement& t = node->transform.Get();
 		m_shader.SetUniformVec2("u_position"_id, t.box.position);
 		m_shader.SetUniformVec2("u_content"_id, t.box.content);
-		
+
 		m_shader.SetUniformVec4("u_border"_id, t.box.border);
 		m_shader.SetUniformVec4("u_padding"_id, t.box.padding);
 
 		m_shader.SetUniformVec4("u_color"_id, node->style.backgroundColor);
 		m_quad.Render();
+
+		if (auto* props = std::get_if<TextProperties>(&node->special.variant)) {
+			m_symbolSheet.Use();
+			m_symbolSheet.Draw();
+			m_shader.Use();
+		}
 	}
 	GL_CHECK(glDepthFunc(GL_LESS));
 }

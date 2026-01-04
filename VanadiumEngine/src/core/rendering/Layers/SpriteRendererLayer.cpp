@@ -68,7 +68,7 @@ namespace Vanadium
 
 		m_readyTexture.try_emplace(texture);
 		GLTexture& tex = m_readyTexture.at(texture);
-		tex.AssignTexture((Texture*)&texture->Texture);
+		tex.AssignTexture(texture->Texture);
 
 		return tex;
 	}

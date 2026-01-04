@@ -14,20 +14,23 @@ namespace Vanadium
 	{
 	public:
 		Texture() {};
-		virtual unsigned int GetWidth() { return 0; };
-		virtual unsigned int GetHeight() { return 0; };
-		virtual void* GetData() { return nullptr; };
+		virtual unsigned int GetWidth() const { return 0; };
+		virtual unsigned int GetHeight() const { return 0; };
+		virtual void* GetData() const { return nullptr; };
 	};
 
 	class TextureRGBA : public Texture
 	{
 	public:
+		TextureRGBA() = default;
 		TextureRGBA(std::filesystem::path path, ImageFileFormat format);
 
-		unsigned int GetWidth() override { return m_data.GetWidth(); }
-		unsigned int GetHeight() override { return m_data.GetHeight(); }
+		void Copy(TextureRGBA& destination) const;
 
-		void* GetData() override { return m_data.Data(); }
+		u32 GetWidth() const override { return m_data.GetWidth(); }
+		u32 GetHeight() const override { return m_data.GetHeight(); }
+
+		void* GetData() const override { return (void*) m_data.Data(); }
 
 	private:
 		Array2D<ColorRGBA> m_data;

@@ -7,6 +7,7 @@
 #include "Mesh/MeshStore.h"
 #include "core/Util/UnorderdVector.h"
 #include "core/HandleStore.h"
+#include "textures/TextureStore.h"
 
 namespace Vanadium::Detail::Rendering
 {
@@ -26,10 +27,12 @@ namespace Vanadium::Detail::Rendering
 		void UpdateCameraUBO();
 
 		MeshStore meshStore;
+		TextureStore textureStore;
 	private:
 		void InitializeDefaultUniformObjects();
 
 		UniformBinder m_uniformBinder;
 		HandleStore<UniformObject> m_uniformObjects;
+
 	};
 }
