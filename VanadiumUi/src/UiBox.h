@@ -33,6 +33,16 @@ struct UiBox
 		);
 	}
 
+	i32 RightVisible()
+	{
+		return position.x + content.x + padding.right + border.right;
+	}
+
+	i32 RightContent()
+	{
+		return position.x + content.x;
+	}
+
 	Vector2I position = { 0.0, 0.0 };
 
 	BoxDirections<i32> margin = { 0, 0, 0, 0 };

@@ -1,6 +1,7 @@
 #pragma once
 #include "Core.h"
 #include "SymbolSheet.h"
+#include "SymbolRenderer.h"
 
 class UiRenderingLayer : public ApplicationLayer
 {
@@ -12,5 +13,4 @@ public:
 private:
 	Shader m_shader;
 	RenderObject m_quad;
-	SymbolSheet m_symbolSheet;
 };

@@ -33,8 +33,7 @@ namespace Vanadium
 	void VertexBuffer::UpdateVertecies(const void* data, int size, int offset)
 	{
 		Bind();
-		if (size + offset > m_bufferSize)
-			throw "buffer does not have enugh capacity";
+		assert(size + offset < m_bufferSize);
 		GL_CHECK(glBufferSubData(GL_ARRAY_BUFFER, offset, size, data));
 		UnBind();
 	}

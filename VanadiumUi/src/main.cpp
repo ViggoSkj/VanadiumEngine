@@ -65,8 +65,10 @@ public:
 
 	ScreenElement& CreateTextElement(Style style, std::string text)
 	{
+		std::shared_ptr<SymbolSheet> symbolSheet = Application::Get().GetAssetManager()->GetFileAsset<SymbolSheet>("res/textures/font.png");
 		ScreenElement& e = CreateBox(style);
 		e.GetEntity().AddComponent<TextElement>()->text = text;
+		e.GetEntity().GetComponent<TextElement>()->symbolRenderer = std::make_unique<SymbolRenderer>(symbolSheet);
 		return e;
 	}
 
@@ -92,8 +94,9 @@ public:
 		style2.backgroundColor = Vanadium::Colors::red;
 		style2.backgroundColor.w = 0.5;
 		style2.position = Style::Flow;
-		style2.width = 200;
+		style2.width = 350;
 		style2.height = 200;
+		//CreateTextElement(style2, "T").Parent = panel;
 		CreateTextElement(style2, "This is a test").Parent = panel;
 	}
 };

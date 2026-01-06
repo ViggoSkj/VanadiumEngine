@@ -4,11 +4,13 @@
 #include "ScreenElement.h"
 #include "Style.h"
 #include "UiBox.h"
-#include <string_view>
+#include "SymbolRenderer.h"
 
 struct TextProperties
 {
+	std::shared_ptr<SymbolRenderer> renderer;
 	std::string text;
+	std::vector<Vector2> resolvedPositions;
 };
 
 enum PropType
@@ -29,8 +31,8 @@ struct ResolvedNodeProperties
 
 struct UiNode
 {
-	UiNode* parent = nullptr;
-	std::vector<UiNode> children;
+	std::shared_ptr<UiNode> parent = nullptr;
+	std::vector<std::shared_ptr<UiNode>> children;
 	Style style;
 	ResolvedNodeProperties resolvedProperties;
 	Vanadium::ComponentHandle<ScreenElement> transform;
@@ -40,11 +42,11 @@ struct UiNode
 
 struct UiTree
 {
-	UiNode root;
+	std::shared_ptr<UiNode> root;
 
-	std::vector<UiNode*> GetNodes();
+	std::vector<std::shared_ptr<UiNode>> GetNodes();
 };
 
 void CalculateLayout(UiTree& tree);
 
-void ResolveChildren(UiNode& node);
+void ResolveChildren(std::shared_ptr<UiNode> node);

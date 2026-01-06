@@ -15,7 +15,7 @@ out vec2 uv;
 void main()
 {
     vec2 size = u_rect.zw - u_rect.xy;
-    vec2 pixelCoordinates = (u_rect.xy * 2 + (aPos.xy + position) * size)/resolution.xy;
+    vec2 pixelCoordinates = (aPos.xy * size + position * 2.0)/resolution.xy;
     gl_Position = vec4(pixelCoordinates, aPos.z, 1.0);
     gl_Position.x -= 1.0;
     gl_Position.y = 1.0 - gl_Position.y;
@@ -31,5 +31,5 @@ uniform sampler2D u_sampler;
 
 void main()
 {
-    FragColor = texture2D(u_sampler, uv);
+    FragColor = texture2D(u_sampler, uv) + vec4(1.0,1.0,1.0,0.3);
 }

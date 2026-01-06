@@ -56,6 +56,4 @@ namespace Vanadium
 		u32 m_vertexArrayId = 0;
 		u32 m_vertexAttributeCount = 0;
 	};
-
-
 }

@@ -18,6 +18,13 @@ struct Style
 		BoxDirections<i32> margin = { 0, 0, 0, 0 };
 	};
 
+	enum Display
+	{
+		Block,
+		Inline,
+	};
+
+	Display display = Display::Block;
 	Position position = Position::Flow;
 	Margin margin;
 	BoxDirections<i32> border;
