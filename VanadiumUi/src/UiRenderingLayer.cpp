@@ -66,3 +66,15 @@ void UiRenderingLayer::OnRender(double dt)
 	}
 	GL_CHECK(glDepthFunc(GL_LESS));
 }
+
+void UiRenderingLayer::OnEvent(Vanadium::Event& event)
+{
+	Vanadium::EventDispatcher dispatcher(event);
+	dispatcher.Dispatch<Vanadium::MouseButtonDownEvent>([this](Vanadium::MouseButtonDownEvent& event) { return OnClick(event); });
+}
+
+bool UiRenderingLayer::OnClick(Vanadium::MouseButtonDownEvent& event)
+{
+
+	return false;
+}

@@ -2,26 +2,21 @@
 #include "Window.h"
 #include "Monitor/Monitor.h"
 #include "core/InputManager/KeyMaps.h"
+#include "core/InputManager/InputEvents.h"
 
 namespace Vanadium
 {
-	void glfw_window_deleter(GLFWwindow* window) {
-		if (window) {
-			glfwDestroyWindow(window);
-		}
-	}
-
 	Window::Window(WindowOptions options)
+		: m_eventCallback(options.eventCallback)
+		, m_width(options.width)
+		, m_height(options.height)
 	{
-		m_width = options.width;
-		m_height = options.height;
-
 		glfwInit();
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-		m_window = std::shared_ptr<GLFWwindow>(glfwCreateWindow(m_width, m_height, "LearnOpenGL", NULL, NULL), glfw_window_deleter);
+		m_window = glfwCreateWindow(m_width, m_height, "LearnOpenGL", NULL, NULL);
 
 		if (m_window == NULL)
 		{
@@ -46,18 +41,40 @@ namespace Vanadium
 			break;
 		}
 
-		glfwMakeContextCurrent(m_window.get());
+		glfwMakeContextCurrent(m_window);
+
+		glfwSetWindowUserPointer(m_window, this);
+
+		glfwSetMouseButtonCallback(m_window, [](GLFWwindow* glfwWindow, int button, int action, int mods)
+			{
+				switch (action)
+				{
+				case GLFW_PRESS:
+					Window& window = *(Window*)glfwGetWindowUserPointer(glfwWindow);
+					MouseButtonDownEvent e;
+					e.MouseButton = button;
+					
+					double x, y;
+					glfwGetCursorPos(glfwWindow, &x, &y);
+
+					e.Position = Vector2(x, y);
+
+					window.DispatchEvent(e);
+					break;
+				}
+			}
+		);
 	}
 
 	Window::Window(int width, int height)
 		: Window(WindowOptions(width, height, 0))
 	{
 
-
 	}
 
 	Window::~Window()
 	{
+		glfwDestroyWindow(m_window);
 		glfwTerminate();
 	}
 
@@ -78,7 +95,7 @@ namespace Vanadium
 
 	void Window::SetPosition(Vector2I position)
 	{
-		glfwSetWindowPos(m_window.get(), position.x, position.y);
+		glfwSetWindowPos(m_window, position.x, position.y);
 	}
 
 	bool Window::WindowSizeChanged()
@@ -86,7 +103,7 @@ namespace Vanadium
 		int activeWidth = 0;
 		int activeHeight = 0;
 
-		glfwGetFramebufferSize(m_window.get(), &activeWidth, &activeHeight);
+		glfwGetFramebufferSize(m_window, &activeWidth, &activeHeight);
 
 		if (m_width != activeWidth || m_height != activeHeight)
 		{
@@ -118,9 +135,14 @@ namespace Vanadium
 		for (int i = 0; i < Key::_LAST; i++)
 		{
 			int glfwKey = GlfwKeyMappings[i];
-			states[i] = glfwGetKey(m_window.get(), glfwKey) == GLFW_PRESS;
+			states[i] = glfwGetKey(m_window, glfwKey) == GLFW_PRESS;
 		}
 
 		m_inputManager.ReportNewKeyStates(states);
+	}
+
+	void Window::DispatchEvent(Event& event)
+	{
+		m_eventCallback(event);
 	}
 }

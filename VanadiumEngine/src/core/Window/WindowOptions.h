@@ -1,6 +1,8 @@
 #pragma once
 #include <variant>
+#include <functional>
 #include "core/CoreTypes.h"
+#include "core/Events.h"
 
 namespace Vanadium
 {
@@ -38,6 +40,8 @@ namespace Vanadium
 
 		i32 width;
 		i32 height;
+
+		std::function<void(Event&)> eventCallback = [](Event& e) {};
 
 		union
 		{

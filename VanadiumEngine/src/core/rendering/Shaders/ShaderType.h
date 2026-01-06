@@ -8,6 +8,4 @@ namespace Vanadium
 		VertexShader,
 		FragmentShader
 	};
-
-
 }

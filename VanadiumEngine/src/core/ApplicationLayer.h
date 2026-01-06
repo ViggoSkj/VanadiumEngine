@@ -9,5 +9,6 @@ namespace Vanadium
 		
 		virtual void OnUpdate(double dt) {};
 		virtual void OnRender(double dt) {};
+		virtual void OnEvent(Event& event) {};
 	};
 }

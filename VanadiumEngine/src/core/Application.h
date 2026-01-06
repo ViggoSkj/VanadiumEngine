@@ -26,6 +26,8 @@ namespace Vanadium
 		void Run();
 		void Stop();
 
+		void RaiseEvent(Event& event);
+
 		void PushDefaultPostLayers();
 
 		template <typename TLayer>

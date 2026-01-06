@@ -1,9 +1,10 @@
 #include "pch.h"
 #include <thread>
 #include <chrono>
+#include <memory>
+#include <ranges>
 #include "Application.h"
 #include "core/Rendering/GLCommon.h"
-#include <memory>
 #include "core/Debug/Log.h"
 #include "core/ShapeRenderer/ShapeRendererLayer.h"
 
@@ -15,6 +16,7 @@ namespace Vanadium
 	{
 		Application::s_instance = this;
 
+		windowOptions.eventCallback = [this](Event& event) { RaiseEvent(event); };
 		m_window = std::make_unique<Window>(windowOptions);
 
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -61,8 +63,6 @@ namespace Vanadium
 				std::this_thread::sleep_for(std::chrono::microseconds((long long)((minDt - dt) * 1000000)));
 				dt = (double)glfwGetTime() - prevTime;
 			}
-
-			// LogDebug(std::to_string(1.0 / dt));
 
 			m_time->TimeSinceStart += dt;
 			prevTime = (float)glfwGetTime();
@@ -132,6 +132,16 @@ namespace Vanadium
 	void Application::Stop()
 	{
 		m_running = false;
+	}
+
+	void Application::RaiseEvent(Event& event)
+	{
+		for (auto& layer : std::views::reverse(m_applicationLayers))
+		{
+			layer->OnEvent(event);
+			if (event.Handled)
+				break;
+		}
 	}
 
 	void Application::PushDefaultPostLayers()

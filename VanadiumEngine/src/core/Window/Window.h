@@ -20,8 +20,8 @@ namespace Vanadium
 		int GetWidth() const { return m_width; }
 		int GetHeight() const { return m_height; }
 
-		bool ShouldClose() const { return glfwWindowShouldClose(m_window.get()); }
-		void SwapBuffers() const { glfwSwapBuffers(m_window.get()); }
+		bool ShouldClose() const { return glfwWindowShouldClose(m_window); }
+		void SwapBuffers() const { glfwSwapBuffers(m_window); }
 
 		void SetPosition(WindowMonitorPosition position);
 		void SetPosition(Vector2I position);
@@ -30,18 +30,19 @@ namespace Vanadium
 
 		glm::mat4 GetOrthographicProjection();
 
-		std::shared_ptr<GLFWwindow> GetGLFWwindow() { return m_window; }
-
 		void ProcessInput();
 
 		const InputManager& GetInputManager() const { return m_inputManager; };
 
 	private:
+		void DispatchEvent(Event& event);
+
 		int m_width;
 		int m_height;
 
+		std::function<void(Event& event)> m_eventCallback;
 		InputManager m_inputManager;
 
-		std::shared_ptr<GLFWwindow> m_window;
+		GLFWwindow* m_window;
 	};
 }

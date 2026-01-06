@@ -9,6 +9,9 @@ public:
 	UiRenderingLayer();
 
 	void OnRender(double dt) override;
+	void OnEvent(Vanadium::Event& event) override;
+
+	bool OnClick(Vanadium::MouseButtonDownEvent& event);
 
 private:
 	Shader m_shader;
