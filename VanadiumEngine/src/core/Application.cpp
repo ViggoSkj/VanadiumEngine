@@ -116,6 +116,13 @@ namespace Vanadium
 				GL_CHECK(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
 				GL_CHECK(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
+
+				// Awake components
+
+				m_ecs->AwakeComponents();
+
+				// Run layers
+
 				for (int i = 0; i < m_applicationLayers.size(); i++)
 				{
 					m_applicationLayers[i]->OnUpdate(dt);

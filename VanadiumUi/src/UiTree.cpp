@@ -194,6 +194,9 @@ void ResolveChildren(std::shared_ptr<UiNode> node)
 
 std::vector<std::shared_ptr<UiNode>> UiTree::GetNodes()
 {
+	if (root == nullptr)
+		return {};
+
 	std::vector<std::shared_ptr<UiNode>> nodes = { root };
 
 	i32 lastLayerIndex = 0;

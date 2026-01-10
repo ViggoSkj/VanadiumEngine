@@ -1,5 +1,6 @@
 #pragma once
 #include "core/CoreTypes.h"
+#include "core/Util/RectI.H"
 #include "BoxDirections.h"
 
 struct UiBox
@@ -16,6 +17,10 @@ struct UiBox
 	}
 
 	void AdjustSize(Vector2I newVisible);
+
+	bool InsideVisible(Vector2I point);
+
+	RectI VisibleRect();
 
 	Vector2I Visible()
 	{

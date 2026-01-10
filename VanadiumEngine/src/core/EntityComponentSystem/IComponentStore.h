@@ -14,6 +14,8 @@ namespace Vanadium
 
 		virtual void Flush() {};
 
+		virtual void AwakeComponents() = 0;
+
 		unsigned int GetId() { return m_id; };
 
 	private:

@@ -1,7 +1,9 @@
 #include "UiRenderingLayer.h"
 #include "ScreenElement.h"
+#include "ButtonElement.h"
 #include "TextElement.h"
 #include "UiTree.h"
+#include "Ui.h"
 #include "core/Util/StringHash.h"
 
 UiRenderingLayer::UiRenderingLayer()
@@ -11,14 +13,14 @@ UiRenderingLayer::UiRenderingLayer()
 
 }
 
-void UiRenderingLayer::OnRender(double dt)
+void UiRenderingLayer::OnUpdate(double dt)
 {
 	UnorderedVector<ScreenElement>& elements = Application::Get().GetECS()->GetComponentStore<ScreenElement>()->GetComponents();
 
 	if (elements.size() == 0)
 		return;
 
-	UiTree tree;
+	// Find root
 	for (ScreenElement& transform : elements)
 	{
 		if (transform.Parent.IsEmpty())
@@ -26,17 +28,32 @@ void UiRenderingLayer::OnRender(double dt)
 			std::shared_ptr<UiNode> root = std::make_shared<UiNode>();
 			root->transform = Vanadium::ECS::CreateHandle(transform);
 			root->style = transform.style;
-			tree.root = root;
+			m_tree.root = root;
 			break;
 		}
 	}
 
-	ResolveChildren(tree.root);
-	CalculateLayout(tree);
+	// calculate layout
+	ResolveChildren(m_tree.root);
+	CalculateLayout(m_tree);
 
+	// retrive buttons
+	UnorderedVector<ButtonElement>& buttons = Application::Get().GetECS()->GetComponentStore<ButtonElement>()->GetComponents();
+	m_clickableBoxes.clear();
+	for (ButtonElement& button : buttons)
+	{
+		ClickableBox box;
+		box.box = button.GetScreenElement().box;
+		box.handler = [](Vanadium::MouseButtonDownEvent& e) { Vanadium::LogDebug("test"); };
+		m_clickableBoxes.push_back(box);
+	}
+}
+
+void UiRenderingLayer::OnRender(double dt)
+{
 	m_shader.Use();
 	GL_CHECK(glDepthFunc(GL_ALWAYS));
-	for (std::shared_ptr<UiNode> node : tree.GetNodes())
+	for (std::shared_ptr<UiNode> node : m_tree.GetNodes())
 	{
 		if (node->transform.IsEmpty())
 			continue;
@@ -75,5 +92,15 @@ void UiRenderingLayer::OnEvent(Vanadium::Event& event)
 
 bool UiRenderingLayer::OnClick(Vanadium::MouseButtonDownEvent& event)
 {
+	// TODO: proper z sorting or somthing
+	for (ClickableBox& box : m_clickableBoxes)
+	{
+		if (box.box.InsideVisible(event.Position))
+		{
+			box.handler(event);
+			return true;
+		}
+	}
+
 	return false;
 }

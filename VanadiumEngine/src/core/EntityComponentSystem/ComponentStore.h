@@ -39,6 +39,7 @@ namespace Vanadium
 		{
 			m_components.push_back(ComponentData(id, ref));
 			m_idIndexMap.InsertLookup(m_components.back().GetId(), m_components.size() - 1);
+			m_newComponentIds.push_back(m_components.back().GetId());
 			return m_components.back().GetId();
 		}
 
@@ -66,6 +67,8 @@ namespace Vanadium
 			m_idIndexMap.Flush();
 		}
 
+		void AwakeComponents() override;
+
 		UnorderedVector<TComponent>& GetComponents() { return m_components; };
 	private:
 		struct ComponentLookup
@@ -79,7 +82,17 @@ namespace Vanadium
 			unsigned int Index = 0;
 		};
 
+		std::vector<i32> m_newComponentIds;
 		UnorderedVector<TComponent> m_components;
 		IdIndexMap m_idIndexMap;
 	};
+
+	template<typename TComponent>
+	inline void ComponentStore<TComponent>::AwakeComponents()
+	{
+		for (i32 id : m_newComponentIds)
+			GetComponent(id)->Awake();
+
+		m_newComponentIds.clear();
+	}
 }

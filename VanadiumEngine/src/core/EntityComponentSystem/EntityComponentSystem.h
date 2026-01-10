@@ -29,13 +29,15 @@ namespace Vanadium
 		void SignalOwnerDeleted(unsigned int owner);
 
 		template<typename TComponent>
-			
+
 		ComponentStore<TComponent>* GetComponentStore()
 		{
 			return m_storeManager.GetComponentStore<TComponent>();
 		}
 
 		void Flush();
+
+		void AwakeComponents() { m_storeManager.AwakeComponents(); }
 
 	private:
 		static unsigned int s_nextEntityId;

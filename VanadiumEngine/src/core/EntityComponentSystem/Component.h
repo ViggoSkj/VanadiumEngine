@@ -43,6 +43,8 @@ namespace Vanadium
 		Entity& GetEntity() { return m_data.GetEntity(); }
 		EntityRef GetEntityRef() const { return m_data.GetEntityRef(); }
 
+		virtual void Awake() {};
+
 	private:
 		ComponentData m_data;
 	};

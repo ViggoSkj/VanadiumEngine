@@ -9,6 +9,8 @@ struct RectI
 
 	}
 
+	bool Inside(Vector2 point);
+
 	Vector2I start;
 	Vector2I end;
 };

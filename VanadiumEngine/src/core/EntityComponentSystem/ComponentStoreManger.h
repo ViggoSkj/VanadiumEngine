@@ -77,6 +77,7 @@ namespace Vanadium
 			}
 		}
 
+		void AwakeComponents();
 	private:
 		u32 m_nextId = 0;
 

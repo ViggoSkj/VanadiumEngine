@@ -2,6 +2,7 @@
 #include "ScreenElement.h"
 #include "UiRenderingLayer.h"
 #include "TextElement.h"
+#include "ButtonElement.h"
 
 class UiSetup : public SceneSetupStep
 {
@@ -68,6 +69,7 @@ public:
 		std::shared_ptr<SymbolSheet> symbolSheet = Application::Get().GetAssetManager()->GetFileAsset<SymbolSheet>("res/textures/font.png");
 		ScreenElement& e = CreateBox(style);
 		e.GetEntity().AddComponent<TextElement>()->text = text;
+		e.GetEntity().AddComponent<ButtonElement>();
 		e.GetEntity().GetComponent<TextElement>()->symbolRenderer = std::make_unique<SymbolRenderer>(symbolSheet);
 		return e;
 	}
