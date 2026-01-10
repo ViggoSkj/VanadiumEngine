@@ -13,10 +13,12 @@ namespace Vanadium
 	Application* Application::s_instance = nullptr;
 
 	Application::Application(WindowOptions windowOptions)
+		: m_eventQueue(std::make_shared<EventQueue>())
 	{
 		Application::s_instance = this;
 
-		windowOptions.eventCallback = [this](Event& event) { RaiseEvent(event); };
+		windowOptions.eventQueue = m_eventQueue;
+
 		m_window = std::make_unique<Window>(windowOptions);
 
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -41,7 +43,6 @@ namespace Vanadium
 		GL_CHECK(glEnable(GL_BLEND));
 
 		GL_CHECK(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-
 	}
 
 	Application::~Application()
@@ -97,6 +98,19 @@ namespace Vanadium
 				}
 			}
 
+			while (!m_eventQueue->Empty())
+			{
+				Event* event = m_eventQueue->PopEvent();
+				for (auto& layer : std::views::reverse(m_applicationLayers))
+				{
+					layer->OnEvent(*event);
+					if (event->Handled)
+						break;
+				}
+			}
+
+			m_eventQueue->Flush();
+
 			if (!paused)
 			{
 				GL_CHECK(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
@@ -136,15 +150,6 @@ namespace Vanadium
 
 	void Application::RaiseEvent(Event& event)
 	{
-		for (auto& layer : std::views::reverse(m_applicationLayers))
-		{
-			layer->OnEvent(event);
-			if (event.Handled)
-				break;
-		}
-	}
 
-	void Application::PushDefaultPostLayers()
-	{
 	}
 }

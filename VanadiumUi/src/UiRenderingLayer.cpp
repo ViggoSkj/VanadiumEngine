@@ -75,6 +75,5 @@ void UiRenderingLayer::OnEvent(Vanadium::Event& event)
 
 bool UiRenderingLayer::OnClick(Vanadium::MouseButtonDownEvent& event)
 {
-
 	return false;
 }

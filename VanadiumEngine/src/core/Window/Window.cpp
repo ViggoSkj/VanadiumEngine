@@ -7,7 +7,7 @@
 namespace Vanadium
 {
 	Window::Window(WindowOptions options)
-		: m_eventCallback(options.eventCallback)
+		: eventQueue(options.eventQueue)
 		, m_width(options.width)
 		, m_height(options.height)
 	{
@@ -59,7 +59,7 @@ namespace Vanadium
 
 					e.Position = Vector2(x, y);
 
-					window.DispatchEvent(e);
+					window.eventQueue->Push(e);
 					break;
 				}
 			}
@@ -139,10 +139,5 @@ namespace Vanadium
 		}
 
 		m_inputManager.ReportNewKeyStates(states);
-	}
-
-	void Window::DispatchEvent(Event& event)
-	{
-		m_eventCallback(event);
 	}
 }

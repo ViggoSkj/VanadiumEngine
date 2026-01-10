@@ -34,13 +34,11 @@ namespace Vanadium
 
 		const InputManager& GetInputManager() const { return m_inputManager; };
 
+		std::shared_ptr<EventQueue> eventQueue;
 	private:
-		void DispatchEvent(Event& event);
-
 		int m_width;
 		int m_height;
 
-		std::function<void(Event& event)> m_eventCallback;
 		InputManager m_inputManager;
 
 		GLFWwindow* m_window;

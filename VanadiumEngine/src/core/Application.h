@@ -9,6 +9,7 @@
 #include "core/Scene/Scene.h"
 #include "core/Scene/SceneManager.h"
 #include "core/Debug/Logger.h"
+#include "core/EventQueue.h"
 
 namespace Vanadium
 {
@@ -27,8 +28,6 @@ namespace Vanadium
 		void Stop();
 
 		void RaiseEvent(Event& event);
-
-		void PushDefaultPostLayers();
 
 		template <typename TLayer>
 			requires(std::is_base_of_v<ApplicationLayer, TLayer>)
@@ -55,6 +54,8 @@ namespace Vanadium
 		bool m_steppingMode = false;
 		bool m_stepBuffered = false;
 		float m_stepDt = 0.016f;
+
+		std::shared_ptr<EventQueue> m_eventQueue;
 
 		// Modules
 		std::unique_ptr<SceneManager> m_sceneManager;

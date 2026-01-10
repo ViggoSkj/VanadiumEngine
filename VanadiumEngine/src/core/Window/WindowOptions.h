@@ -3,6 +3,7 @@
 #include <functional>
 #include "core/CoreTypes.h"
 #include "core/Events.h"
+#include "core/EventQueue.h"
 
 namespace Vanadium
 {
@@ -41,7 +42,7 @@ namespace Vanadium
 		i32 width;
 		i32 height;
 
-		std::function<void(Event&)> eventCallback = [](Event& e) {};
+		std::shared_ptr<EventQueue> eventQueue;
 
 		union
 		{
