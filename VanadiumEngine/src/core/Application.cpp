@@ -27,6 +27,7 @@ namespace Vanadium
 			return;
 		}
 
+
 		m_time = std::make_unique<Time>();
 		m_logger = std::make_unique<Logger>();
 		m_ecs = std::make_unique<EntityComponentSystem>();
@@ -40,6 +41,8 @@ namespace Vanadium
 
 		GL_CHECK(glDepthFunc(GL_LESS));
 
+		GL_CHECK(glEnable(GL_MULTISAMPLE));
+		
 		GL_CHECK(glEnable(GL_BLEND));
 
 		GL_CHECK(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));

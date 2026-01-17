@@ -2,6 +2,15 @@
 #include "core/CoreTypes.h"
 #include "BoxDirections.h"
 
+enum class StyleSource
+{
+	None,
+	Inline,
+	Class,
+	Id,
+	Type,
+};
+
 struct Style
 {
 	enum Position
@@ -33,9 +42,11 @@ struct Style
 	bool widthAuto = false;
 	bool heightAuto = false;
 
-	Vector4 backgroundColor;
+	Vector4 backgroundColor = { 1, 1, 1, 1};
 	i32 xPosition = 0;
 	i32 yPosition = 0;
 	i32 width = 0;
 	i32 height = 0;
+
+	i32 borderRadius = 0;
 };

@@ -3,8 +3,6 @@
 
 void CameraMovementComponent::OnUpdate(double dt)
 {
-	GLFWwindow* glfwWindow = Application::Get().GetWindow()->GetGLFWwindow().get();
-
 	const InputManager& Input = Application::Get().GetWindow()->GetInputManager();
 	SceneManager* sceneManager = Application::Get().GetSceneManager();
 

@@ -6,3 +6,4 @@
 #include "core/Util/UnorderdVector.h"
 #include "core/Util/Rect.h"
 #include "core/Util/RotatableRect.h"
+#include "core/Util/StringHash.h"

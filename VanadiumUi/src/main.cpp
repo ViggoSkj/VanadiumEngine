@@ -31,6 +31,7 @@ public:
 		style.heightAuto = true;
 		style.border = { 10, 10, 10, 10 };
 		style.padding = { 100, 100, 100, 100 };
+		style.borderRadius = 10;
 
 		Style style2;
 		style2.padding = 10;
@@ -86,6 +87,7 @@ public:
 		style.heightAuto = true;
 		style.border = { 10, 10, 10, 10 };
 		style.padding = { 100, 100, 100, 100 };
+		style.borderRadius = 10;
 
 		auto panel = Vanadium::ECS::CreateHandle(CreateBox(style));
 
