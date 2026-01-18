@@ -3,6 +3,7 @@
 #include "UiRenderingLayer.h"
 #include "TextElement.h"
 #include "ButtonElement.h"
+#include "StyleSheetParser.h"
 
 class UiSetup : public SceneSetupStep
 {
@@ -107,6 +108,16 @@ public:
 
 int main()
 {
+	std::string source = Vanadium::Detail::ReadFile("res/styles/style.vss");
+
+	std::optional<StyleSheetParser> parsed = StyleSheetParser::Parse(source);
+
+	assert(parsed.has_value());
+
+	parsed.value().DebugPrint();
+
+	return 0;
+
 	Application app(Vanadium::WindowOptions(1600, 1000, 2));
 
 	app.PushLayer<UiRenderingLayer>();
