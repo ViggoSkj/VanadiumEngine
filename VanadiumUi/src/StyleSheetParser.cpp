@@ -151,14 +151,21 @@ std::string_view TokenizedStyleSheet::Token(i32 index) const
 class TokenAnalyzer
 {
 public:
+	TokenAnalyzer(const TokenizedStyleSheet& tokens, i32 start)
+		: tokens(tokens), cursor(start), view(start)
+	{
+
+	}
+
 	const ParsedStyleSheetToken& Cursor() const { return tokens.tokens[cursor]; }
 	const ParsedStyleSheetToken& View() const { return tokens.tokens[view]; }
 	std::string_view CurrentCursor() const { return tokens.Token(cursor); }
 	std::string_view CurrentView() const { return tokens.Token(view); }
+	size_t Count() const { return tokens.tokens.size(); };
 
 	i32 view;
 	i32 cursor;
-	TokenizedStyleSheet tokens;
+	const TokenizedStyleSheet& tokens;
 
 private:
 	i32 m_savePoint;
@@ -199,7 +206,7 @@ enum class ScopeOwnerType
 struct ScopeOwner
 {
 	std::string name;
-	ScopeOwnerType type;
+	ScopeOwnerType type = ScopeOwnerType::None;
 };
 
 static struct StyleSheetScope
@@ -222,7 +229,7 @@ std::optional<StyleSheetPropertyValue> ParsePropertyValue(TokenizedStyleSheet to
 {
 	StyleSheetPropertyValue value;
 
-	while (ana.CurrentCursor() != ";")
+	while (ana.cursor < ana.Count() && ana.CurrentCursor() != ";")
 	{
 		if (ana.CurrentCursor() == ",")
 		{
@@ -238,10 +245,10 @@ std::optional<StyleSheetPropertyValue> ParsePropertyValue(TokenizedStyleSheet to
 	return value;
 }
 
-std::optional<StyleSheetScope> CreateScope(TokenizedStyleSheet tokenized, std::shared_ptr<StyleSheetScope> parentScope)
+std::optional<std::vector<StyleSheetScope>> CreateScopes(TokenizedStyleSheet tokenized, std::shared_ptr<StyleSheetScope> parentScope)
 {
-	StyleSheetScope scope;
-	scope.parentScope = parentScope;
+	std::vector<StyleSheetScope> scopes;
+	StyleSheetScope* scope = nullptr;
 
 	enum ParserState
 	{
@@ -261,63 +268,83 @@ std::optional<StyleSheetScope> CreateScope(TokenizedStyleSheet tokenized, std::s
 	{
 #define TOKEN_STR tokenized.Token(i)
 #define TOKEN tokenized.tokens[i]
-#define REQUIRE_STR(str) if (TOKEN_STR != str) return std::nullopt
-#define REQUIRE_TYPE(t) if (TOKEN.type != StyleSheetTokenType::t) return std::nullopt
 
 		switch (state)
 		{
 		case SearchingForOwnerType:
-			scope.owner.type = TokenToOwnerType(TOKEN_STR);
-			if (scope.owner.type == ScopeOwnerType::None)
+		{
+			std::string_view s = TOKEN_STR;
+			ScopeOwnerType type = TokenToOwnerType(TOKEN_STR);
+			if (type == ScopeOwnerType::None)
 				return std::nullopt;
+			scopes.push_back(StyleSheetScope());
+			scope = &scopes.back();
+			scope->parentScope = parentScope;
+			scope->owner.type = type;
 			state = SearchingForOwner;
 			i++;
 			break;
-
+		}
 		case SearchingForOwner:
-			REQUIRE_TYPE(Name);
-			scope.owner.name = TOKEN_STR;
+		{
+			if (TOKEN.type != StyleSheetTokenType::Name)
+				return std::nullopt;
+			scope->owner.name = TOKEN_STR;
 			state = OpeningScope;
 			i++;
 			break;
-
+		}
 		case OpeningScope:
-			REQUIRE_STR("{");
+		{
+			if (TOKEN_STR != "{")
+				return std::nullopt;
 			state = FindingPropertyName;
 			i++;
 			break;
-
+		}
 		case FindingPropertyName:
-			REQUIRE_TYPE(Name);
-			scope.properties.emplace_back();
-			scope.properties.back().property = TOKEN_STR;
+		{
+			if (TOKEN.type != StyleSheetTokenType::Name)
+				return std::nullopt;
+			scope->properties.emplace_back();
+			scope->properties.back().property = TOKEN_STR;
 			i++;
-			REQUIRE_STR(":");
+			if (TOKEN_STR != ":")
+				return std::nullopt;
 			i++;
+
+			state = FindingPropertyValue;
 
 			break;
-
+		}
 		case FindingPropertyValue:
-			TokenAnalyzer analyzer;
-			analyzer.cursor = i;
+		{
+			TokenAnalyzer analyzer(tokenized, i);
 			std::optional<StyleSheetPropertyValue> valueOpt = ParsePropertyValue(tokenized, analyzer);
 			if (!valueOpt.has_value())
 				return std::nullopt;
-			scope.properties.back().value = valueOpt.value();
+			scope->properties.back().value = valueOpt.value();
 
 			i = analyzer.cursor;
 
-			REQUIRE_STR(";");
+			if (TOKEN_STR != ";")
+				return std::nullopt;
 			i++;
 			if (TOKEN_STR == "}")
+			{
+				i++;
 				state = SearchingForOwnerType;
+			}
 			else
 				state = FindingPropertyName;
-
+			break;
+		}
 		default:
 			return std::nullopt;
 		}
 	}
+
+	return scopes;
 }
 
 #pragma endregion
@@ -334,6 +361,13 @@ std::optional<StyleSheetParser> StyleSheetParser::Parse(std::string_view source)
 
 	if (!parser.ValidateDepth())
 		return std::nullopt;
+
+	std::optional<std::vector<StyleSheetScope>> scopesOpt = CreateScopes(parser.m_tokens, nullptr);
+
+	if (!scopesOpt)
+		return std::nullopt;
+
+	std::vector<StyleSheetScope> scopes = scopesOpt.value();
 
 	return parser;
 }
