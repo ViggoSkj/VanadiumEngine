@@ -88,8 +88,8 @@ public:
 		return top + bottom;
 	}
 
-	T top = 0;
-	T right = 0;
-	T bottom = 0;
-	T left = 0;
+	T top;
+	T right;
+	T bottom;
+	T left;
 };

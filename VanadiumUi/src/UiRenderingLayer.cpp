@@ -66,7 +66,7 @@ void UiRenderingLayer::OnRender(double dt)
 		m_shader.SetUniformVec4("u_padding"_id, t.box.padding);
 
 		m_shader.SetUniformVec4("u_color"_id, node->style.backgroundColor);
-		m_shader.SetUniformFloat("u_rounding"_id, node->style.borderRadius);
+		m_shader.SetUniformFloat("u_rounding"_id, node->style.borderRadius.number);
 		m_quad.Render();
 
 		if (auto* props = std::get_if<TextProperties>(&node->special.variant)) {

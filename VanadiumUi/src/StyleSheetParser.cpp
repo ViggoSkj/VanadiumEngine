@@ -13,11 +13,11 @@ static bool IsPartialyNumericCharacter(char c)
 	return IsFullyNumericCharacter(c) || c == '.';
 }
 
-static bool IsOperationalCharacter(char c)
+static bool IsLogicalCharacter(char c)
 {
 	return c == '(' || c == ')' || c == '{' || c == '}' || c == '[' || c == ']' ||
 		c == ';' || c == ':' || c == ',' ||
-		c == '.' || c == '#';
+		c == '.' || c == '#' || c == '%';
 }
 
 static bool IsWhiteSpaceCharacter(char c)
@@ -38,7 +38,7 @@ static bool IsPartiallyNameCharacter(char c)
 
 static bool IsValidCharacter(char c)
 {
-	return IsOperationalCharacter(c) ||
+	return IsLogicalCharacter(c) ||
 		IsWhiteSpaceCharacter(c) ||
 		IsPartiallyNameCharacter(c) ||
 		IsPartialyNumericCharacter(c);
@@ -100,9 +100,9 @@ std::optional<TokenizedStyleSheet> TokenizedStyleSheet::TokenizeStyleSheet(std::
 					cursor = view;
 				}
 			}
-			else if (IsOperationalCharacter(CURSOR_CHAR))
+			else if (IsLogicalCharacter(CURSOR_CHAR))
 			{
-				if (IsOperationalCharacter(VIEW_CHAR))
+				if (IsLogicalCharacter(VIEW_CHAR))
 				{
 					// continue grabing operator
 					view++;
@@ -194,10 +194,19 @@ static struct StyleDefinitionTarget
 	StyleSourceType type = StyleSourceType::None;
 };
 
+static enum class StyleSheetPropertyType
+{
+	Mesurement,
+	String,
+};
+
 static struct StyleSheetPropertyValue
 {
-	std::vector<float> numbers;
+	std::vector<Mesurement> messurements;
+	std::vector<std::string> strings;
+	std::vector<StyleSheetPropertyType> ordering;
 };
+
 
 static struct StyleSheetProperty
 {
@@ -221,6 +230,16 @@ StyleSourceType TokenToOwnerType(std::string_view token)
 	return StyleSourceType::None;
 }
 
+StyleUnit StringToUnit(std::string_view str)
+{
+	if (str == "px")
+		return StyleUnit::Pixel;
+	if (str == "%")
+		return StyleUnit::Fraction;
+
+	return StyleUnit::None;
+}
+
 std::optional<StyleSheetPropertyValue> ParsePropertyValue(TokenizedStyleSheet tokenized, TokenAnalyzer& ana)
 {
 	StyleSheetPropertyValue value;
@@ -233,7 +252,21 @@ std::optional<StyleSheetPropertyValue> ParsePropertyValue(TokenizedStyleSheet to
 		}
 		else if (ana.Cursor().type == StyleSheetTokenType::Numeric)
 		{
-			value.numbers.push_back(std::stof(ana.CurrentCursor().data()));
+			StyleUnit unit = StyleUnit::None;
+			float number = std::stof(ana.CurrentCursor().data());
+			ana.cursor++;
+			if (ana.CurrentCursor() != "," && ana.CurrentCursor() != ";")
+			{
+				unit = StringToUnit(ana.CurrentCursor());
+				ana.cursor++;
+			}
+			value.messurements.push_back({ number, unit });
+			value.ordering.push_back(StyleSheetPropertyType::Mesurement);
+		}
+		else if (ana.Cursor().type == StyleSheetTokenType::Name)
+		{
+			value.strings.push_back(std::string(ana.CurrentCursor()));
+			value.ordering.push_back(StyleSheetPropertyType::String);
 			ana.cursor++;
 		}
 	}
@@ -347,6 +380,148 @@ std::expected<std::vector<StyleDefinition>, ErrorValue> CreateScopes(TokenizedSt
 
 #pragma region StyleResolving
 
+void ResolveMesurementProperty(StyleSheetPropertyValue value, StyleBox<Mesurement>& mesurementBox)
+{
+	switch (value.ordering.size())
+	{
+	case 1:
+	{
+		if (value.ordering[0] == StyleSheetPropertyType::Mesurement)
+		{
+			mesurementBox.box.top = value.messurements[0];
+			mesurementBox.box.right = value.messurements[0];
+			mesurementBox.box.bottom = value.messurements[0];
+			mesurementBox.box.left = value.messurements[0];
+		}
+		break;
+	}
+	case 2:
+	{
+		if (value.ordering[0] == StyleSheetPropertyType::Mesurement)
+		{
+			mesurementBox.box.top = value.messurements[0];
+			mesurementBox.box.bottom = value.messurements[0];
+		}
+		if (value.ordering[1] == StyleSheetPropertyType::Mesurement)
+		{
+			mesurementBox.box.right = value.messurements[1];
+			mesurementBox.box.left = value.messurements[1];
+		}
+		break;
+	}
+	case 4:
+	{
+		if (value.ordering[0] == StyleSheetPropertyType::Mesurement)
+			mesurementBox.box.top = value.messurements[0];
+		if (value.ordering[1] == StyleSheetPropertyType::Mesurement)
+			mesurementBox.box.right = value.messurements[1];
+		if (value.ordering[2] == StyleSheetPropertyType::Mesurement)
+			mesurementBox.box.bottom = value.messurements[2];
+		if (value.ordering[3] == StyleSheetPropertyType::Mesurement)
+			mesurementBox.box.left = value.messurements[3];
+		break;
+	}
+	default:
+		break;
+	}
+}
+
+void ResolveStringProperty(StyleSheetPropertyValue value, StyleBox<std::string>& stringBox)
+{
+	switch (value.ordering.size())
+	{
+	case 1:
+	{
+		if (value.ordering[0] == StyleSheetPropertyType::String)
+		{
+			stringBox.box.top = value.strings[0];
+			stringBox.box.right = value.strings[0];
+			stringBox.box.bottom = value.strings[0];
+			stringBox.box.left = value.strings[0];
+		}
+		break;
+	}
+	case 2:
+	{
+		if (value.ordering[0] == StyleSheetPropertyType::String)
+		{
+			stringBox.box.top = value.strings[0];
+			stringBox.box.bottom = value.strings[0];
+		}
+		if (value.ordering[1] == StyleSheetPropertyType::String)
+		{
+			stringBox.box.right = value.strings[1];
+			stringBox.box.left = value.strings[1];
+		}
+		break;
+	}
+	case 4:
+	{
+		if (value.ordering[0] == StyleSheetPropertyType::String)
+			stringBox.box.top = value.strings[0];
+		if (value.ordering[1] == StyleSheetPropertyType::String)
+			stringBox.box.right = value.strings[1];
+		if (value.ordering[2] == StyleSheetPropertyType::String)
+			stringBox.box.bottom = value.strings[2];
+		if (value.ordering[3] == StyleSheetPropertyType::String)
+			stringBox.box.left = value.strings[3];
+		break;
+	}
+	default:
+		break;
+	}
+}
+
+void ResolveFirstMesurement(StyleSheetPropertyValue value, StyleValue<Mesurement>& mesurement)
+{
+	if (value.messurements.size() > 0)
+		mesurement = value.messurements[0];
+}
+
+void ResolveFirstString(StyleSheetPropertyValue value, StyleValue<std::string>& string)
+{
+	if (value.strings.size() > 0)
+		string = value.strings[0];
+}
+
+void ResolveFirst(StyleSheetPropertyValue value, StyleValue<Mesurement> mesurement, StyleValue<std::string> string)
+{
+	if (value.ordering.size() > 0 && value.ordering[0] == StyleSheetPropertyType::Mesurement)
+		ResolveFirstMesurement(value, mesurement);
+	else
+		ResolveFirstString(value, string);
+}
+
+void ResolveProperty(StyleSheetPropertyValue value, StyleBox<Mesurement>& mesurementBox, StyleBox<std::string>& stringBox)
+{
+	ResolveMesurementProperty(value, mesurementBox);
+	ResolveStringProperty(value, stringBox);
+}
+
+StyleBox<bool> StringToBoolBox(const StyleBox<std::string>& box, std::string trueValue, bool unsetOnFalse)
+{
+	StyleBox<bool> result;
+
+	result.box.top = box.box.top == trueValue;
+	result.box.right = box.box.right == trueValue;
+	result.box.bottom = box.box.bottom == trueValue;
+	result.box.left = box.box.left == trueValue;
+
+	if (unsetOnFalse)
+	{
+		if (!result.box.top.Or(false))
+			result.box.top = Rule::Unset;
+		if (!result.box.right.Or(false))
+			result.box.right = Rule::Unset;
+		if (!result.box.bottom.Or(false))
+			result.box.bottom = Rule::Unset;
+		if (!result.box.left.Or(false))
+			result.box.left = Rule::Unset;
+	}
+
+	return result;
+}
+
 Style ResolveStyle(const std::vector<StyleSheetProperty>& properties)
 {
 	Style style;
@@ -355,11 +530,55 @@ Style ResolveStyle(const std::vector<StyleSheetProperty>& properties)
 	{
 		switch (hash_sv(p.property))
 		{
+		case "positioning"_id:
+		{
+			if (p.value.strings.size() == 1)
+			{
+				switch (hash_sv(p.value.strings[0]))
+				{
+				case "absolute"_id:
+					style.positioning = Style::Positioning::Absolute;
+				case "flow"_id:
+					style.positioning = Style::Positioning::Flow;
+				}
+			}
+			break;
+		}
+		case "margin"_id:
+		{
+			StyleBox<std::string> autoBox;
+			ResolveProperty(p.value, style.margin, autoBox);
+			style.marginAuto = StringToBoolBox(autoBox, "auto", true);
+			break;
+		}
+		case "width"_id:
+		{
+			StyleValue<std::string> autoWidth;
+			ResolveFirst(p.value, style.width, autoWidth);
+			if (autoWidth == "auto")
+				style.widthAuto = true;
+			break;
+		}
+		case "height"_id:
+		{
+			StyleValue<std::string> autoHeight;
+			ResolveFirst(p.value, style.height, autoHeight);
+			break;
+		}
+		case "backgroundColor"_id:
+		{
+			if (p.value.messurements.size() == 4)
+				style.backgroundColor = Vector4(
+					p.value.messurements[0].number,
+					p.value.messurements[1].number,
+					p.value.messurements[2].number,
+					p.value.messurements[3].number
+				);
+			break;
+		}
 		case "border"_id:
 		{
-			if (p.value.numbers.size() == 1)
-				style.border = p.value.numbers[0];
-
+			ResolveMesurementProperty(p.value, style.border);
 			break;
 		}
 		default:
@@ -369,6 +588,8 @@ Style ResolveStyle(const std::vector<StyleSheetProperty>& properties)
 
 	return style;
 }
+
+
 
 #pragma endregion StyleResolving
 

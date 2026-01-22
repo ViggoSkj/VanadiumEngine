@@ -5,55 +5,7 @@
 #include "ButtonElement.h"
 #include "StyleSheetParser.h"
 
-class UiSetup : public SceneSetupStep
-{
-public:
-	UiSetup(Scene* scene)
-		: SceneSetupStep(scene) {
-	}
-
-	ScreenElement& CreateBox(Style style)
-	{
-		ResolvedStyle resolved(style);
-
-		EntityRef ref = CreateEntity();
-		ScreenElement* t = ref.Get().AddComponent<ScreenElement>();
-		t->style = resolved;
-		return *t;
-	}
-
-	void Execute() override
-	{
-		Style style;
-		style.backgroundColor = Vanadium::Colors::white;
-		style.position = Style::Absolute;
-		style.xPosition = 400;
-		style.yPosition = 100;
-		style.width = 700;
-		style.height = 400;
-		style.heightAuto = true;
-		style.border = { 10, 10, 10, 10 };
-		style.padding = { 100, 100, 100, 100 };
-		style.borderRadius = 10;
-
-		Style style2;
-		style2.padding = 10;
-		style2.margin = 10;
-		style2.marginAuto = { true, true, true ,true };
-		style2.backgroundColor = Vanadium::Colors::red;
-		style2.backgroundColor.value.w = 0.5;
-		style2.position = Style::Flow;
-		style2.width = 200;
-		style2.height = 200;
-
-		auto panel = Vanadium::ECS::CreateHandle(CreateBox(style));
-		CreateBox(style2).Parent = panel;
-		style2.width = 300;
-		style2.height = 300;
-		style2.widthAuto = true;
-		CreateBox(style2).Parent = panel;
-	}
-};
+using namespace StyleLiterals;
 
 class SymbolTesting : public SceneSetupStep
 {
@@ -82,27 +34,27 @@ public:
 	{
 		Style style;
 		style.backgroundColor = Vanadium::Colors::white;
-		style.position = Style::Absolute;
-		style.xPosition = 400;
-		style.yPosition = 100;
-		style.width = 700;
-		style.height = 400;
+		style.positioning = Style::Absolute;
+		style.xPosition = 400px;
+		style.yPosition = 100px;
+		style.width = 700px;
+		style.height = 400px;
 		style.heightAuto = true;
-		style.border = { 10, 10, 10, 10 };
-		style.padding = { 100, 100, 100, 100 };
-		style.borderRadius = 10;
+		style.border = { 10px, 10px, 10px, 10px };
+		style.padding = { 100px, 100px, 100px, 100px };
+		style.borderRadius = 10px;
 
 		auto panel = Vanadium::ECS::CreateHandle(CreateBox(style));
 
 		Style style2;
-		style2.padding = 10;
-		style2.margin = 10;
+		style2.padding = 10px;
+		style2.margin = 10px;
 		style2.marginAuto = { true, true, true ,true };
 		style2.backgroundColor = Vanadium::Colors::red;
 		style2.backgroundColor.value.w = 0.5;
-		style2.position = Style::Flow;
-		style2.width = 350;
-		style2.height = 200;
+		style2.positioning = Style::Flow;
+		style2.width = 350px;
+		style2.height = 200px;
 		//CreateTextElement(style2, "T").Parent = panel;
 		CreateTextElement(style2, "This is a test").Parent = panel;
 	}
@@ -121,10 +73,6 @@ int main()
 		Vanadium::LogError(parsed.error());
 		return 0;
 	}
-
-	parsed.value().DebugPrint();
-
-	return 0;
 
 	app.PushLayer<UiRenderingLayer>();
 

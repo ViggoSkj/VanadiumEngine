@@ -31,6 +31,27 @@ Vector2I TryPosition(UiNode* parent, UiNode* previous)
 	return Vector2I(StartLine(parent, previous), BlockLine(parent, previous));
 }
 
+i32 MesurementToPixels(Mesurement mesurement, float full)
+{
+	if (mesurement.unit == StyleUnit::Pixel)
+		return mesurement.number;
+	else if (mesurement.unit == StyleUnit::Fraction)
+		return full * mesurement.number;
+}
+
+BoxDirections<i32> MesurementToPixels(BoxDirections<Mesurement> mesurement, std::shared_ptr<UiNode> parent)
+{
+	float fullX = parent == nullptr ? 0 : parent->resolvedProperties.box.content.x;
+	float fullY = parent == nullptr ? 0 : parent->resolvedProperties.box.content.y;
+
+	BoxDirections<i32> result;
+	result.top = MesurementToPixels(mesurement.top, fullY);
+	result.right = MesurementToPixels(mesurement.right, fullX);
+	result.bottom = MesurementToPixels(mesurement.bottom, fullY);
+	result.left = MesurementToPixels(mesurement.left, fullX);
+	return result;
+}
+
 void CalculateLayout(UiTree& tree)
 {
 	std::vector<std::shared_ptr<UiNode>> nodes = tree.GetNodes();
@@ -43,18 +64,26 @@ void CalculateLayout(UiTree& tree)
 			UiNode& node = *nodePtr;
 			ResolvedStyle& style = node.style;
 
+#define PARENT_CONTENT node.parent == nullptr ? 0 : node.parent->resolvedProperties.box.content
+
 			if (previous != nullptr && previous->parent != node.parent)
 				previous = nullptr;
 
-			node.resolvedProperties.box.padding = style.padding;
-			node.resolvedProperties.box.border = style.border;
+			node.resolvedProperties.box.padding = MesurementToPixels(style.padding, node.parent);
+			node.resolvedProperties.box.border = MesurementToPixels(style.border, node.parent);
 
 			if (style.display == Style::Block)
 			{
 				if (style.position == Style::Absolute)
 				{
-					node.resolvedProperties.box.position = Vector2(style.xPosition, style.yPosition);
-					node.resolvedProperties.box.AdjustSize(Vector2I(style.width, style.height));
+					node.resolvedProperties.box.position = Vector2(
+						MesurementToPixels(style.xPosition, PARENT_CONTENT.x),
+						MesurementToPixels(style.yPosition, PARENT_CONTENT.y)
+					);
+					node.resolvedProperties.box.AdjustSize(Vector2I(
+						MesurementToPixels(style.width, PARENT_CONTENT.x),
+						MesurementToPixels(style.height, PARENT_CONTENT.y)
+					));
 
 					if (style.heightAuto)
 					{
@@ -71,7 +100,10 @@ void CalculateLayout(UiTree& tree)
 
 				if (style.position == Style::Flow)
 				{
-					node.resolvedProperties.box.AdjustSize(Vector2I(style.width, style.height));
+					node.resolvedProperties.box.AdjustSize(Vector2I(
+						MesurementToPixels(style.width, PARENT_CONTENT.x),
+						MesurementToPixels(style.height, PARENT_CONTENT.y)
+					));
 
 					if (style.widthAuto)
 					{
@@ -87,8 +119,8 @@ void CalculateLayout(UiTree& tree)
 						node.resolvedProperties.box.margin.right = availableWidth / 2;
 					}
 
-					node.resolvedProperties.box.margin.top = style.margin.top;
-					node.resolvedProperties.box.margin.bottom = style.margin.bottom;
+					node.resolvedProperties.box.margin.top = MesurementToPixels(style.margin.top, node.parent->resolvedProperties.box.content.y);
+					node.resolvedProperties.box.margin.bottom = MesurementToPixels(style.margin.bottom, node.parent->resolvedProperties.box.content.y);
 
 					if (node.parent != nullptr)
 					{
@@ -123,12 +155,15 @@ void CalculateLayout(UiTree& tree)
 			{
 				Vector2I start = TryPosition(node.parent.get(), previous);
 				node.resolvedProperties.box.position = start;
-				node.resolvedProperties.box.content = Vector2I(style.width, style.height);
+				node.resolvedProperties.box.AdjustSize(Vector2I(
+					MesurementToPixels(style.width, PARENT_CONTENT.x),
+					MesurementToPixels(style.height, PARENT_CONTENT.y)
+				));;
 
 				if (node.resolvedProperties.box.RightVisible() >= node.parent->resolvedProperties.box.RightContent())
 				{
 					start.x = StartLine(node.parent.get(), nullptr);
-					start.y += node.style.height;
+					start.y += MesurementToPixels(node.style.height, node.parent->resolvedProperties.box.content.y);
 					node.resolvedProperties.box.position = start;
 				}
 			}
@@ -175,8 +210,8 @@ void ResolveChildren(std::shared_ptr<UiNode> node)
 				cNode->parent = childNode;
 				cNode->style.display = Style::Inline;
 				Vector2 size = textElement->symbolRenderer->Sheet()->GetSymbolSize(c, 16);
-				cNode->style.width = size.x;
-				cNode->style.height = size.y;
+				cNode->style.width = Mesurement(size.x, StyleUnit::Pixel);
+				cNode->style.height = Mesurement(size.y, StyleUnit::Pixel);
 
 				childNode->children.push_back(cNode);
 			}
