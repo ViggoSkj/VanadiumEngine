@@ -41,7 +41,7 @@ void CalculateLayout(UiTree& tree)
 		for (auto nodePtr : nodes)
 		{
 			UiNode& node = *nodePtr;
-			Style& style = node.style;
+			ResolvedStyle& style = node.style;
 
 			if (previous != nullptr && previous->parent != node.parent)
 				previous = nullptr;
@@ -79,7 +79,7 @@ void CalculateLayout(UiTree& tree)
 						node.resolvedProperties.box.AdjustSize(Vector2I(availableWidth, node.resolvedProperties.box.Visible().y));
 					}
 
-					if (style.margin.marginAuto.left && style.margin.marginAuto.right)
+					if (style.marginAuto.left && style.marginAuto.right)
 					{
 						float availableWidth = node.parent->resolvedProperties.box.content.x;
 						availableWidth -= node.resolvedProperties.box.Visible().x;
@@ -87,8 +87,8 @@ void CalculateLayout(UiTree& tree)
 						node.resolvedProperties.box.margin.right = availableWidth / 2;
 					}
 
-					node.resolvedProperties.box.margin.top = style.margin.margin.top;
-					node.resolvedProperties.box.margin.bottom = style.margin.margin.bottom;
+					node.resolvedProperties.box.margin.top = style.margin.top;
+					node.resolvedProperties.box.margin.bottom = style.margin.bottom;
 
 					if (node.parent != nullptr)
 					{

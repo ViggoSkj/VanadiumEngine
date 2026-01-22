@@ -13,5 +13,5 @@ public:
 	std::vector<ScreenElement*> GetChildren();
 
 	UiBox box;
-	Style style;
+	ResolvedStyle style;
 };

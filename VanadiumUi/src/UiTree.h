@@ -33,7 +33,7 @@ struct UiNode
 {
 	std::shared_ptr<UiNode> parent = nullptr;
 	std::vector<std::shared_ptr<UiNode>> children;
-	Style style;
+	ResolvedStyle style;
 	ResolvedNodeProperties resolvedProperties;
 	Vanadium::ComponentHandle<ScreenElement> transform;
 

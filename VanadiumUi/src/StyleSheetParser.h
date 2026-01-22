@@ -1,6 +1,7 @@
 #pragma once
 #include "Style.h"
 #include "Error.h"
+#include "StyleSheet.h"
 
 enum StyleSheetParserErrorCode
 {
@@ -47,10 +48,11 @@ public:
 	static std::expected<StyleSheetParser, ErrorValue> Parse(std::string_view source);
 
 	void DebugPrint();
+
+	StyleSheet generated;
 private:
-
 	bool ValidateDepth();
-
+	
 	TokenizedStyleSheet m_tokens;
 	std::string m_source;
 };

@@ -5,7 +5,7 @@
 struct StyleSourceId
 {
 	u32 id;
-	StyleSource sourceType;
+	StyleSourceType sourceType;
 };
 
 class StyleStore

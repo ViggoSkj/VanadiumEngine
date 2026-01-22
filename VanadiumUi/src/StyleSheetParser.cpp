@@ -1,6 +1,7 @@
 #include "pch.h"
 #include <iostream>
 #include "StyleSheetParser.h"
+#include "core/util/StringHash.h"
 
 static bool IsFullyNumericCharacter(char c)
 {
@@ -143,6 +144,8 @@ std::optional<TokenizedStyleSheet> TokenizedStyleSheet::TokenizeStyleSheet(std::
 	return sheet;
 }
 
+
+
 std::string_view TokenizedStyleSheet::Token(i32 index) const
 {
 	return source.substr(tokens[index].sourceStart, tokens[index].sourceEnd - tokens[index].sourceStart);
@@ -174,17 +177,6 @@ private:
 
 #pragma region Parsing
 
-struct StyleSheetPropertyValue
-{
-	std::vector<float> numbers;
-};
-
-struct StyleSheetProperty
-{
-	std::string_view property;
-	StyleSheetPropertyValue value;
-};
-
 enum class PropertyType
 {
 	None,
@@ -196,33 +188,37 @@ enum class PropertyType
 	String
 };
 
-enum class ScopeOwnerType
-{
-	None,
-	Class,
-	Id
-};
-
-struct ScopeOwner
+static struct StyleDefinitionTarget
 {
 	std::string name;
-	ScopeOwnerType type = ScopeOwnerType::None;
+	StyleSourceType type = StyleSourceType::None;
 };
 
-static struct StyleSheetScope
+static struct StyleSheetPropertyValue
 {
-	ScopeOwner owner;
-	std::shared_ptr<StyleSheetScope> parentScope;
+	std::vector<float> numbers;
+};
+
+static struct StyleSheetProperty
+{
+	std::string_view property;
+	StyleSheetPropertyValue value;
+};
+
+static struct StyleDefinition
+{
+	StyleDefinitionTarget target;
+	std::shared_ptr<StyleDefinition> parentScope;
 	std::vector<StyleSheetProperty> properties;
 };
 
-ScopeOwnerType TokenToOwnerType(std::string_view token)
+StyleSourceType TokenToOwnerType(std::string_view token)
 {
 	if (token == ".")
-		return ScopeOwnerType::Class;
+		return StyleSourceType::Class;
 	if (token == "#")
-		return ScopeOwnerType::Id;
-	return ScopeOwnerType::None;
+		return StyleSourceType::Id;
+	return StyleSourceType::None;
 }
 
 std::optional<StyleSheetPropertyValue> ParsePropertyValue(TokenizedStyleSheet tokenized, TokenAnalyzer& ana)
@@ -245,10 +241,10 @@ std::optional<StyleSheetPropertyValue> ParsePropertyValue(TokenizedStyleSheet to
 	return value;
 }
 
-std::expected<std::vector<StyleSheetScope>, ErrorValue> CreateScopes(TokenizedStyleSheet tokenized, std::shared_ptr<StyleSheetScope> parentScope)
+std::expected<std::vector<StyleDefinition>, ErrorValue> CreateScopes(TokenizedStyleSheet tokenized, std::shared_ptr<StyleDefinition> parentScope)
 {
-	std::vector<StyleSheetScope> scopes;
-	StyleSheetScope* scope = nullptr;
+	std::vector<StyleDefinition> scopes;
+	StyleDefinition* scope = nullptr;
 
 	enum ParserState
 	{
@@ -274,13 +270,13 @@ std::expected<std::vector<StyleSheetScope>, ErrorValue> CreateScopes(TokenizedSt
 		case SearchingForOwnerType:
 		{
 			std::string_view s = TOKEN_STR;
-			ScopeOwnerType type = TokenToOwnerType(TOKEN_STR);
-			if (type == ScopeOwnerType::None)
+			StyleSourceType type = TokenToOwnerType(TOKEN_STR);
+			if (type == StyleSourceType::None)
 				return std::unexpected(ErrorValue(StyleSheetParserDomain, SyntaxError, "Unexpected owner type."));
-			scopes.push_back(StyleSheetScope());
+			scopes.push_back(StyleDefinition());
 			scope = &scopes.back();
 			scope->parentScope = parentScope;
-			scope->owner.type = type;
+			scope->target.type = type;
 			state = SearchingForOwner;
 			i++;
 			break;
@@ -289,7 +285,7 @@ std::expected<std::vector<StyleSheetScope>, ErrorValue> CreateScopes(TokenizedSt
 		{
 			if (TOKEN.type != StyleSheetTokenType::Name)
 				return std::unexpected(ErrorValue(StyleSheetParserDomain, SyntaxError, "Invalid owner name."));
-			scope->owner.name = TOKEN_STR;
+			scope->target.name = TOKEN_STR;
 			state = OpeningScope;
 			i++;
 			break;
@@ -349,6 +345,33 @@ std::expected<std::vector<StyleSheetScope>, ErrorValue> CreateScopes(TokenizedSt
 
 #pragma endregion
 
+#pragma region StyleResolving
+
+Style ResolveStyle(const std::vector<StyleSheetProperty>& properties)
+{
+	Style style;
+
+	for (const StyleSheetProperty& p : properties)
+	{
+		switch (hash_sv(p.property))
+		{
+		case "border"_id:
+		{
+			if (p.value.numbers.size() == 1)
+				style.border = p.value.numbers[0];
+
+			break;
+		}
+		default:
+			break;
+		}
+	}
+
+	return style;
+}
+
+#pragma endregion StyleResolving
+
 std::expected<StyleSheetParser, ErrorValue> StyleSheetParser::Parse(std::string_view source)
 {
 	std::optional<TokenizedStyleSheet> tokenized = TokenizedStyleSheet::TokenizeStyleSheet(source);
@@ -362,12 +385,17 @@ std::expected<StyleSheetParser, ErrorValue> StyleSheetParser::Parse(std::string_
 	if (!parser.ValidateDepth())
 		return std::unexpected(ErrorValue(StyleSheetParserDomain, SyntaxError, "Deapth validation failed."));
 
-	std::expected<std::vector<StyleSheetScope>, ErrorValue> scopesOpt = CreateScopes(parser.m_tokens, nullptr);
+	std::expected<std::vector<StyleDefinition>, ErrorValue> scopesOpt = CreateScopes(parser.m_tokens, nullptr);
 
 	if (!scopesOpt)
 		return std::unexpected(scopesOpt.error());
 
-	std::vector<StyleSheetScope> scopes = scopesOpt.value();
+	std::vector<StyleDefinition> scopes = scopesOpt.value();
+
+	for (const StyleDefinition& def : scopes)
+	{
+		parser.generated.PushSourcedStyle(SourceTarget(def.target.name, def.target.type), ResolveStyle(def.properties));
+	}
 
 	return parser;
 }

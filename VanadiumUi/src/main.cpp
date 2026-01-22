@@ -14,9 +14,11 @@ public:
 
 	ScreenElement& CreateBox(Style style)
 	{
+		ResolvedStyle resolved(style);
+
 		EntityRef ref = CreateEntity();
 		ScreenElement* t = ref.Get().AddComponent<ScreenElement>();
-		t->style = style;
+		t->style = resolved;
 		return *t;
 	}
 
@@ -36,10 +38,10 @@ public:
 
 		Style style2;
 		style2.padding = 10;
-		style2.margin.margin = 10;
-		style2.margin.marginAuto = { true, true, true ,true };
+		style2.margin = 10;
+		style2.marginAuto = { true, true, true ,true };
 		style2.backgroundColor = Vanadium::Colors::red;
-		style2.backgroundColor.w = 0.5;
+		style2.backgroundColor.value.w = 0.5;
 		style2.position = Style::Flow;
 		style2.width = 200;
 		style2.height = 200;
@@ -94,10 +96,10 @@ public:
 
 		Style style2;
 		style2.padding = 10;
-		style2.margin.margin = 10;
-		style2.margin.marginAuto = { true, true, true ,true };
+		style2.margin = 10;
+		style2.marginAuto = { true, true, true ,true };
 		style2.backgroundColor = Vanadium::Colors::red;
-		style2.backgroundColor.w = 0.5;
+		style2.backgroundColor.value.w = 0.5;
 		style2.position = Style::Flow;
 		style2.width = 350;
 		style2.height = 200;
@@ -123,7 +125,6 @@ int main()
 	parsed.value().DebugPrint();
 
 	return 0;
-
 
 	app.PushLayer<UiRenderingLayer>();
 
