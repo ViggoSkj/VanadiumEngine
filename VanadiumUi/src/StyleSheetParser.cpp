@@ -245,7 +245,7 @@ std::optional<StyleSheetPropertyValue> ParsePropertyValue(TokenizedStyleSheet to
 	return value;
 }
 
-std::optional<std::vector<StyleSheetScope>> CreateScopes(TokenizedStyleSheet tokenized, std::shared_ptr<StyleSheetScope> parentScope)
+std::expected<std::vector<StyleSheetScope>, ErrorValue> CreateScopes(TokenizedStyleSheet tokenized, std::shared_ptr<StyleSheetScope> parentScope)
 {
 	std::vector<StyleSheetScope> scopes;
 	StyleSheetScope* scope = nullptr;
@@ -276,7 +276,7 @@ std::optional<std::vector<StyleSheetScope>> CreateScopes(TokenizedStyleSheet tok
 			std::string_view s = TOKEN_STR;
 			ScopeOwnerType type = TokenToOwnerType(TOKEN_STR);
 			if (type == ScopeOwnerType::None)
-				return std::nullopt;
+				return std::unexpected(ErrorValue(StyleSheetParserDomain, SyntaxError, "Unexpected owner type."));
 			scopes.push_back(StyleSheetScope());
 			scope = &scopes.back();
 			scope->parentScope = parentScope;
@@ -288,7 +288,7 @@ std::optional<std::vector<StyleSheetScope>> CreateScopes(TokenizedStyleSheet tok
 		case SearchingForOwner:
 		{
 			if (TOKEN.type != StyleSheetTokenType::Name)
-				return std::nullopt;
+				return std::unexpected(ErrorValue(StyleSheetParserDomain, SyntaxError, "Invalid owner name."));
 			scope->owner.name = TOKEN_STR;
 			state = OpeningScope;
 			i++;
@@ -297,7 +297,7 @@ std::optional<std::vector<StyleSheetScope>> CreateScopes(TokenizedStyleSheet tok
 		case OpeningScope:
 		{
 			if (TOKEN_STR != "{")
-				return std::nullopt;
+				return std::unexpected(ErrorValue(StyleSheetParserDomain, SyntaxError, "Scope needs to be opend with a \"{\"."));
 			state = FindingPropertyName;
 			i++;
 			break;
@@ -305,12 +305,12 @@ std::optional<std::vector<StyleSheetScope>> CreateScopes(TokenizedStyleSheet tok
 		case FindingPropertyName:
 		{
 			if (TOKEN.type != StyleSheetTokenType::Name)
-				return std::nullopt;
+				return std::unexpected(ErrorValue(StyleSheetParserDomain, SyntaxError, "Invalid property name."));
 			scope->properties.emplace_back();
 			scope->properties.back().property = TOKEN_STR;
 			i++;
 			if (TOKEN_STR != ":")
-				return std::nullopt;
+				return std::unexpected(ErrorValue(StyleSheetParserDomain, SyntaxError, "Property definition needs a \":\"."));
 			i++;
 
 			state = FindingPropertyValue;
@@ -322,13 +322,13 @@ std::optional<std::vector<StyleSheetScope>> CreateScopes(TokenizedStyleSheet tok
 			TokenAnalyzer analyzer(tokenized, i);
 			std::optional<StyleSheetPropertyValue> valueOpt = ParsePropertyValue(tokenized, analyzer);
 			if (!valueOpt.has_value())
-				return std::nullopt;
+				return std::unexpected(ErrorValue(StyleSheetParserDomain, SyntaxError, "Invalid property value."));
 			scope->properties.back().value = valueOpt.value();
 
 			i = analyzer.cursor;
 
 			if (TOKEN_STR != ";")
-				return std::nullopt;
+				return std::unexpected(ErrorValue(StyleSheetParserDomain, SyntaxError, "Property definition needs to end with a \";\"."));
 			i++;
 			if (TOKEN_STR == "}")
 			{
@@ -340,7 +340,7 @@ std::optional<std::vector<StyleSheetScope>> CreateScopes(TokenizedStyleSheet tok
 			break;
 		}
 		default:
-			return std::nullopt;
+			return std::unexpected(ErrorValue(StyleSheetParserDomain, InvalidState, "Invalid parser state."));
 		}
 	}
 
@@ -349,23 +349,23 @@ std::optional<std::vector<StyleSheetScope>> CreateScopes(TokenizedStyleSheet tok
 
 #pragma endregion
 
-std::optional<StyleSheetParser> StyleSheetParser::Parse(std::string_view source)
+std::expected<StyleSheetParser, ErrorValue> StyleSheetParser::Parse(std::string_view source)
 {
 	std::optional<TokenizedStyleSheet> tokenized = TokenizedStyleSheet::TokenizeStyleSheet(source);
 	if (!tokenized.has_value())
-		return std::nullopt;
+		return std::unexpected(ErrorValue(StyleSheetParserDomain, FailedTokenization));
 
 	StyleSheetParser parser;
 	parser.m_tokens = tokenized.value();
 	parser.m_source = source;
 
 	if (!parser.ValidateDepth())
-		return std::nullopt;
+		return std::unexpected(ErrorValue(StyleSheetParserDomain, SyntaxError, "Deapth validation failed."));
 
-	std::optional<std::vector<StyleSheetScope>> scopesOpt = CreateScopes(parser.m_tokens, nullptr);
+	std::expected<std::vector<StyleSheetScope>, ErrorValue> scopesOpt = CreateScopes(parser.m_tokens, nullptr);
 
 	if (!scopesOpt)
-		return std::nullopt;
+		return std::unexpected(scopesOpt.error());
 
 	std::vector<StyleSheetScope> scopes = scopesOpt.value();
 

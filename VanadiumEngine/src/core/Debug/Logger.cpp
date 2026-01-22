@@ -32,10 +32,12 @@ namespace Vanadium
 			return "Info";
 		case LogLevel::Warning:
 			return "Warning";
+		case LogLevel::Error:
+			return "Error";
 		case LogLevel::Critical:
 			return "Critical";
 		default:
-			return "LOG_LEVEL";
+			return "LOG_LEVEL_NOT_SET";
 		}
 	}
 

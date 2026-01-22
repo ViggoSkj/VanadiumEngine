@@ -1,5 +1,15 @@
 #pragma once
 #include "Style.h"
+#include "Error.h"
+
+enum StyleSheetParserErrorCode
+{
+	FailedTokenization,
+	SyntaxError,
+	InvalidState,
+};
+
+inline i32 StyleSheetParserDomain = Vanadium::ErrorDomainService::RegisterDomain("StyleSheetParser");
 
 enum class StyleSheetTokenType
 {
@@ -34,7 +44,7 @@ struct TokenizedStyleSheet
 class StyleSheetParser
 {
 public:
-	static std::optional<StyleSheetParser> Parse(std::string_view source);
+	static std::expected<StyleSheetParser, ErrorValue> Parse(std::string_view source);
 
 	void DebugPrint();
 private:

@@ -8,7 +8,8 @@ namespace Vanadium
 		Verbose,
 		Info,
 		Warning,
-		Critical
+		Error,
+		Critical,
 	};
 
 	class Logger

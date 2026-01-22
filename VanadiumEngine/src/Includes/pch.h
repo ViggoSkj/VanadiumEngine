@@ -9,6 +9,8 @@
 
 // other
 #include <filesystem>
+#include <expected>
+#include <optional>
 
 // core
 #include "core/CoreTypes.h"

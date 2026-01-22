@@ -108,17 +108,22 @@ public:
 
 int main()
 {
+	Application app(Vanadium::WindowOptions(1600, 1000, 2));
+
 	std::string source = Vanadium::Detail::ReadFile("res/styles/style.vss");
 
-	std::optional<StyleSheetParser> parsed = StyleSheetParser::Parse(source);
+	std::expected<StyleSheetParser, ErrorValue> parsed = StyleSheetParser::Parse(source);
 
-	assert(parsed.has_value());
+	if (!parsed)
+	{
+		Vanadium::LogError(parsed.error());
+		return 0;
+	}
 
 	parsed.value().DebugPrint();
 
 	return 0;
 
-	Application app(Vanadium::WindowOptions(1600, 1000, 2));
 
 	app.PushLayer<UiRenderingLayer>();
 
