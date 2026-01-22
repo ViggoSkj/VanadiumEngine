@@ -2,6 +2,11 @@
 #include "core/util/StringHash.h"
 #include "SymbolSheetMap.h"
 
+std::shared_ptr<SymbolSheet> SymbolSheet::LoadFromFile(std::filesystem::path path)
+{
+	return std::make_shared<SymbolSheet>(path);
+}
+
 SymbolSheet::SymbolSheet(std::filesystem::path path)
 	: SymbolSheet(path, 16, 16, 10, 10)
 {

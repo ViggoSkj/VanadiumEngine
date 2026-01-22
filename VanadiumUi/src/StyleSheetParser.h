@@ -10,7 +10,7 @@ enum StyleSheetParserErrorCode
 	InvalidState,
 };
 
-inline i32 StyleSheetParserDomain = Vanadium::ErrorDomainService::RegisterDomain("StyleSheetParser");
+inline const i32 StyleSheetParserDomain = Vanadium::ErrorDomainService::RegisterDomain("StyleSheetParser");
 
 enum class StyleSheetTokenType
 {

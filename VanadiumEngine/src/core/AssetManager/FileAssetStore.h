@@ -37,7 +37,12 @@ namespace Vanadium
 			if (m_loadedFileAssets.contains(path.string()))
 				return m_loadedFileAssets.at(path.string());
 
-			m_loadedFileAssets.insert({ path.string(), std::make_shared<TFileAsset>(path) });
+			std::optional<std::shared_ptr<TFileAsset>> asset = TFileAsset::LoadFromFile(path);
+
+			if (!asset)
+				return nullptr;
+
+			m_loadedFileAssets.insert({ path.string(), asset.value()});
 			return m_loadedFileAssets.at(path.string());
 		}
 	private:

@@ -1,10 +1,10 @@
 .panel
 {
 	positioning: absolute;
-	margin: auto;
+	margin: 100px;
 	bottom: 0;
-	width: 400px;
-	height: 200px;
+	width: auto;
+	height: 400px;
 	backgroundColor: 1.0, 1.0, 1.0, 1.0;
 	border: 4px;
 }

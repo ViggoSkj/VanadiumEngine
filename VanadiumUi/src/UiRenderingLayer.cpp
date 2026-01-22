@@ -10,7 +10,7 @@ UiRenderingLayer::UiRenderingLayer()
 	: m_quad(Vanadium::Rendering::CreateMesh(Vanadium::Util::SquareMeshData(2.0, false)))
 	, m_shader(Application::Get().GetAssetManager()->GetFileAsset<ShaderCodeAsset>("res/shaders/box.shader")->CreateShader().value())
 {
-
+	m_tree.screenResolution = Application::Get().GetWindow()->GetResolution();
 }
 
 void UiRenderingLayer::OnUpdate(double dt)

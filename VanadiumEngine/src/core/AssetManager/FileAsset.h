@@ -1,20 +1,27 @@
 #pragma once
-#include "pch.h"
-#include "core/CoreTypes.h"
-
+#include <expected>
 #include <fstream>
 #include <concepts>
+#include "core/CoreTypes.h"
+#include "core/ErrorValue/ErrorValue.h"
 
 
 namespace Vanadium::Detail
 {
+	inline const i32 FileIODomain = ErrorDomainService::RegisterDomain("FileIODomain");
+
+	enum class FileIOErrorCode
+	{
+		FailedOpen,
+	};
+
 	template<typename T>
 	concept LoadableAsset = requires(std::filesystem::path path) {
 		{ T(path) }; // T must be constructible from std::filesystem::path
 		{ std::declval<T>().Load(path) }; // optional if you want a Load() method
 	};
 
-	static std::string ReadFile(std::filesystem::path file)
+	static std::expected<std::string, ErrorValue> ReadFile(std::filesystem::path file)
 	{
 		if (!std::filesystem::exists(file))
 		{
@@ -27,7 +34,9 @@ namespace Vanadium::Detail
 
 		if (!stream.is_open())
 		{
-			throw std::runtime_error("Failed to open asset file: " + file.string());
+			std::string msg = "Failed to open file: ";
+			msg.append(file.string());
+			return std::unexpected(ErrorValue(FileIODomain, (i32)FileIOErrorCode::FailedOpen, msg));
 		}
 
 		std::string result;

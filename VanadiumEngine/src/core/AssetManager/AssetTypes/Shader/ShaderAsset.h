@@ -6,14 +6,14 @@
 
 namespace Vanadium
 {
-	struct ShaderCodeAsset
+	class ShaderCodeAsset
 	{
-		ShaderCodeAsset(std::filesystem::path path);
-
-		Detail::ShaderProcessingObject m_processingObject;
+	public:
+		static std::shared_ptr<ShaderCodeAsset> LoadFromFile(std::filesystem::path path);
 
 		std::vector<UniformObjectDescriptor> GetUniformObjectDescriptors();
 		std::optional<ShaderDescriptor> CreateShaderDescriptor();
 		std::optional<Shader> CreateShader();
+		Detail::ShaderProcessingObject m_processingObject;
 	};
 }

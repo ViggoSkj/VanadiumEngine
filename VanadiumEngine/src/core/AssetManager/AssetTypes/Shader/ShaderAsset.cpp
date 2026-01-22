@@ -20,11 +20,19 @@ namespace Vanadium
 		}
 	};
 
-	ShaderCodeAsset::ShaderCodeAsset(std::filesystem::path path)
-		: m_processingObject(Vanadium::Detail::ReadFile(path))
+	std::shared_ptr<ShaderCodeAsset> ShaderCodeAsset::LoadFromFile(std::filesystem::path path)
 	{
+		std::expected<std::string, ErrorValue> data = Vanadium::Detail::ReadFile(path);
+		if (!data)
+			return nullptr;
+
+		Detail::ShaderProcessingObject processingObject(data.value());
+		
 		ShaderCodeAssetLoader loader;
-		Detail::ShaderCodeGenerator::ExecuteIncludes(m_processingObject, &loader);
+		Detail::ShaderCodeGenerator::ExecuteIncludes(processingObject, &loader);
+		std::shared_ptr<ShaderCodeAsset> asset = std::make_shared<ShaderCodeAsset>();
+		asset->m_processingObject = processingObject;
+		return asset;
 	}
 
 	std::vector<UniformObjectDescriptor> ShaderCodeAsset::GetUniformObjectDescriptors()

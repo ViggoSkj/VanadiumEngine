@@ -8,7 +8,7 @@ namespace Vanadium
 	struct TextureRGBAAsset
 	{
 	public:
-		TextureRGBAAsset(std::filesystem::path path);
+		static std::shared_ptr<TextureRGBAAsset> LoadFromFile(std::filesystem::path path);
 		TextureRGBA Texture;
 	};
 }

@@ -1,5 +1,5 @@
 #pragma once
-#include "pch.h"
+#include "core/ErrorValue/ErrorValue.h"
 #include "core/Rendering/Primitives/Color.h"
 #include "core/Util/Array2D.h"
 
@@ -22,8 +22,9 @@ namespace Vanadium
 	class TextureRGBA : public Texture
 	{
 	public:
+		static std::expected<TextureRGBA, ErrorValue> LoadFromFile(std::filesystem::path path, ImageFileFormat format);
+
 		TextureRGBA() = default;
-		TextureRGBA(std::filesystem::path path, ImageFileFormat format);
 
 		void Copy(TextureRGBA& destination) const;
 

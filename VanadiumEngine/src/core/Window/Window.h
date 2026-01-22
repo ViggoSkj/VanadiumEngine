@@ -19,6 +19,7 @@ namespace Vanadium
 
 		int GetWidth() const { return m_width; }
 		int GetHeight() const { return m_height; }
+		Vector2I GetResolution() const { return Vector2I(m_width, m_height); }
 
 		bool ShouldClose() const { return glfwWindowShouldClose(m_window); }
 		void SwapBuffers() const { glfwSwapBuffers(m_window); }

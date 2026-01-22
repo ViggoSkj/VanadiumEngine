@@ -39,16 +39,13 @@ i32 MesurementToPixels(Mesurement mesurement, float full)
 		return full * mesurement.number;
 }
 
-BoxDirections<i32> MesurementToPixels(BoxDirections<Mesurement> mesurement, std::shared_ptr<UiNode> parent)
+BoxDirections<i32> MesurementToPixels(BoxDirections<Mesurement> mesurement, Vector2 full)
 {
-	float fullX = parent == nullptr ? 0 : parent->resolvedProperties.box.content.x;
-	float fullY = parent == nullptr ? 0 : parent->resolvedProperties.box.content.y;
-
 	BoxDirections<i32> result;
-	result.top = MesurementToPixels(mesurement.top, fullY);
-	result.right = MesurementToPixels(mesurement.right, fullX);
-	result.bottom = MesurementToPixels(mesurement.bottom, fullY);
-	result.left = MesurementToPixels(mesurement.left, fullX);
+	result.top = MesurementToPixels(mesurement.top, full.y);
+	result.right = MesurementToPixels(mesurement.right, full.x);
+	result.bottom = MesurementToPixels(mesurement.bottom, full.y);
+	result.left = MesurementToPixels(mesurement.left, full.x);
 	return result;
 }
 
@@ -64,26 +61,47 @@ void CalculateLayout(UiTree& tree)
 			UiNode& node = *nodePtr;
 			ResolvedStyle& style = node.style;
 
-#define PARENT_CONTENT node.parent == nullptr ? 0 : node.parent->resolvedProperties.box.content
+#define PARENT_CONTENT (node.parent == nullptr ? tree.screenResolution : node.parent->resolvedProperties.box.content)
 
 			if (previous != nullptr && previous->parent != node.parent)
 				previous = nullptr;
 
-			node.resolvedProperties.box.padding = MesurementToPixels(style.padding, node.parent);
-			node.resolvedProperties.box.border = MesurementToPixels(style.border, node.parent);
+			node.resolvedProperties.box.padding = MesurementToPixels(style.padding, PARENT_CONTENT);
+			node.resolvedProperties.box.border = MesurementToPixels(style.border, PARENT_CONTENT);
 
 			if (style.display == Style::Block)
 			{
 				if (style.position == Style::Absolute)
 				{
-					node.resolvedProperties.box.position = Vector2(
-						MesurementToPixels(style.xPosition, PARENT_CONTENT.x),
-						MesurementToPixels(style.yPosition, PARENT_CONTENT.y)
-					);
-					node.resolvedProperties.box.AdjustSize(Vector2I(
-						MesurementToPixels(style.width, PARENT_CONTENT.x),
-						MesurementToPixels(style.height, PARENT_CONTENT.y)
-					));
+					if (style.widthAuto)
+					{
+						node.resolvedProperties.box.AdjustSize(Vector2I(
+							PARENT_CONTENT.x - MesurementToPixels(style.margin, PARENT_CONTENT).Horizontal(),
+							MesurementToPixels(style.height, PARENT_CONTENT.y)
+						));
+					}
+					else
+					{
+						node.resolvedProperties.box.AdjustSize(Vector2I(
+							MesurementToPixels(style.width, PARENT_CONTENT.x),
+							MesurementToPixels(style.height, PARENT_CONTENT.y)
+						));
+					}
+
+					if (style.xPosition.rule == Rule::Unset)
+					{
+						node.resolvedProperties.box.position = Vector2(
+							MesurementToPixels(style.margin.left, PARENT_CONTENT.x),
+							MesurementToPixels(style.yPosition, PARENT_CONTENT.y)
+						);
+					}
+					else
+					{
+						node.resolvedProperties.box.position = Vector2(
+							MesurementToPixels(style.xPosition.value, PARENT_CONTENT.x),
+							MesurementToPixels(style.yPosition, PARENT_CONTENT.y)
+						);
+					}
 
 					if (style.heightAuto)
 					{
@@ -100,6 +118,8 @@ void CalculateLayout(UiTree& tree)
 
 				if (style.position == Style::Flow)
 				{
+					assert(node.parent != nullptr);
+
 					node.resolvedProperties.box.AdjustSize(Vector2I(
 						MesurementToPixels(style.width, PARENT_CONTENT.x),
 						MesurementToPixels(style.height, PARENT_CONTENT.y)
@@ -113,8 +133,7 @@ void CalculateLayout(UiTree& tree)
 
 					if (style.marginAuto.left && style.marginAuto.right)
 					{
-						float availableWidth = node.parent->resolvedProperties.box.content.x;
-						availableWidth -= node.resolvedProperties.box.Visible().x;
+						float availableWidth = PARENT_CONTENT.x - node.resolvedProperties.box.Visible().x;
 						node.resolvedProperties.box.margin.left = availableWidth / 2;
 						node.resolvedProperties.box.margin.right = availableWidth / 2;
 					}

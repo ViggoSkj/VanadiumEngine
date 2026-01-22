@@ -42,6 +42,8 @@ struct UiNode
 
 struct UiTree
 {
+	Vector2I screenResolution;
+
 	std::shared_ptr<UiNode> root;
 
 	std::vector<std::shared_ptr<UiNode>> GetNodes();

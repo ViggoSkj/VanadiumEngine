@@ -33,8 +33,11 @@ struct Mesurement
 
 namespace StyleLiterals
 {
-	constexpr Mesurement operator""px(unsigned long long value) noexcept{
+	constexpr Mesurement operator""_px(unsigned long long value) noexcept{
 		return Mesurement(value, StyleUnit::Pixel);
+	}
+	constexpr Mesurement operator""_part(long double value) noexcept {
+		return Mesurement(value, StyleUnit::Fraction);
 	}
 }
 
@@ -164,20 +167,20 @@ struct ResolvedStyle
 		display = style.display.Or(Style::Display::Block);
 		position = style.positioning.Or(Style::Positioning::Flow);
 		marginAuto = style.marginAuto.Or(false);
-		margin = style.margin.Or(0px);
-		border = style.border.Or(0px);
-		padding = style.padding.Or(0px);
+		margin = style.margin.Or(0_px);
+		border = style.border.Or(0_px);
+		padding = style.padding.Or(0_px);
 
 		widthAuto = style.widthAuto.Or(false);
 		heightAuto = style.heightAuto.Or(false);
 
 		backgroundColor = style.backgroundColor.Or({ 1.0,1.0,1.0,1.0 });
-		xPosition = style.xPosition.Or(0px);
-		yPosition = style.yPosition.Or(0px);
-		width = style.width.Or(0px);
-		height = style.height.Or(0px);
+		xPosition = style.xPosition;
+		yPosition = style.yPosition.Or(0_px);
+		width = style.width.Or(0_px);
+		height = style.height.Or(0_px);
 
-		borderRadius = style.borderRadius.Or(0px);
+		borderRadius = style.borderRadius.Or(0_px);
 	}
 
 	Style::Display display;
@@ -191,7 +194,7 @@ struct ResolvedStyle
 	bool heightAuto;
 
 	Vector4 backgroundColor;
-	Mesurement xPosition;
+	StyleValue<Mesurement> xPosition;
 	Mesurement yPosition;
 	Mesurement width;
 	Mesurement height;

@@ -5,8 +5,10 @@
 
 namespace Vanadium
 {
-	TextureRGBA::TextureRGBA(std::filesystem::path path, ImageFileFormat format)
+	std::expected<TextureRGBA, ErrorValue> TextureRGBA::LoadFromFile(std::filesystem::path path, ImageFileFormat format)
 	{
+		TextureRGBA tex;
+
 		unsigned char* image = NULL;   // will be allocated by lodepng
 		unsigned int width, height;
 		unsigned int error;
@@ -15,10 +17,12 @@ namespace Vanadium
 		error = lodepng_decode32_file(&image, &width, &height, path.string().c_str());
 		if (error) {
 			printf("decoder error %u: %s\n", error, lodepng_error_text(error));
-			return;
+			return std::unexpected(ErrorValue(0, -112323));
 		}
 
-		m_data = Array2D<ColorRGBA>((ColorRGBA*)image, width, height);
+		tex.m_data = Array2D<ColorRGBA>((ColorRGBA*)image, width, height);
+
+		return tex;
 	}
 
 	void TextureRGBA::Copy(TextureRGBA& destination) const

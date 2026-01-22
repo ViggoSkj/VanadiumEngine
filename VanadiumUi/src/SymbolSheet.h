@@ -4,6 +4,8 @@
 class SymbolSheet
 {
 public:
+	static std::shared_ptr<SymbolSheet> LoadFromFile(std::filesystem::path path);
+
 	SymbolSheet(std::filesystem::path path);
 	SymbolSheet(std::filesystem::path path, u32 symbolWidth, u32 symbolHeight, u32 columns, u32 rows);
 

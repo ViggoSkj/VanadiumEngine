@@ -32,29 +32,33 @@ public:
 
 	void Execute() override
 	{
-		Style style;
-		style.backgroundColor = Vanadium::Colors::white;
-		style.positioning = Style::Absolute;
-		style.xPosition = 400px;
-		style.yPosition = 100px;
-		style.width = 700px;
-		style.height = 400px;
-		style.heightAuto = true;
-		style.border = { 10px, 10px, 10px, 10px };
-		style.padding = { 100px, 100px, 100px, 100px };
-		style.borderRadius = 10px;
+		std::shared_ptr<StyleSheet> styleSheet = Application::Get().GetAssetManager()->GetFileAsset<StyleSheet>("res/styles/style.vss");
+
+		Style style = styleSheet->GetClassDefinition("panel").value();
+		/*
+				style.backgroundColor = Vanadium::Colors::white;
+				style.positioning = Style::Absolute;
+				style.yPosition = 100_px;
+				style.widthAuto = true;
+				style.height = 400_px;
+				style.margin = 100_px;
+				style.heightAuto = true;
+				style.border = { 10_px, 10_px, 10_px, 10_px };
+				style.padding = { 100_px, 100_px, 100_px, 100_px };
+				style.borderRadius = 10_px;
+		*/
 
 		auto panel = Vanadium::ECS::CreateHandle(CreateBox(style));
 
 		Style style2;
-		style2.padding = 10px;
-		style2.margin = 10px;
+		style2.padding = 10_px;
+		style2.margin = 10_px;
 		style2.marginAuto = { true, true, true ,true };
 		style2.backgroundColor = Vanadium::Colors::red;
 		style2.backgroundColor.value.w = 0.5;
 		style2.positioning = Style::Flow;
-		style2.width = 350px;
-		style2.height = 200px;
+		style2.width = 350_px;
+		style2.height = 200_px;
 		//CreateTextElement(style2, "T").Parent = panel;
 		CreateTextElement(style2, "This is a test").Parent = panel;
 	}
@@ -63,16 +67,6 @@ public:
 int main()
 {
 	Application app(Vanadium::WindowOptions(1600, 1000, 2));
-
-	std::string source = Vanadium::Detail::ReadFile("res/styles/style.vss");
-
-	std::expected<StyleSheetParser, ErrorValue> parsed = StyleSheetParser::Parse(source);
-
-	if (!parsed)
-	{
-		Vanadium::LogError(parsed.error());
-		return 0;
-	}
 
 	app.PushLayer<UiRenderingLayer>();
 

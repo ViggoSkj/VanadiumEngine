@@ -6,6 +6,8 @@ namespace Vanadium::Detail
 {
 	struct ShaderProcessingObject
 	{
+		ShaderProcessingObject() = default;
+
 		ShaderProcessingObject(std::string source)
 			: Source(source), Tokenized(Tokenizer::Tokenize(source)) {
 		}

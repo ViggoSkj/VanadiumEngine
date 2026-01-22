@@ -484,7 +484,7 @@ void ResolveFirstString(StyleSheetPropertyValue value, StyleValue<std::string>& 
 		string = value.strings[0];
 }
 
-void ResolveFirst(StyleSheetPropertyValue value, StyleValue<Mesurement> mesurement, StyleValue<std::string> string)
+void ResolveFirst(StyleSheetPropertyValue value, StyleValue<Mesurement>& mesurement, StyleValue<std::string>& string)
 {
 	if (value.ordering.size() > 0 && value.ordering[0] == StyleSheetPropertyType::Mesurement)
 		ResolveFirstMesurement(value, mesurement);
@@ -538,8 +538,10 @@ Style ResolveStyle(const std::vector<StyleSheetProperty>& properties)
 				{
 				case "absolute"_id:
 					style.positioning = Style::Positioning::Absolute;
+					break;
 				case "flow"_id:
 					style.positioning = Style::Positioning::Flow;
+					break;
 				}
 			}
 			break;

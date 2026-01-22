@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "core/CoreTypes.h"
+#include "ErrorDomainService.h"
 
 class ErrorValue
 {
@@ -11,7 +12,7 @@ public:
 
 	}
 
-	ErrorValue(i32 domain, i32 code, std::string_view message)
+	ErrorValue(i32 domain, i32 code, std::string message)
 		: domain(domain), code(code), message(message)
 	{
 
